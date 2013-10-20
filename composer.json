@@ -21,7 +21,7 @@
     "require": {
         "php":                            ">=5.3.3",
         "guzzle/guzzle":                  "~3.7",
-        "eightpoints/guzzle-wsse-plugin": "@dev"
+        "eightpoints/guzzle-wsse-plugin": "1.*"
     },
 
     "target-dir": "EightPoints/Bundle/GuzzleBundle",

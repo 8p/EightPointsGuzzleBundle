@@ -1,0 +1,31 @@
+{
+    "name":        "eightpoints/guzzle-bundle",
+    "type":        "symfony-bundle",
+    "description": "Integrates Guzzle into Symfony2, comes with WSSE Plugin for RESTful Interfaces",
+    "keywords":    ["bundle", "guzzle", "symfony", "rest", "web service", "curl", "client", "HTTP client"],
+    "homepage":    "https://github.com/8p/GuzzleBundle",
+    "license":     "MIT",
+
+    "authors": [
+        {
+            "name":     "Florian Preusner",
+            "email":    "florian.preusner@8points.de",
+            "homepage": "https://github.com/floeHly"
+        },
+        {
+            "name":     "Community",
+            "homepage": "https://github.com/8p/GuzzleBundle/contributors"
+        }
+    ],
+
+    "require": {
+        "php":           ">=5.3.3",
+        "guzzle/guzzle": "~3.7"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "EightPoints\\Bundle\\GuzzleBundle": ""
+        }
+    }
+}

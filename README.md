@@ -1,4 +1,3 @@
-GuzzleBundle
-============
-
-Integrates Guzzle into Symfony2
+Symfony Guzzle Bundle
+================================================
+@todo

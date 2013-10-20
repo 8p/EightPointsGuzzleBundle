@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="guzzle.http_client.class">Guzzle\Http\Client</parameter>
+        <parameter key="guzzle.plugin.wsse.class">EightPoints\Guzzle\Plugin\WsseAuthPlugin</parameter>
+
+        <parameter key="guzzle.plugin.wsse.username"></parameter>
+        <parameter key="guzzle.plugin.wsse.password"></parameter>
+    </parameters>
+
+    <services>
+        <service id="guzzle.client" class="%guzzle.http_client.class%">
+            <argument type="string" id="guzzle.base_url">%guzzle.base_url%</argument>
+        </service>
+        <service id="guzzle.plugin.wsse" class="%guzzle.plugin.wsse.class%">
+            <argument type="string" id="guzzle.plugin.wsse.username">%guzzle.plugin.wsse.username%</argument>
+            <argument type="string" id="guzzle.plugin.wsse.password">%guzzle.plugin.wsse.password%</argument>
+        </service>
+    </services>
+</container>

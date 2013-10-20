@@ -1,0 +1,16 @@
+# Ingore common cruft
+.DS_STORE
+coverage
+.idea
+
+# Ignore potentially sensitive phpunit file
+phpunit.xml
+
+# Ignore composer generated files
+composer.phar
+composer.lock
+composer-test.lock
+vendor/
+
+# Ignore subsplit working directory
+.subsplit

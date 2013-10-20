@@ -23,6 +23,8 @@
         "guzzle/guzzle": "~3.7"
     },
 
+    "target-dir": "EightPoints/Bundle/GuzzleBundle",
+    
     "autoload": {
         "psr-0": {
             "EightPoints\\Bundle\\GuzzleBundle": ""

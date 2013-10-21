@@ -5,8 +5,10 @@
 
     <parameters>
         <parameter key="guzzle.http_client.class">Guzzle\Http\Client</parameter>
+        <parameter key="guzzle.plugin.header.class">EightPoints\Bundle\GuzzleBundle\EventListener\HeaderSubscriber</parameter>
         <parameter key="guzzle.plugin.wsse.class">EightPoints\Guzzle\Plugin\WsseAuthPlugin</parameter>
 
+        <parameter key="guzzle.plugin.header.headers" type="collection" ></parameter>
         <parameter key="guzzle.plugin.wsse.username"></parameter>
         <parameter key="guzzle.plugin.wsse.password"></parameter>
     </parameters>
@@ -14,6 +16,9 @@
     <services>
         <service id="guzzle.client" class="%guzzle.http_client.class%">
             <argument type="string" id="guzzle.base_url">%guzzle.base_url%</argument>
+        </service>
+        <service id="guzzle.plugin.header" class="%guzzle.plugin.header.class%">
+            <argument id="guzzle.plugin.header.headers">%guzzle.plugin.header.headers%</argument>
         </service>
         <service id="guzzle.plugin.wsse" class="%guzzle.plugin.wsse.class%">
             <argument type="string" id="guzzle.plugin.wsse.username">%guzzle.plugin.wsse.username%</argument>

@@ -35,7 +35,7 @@ class Configuration implements ConfigurationInterface {
     public function __construct($debug = false) {
 
         $this->debug = (boolean) $debug;
-    } // end: __construct()
+    } // end: __construct
 
     /**
      * Generates the configuration tree builder
@@ -53,13 +53,18 @@ class Configuration implements ConfigurationInterface {
                     ->children()
                         ->scalarNode('base_url')->defaultValue(null)->end()
 
+                        ->arrayNode('headers')
+                            ->prototype('scalar')
+                            ->end()
+                        ->end()
+
                         ->arrayNode('plugin')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->arrayNode('wsse')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('username')->defaultValue('')->end()
+                                        ->scalarNode('username')->defaultFalse()->end()
                                         ->scalarNode('password')->defaultValue('')->end()
                                     ->end()
                                 ->end()
@@ -71,5 +76,5 @@ class Configuration implements ConfigurationInterface {
                 ->end();
 
         return $builder;
-    } // end: getConfigTreeBuilder()
+    } // end: getConfigTreeBuilder
 } // end: Configuration

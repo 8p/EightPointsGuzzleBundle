@@ -31,5 +31,5 @@ class GuzzleBundle extends Bundle {
     public function build(ContainerBuilder $container) {
 
         parent::build($container);
-    } // end: build()
+    } // end: build
 } // end: GuzzleBundle

@@ -48,14 +48,34 @@ class GuzzleExtension extends Extension {
 
         $container->setParameter('guzzle.base_url', $config['base_url']);
 
-        if($config['plugin']['wsse']['username']) {
+        if(isset($config['plugin']['wsse'])) {
 
-            $container->setParameter('guzzle.plugin.wsse.username', $config['plugin']['wsse']['username']);
-            $container->setParameter('guzzle.plugin.wsse.password', $config['plugin']['wsse']['password']);
-
-            $wsse   = $container->get('guzzle.plugin.wsse');
-            $client = $container->get('guzzle.client');
-            $client->getEventDispatcher()->addSubscriber($wsse);
+            $this->setUpWsse($config['plugin']['wsse'], $container);
         }
-    } // end: load()
+    } // end: load
+
+    /**
+     * Set up WSSE settings
+     *
+     * @author  Florian Preusner
+     * @version 1.0
+     * @since   2013-10
+     *
+     * @param   array            $config
+     * @param   ContainerBuilder $container
+     *
+     * @return  void
+     */
+    protected function setUpWsse(array $config, ContainerBuilder $container) {
+
+        if($config['username']) {
+
+            $container->setParameter('guzzle.plugin.wsse.username', $config['username']);
+            $container->setParameter('guzzle.plugin.wsse.password', $config['password']);
+
+            $container->getDefinition('guzzle.client')
+                      ->addMethodCall('getEventDispatcher')
+                      ->addMethodCall('addSubscriber', array($container->getDefinition('guzzle.plugin.wsse')));
+        }
+    } // end: setUpWsse
 } // end: GuzzleExtension

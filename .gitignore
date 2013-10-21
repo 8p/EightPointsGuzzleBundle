@@ -1,7 +1,6 @@
 # Ingore common cruft
 .DS_STORE
 coverage
-.idea
 
 # Ignore potentially sensitive phpunit file
 phpunit.xml

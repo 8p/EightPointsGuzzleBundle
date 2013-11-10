@@ -66,7 +66,7 @@ See also the list of [contributors][5] who participated in this project.
 
 License
 -------
-This plugin is licensed under the MIT License - see the LICENSE file for details
+This bundle is licensed under the MIT License - see the LICENSE file for details
 
 
 [1]: http://guzzlephp.org/

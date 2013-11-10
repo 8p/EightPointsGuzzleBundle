@@ -8,7 +8,7 @@ use       Symfony\Component\HttpKernel\Bundle\Bundle,
 /**
  * Class GuzzleBundle
  *
- * @package   Webinterface\GuzzleBundle
+ * @package   EightPoints\Bundle\GuzzleBundle
  *
  * @copyright 8points IT
  * @author    Florian Preusner

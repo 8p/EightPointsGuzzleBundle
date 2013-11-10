@@ -8,7 +8,7 @@ It comes with a WSSE Auth Plugin that can be used optional.
 
 Requirements
 ------------
- - PHP 5.3.2 or above (at least 5.3.4 recommended to avoid potential bugs)
+ - PHP 5.3.3 or above (at least 5.3.4 recommended to avoid potential bugs)
  - Guzzle PHP Framework
  - [WSSE Auth Plugin][2]
 
@@ -59,9 +59,9 @@ $response = $client->get('/users')->send();
 
 Authors
 -------
-Florian Preusner - <florian.preusner@8points.de> - <http://twitter.com/floeH> - <http://floeh.com><br />
+ - Florian Preusner ([Twitter][4])
 
-See also the list of [contributors][4] who participated in this project.
+See also the list of [contributors][5] who participated in this project.
 
 
 License
@@ -72,4 +72,5 @@ This plugin is licensed under the MIT License - see the LICENSE file for details
 [1]: http://guzzlephp.org/
 [2]: https://github.com/8p/guzzle-wsse-plugin
 [3]: https://packagist.org/packages/eightpoints/guzzle-bundle
-[4]: https://github.com/8p/GuzzleBundle/graphs/contributors
+[4]: http://twitter.com/floeH
+[5]: https://github.com/8p/GuzzleBundle/graphs/contributors

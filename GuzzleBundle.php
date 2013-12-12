@@ -12,8 +12,6 @@ use       Symfony\Component\HttpKernel\Bundle\Bundle,
  * Class GuzzleBundle
  *
  * @package   EightPoints\Bundle\GuzzleBundle
- *
- * @copyright 8points IT
  * @author    Florian Preusner
  *
  * @version   1.0

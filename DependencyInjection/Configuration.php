@@ -9,8 +9,6 @@ use       Symfony\Component\Config\Definition\Builder\TreeBuilder,
  * Configuration
  *
  * @package   EightPoints\Bundle\GuzzleBundle\DependencyInjection
- *
- * @copyright 8points IT
  * @author    Florian Preusner
  *
  * @version   1.0
@@ -19,9 +17,14 @@ use       Symfony\Component\Config\Definition\Builder\TreeBuilder,
 class Configuration implements ConfigurationInterface {
 
     /**
+     * @var string $alias
+     */
+    protected $alias;
+
+    /**
      * @var boolean $debug
      */
-    private $debug;
+    protected $debug;
 
     /**
      * Constructor
@@ -30,10 +33,12 @@ class Configuration implements ConfigurationInterface {
      * @version 1.0
      * @since   2013-10
      *
+     * @param   string  $alias
      * @param   boolean $debug
      */
-    public function __construct($debug = false) {
+    public function __construct($alias, $debug = false) {
 
+        $this->alias = $alias;
         $this->debug = (boolean) $debug;
     } // end: __construct
 
@@ -49,7 +54,7 @@ class Configuration implements ConfigurationInterface {
     public function getConfigTreeBuilder() {
 
         $builder = new TreeBuilder();
-        $builder->root('guzzle')
+        $builder->root($this->alias)
                     ->children()
                         ->scalarNode('base_url')->defaultValue(null)->end()
 

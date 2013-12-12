@@ -9,8 +9,6 @@ use       Guzzle\Common\Event,
  * Adds headers to request
  *
  * @package   EightPoints\Bundle\GuzzleBundle\EventListener
- *
- * @copyright 8points IT
  * @author    Florian Preusner
  *
  * @version   1.0

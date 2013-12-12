@@ -12,8 +12,6 @@ use       Symfony\Component\Config\FileLocator,
  * GuzzleExtension
  *
  * @package   EightPoints\Bundle\GuzzleBundle\DependencyInjection
- *
- * @copyright 8points IT
  * @author    Florian Preusner
  *
  * @version   1.0
@@ -41,7 +39,7 @@ class GuzzleExtension extends Extension {
         $loader->load('services.xml');
 
         $processor     = new Processor();
-        $configuration = new Configuration($container->getParameter('kernel.debug'));
+        $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'));
         $config        = $processor->processConfiguration($configuration, $configs);
 
         $container->setParameter('guzzle.base_url', $config['base_url']);

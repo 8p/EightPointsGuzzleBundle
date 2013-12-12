@@ -35,10 +35,8 @@ class GuzzleExtension extends Extension {
      */
     public function load(array $configs, ContainerBuilder $container) {
 
-        $loader = new XmlFileLoader(
-            $container,
-            new FileLocator(implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Resources', 'config')))
-        );
+        $configPath = implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Resources', 'config'));
+        $loader     = new XmlFileLoader($container, new FileLocator($configPath));
 
         $loader->load('services.xml');
 
@@ -103,4 +101,18 @@ class GuzzleExtension extends Extension {
                       ->addMethodCall('addSubscriber', array($container->getDefinition('guzzle.plugin.wsse')));
         }
     } // end: setUpWsse
+
+    /**
+     * Returns alias of class
+     *
+     * @author  Florian Preusner
+     * @version 1.1
+     * @since   2013-12
+     *
+     * @return  string
+     */
+    public function getAlias() {
+
+        return 'guzzle';
+    } // end: getAlias
 } // end: GuzzleExtension

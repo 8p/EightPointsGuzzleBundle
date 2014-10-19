@@ -21,7 +21,7 @@ To install this bundle, run the command below and you will get the latest versio
 composer require eightpoints/guzzle-bundle
 ```
 
-To use the newest (maybe unstable) version, please add following into your composer.json:
+To use the newest (maybe unstable) version please add following into your composer.json:
 
 ``` json
 {
@@ -60,6 +60,18 @@ Using services in controller:
 ``` php
 $client   = $this->get('guzzle.client');
 $response = $client->get('/users')->send();
+```
+
+Suggestions
+-----------
+
+Adding aliases:
+If you want to use different names for provided services you can use aliases. This is a good idea if you don't want 
+have any dependency to guzzle in your service name.
+``` yaml
+services:
+   http.client:
+       alias: guzzle.client
 ```
 
 

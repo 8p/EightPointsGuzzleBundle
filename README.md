@@ -3,19 +3,25 @@ Symfony GuzzleBundle [![Latest Stable Version](https://poser.pugx.org/eightpoint
 [![knpbundles.com](http://knpbundles.com/8p/GuzzleBundle/badge)](http://knpbundles.com/8p/GuzzleBundle)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590/big.png)](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590)
 
-This plugin integrates [Guzzle][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
-It comes with a WSSE Auth Plugin that can be used optional.
+This plugin integrates [Guzzle 5.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
+It comes with a WSSE Auth Plugin that can be used optionally.
 
 Requirements
 ------------
- - PHP 5.3.3 or above (at least 5.3.4 recommended to avoid potential bugs)
+ - PHP 5.4 or above
  - Guzzle PHP Framework
  - [WSSE Auth Plugin][2]
 
  
 Installation
 ------------
-Using composer ([Packagist][3]):
+To install this bundle, run the command below and you will get the latest version by [Packagist][3].
+
+``` bash
+composer require eightpoints/guzzle-bundle
+```
+
+To use the newest (maybe unstable) version, please add following into your composer.json:
 
 ``` json
 {

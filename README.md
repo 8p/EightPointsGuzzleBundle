@@ -3,19 +3,21 @@ Symfony GuzzleBundle [![Latest Stable Version](https://poser.pugx.org/eightpoint
 [![knpbundles.com](http://knpbundles.com/8p/GuzzleBundle/badge)](http://knpbundles.com/8p/GuzzleBundle)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590/big.png)](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590)
 
-This plugin integrates [Guzzle 5.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
+This bundle integrates [Guzzle 5.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
 It comes with a WSSE Auth Plugin that can be used optionally.
+
+GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
 Requirements
 ------------
  - PHP 5.4 or above
  - Guzzle PHP Framework
- - [WSSE Auth Plugin][2]
+ - [WSSE Auth Plugin][3]
 
  
 Installation
 ------------
-To install this bundle, run the command below and you will get the latest version by [Packagist][3].
+To install this bundle, run the command below and you will get the latest version by [Packagist][4].
 
 ``` bash
 composer require eightpoints/guzzle-bundle
@@ -77,9 +79,9 @@ services:
 
 Authors
 -------
- - Florian Preusner ([Twitter][4])
+ - Florian Preusner ([Twitter][5])
 
-See also the list of [contributors][5] who participated in this project.
+See also the list of [contributors][6] who participated in this project.
 
 
 License
@@ -88,7 +90,8 @@ This bundle is licensed under the MIT License - see the LICENSE file for details
 
 
 [1]: http://guzzlephp.org/
-[2]: https://github.com/8p/guzzle-wsse-plugin
-[3]: https://packagist.org/packages/eightpoints/guzzle-bundle
-[4]: http://twitter.com/floeH
-[5]: https://github.com/8p/GuzzleBundle/graphs/contributors
+[2]: http://semver.org/
+[3]: https://github.com/8p/guzzle-wsse-plugin
+[4]: https://packagist.org/packages/eightpoints/guzzle-bundle
+[5]: http://twitter.com/floeH
+[6]: https://github.com/8p/GuzzleBundle/graphs/contributors

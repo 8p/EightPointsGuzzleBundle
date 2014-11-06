@@ -2,8 +2,8 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\EventListener;
 
-use       Guzzle\Common\Event,
-          Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use       GuzzleHttp\Event\BeforeEvent,
+          GuzzleHttp\Event\SubscriberInterface;
 
 /**
  * Adds headers to request
@@ -11,10 +11,10 @@ use       Guzzle\Common\Event,
  * @package   EightPoints\Bundle\GuzzleBundle\EventListener
  * @author    Florian Preusner
  *
- * @version   1.0
+ * @version   2.0
  * @since     2013-10
  */
-class HeaderSubscriber implements EventSubscriberInterface {
+class HeaderSubscriber implements SubscriberInterface {
 
     /**
      * @var array $headers
@@ -105,33 +105,33 @@ class HeaderSubscriber implements EventSubscriberInterface {
      * {@inheritdoc}
      *
      * @author  Florian Preusner
-     * @version 1.0
+     * @version 2.0
      * @since   2013-10
      */
-    public static function getSubscribedEvents() {
+    public function getEvents() {
 
-        return array('client.create_request' => 'onRequestCreate');
-    } // end: getSubscribedEvents
+        return ['before' => ['onBefore']];
+    } // end: getEvents
 
     /**
      * Add given headers to request
      *
      * @author  Florian Preusner
-     * @version 1.0
+     * @version 2.0
      * @since   2013-10
      *
-     * @param   Event $event
+     * @param   BeforeEvent $event
      *
      * @return  void
      */
-    public function onRequestCreate(Event $event) {
+    public function onBefore(BeforeEvent $event) {
 
-        $request = $event['request'];
+        $request = $event->getRequest();
 
         // make sure to keep headers that have been already set
-        foreach($this->headers as $key => $value) {
+        foreach($this->getHeaders() as $key => $value) {
 
             $request->addHeader($key, $value);
         }
-    } // end: onRequestCreate
+    } // end: onBefore
 } // end: HeaderSubscriber

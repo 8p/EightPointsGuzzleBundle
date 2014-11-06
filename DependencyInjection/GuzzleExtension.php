@@ -59,7 +59,7 @@ class GuzzleExtension extends Extension {
      * Set up HTTP headers
      *
      * @author  Florian Preusner
-     * @version 1.0
+     * @version 2.0
      * @since   2013-10
      *
      * @param   array            $headers
@@ -70,16 +70,16 @@ class GuzzleExtension extends Extension {
     protected function setUpHeaders(array $headers, ContainerBuilder $container) {
 
         $container->setParameter('guzzle.plugin.header.headers', $headers);
-        $container->getDefinition('guzzle.client')
-                  ->addMethodCall('getEventDispatcher')
-                  ->addMethodCall('addSubscriber', array($container->getDefinition('guzzle.plugin.header')));
+
+        $container->getDefinition('guzzle.emitter')
+                  ->addMethodCall('attach', array($container->getDefinition('guzzle.plugin.header')));
     } // end: setUpHeaders
 
     /**
      * Set up WSSE settings
      *
      * @author  Florian Preusner
-     * @version 1.0
+     * @version 2.0
      * @since   2013-10
      *
      * @param   array            $config
@@ -94,9 +94,8 @@ class GuzzleExtension extends Extension {
             $container->setParameter('guzzle.plugin.wsse.username', $config['username']);
             $container->setParameter('guzzle.plugin.wsse.password', $config['password']);
 
-            $container->getDefinition('guzzle.client')
-                      ->addMethodCall('getEventDispatcher')
-                      ->addMethodCall('addSubscriber', array($container->getDefinition('guzzle.plugin.wsse')));
+            $container->getDefinition('guzzle.emitter')
+                      ->addMethodCall('attach', array($container->getDefinition('guzzle.plugin.wsse')));
         }
     } // end: setUpWsse
 

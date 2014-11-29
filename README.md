@@ -63,8 +63,7 @@ $response = $client->get('/users')->send();
 
 ## Features
 ### Symfony Debug Toolbar / Profiler
-![Debug Logs](/Resources/doc/debug_logs.png "Symfony Debug Toolbar - Guzzle Logs")
-
+![Debug Logs](/Resources/doc/img/debug_logs.png =360x "Symfony Debug Toolbar - Guzzle Logs")
 
 
 ## Suggestions

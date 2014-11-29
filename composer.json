@@ -24,6 +24,10 @@
         "eightpoints/guzzle-wsse-plugin": "~2.0"
     },
 
+    "require-dev": {
+        "guzzlehttp/log-subscriber":      "~1.0"
+    },
+
     "target-dir": "EightPoints/Bundle/GuzzleBundle",
     
     "autoload": {

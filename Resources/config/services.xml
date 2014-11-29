@@ -11,22 +11,22 @@
         <parameter key="guzzle.data_collector.class">EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector</parameter>
         <parameter key="guzzle.logger.class">EightPoints\Bundle\GuzzleBundle\Log\Logger</parameter>
 
-        <parameter key="guzzle.plugin.header.headers" type="collection"></parameter>
-        <parameter key="guzzle.plugin.wsse.username"></parameter>
-        <parameter key="guzzle.plugin.wsse.password"></parameter>
+        <parameter key="guzzle.plugin.header.headers" type="collection" />
+        <parameter key="guzzle.plugin.wsse.username" />
+        <parameter key="guzzle.plugin.wsse.password" />
     </parameters>
 
     <services>
         <!-- Main -->
         <service id="guzzle.emitter" class="%guzzle.emitter.class%">
             <call method="attach">
-                <argument type="service" id="guzzle.logger.subscriber"></argument>
+                <argument type="service" id="guzzle.logger.subscriber" />
             </call>
         </service>
         <service id="guzzle.client" class="%guzzle.http_client.class%">
             <argument type="collection">
                 <argument key="base_url" type="string" id="guzzle.base_url">%guzzle.base_url%</argument>
-                <argument key="emitter" type="service" id="guzzle.emitter"></argument>
+                <argument key="emitter" type="service" id="guzzle.emitter" />
             </argument>
         </service>
         <service id="guzzle.plugin.header" class="%guzzle.plugin.header.class%">

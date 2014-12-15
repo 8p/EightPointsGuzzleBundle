@@ -55,7 +55,7 @@ class HttpDataCollector extends DataCollector {
         $messages = $this->logger->getMessages();
 
         $this->addLogs($messages);
-        $this->addRequest($request, $response);
+        //$this->addRequest($request, $response); // @todo: only collect information that is interesting
     } // end: collect
 
     /**

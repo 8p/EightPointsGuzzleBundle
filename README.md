@@ -57,7 +57,7 @@ All these settings are optional. If WSSE username is defined the WSSE plugin wil
 Using services in controller:
 ``` php
 $client   = $this->get('guzzle.client');
-$response = $client->get('/users')->send();
+$response = $client->get('/users');
 ```
 
 

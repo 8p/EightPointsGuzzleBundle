@@ -2,7 +2,9 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DataCollector;
 
-use       Psr\Log\LoggerInterface,
+use       EightPoints\Bundle\GuzzleBundle\Log\LogGroup,
+
+	      Psr\Log\LoggerInterface,
 
           Symfony\Component\HttpKernel\DataCollector\DataCollector,
           Symfony\Component\HttpFoundation\Request,
@@ -21,7 +23,7 @@ use       Psr\Log\LoggerInterface,
 class HttpDataCollector extends DataCollector {
 
     /**
-     * @var LoggerInterface $logger
+     * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger $logger
      */
     protected $logger;
 
@@ -38,10 +40,10 @@ class HttpDataCollector extends DataCollector {
 
         $this->logger = $logger;
         $this->data   = array(
-            'requests' => array(),
-            'logs'     => array()
+            'logs'      => array(),
+			'callCount' => 0,
         );
-    } // end: __construct
+    } // end: __construct()
 
     /**
      * {@inheritdoc}
@@ -53,10 +55,16 @@ class HttpDataCollector extends DataCollector {
     public function collect(Request $request, Response $response, \Exception $exception = null) {
 
         $messages = $this->logger->getMessages();
+		$requestId = spl_object_hash($request); // @todo returns always same id?
+		$requestId = $request->getUri();
 
-        $this->addLogs($messages);
-        //$this->addRequest($request, $response); // @todo: only collect information that is interesting
-    } // end: collect
+		// clear log to have only messages related to symfony request context
+		$this->logger->clear();
+
+		$logGroup = $this->getLogGroup($requestId);
+		$logGroup->setRequest($request);
+		$logGroup->setMessages($messages);
+    } // end: collect()
 
     /**
      * {@inheritdoc}
@@ -68,7 +76,7 @@ class HttpDataCollector extends DataCollector {
     public function getName() {
 
         return 'guzzle';
-    } // end: getName
+    } // end: getName()
 
     /**
      * Returning log entries
@@ -84,58 +92,66 @@ class HttpDataCollector extends DataCollector {
         $logs = isset($this->data['logs']) ? $this->data['logs'] : array();
 
         return $logs;
-    } // end: getLogs
+    } // end: getLogs()
 
-    /**
-     * Returning requests
-     *
-     * @author  Florian Preusner
-     * @version 2.1
-     * @since   2014-11
-     *
-     * @return  array $requests
-     */
-    public function getRequests() {
+	/**
+	 * Get all messages
+	 *
+	 * @author  Florian Preusner
+	 * @version 2.2
+	 * @since   2015-05
+	 *
+	 * @return  array
+	 */
+	public function getMessages() {
 
-        $requests = isset($this->data['requests']) ? $this->data['requests'] : array();
+		$messages = array();
 
-        return $requests;
-    } // end: getRequests
+		foreach($this->getLogs() as $log) {
 
-    /**
-     * Add log messages to data variable
-     *
-     * @author  Florian Preusner
-     * @version 2.1
-     * @since   2014-11
-     *
-     * @param   array $messages
-     */
-    protected function addLogs(array $messages) {
+			foreach($log->getMessages() as $message) {
 
-        foreach($messages as $message) {
+				$messages[] = $message;
+			}
+		}
 
-            array_push($this->data['logs'], $message);
-        }
-    } // end: addLogs
+		return $messages;
+	} // end: getMessages()
 
-    /**
-     * Add request/response to data variable
-     *
-     * @author  Florian Preusner
-     * @version 2.1
-     * @since   2014-11
-     *
-     * @param   Request  $request
-     * @param   Response $response
-     */
-    protected function addRequest(Request $request, Response $response) {
+	/**
+	 * Return amount of http calls
+	 *
+	 * @author  Florian Preusner
+	 * @version 2.2
+	 * @since   2015-05
+	 *
+	 * @return  integer
+	 */
+	public function getCallCount() {
 
-        $data = array(
-            'request' => $request,
-            'response' => $response
-        );
+		$callCount = count($this->getMessages());
 
-        array_push($this->data['requests'], $data);
-    } // end: addRequest
+		return $callCount;
+	} // end: getCallCount()
+
+	/**
+	 * Returns (new) LogGroup based on given id
+	 *
+	 * @author  Florian Preusner
+	 * @version 2.2
+	 * @since   2015-05
+	 *
+	 * @param   string $id
+	 *
+	 * @return  LogGroup
+	 */
+	protected function getLogGroup($id) {
+
+		if(!isset($this->data['logs'][$id])) {
+
+			$this->data['logs'][$id] = new LogGroup();
+		}
+
+		return $this->data['logs'][$id];
+	} // end: getLogGroup()
 } // end: HttpDataCollector

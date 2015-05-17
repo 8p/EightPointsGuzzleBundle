@@ -8,15 +8,15 @@
              alt="Guzzle"
              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAcCAYAAABsxO8nAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAAd0SU1FB9wJFA0kAmx9x5QAAAAdaVRYdENvbW1lbnQAAAAAAENyZWF0ZWQgd2l0aCBHSU1QZC5lBwAAAsRJREFUOMvdlL1vXUUQxc+ZXV/HJCSiQRRBdOHDEYVrR5Gf3vWHrMjPtHTQ5m9IRQtI/AE0NDS2sYSc5+cPCSwUKVKE5BRBKD1ShEgsEM593pmh2Wvte3kE6kxz9652f3PmzNwLvLLBdrGwsPAGyTkRaQAYACVZkUyDweDe/wJ1Op2eiGzFGEESIQSYGcwMAODup7u7u6/9J6jb7T6cmpq6XlXVdRG5TDK6u6rqM1X9xszmRGQ2pfRrVVX3qqr6dGNj4/gF0PLy8o/T09M3tre3OZ5pbW1tXVU3U0pz/X7/59XVVQ8hIMb44ebm5sP2nAAAyQsvUf02SZAc5vebqorhcHjc6/XeHQEBeK6qk2sn/zAzkEzZr5OU0klKCSml+yOglNJTd58IOjs7g6rC3U8BwMwigGMz+0VVL7fnIgCo6pOmabCysrKVWz/j7n8COBsOhx+TRIzxBAD6/f6DxcXF70h+nlLCOOiZmUFVeyTbks7bH2PEzs7OSXtpMBh80e12ZwB8NgIys6chBLg7Wq/cHdlkmBnquva8t7W3t/eRiNwv7Yj5kpsZRKQ0Ga26lBJIfk/yfQDrnU6n0zTNkxDCKKj8VEqYmSGEgJQSjo6ObuWv4CcAKyQPyk7HfPnvdqOUKyJQ1XNluYtBRC4AuFruS87srbHt8yXxG8lHAJpSfbu6KCIY96lVV8JJXnL3d0IId0miruvZc5CI/KuMcXgI4UqM8drh4eHvuaOzZWnPW0/GSyshOU4BXCwUflAq4qTs7g4RGW9AjDFWWd0PJN8rPZqZVJaIjMxTvvy6u7fz97W7r5dzdGmSNyGEF0DufiWEMJ3XjbtXpaLZcqJLv8wMMUbUdf1mVnQHwLW6rp3ktyLy6Hyi5+fnr4rIbRF5bGZ/5Z+YAJgRkbdCCGl/f//LNtnS0tJNVf3E3R8cHBx8hVc7/gEz5WHvMjpIQQAAAABJRU5ErkJggg=="/>
         <span class="sf-toolbar-status{% if 10 < collector.logs | length %} sf-toolbar-status-yellow{% endif %}">
-            {{ collector.logs | length }}
+            {{ collector.callCount }}
         </span>
     {% endset %}
 
     {% set text %}
 
         <div class="sf-toolbar-info-piece">
-            <b>Logs</b>
-            <span>{{ collector.logs | length }}</span>
+            <b>API Calls</b>
+            <span>{{ collector.callCount }}</span>
         </div>
     {% endset %}
 
@@ -31,7 +31,7 @@
     </span>
     <strong>Guzzle</strong>
     <span class="count">
-        <span>{{ collector.logs | length }}</span>
+        <span>{{ collector.callCount }}</span>
     </span>
 </span>
 {% endblock %}
@@ -46,10 +46,13 @@
         </p>
     {% else %}
         <ul class="alt">
-            {% for i, log in collector.logs %}
-                <li class="{{ i is odd ? 'odd' : 'even' }}">
-                    <code>[{{ log.level }}] {{ log.message }}</code>
-                </li>
+            {% for group in collector.logs %}
+                {% for i, message in group.messages %}
+
+                    <li class="{{ i is odd ? 'odd' : 'even' }}">
+                        <code>[{{ message.level }}] {{ message.message }}</code>
+                    </li>
+                {% endfor %}
             {% endfor %}
         </ul>
     {% endif %}

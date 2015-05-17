@@ -17,18 +17,21 @@
     </parameters>
 
     <services>
-        <!-- Main -->
-        <service id="guzzle.emitter" class="%guzzle.emitter.class%">
-            <call method="attach">
-                <argument type="service" id="guzzle.logger.subscriber" />
-            </call>
-        </service>
         <service id="guzzle.client" class="%guzzle.http_client.class%">
             <argument type="collection">
                 <argument key="base_url" type="string" id="guzzle.base_url">%guzzle.base_url%</argument>
                 <argument key="emitter" type="service" id="guzzle.emitter" />
             </argument>
         </service>
+
+        <!-- Events -->
+        <service id="guzzle.emitter" class="%guzzle.emitter.class%">
+            <call method="attach">
+                <argument type="service" id="guzzle.logger.subscriber" />
+            </call>
+        </service>
+
+        <!-- HTTP Header Plugin -->
         <service id="guzzle.plugin.header" class="%guzzle.plugin.header.class%">
             <argument id="guzzle.plugin.header.headers">%guzzle.plugin.header.headers%</argument>
         </service>

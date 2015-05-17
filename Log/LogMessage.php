@@ -13,20 +13,25 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
  */
 class LogMessage {
 
-    /**
-     * @var string $level
+	/**
+     * @var string
      */
-    private $level;
+    protected $message;
 
     /**
-     * @var string $message
+     * @var string
      */
-    private $message;
+    protected $level;
 
     /**
-     * @var array $context
+     * @var LogRequest
      */
-    private $context = array();
+    protected $request;
+
+	/**
+	 * @var LogResponse
+	 */
+	protected $response;
 
     /**
      * Constructor
@@ -35,16 +40,25 @@ class LogMessage {
      * @version 2.1
      * @since   2014-11
      *
-     * @param   string $level
      * @param   string $message
-     * @param   array  $context
      */
-    public function __construct($level, $message, $context = array()) {
+    public function __construct($message) {
 
-        $this->level   = $level;
         $this->message = $message;
-        $this->context = $context;
     } // end: __construct
+
+	/**
+	 * Set log level
+	 *
+	 * @author Florian Preusner
+	 * @since  2015-05
+	 *
+	 * @param  string $value
+	 */
+	public function setLevel($value) {
+
+		$this->level = $value;
+	} // end: setLevel()
 
     /**
      * Returning log level
@@ -74,17 +88,59 @@ class LogMessage {
         return $this->message;
     } // end: getMessage
 
-    /**
-     * Returning context array
-     *
-     * @author  Florian Preusner
-     * @version 2.1
-     * @since   2014-11
-     *
-     * @return  array
-     */
-    public function getContext() {
+	/**
+	 * Set Log Request
+	 *
+	 * @author  Florian Preusner
+	 * @version 2.2
+	 * @since   2015-05
+	 *
+	 * @param   LogRequest $value
+	 */
+    public function setRequest(LogRequest $value) {
 
-        return $this->context;
-    } // end: getContext
+		$this->request = $value;
+	} // end: setRequest()
+
+	/**
+	 * Get Log Request
+	 *
+	 * @author  Florian Preusner
+	 * @version 2.2
+	 * @since   2015-05
+	 *
+	 * @return  LogRequest
+	 */
+	public function getRequest() {
+
+		return $this->request;
+	} // end: getRequest()
+
+	/**
+	 * Set Log Response
+	 *
+	 * @author  Florian Preusner
+	 * @version 2.2
+	 * @since   2015-05
+	 *
+	 * @param   LogResponse $value
+	 */
+	public function setResponse(LogResponse $value) {
+
+		$this->response = $value;
+	} // end: setResponse()
+
+	/**
+	 * Get Log Response
+	 *
+	 * @author  Florian Preusner
+	 * @version 2.2
+	 * @since   2015-05
+	 *
+	 * @return  LogResponse
+	 */
+	public function getResponse() {
+
+		return $this->response;
+	} // end: getResponse()
 } // end: LogMessage

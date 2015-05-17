@@ -19,7 +19,7 @@ class Logger implements LoggerInterface {
     use LoggerTrait;
 
     /**
-     * @var array $messages
+     * @var array
      */
     private $messages = array();
 
@@ -38,34 +38,42 @@ class Logger implements LoggerInterface {
      */
     public function log($level, $message, array $context = array()) {
 
-        // @todo: reactivate context cause of serializing closures is not possible
-        //[1] => EightPoints\Bundle\GuzzleBundle\Log\LogMessage Object(
-        //    [level:EightPoints\Bundle\GuzzleBundle\Log\LogMessage:private] => info
-        //    [message:EightPoints\Bundle\GuzzleBundle\Log\LogMessage:private] => vagrant-debian64 Guzzle/5.0.3 curl/7.26.0 PHP/5.5.10-1~dotdeb.1 - [2014-12-02T03:57:38+00:00] "GET /restfullink?p2i_key=8d97e7b12a93172f&p2i_url=http%3A%2F%2Fwww.stuttgarter-zeitung.de%2F&p2i_fullpage=1&p2i_wait=5&p2i_imageformat=png /" 200 181
-        //    [context:EightPoints\Bundle\GuzzleBundle\Log\LogMessage:private] => Array(
-        //        [request] => GuzzleHttp\Message\Request Object(
-        //        [url:GuzzleHttp\Message\Request:private] => GuzzleHttp\Url Object(
-        //            [scheme:GuzzleHttp\Url:private] => http
-        //            [host:GuzzleHttp\Url:private] => api.page2images.com
-        //            [port:GuzzleHttp\Url:private] =>
-        //            [username:GuzzleHttp\Url:private] =>
-        //            [password:GuzzleHttp\Url:private] =>
-        //            [path:GuzzleHttp\Url:private] => /restfullink
-        //            [fragment:GuzzleHttp\Url:private] =>
-        //            [query:GuzzleHttp\Url:private] => GuzzleHttp\Query Object(
-        //                [encoding:GuzzleHttp\Query:private] => rawurlencode
-        //                [aggregator:GuzzleHttp\Query:private] => Closure Object(
-        //                    [static] => Array(
-        //                        [numericIndices] => 1
-        //                    )
-        //                    [parameter] => Array(
-        //                        [$data] =>
-        //                    )
+		$request  = new LogRequest($context['request']);
+		$response = new LogResponse($context['response']);
 
-        $message = new LogMessage($level, $message, array());
+        $message = new LogMessage($message);
+		$message->setLevel($level);
+		$message->setRequest($request);
+		$message->setResponse($response);
 
         $this->messages[] = $message;
-    } // end: log
+    } // end: log()
+
+	/**
+	 * Clear messages list
+	 *
+	 * @author  Florian Preusner
+	 * @version 2.2
+	 * @since   2015-05
+	 */
+	public function clear() {
+
+		$this->messages = array();
+	} // end: clear()
+
+	/**
+	 * Return if messages exist or not
+	 *
+	 * @author  Florian Preusner
+	 * @version 2.2
+	 * @since   2015-05
+	 *
+	 * @return  boolean
+	 */
+	public function hasMessages() {
+
+		return ($this->getMessages());
+	} // end: hasMessages()
 
     /**
      * Return log messages
@@ -79,5 +87,5 @@ class Logger implements LoggerInterface {
     public function getMessages() {
 
         return $this->messages;
-    } // end: getMessages
+    } // end: getMessages()
 } // end: Logger

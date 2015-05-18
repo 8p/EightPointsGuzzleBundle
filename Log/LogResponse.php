@@ -10,7 +10,7 @@ use       GuzzleHttp\Message\ResponseInterface;
  * @package EightPoints\Bundle\GuzzleBundle\Log
  * @author  Florian Preusner
  *
- * @version 2.2
+ * @version 2.1
  * @since   2015-05
  */
 class LogResponse {
@@ -24,7 +24,7 @@ class LogResponse {
 	 * Construct
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @param   ResponseInterface $response
@@ -38,7 +38,7 @@ class LogResponse {
 	 * Save data
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @param   ResponseInterface $request
@@ -52,7 +52,7 @@ class LogResponse {
 	 * Set response headers
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @param   array $value
@@ -66,7 +66,7 @@ class LogResponse {
 	 * Return response headers
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @return  array

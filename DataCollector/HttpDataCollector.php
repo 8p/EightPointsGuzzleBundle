@@ -98,7 +98,7 @@ class HttpDataCollector extends DataCollector {
 	 * Get all messages
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @return  array
@@ -122,7 +122,7 @@ class HttpDataCollector extends DataCollector {
 	 * Return amount of http calls
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @return  integer
@@ -138,7 +138,7 @@ class HttpDataCollector extends DataCollector {
 	 * Returns (new) LogGroup based on given id
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @param   string $id

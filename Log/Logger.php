@@ -53,7 +53,7 @@ class Logger implements LoggerInterface {
 	 * Clear messages list
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 */
 	public function clear() {
@@ -65,7 +65,7 @@ class Logger implements LoggerInterface {
 	 * Return if messages exist or not
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @return  boolean

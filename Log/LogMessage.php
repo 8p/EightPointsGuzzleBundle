@@ -92,7 +92,7 @@ class LogMessage {
 	 * Set Log Request
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @param   LogRequest $value
@@ -106,7 +106,7 @@ class LogMessage {
 	 * Get Log Request
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @return  LogRequest
@@ -120,7 +120,7 @@ class LogMessage {
 	 * Set Log Response
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @param   LogResponse $value
@@ -134,7 +134,7 @@ class LogMessage {
 	 * Get Log Response
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @return  LogResponse

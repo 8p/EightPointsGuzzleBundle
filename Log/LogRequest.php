@@ -10,7 +10,7 @@ use       GuzzleHttp\Message\RequestInterface;
  * @package EightPoints\Bundle\GuzzleBundle\Log
  * @author  Florian Preusner
  *
- * @version 2.2
+ * @version 2.1
  * @since   2015-05
  */
 class LogRequest {
@@ -24,7 +24,7 @@ class LogRequest {
 	 * Construct
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @param   RequestInterface $request
@@ -38,7 +38,7 @@ class LogRequest {
 	 * Save data
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @param   RequestInterface $request
@@ -52,7 +52,7 @@ class LogRequest {
 	 * Set request host
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @param   string $value
@@ -66,7 +66,7 @@ class LogRequest {
 	 * Return host
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @return  string

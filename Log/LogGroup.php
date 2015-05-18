@@ -10,7 +10,7 @@ use       Symfony\Component\HttpFoundation\Request;
  * @package EightPoints\Bundle\GuzzleBundle\Log
  * @author  Florian Preusner
  *
- * @version 2.2
+ * @version 2.1
  * @since   2015-05
  */
 class LogGroup {
@@ -29,7 +29,7 @@ class LogGroup {
 	 * Set Symfony Request
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @param   Request $value
@@ -43,7 +43,7 @@ class LogGroup {
 	 * Get Symfony Request
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @return  Request
@@ -57,7 +57,7 @@ class LogGroup {
 	 * Set Log Messages
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @param   array $value
@@ -71,7 +71,7 @@ class LogGroup {
 	 * Return Log Messages
 	 *
 	 * @author  Florian Preusner
-	 * @version 2.2
+	 * @version 2.1
 	 * @since   2015-05
 	 *
 	 * @return  array

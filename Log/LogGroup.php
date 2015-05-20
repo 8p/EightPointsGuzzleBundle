@@ -21,37 +21,37 @@ class LogGroup {
     protected $messages = array();
 
     /**
-     * @var Request
+     * @var string
      */
-    protected $request;
+    protected $requestName;
 
 	/**
-	 * Set Symfony Request
+	 * Set Request Name
 	 *
 	 * @author  Florian Preusner
 	 * @version 2.1
 	 * @since   2015-05
 	 *
-	 * @param   Request $value
+	 * @param   string $value
 	 */
-    public function setRequest(Request $value) {
+    public function setRequestName($value) {
 
-		$this->request = $value;
-	} // end: setRequest()
+		$this->requestName = $value;
+	} // end: setRequestName()
 
 	/**
-	 * Get Symfony Request
+	 * Get Request Name
 	 *
 	 * @author  Florian Preusner
 	 * @version 2.1
 	 * @since   2015-05
 	 *
-	 * @return  Request
+	 * @return  string
 	 */
-	public function getRequest() {
+	public function getRequestName() {
 
-		return $this->request;
-	} // end: getRequest()
+		return $this->requestName;
+	} // end: getRequestName()
 
 	/**
 	 * Set Log Messages

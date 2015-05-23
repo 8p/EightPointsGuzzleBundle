@@ -1,0 +1,93 @@
+{% if not collector.logs %}
+    <p>
+        <em>No calls</em>
+    </p>
+{% else %}
+
+    {% for group in collector.logs %}
+
+        <h3>{{ group.requestName }}</h3>
+
+
+            {% for i, message in group.messages %}
+
+                <h4>Basic</h4>
+                <table>
+                    <tr>
+                        <th>Level</th>
+                        <td>{{ message.level }}</td>
+                    </tr>
+                    <tr>
+                        <th>Message</th>
+                        <td>{{ message.message }}</td>
+                    </tr>
+                </table>
+
+                <h4>Request</h4>
+
+                <table>
+                    <tr>
+                        <th>Host (Port)</th>
+                        <td>{{ message.request.host ~ ":" ~ message.request.port }}</td>
+                    </tr>
+                    <tr>
+                        <th>Url</th>
+                        <td>{{ message.request.url }}</td>
+                    </tr>
+                    <tr>
+                        <th>Path</th>
+                        <td>{{ message.request.path }}</td>
+                    </tr>
+                    <tr>
+                        <th>Scheme</th>
+                        <td>{{ message.request.scheme }}</td>
+                    </tr>
+                    <tr>
+                        <th>Headers</th>
+                        <td>{{ dump(message.request.headers) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Protocol Version</th>
+                        <td>{{ message.request.protocolVersion }}</td>
+                    </tr>
+                    <tr>
+                        <th>Method</th>
+                        <td>{{ message.request.method }}</td>
+                    </tr>
+                    <tr>
+                        <th>Body</th>
+                        <td>{{ dump(message.request.body) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Resource</th>
+                        <td>{{ message.request.resource }}</td>
+                    </tr>
+                </table>
+
+                <h4>Response</h4>
+
+                <table>
+                    <tr>
+                        <th>HTTP Status Code</th>
+                        <td>{{ message.response.statusCode }}</td>
+                    </tr>
+                    <tr>
+                        <th>Body</th>
+                        <td>{{ dump(message.response.body) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Headers</th>
+                        <td>{{ dump(message.response.headers) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Protocol Version</th>
+                        <td>{{ message.response.protocolVersion }}</td>
+                    </tr>
+                </table>
+            {% else %}
+
+                <li>No Calls</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endif %}

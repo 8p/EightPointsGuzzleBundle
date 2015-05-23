@@ -135,6 +135,33 @@ class HttpDataCollector extends DataCollector {
 	} // end: getCallCount()
 
 	/**
+	 * Get Error Count
+	 *
+	 * @author  Florian Preusner
+	 * @version 2.2
+	 * @since   2015-05
+	 *
+	 * @return  integer
+	 */
+	public function getErrorCount() {
+
+		return 0; //@todo
+	} // end: getErrorCount()
+
+	/**
+	 * Get total time of all requests
+	 *
+	 * @author Florian Preusner
+	 * @since  2015-05
+	 *
+	 * @return float
+	 */
+	public function getTotalTime() {
+
+		return 0; //@todo
+	} // end: getTotalTime()
+
+	/**
 	 * Returns (new) LogGroup based on given id
 	 *
 	 * @author  Florian Preusner

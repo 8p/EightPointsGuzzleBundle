@@ -88,7 +88,7 @@ class LogRequest {
 	 *
 	 * @param   RequestInterface $request
 	 */
-	public function save(RequestInterface $request) {
+	protected function save(RequestInterface $request) {
 
 		$this->setHost($request->getHost());
 		$this->setPort($request->getPort());

@@ -38,13 +38,21 @@ class Logger implements LoggerInterface {
      */
     public function log($level, $message, array $context = array()) {
 
-		$request  = new LogRequest($context['request']);
-		$response = new LogResponse($context['response']);
-
         $message = new LogMessage($message);
 		$message->setLevel($level);
-		$message->setRequest($request);
-		$message->setResponse($response);
+
+		if($context) {
+
+			if(isset($context['request'])) {
+
+				$message->setRequest(new LogRequest($context['request']));
+			}
+
+			if(isset($context['response'])) {
+
+				$message->setResponse(new LogResponse($context['response']));
+			}
+		}
 
         $this->messages[] = $message;
     } // end: log()
@@ -72,7 +80,7 @@ class Logger implements LoggerInterface {
 	 */
 	public function hasMessages() {
 
-		return ($this->getMessages());
+		return $this->getMessages() ? true : false;
 	} // end: hasMessages()
 
     /**

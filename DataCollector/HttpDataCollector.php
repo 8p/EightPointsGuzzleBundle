@@ -41,7 +41,7 @@ class HttpDataCollector extends DataCollector {
         $this->logger = $logger;
         $this->data   = array(
             'logs'      => array(),
-			'callCount' => 0,
+            'callCount' => 0,
         );
     } // end: __construct()
 
@@ -55,15 +55,15 @@ class HttpDataCollector extends DataCollector {
     public function collect(Request $request, Response $response, \Exception $exception = null) {
 
         $messages = $this->logger->getMessages();
-		$requestId = spl_object_hash($request); // @todo returns always same id?
-		$requestId = $request->getUri();
+        $requestId = spl_object_hash($request); // @todo returns always same id?
+        $requestId = $request->getUri();
 
-		// clear log to have only messages related to symfony request context
-		$this->logger->clear();
+        // clear log to have only messages related to symfony request context
+        $this->logger->clear();
 
-		$logGroup = $this->getLogGroup($requestId);
-		$logGroup->setRequestName($request->getPathInfo());
-		$logGroup->setMessages($messages);
+        $logGroup = $this->getLogGroup($requestId);
+        $logGroup->setRequestName($request->getPathInfo());
+        $logGroup->setMessages($messages);
     } // end: collect()
 
     /**
@@ -94,91 +94,90 @@ class HttpDataCollector extends DataCollector {
         return $logs;
     } // end: getLogs()
 
-	/**
-	 * Get all messages
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  array
-	 */
-	public function getMessages() {
+    /**
+     * Get all messages
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  array
+     */
+    public function getMessages() {
 
-		$messages = array();
+        $messages = array();
 
-		foreach($this->getLogs() as $log) {
+        foreach($this->getLogs() as $log) {
 
-			foreach($log->getMessages() as $message) {
+            foreach($log->getMessages() as $message) {
 
-				$messages[] = $message;
-			}
-		}
+                $messages[] = $message;
+            }
+        }
 
-		return $messages;
-	} // end: getMessages()
+        return $messages;
+    } // end: getMessages()
 
-	/**
-	 * Return amount of http calls
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  integer
-	 */
-	public function getCallCount() {
+    /**
+     * Return amount of http calls
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  integer
+     */
+    public function getCallCount() {
 
-		$callCount = count($this->getMessages());
+        $callCount = count($this->getMessages());
 
-		return $callCount;
-	} // end: getCallCount()
+        return $callCount;
+    } // end: getCallCount()
 
-	/**
-	 * Get Error Count
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.2
-	 * @since   2015-05
-	 *
-	 * @return  integer
-	 */
-	public function getErrorCount() {
+    /**
+     * Get Error Count
+     *
+     * @author  Florian Preusner
+     * @version 2.2
+     * @since   2015-05
+     *
+     * @return  integer
+     */
+    public function getErrorCount() {
 
-		return 0; //@todo
-	} // end: getErrorCount()
+        return 0; //@todo
+    } // end: getErrorCount()
 
-	/**
-	 * Get total time of all requests
-	 *
-	 * @author Florian Preusner
-	 * @since  2015-05
-	 *
-	 * @return float
-	 */
-	public function getTotalTime() {
+    /**
+     * Get total time of all requests
+     *
+     * @author Florian Preusner
+     * @since  2015-05
+     *
+     * @return float
+     */
+    public function getTotalTime() {
 
-		return 0; //@todo
-	} // end: getTotalTime()
+        return 0; //@todo
+    } // end: getTotalTime()
 
-	/**
-	 * Returns (new) LogGroup based on given id
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $id
-	 *
-	 * @return  LogGroup
-	 */
-	protected function getLogGroup($id) {
+    /**
+     * Returns (new) LogGroup based on given id
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $id
+     * @return  LogGroup
+     */
+    protected function getLogGroup($id) {
 
-		if(!isset($this->data['logs'][$id])) {
+        if(!isset($this->data['logs'][$id])) {
 
-			$this->data['logs'][$id] = new LogGroup();
-		}
+            $this->data['logs'][$id] = new LogGroup();
+        }
 
-		return $this->data['logs'][$id];
-	} // end: getLogGroup()
+        return $this->data['logs'][$id];
+    } // end: getLogGroup()
 } // end: HttpDataCollector

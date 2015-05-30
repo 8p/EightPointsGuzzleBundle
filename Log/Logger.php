@@ -39,49 +39,49 @@ class Logger implements LoggerInterface {
     public function log($level, $message, array $context = array()) {
 
         $message = new LogMessage($message);
-		$message->setLevel($level);
+        $message->setLevel($level);
 
-		if($context) {
+        if($context) {
 
-			if(isset($context['request'])) {
+            if(isset($context['request'])) {
 
-				$message->setRequest(new LogRequest($context['request']));
-			}
+                $message->setRequest(new LogRequest( $context['request']));
+            }
 
-			if(isset($context['response'])) {
+            if(isset($context['response'])) {
 
-				$message->setResponse(new LogResponse($context['response']));
-			}
-		}
+                $message->setResponse(new LogResponse($context['response']));
+            }
+        }
 
         $this->messages[] = $message;
     } // end: log()
 
-	/**
-	 * Clear messages list
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 */
-	public function clear() {
+    /**
+     * Clear messages list
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     */
+    public function clear() {
 
-		$this->messages = array();
-	} // end: clear()
+        $this->messages = array();
+    } // end: clear()
 
-	/**
-	 * Return if messages exist or not
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  boolean
-	 */
-	public function hasMessages() {
+    /**
+     * Return if messages exist or not
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  boolean
+     */
+    public function hasMessages() {
 
-		return $this->getMessages() ? true : false;
-	} // end: hasMessages()
+        return $this->getMessages() ? true : false;
+    } // end: hasMessages()
 
     /**
      * Return log messages

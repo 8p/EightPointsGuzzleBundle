@@ -15,166 +15,166 @@ use       GuzzleHttp\Message\ResponseInterface;
  */
 class LogResponse {
 
-	/**
-	 * @var integer
-	 */
-	protected $statusCode;
-
-	/**
-	 * @var string
-	 */
-	protected $body;
-
-	/**
-	 * @var array
-	 */
-	protected $headers = array();
-
-	/**
-	 * @var string
-	 */
-	protected $protocolVersion;
+    /**
+     * @var integer
+     */
+    protected $statusCode;
 
     /**
-	 * Construct
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   ResponseInterface $response
-	 */
+     * @var string
+     */
+    protected $body;
+
+    /**
+     * @var array
+     */
+    protected $headers = array();
+
+    /**
+     * @var string
+     */
+    protected $protocolVersion;
+
+    /**
+     * Construct
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   ResponseInterface $response
+     */
     public function __construct(ResponseInterface $response) {
 
         $this->save($response);
     } // end: __construct
 
-	/**
-	 * Save data
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   ResponseInterface $response
-	 */
-	public function save(ResponseInterface $response) {
+    /**
+     * Save data
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   ResponseInterface $response
+     */
+    public function save(ResponseInterface $response) {
 
-		$this->setStatusCode($response->getStatusCode());
-		$this->setBody($response->getBody());
-		$this->setHeaders($response->getHeaders());
-		$this->setProtocolVersion($response->getProtocolVersion());
-	} // end: save()
+        $this->setStatusCode($response->getStatusCode());
+        $this->setBody($response->getBody());
+        $this->setHeaders($response->getHeaders());
+        $this->setProtocolVersion($response->getProtocolVersion());
+    } // end: save()
 
-	/**
-	 * Return HTTP status code
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  integer
-	 */
-	public function getStatusCode() {
+    /**
+     * Return HTTP status code
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  integer
+     */
+    public function getStatusCode() {
 
-		return $this->statusCode;
-	} // end: getStatusCode()
+        return $this->statusCode;
+    } // end: getStatusCode()
 
-	/**
-	 * Set HTTP status code
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   integer $value
-	 */
-	public function setStatusCode($value) {
+    /**
+     * Set HTTP status code
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   integer $value
+     */
+    public function setStatusCode($value) {
 
-		$this->statusCode = $value;
-	} // end: setStatusCode()
+        $this->statusCode = $value;
+    } // end: setStatusCode()
 
-	/**
-	 * Return response body
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  string
-	 */
-	public function getBody() {
+    /**
+     * Return response body
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  string
+     */
+    public function getBody() {
 
-		return $this->body;
-	} // end: getBody()
+        return $this->body;
+    } // end: getBody()
 
-	/**
-	 * Set response body
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $value
-	 */
-	public function setBody($value) {
+    /**
+     * Set response body
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $value
+     */
+    public function setBody($value) {
 
-		$this->body = $value;
-	} // end: setBody()
+        $this->body = $value;
+    } // end: setBody()
 
-	/**
-	 * Return protocol version
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  string
-	 */
-	public function getProtocolVersion() {
+    /**
+     * Return protocol version
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  string
+     */
+    public function getProtocolVersion() {
 
-			return $this->protocolVersion;
-	} // end: getProtocolVersion()
+        return $this->protocolVersion;
+    } // end: getProtocolVersion()
 
-	/**
-	 * Set protocol version
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $value
-	 */
-	public function setProtocolVersion($value) {
+    /**
+     * Set protocol version
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $value
+     */
+    public function setProtocolVersion($value) {
 
-		$this->protocolVersion = $value;
-	} // end: setProtocolVersion()
+        $this->protocolVersion = $value;
+    } // end: setProtocolVersion()
 
-	/**
-	 * Return response headers
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  array
-	 */
-	public function getHeaders() {
+    /**
+     * Return response headers
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  array
+     */
+    public function getHeaders() {
 
-		return $this->headers;
-	} // end: getHeaders()
+        return $this->headers;
+    } // end: getHeaders()
 
-	/**
-	 * Set response headers
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   array $value
-	 */
-	public function setHeaders(array $value) {
+    /**
+     * Set response headers
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   array $value
+     */
+    public function setHeaders(array $value) {
 
-		$this->headers = $value;
-	} // end: setHeaders()
+        $this->headers = $value;
+    } // end: setHeaders()
 } // end: LogResponse

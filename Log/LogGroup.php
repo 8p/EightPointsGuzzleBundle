@@ -2,8 +2,6 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Log;
 
-use       Symfony\Component\HttpFoundation\Request;
-
 /**
  * Class LogGroup
  *
@@ -15,7 +13,7 @@ use       Symfony\Component\HttpFoundation\Request;
  */
 class LogGroup {
 
-	/**
+    /**
      * @var array
      */
     protected $messages = array();
@@ -25,59 +23,59 @@ class LogGroup {
      */
     protected $requestName;
 
-	/**
-	 * Set Request Name
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $value
-	 */
+    /**
+     * Set Request Name
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $value
+     */
     public function setRequestName($value) {
 
-		$this->requestName = $value;
-	} // end: setRequestName()
+        $this->requestName = $value;
+    } // end: setRequestName()
 
-	/**
-	 * Get Request Name
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  string
-	 */
-	public function getRequestName() {
+    /**
+     * Get Request Name
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  string
+     */
+    public function getRequestName() {
 
-		return $this->requestName;
-	} // end: getRequestName()
+        return $this->requestName;
+    } // end: getRequestName()
 
-	/**
-	 * Set Log Messages
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   array $value
-	 */
-	public function setMessages(array $value) {
+    /**
+     * Set Log Messages
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   array $value
+     */
+    public function setMessages(array $value) {
 
-		$this->messages = $value;
-	} // end: setMessages()
+        $this->messages = $value;
+    } // end: setMessages()
 
-	/**
-	 * Return Log Messages
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  array
-	 */
-	public function getMessages() {
+    /**
+     * Return Log Messages
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  array
+     */
+    public function getMessages() {
 
-		return $this->messages;
-	} // end: getMessages()
+        return $this->messages;
+    } // end: getMessages()
 } // end: LogGroup

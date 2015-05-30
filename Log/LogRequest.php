@@ -15,370 +15,370 @@ use       GuzzleHttp\Message\RequestInterface;
  */
 class LogRequest {
 
-	/**
-	 * @var string
-	 */
-	protected $host;
+    /**
+     * @var string
+     */
+    protected $host;
 
-	/**
-	 * @var integer
-	 */
-	protected $port;
+    /**
+     * @var integer
+     */
+    protected $port;
 
-	/**
-	 * @var string
-	 */
-	protected $url;
+    /**
+     * @var string
+     */
+    protected $url;
 
-	/**
-	 * @var string
-	 */
-	protected $path;
+    /**
+     * @var string
+     */
+    protected $path;
 
-	/**
-	 * @var string
-	 */
-	protected $scheme;
+    /**
+     * @var string
+     */
+    protected $scheme;
 
-	/**
-	 * @var array
-	 */
-	protected $headers = array();
+    /**
+     * @var array
+     */
+    protected $headers = array();
 
-	/**
-	 * @var string
-	 */
-	protected $protocolVersion;
+    /**
+     * @var string
+     */
+    protected $protocolVersion;
 
-	/**
-	 * @var string
-	 */
-	protected $method;
+    /**
+     * @var string
+     */
+    protected $method;
 
-	/**
-	 * @var string
-	 */
-	protected $body;
+    /**
+     * @var string
+     */
+    protected $body;
 
-	/**
-	 * @var string
-	 */
-	protected $resource;
+    /**
+     * @var string
+     */
+    protected $resource;
 
-	/**
-	 * Construct
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   RequestInterface $request
-	 */
+    /**
+     * Construct
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   RequestInterface $request
+     */
     public function __construct(RequestInterface $request) {
 
         $this->save($request);
     } // end: __construct
 
-	/**
-	 * Save data
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   RequestInterface $request
-	 */
-	protected function save(RequestInterface $request) {
+    /**
+     * Save data
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   RequestInterface $request
+     */
+    protected function save(RequestInterface $request) {
 
-		$this->setHost($request->getHost());
-		$this->setPort($request->getPort());
-		$this->setUrl($request->getUrl());
-		$this->setPath($request->getPath());
-		$this->setScheme($request->getScheme());
-		$this->setHeaders($request->getHeaders());
-		$this->setProtocolVersion($request->getProtocolVersion());
-		$this->setMethod($request->getMethod());
-		$this->setBody($request->getBody());
-		$this->setResource($request->getResource());
-	} // end: save()
+        $this->setHost($request->getHost());
+        $this->setPort($request->getPort());
+        $this->setUrl($request->getUrl());
+        $this->setPath($request->getPath());
+        $this->setScheme($request->getScheme());
+        $this->setHeaders($request->getHeaders());
+        $this->setProtocolVersion($request->getProtocolVersion());
+        $this->setMethod($request->getMethod());
+        $this->setBody($request->getBody());
+        $this->setResource($request->getResource());
+    } // end: save()
 
-	/**
-	 * Set request host
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $value
-	 */
-	public function setHost($value) {
+    /**
+     * Return host
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  string
+     */
+    public function getHost() {
 
-		$this->host = $value;
-	} // end: setHost()
+        return $this->host;
+    } // end: getHost()
 
-	/**
-	 * Return host
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  string
-	 */
-	public function getHost() {
+    /**
+     * Set request host
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $value
+     */
+    public function setHost($value) {
 
-		return $this->host;
-	} // end: getHost()
+        $this->host = $value;
+    } // end: setHost()
 
-	/**
-	 * Return port
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  integer
-	 */
-	public function getPort() {
+    /**
+     * Return port
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  integer
+     */
+    public function getPort() {
 
-		return $this->port;
-	} // end: getPort()
+        return $this->port;
+    } // end: getPort()
 
-	/**
-	 * Set port
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   integer $value
-	 */
-	public function setPort($value) {
+    /**
+     * Set port
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   integer $value
+     */
+    public function setPort($value) {
 
-		$this->port = $value;
-	} // end: setPort()
+        $this->port = $value;
+    } // end: setPort()
 
-	/**
-	 * Return url
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  string
-	 */
-	public function getUrl() {
+    /**
+     * Return url
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  string
+     */
+    public function getUrl() {
 
-		return $this->url;
-	} // end: getUrl()
+        return $this->url;
+    } // end: getUrl()
 
-	/**
-	 * Set url
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $value
-	 */
-	public function setUrl($value) {
+    /**
+     * Set url
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $value
+     */
+    public function setUrl($value) {
 
-		$this->url = $value;
-	} // end: setUrl()
+        $this->url = $value;
+    } // end: setUrl()
 
-	/**
-	 * Return path
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  string
-	 */
-	public function getPath() {
+    /**
+     * Return path
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  string
+     */
+    public function getPath() {
 
-		return $this->path;
-	} // end: getPath()
+        return $this->path;
+    } // end: getPath()
 
-	/**
-	 * Set path
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $value
-	 */
-	public function setPath($value) {
+    /**
+     * Set path
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $value
+     */
+    public function setPath($value) {
 
-		$this->path = $value;
-	} // end: setPath()
+        $this->path = $value;
+    } // end: setPath()
 
-	/**
-	 * Return scheme
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  string
-	 */
-	public function getScheme() {
+    /**
+     * Return scheme
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  string
+     */
+    public function getScheme() {
 
-		return $this->scheme;
-	} // end: getScheme()
+        return $this->scheme;
+    } // end: getScheme()
 
-	/**
-	 * Set scheme
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $value
-	 */
-	public function setScheme($value) {
+    /**
+     * Set scheme
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $value
+     */
+    public function setScheme($value) {
 
-		$this->scheme = $value;
-	} // end: setScheme()
+        $this->scheme = $value;
+    } // end: setScheme()
 
-	/**
-	 * Return headers
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return array
-	 */
-	public function getHeaders() {
+    /**
+     * Return headers
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return array
+     */
+    public function getHeaders() {
 
-		return $this->headers;
-	} // end: getHeaders()
+        return $this->headers;
+    } // end: getHeaders()
 
-	/**
-	 * Set headers
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   array $value
-	 */
-	public function setHeaders(array $value) {
+    /**
+     * Set headers
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   array $value
+     */
+    public function setHeaders(array $value) {
 
-		$this->headers = $value;
-	} // end: setHeaders()
+        $this->headers = $value;
+    } // end: setHeaders()
 
-	/**
-	 * Return protocol version
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  string
-	 */
-	public function getProtocolVersion() {
+    /**
+     * Return protocol version
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  string
+     */
+    public function getProtocolVersion() {
 
-		return $this->protocolVersion;
-	} // end: getProtocolVersion()
+        return $this->protocolVersion;
+    } // end: getProtocolVersion()
 
-	/**
-	 * Set protocol version
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $value
-	 */
-	public function setProtocolVersion($value) {
+    /**
+     * Set protocol version
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $value
+     */
+    public function setProtocolVersion($value) {
 
-		$this->protocolVersion = $value;
-	} // end: setProtocolVersion()
+        $this->protocolVersion = $value;
+    } // end: setProtocolVersion()
 
-	/**
-	 * Return method
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  string
-	 */
-	public function getMethod() {
+    /**
+     * Return method
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  string
+     */
+    public function getMethod() {
 
-		return $this->method;
-	} // end: getMethod()
+        return $this->method;
+    } // end: getMethod()
 
-	/**
-	 * Set method
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $value
-	 */
-	public function setMethod($value) {
+    /**
+     * Set method
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $value
+     */
+    public function setMethod($value) {
 
-		$this->method = $value;
-	} // end: setMethod()
+        $this->method = $value;
+    } // end: setMethod()
 
-	/**
-	 * Return body
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  string
-	 */
-	public function getBody() {
+    /**
+     * Return body
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  string
+     */
+    public function getBody() {
 
-		return $this->body;
-	} // end: getBody()
+        return $this->body;
+    } // end: getBody()
 
-	/**
-	 * Set body
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $value
-	 */
-	public function setBody($value) {
+    /**
+     * Set body
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $value
+     */
+    public function setBody($value) {
 
-		$this->body = $value;
-	} // end: setBody()
+        $this->body = $value;
+    } // end: setBody()
 
-	/**
-	 * Return resource
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @return  string
-	 */
-	public function getResource() {
+    /**
+     * Return resource
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @return  string
+     */
+    public function getResource() {
 
-		return $this->resource;
-	} // end: getResource()
+        return $this->resource;
+    } // end: getResource()
 
-	/**
-	 * Set resource
-	 *
-	 * @author  Florian Preusner
-	 * @version 2.1
-	 * @since   2015-05
-	 *
-	 * @param   string $value
-	 */
-	public function setResource($value) {
+    /**
+     * Set resource
+     *
+     * @author  Florian Preusner
+     * @version 2.1
+     * @since   2015-05
+     *
+     * @param   string $value
+     */
+    public function setResource($value) {
 
-		$this->resource = $value;
-	} // end: setResource()
+        $this->resource = $value;
+    } // end: setResource()
 } // end: LogRequest

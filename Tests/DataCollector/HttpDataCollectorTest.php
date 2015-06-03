@@ -40,7 +40,7 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase {
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::construct
+     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::construct
      */
     public function testConstruct() {
 
@@ -61,7 +61,7 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase {
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::collect
+     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::collect
      */
     public function testCollect() {
 

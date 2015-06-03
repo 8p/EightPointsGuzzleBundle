@@ -39,8 +39,6 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase {
      * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
-     *
-     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::construct
      */
     public function testConstruct() {
 

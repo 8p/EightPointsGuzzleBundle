@@ -55,7 +55,6 @@ class HttpDataCollector extends DataCollector {
     public function collect(Request $request, Response $response, \Exception $exception = null) {
 
         $messages = $this->logger->getMessages();
-        $requestId = spl_object_hash($request); // @todo returns always same id?
         $requestId = $request->getUri();
 
         // clear log to have only messages related to symfony request context

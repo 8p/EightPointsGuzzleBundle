@@ -16,7 +16,7 @@ use       EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
 class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase {
 
     /**
-     * @var
+     * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger
      */
     protected $logger;
 

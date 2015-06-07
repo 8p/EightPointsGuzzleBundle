@@ -21,6 +21,16 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
     protected $response;
 
     /**
+     * @var array
+     */
+    protected $headers = [
+        'Date'          => ['Sun, 07 Jun 2015 16:32:50 GMT'],
+        'Expires'       => ['-1'],
+        'Cache-Control' => ['private, max-age=0'],
+        'Content-Type'  => ['text/html; charset=ISO-8859-1']
+    ];
+
+    /**
      * SetUp: before executing each test function
      *
      * @author  Florian Preusner
@@ -34,7 +44,7 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
                                ->getMock();
 
         $this->response->method('getStatusCode')->willReturn(200);
-        $this->response->method('getHeaders')->willReturn(['Content-Length' => 2435]);
+        $this->response->method('getHeaders')->willReturn($this->headers);
         $this->response->method('getBody')->willReturn('test body');
         $this->response->method('getProtocolVersion')->willReturn('1.1');
     } // end: setUp()
@@ -46,6 +56,7 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
      * @version 2.1
      * @since   2015-06
      *
+     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getStatusCode
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setStatusCode
@@ -64,6 +75,7 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
      * @version 2.1
      * @since   2015-06
      *
+     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getBody
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setBody
@@ -82,6 +94,7 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
      * @version 2.1
      * @since   2015-06
      *
+     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getProtocolVersion
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setProtocolVersion
@@ -100,6 +113,7 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
      * @version 2.1
      * @since   2015-06
      *
+     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getHeaders
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setHeaders
@@ -107,8 +121,7 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
     public function testHeaders() {
 
         $response = new LogResponse($this->response);
-        $headers  = ['Content-Length' => 2435];
 
-        $this->assertSame($headers, $response->getHeaders());
+        $this->assertSame($this->headers, $response->getHeaders());
     } // end: testProtocolVersion()
 } // end: LogResponseTest

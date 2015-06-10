@@ -8,7 +8,7 @@ It comes with a WSSE Auth Plugin that can be used optionally.
 GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
 ## Requirements
- - PHP 5.4 or above
+ - PHP 5.5.0 or above
  - [Guzzle PHP Framework][1] (included by composer)
  - [WSSE Auth Plugin][3] (included by composer)
 

@@ -54,7 +54,7 @@ class HttpDataCollector extends DataCollector {
      */
     public function collect(Request $request, Response $response, \Exception $exception = null) {
 
-        $messages = $this->logger->getMessages();
+        $messages  = $this->logger->getMessages();
         $requestId = $request->getUri();
 
         // clear log to have only messages related to symfony request context

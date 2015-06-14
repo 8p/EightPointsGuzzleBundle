@@ -2,7 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Log;
 
-use       GuzzleHttp\Message\RequestInterface;
+use       Psr\Http\Message\RequestInterface;
 
 /**
  * Class LogRequest
@@ -90,16 +90,17 @@ class LogRequest {
      */
     protected function save(RequestInterface $request) {
 
-        $this->setHost($request->getHost());
-        $this->setPort($request->getPort());
-        $this->setUrl($request->getUrl());
-        $this->setPath($request->getPath());
-        $this->setScheme($request->getScheme());
+        $uri = $request->getUri();
+
+        $this->setHost($uri->getHost());
+        $this->setPort($uri->getPort());
+        $this->setUrl((string) $uri);
+        $this->setPath($uri->getPath());
+        $this->setScheme($uri->getScheme());
         $this->setHeaders($request->getHeaders());
         $this->setProtocolVersion($request->getProtocolVersion());
         $this->setMethod($request->getMethod());
         $this->setBody($request->getBody());
-        $this->setResource($request->getResource());
     } // end: save()
 
     /**

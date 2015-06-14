@@ -16,7 +16,7 @@ use       EightPoints\Bundle\GuzzleBundle\Log\LogResponse;
 class LogResponseTest extends \PHPUnit_Framework_TestCase {
 
     /**
-     * @var \GuzzleHttp\Message\Response
+     * @var \GuzzleHttp\Psr7\Response
      */
     protected $response;
 
@@ -39,7 +39,7 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
      */
     public function setUp() {
 
-        $this->response = $this->getMockBuilder('GuzzleHttp\Message\Response')
+        $this->response = $this->getMockBuilder('GuzzleHttp\Psr7\Response')
                                ->disableOriginalConstructor()
                                ->getMock();
 

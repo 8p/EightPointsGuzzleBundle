@@ -26,10 +26,9 @@
     }
   ],
   "require": {
-    "php":                            ">=5.4.0",
-    "guzzlehttp/guzzle":              "~5.0",
-    "eightpoints/guzzle-wsse-plugin": "~2.0",
-    "guzzlehttp/log-subscriber":      "~1.0"
+    "php":                            ">=5.5.0",
+    "guzzlehttp/guzzle":              "~6.0",
+    "eightpoints/guzzle-wsse-plugin": "~2.0"
   },
   "target-dir": "EightPoints/Bundle/GuzzleBundle",
   "autoload": {

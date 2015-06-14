@@ -46,12 +46,12 @@ class GuzzleExtension extends Extension {
 
         if($config['headers']) {
 
-            $this->setUpHeaders($config['headers'], $container);
+//            $this->setUpHeaders($config['headers'], $container);//@todo
         }
 
         if(isset($config['plugin']['wsse'])) {
 
-            $this->setUpWsse($config['plugin']['wsse'], $container);
+//            $this->setUpWsse($config['plugin']['wsse'], $container);//@todo
         }
     } // end: load
 

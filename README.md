@@ -2,13 +2,13 @@
 [![knpbundles.com](http://knpbundles.com/8p/GuzzleBundle/badge)](http://knpbundles.com/8p/GuzzleBundle)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590/big.png)](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590)
 
-This bundle integrates [Guzzle 5.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
+This bundle integrates [Guzzle 6.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
 It comes with a WSSE Auth Plugin that can be used optionally.
 
 GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
 ## Requirements
- - PHP 5.4 or above
+ - PHP 5.5 or above
  - [Guzzle PHP Framework][1] (included by composer)
  - [WSSE Auth Plugin][3] (included by composer)
 

@@ -5,11 +5,15 @@
 
     <parameters>
         <parameter key="guzzle.http_client.class">GuzzleHttp\Client</parameter>
-        <parameter key="guzzle.emitter.class">GuzzleHttp\Event\Emitter</parameter>
-        <parameter key="guzzle.plugin.header.class">EightPoints\Bundle\GuzzleBundle\EventListener\HeaderSubscriber</parameter>
-        <parameter key="guzzle.plugin.wsse.class">EightPoints\Guzzle\Plugin\WsseAuthPlugin</parameter>
-        <parameter key="guzzle.data_collector.class">EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector</parameter>
-        <parameter key="guzzle.logger.class">EightPoints\Bundle\GuzzleBundle\Log\Logger</parameter>
+		<parameter key="guzzle.middleware.class">GuzzleHttp\Middleware</parameter>
+		<parameter key="guzzle.formatter.class">GuzzleHttp\MessageFormatter</parameter>
+
+        <parameter key="guzzle_bundle.plugin.header.class">EightPoints\Bundle\GuzzleBundle\EventListener\HeaderSubscriber</parameter>
+        <parameter key="guzzle_bundle.plugin.wsse.class">EightPoints\Guzzle\Plugin\WsseAuthPlugin</parameter>
+        <parameter key="guzzle_bundle.data_collector.class">EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector</parameter>
+        <parameter key="guzzle_bundle.logger.class">EightPoints\Bundle\GuzzleBundle\Log\Logger</parameter>
+		<parameter key="guzzle_bundle.middleware.class">EightPoints\Bundle\GuzzleBundle\Handler\Middleware</parameter>
+
 
         <parameter key="guzzle.plugin.header.headers" type="collection" />
         <parameter key="guzzle.plugin.wsse.username" />
@@ -17,39 +21,49 @@
     </parameters>
 
     <services>
+		<!-- Guzzle Client -->
         <service id="guzzle.client" class="%guzzle.http_client.class%">
             <argument type="collection">
-                <argument key="base_url" type="string" id="guzzle.base_url">%guzzle.base_url%</argument>
-                <argument key="emitter" type="service" id="guzzle.emitter" />
+                <argument key="base_uri" type="string" id="guzzle.base_url">%guzzle.base_url%</argument>
+                <argument key="handler" type="service" id="guzzle.handler" />
             </argument>
         </service>
 
-        <!-- Events -->
-        <service id="guzzle.emitter" class="%guzzle.emitter.class%">
-            <call method="attach">
-                <argument type="service" id="guzzle.logger.subscriber" />
+		<!-- Formatter -->
+		<service id="guzzle.formatter" class="%guzzle.formatter.class%" />
+
+		<!-- Middleware / Events -->
+		<service id="guzzle_bundle.middleware" class="%guzzle_bundle.middleware.class%">
+            <argument type="service" id="guzzle_bundle.logger" />
+			<argument type="service" id="guzzle.formatter" />
+        </service>
+
+		<!-- Handler -->
+		<service id="guzzle.handler" class="GuzzleHttp\HandlerStack">
+			<factory class="GuzzleHttp\HandlerStack" method="create" />
+            <call method="push">
+                <argument type="expression">service('guzzle_bundle.middleware').log()</argument>
             </call>
         </service>
 
         <!-- HTTP Header Plugin -->
-        <service id="guzzle.plugin.header" class="%guzzle.plugin.header.class%">
+        <service id="guzzle_bundle.plugin.header" class="%guzzle_bundle.plugin.header.class%">
             <argument id="guzzle.plugin.header.headers">%guzzle.plugin.header.headers%</argument>
         </service>
 
         <!-- WSSE Plugin -->
-        <service id="guzzle.plugin.wsse" class="%guzzle.plugin.wsse.class%">
+        <service id="guzzle_bundle.plugin.wsse" class="%guzzle_bundle.plugin.wsse.class%">
             <argument type="string" id="guzzle.plugin.wsse.username">%guzzle.plugin.wsse.username%</argument>
             <argument type="string" id="guzzle.plugin.wsse.password">%guzzle.plugin.wsse.password%</argument>
         </service>
 
         <!-- Logger -->
-        <service id="guzzle.logger" class="%guzzle.logger.class%"></service>
-        <service id="guzzle.logger.subscriber" class="GuzzleHttp\Subscriber\Log\LogSubscriber">
-            <argument type="service" id="guzzle.logger" />
-        </service>
-        <service id="guzzle.data_collector" class="%guzzle.data_collector.class%" public="false">
+        <service id="guzzle_bundle.logger" class="%guzzle_bundle.logger.class%"></service>
+
+		<!-- Data Collector -->
+        <service id="guzzle_bundle.data_collector" class="%guzzle_bundle.data_collector.class%" public="false">
             <tag name="data_collector" template="GuzzleBundle::debug" id="guzzle" />
-            <argument type="service" id="guzzle.logger" />
+            <argument type="service" id="guzzle_bundle.logger" />
         </service>
     </services>
 </container>

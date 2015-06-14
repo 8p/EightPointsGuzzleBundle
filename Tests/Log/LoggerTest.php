@@ -81,11 +81,16 @@ class LoggerTest extends \PHPUnit_Framework_TestCase {
             $this->assertNull($message->getResponse());
         }
 
-        $requestMock = $this->getMockBuilder('GuzzleHttp\Message\Request')
+        $uriMock = $this->getMockBuilder('GuzzleHttp\Psr7\Uri')
+                            ->disableOriginalConstructor()
+                            ->getMock();
+
+        $requestMock = $this->getMockBuilder('GuzzleHttp\Psr7\Request')
                             ->disableOriginalConstructor()
                             ->getMock();
 
         $requestMock->method('getHeaders')->willReturn([]);
+        $requestMock->method('getUri')->willReturn($uriMock);
 
         $logger->log('info', 'info message', ['request' => $requestMock]);
 

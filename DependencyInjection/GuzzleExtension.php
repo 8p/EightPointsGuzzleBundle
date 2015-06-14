@@ -47,10 +47,12 @@ class GuzzleExtension extends Extension {
         $container->setParameter('guzzle.plugin.header.headers', $config['headers']);
 
         // WSSE
-        if(isset($config['plugin']['wsse']) && $wsse = $config['plugin']['wsse']) {
+        if(isset($config['plugin']['wsse'])
+            && $username = $config['plugin']['wsse']['username']
+            && $password = $config['plugin']['wsse']['password']) {
 
-            $container->setParameter('guzzle.plugin.wsse.username', $wsse['username']);
-            $container->setParameter('guzzle.plugin.wsse.password', $wsse['password']);
+            $container->setParameter('guzzle.plugin.wsse.username', $username);
+            $container->setParameter('guzzle.plugin.wsse.password', $password);
 
             $container->getDefinition('guzzle.handler')
                       ->addMethodCall('push', array(new Expression('service("guzzle_bundle.middleware.wsse").attach()')));

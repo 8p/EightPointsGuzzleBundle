@@ -8,12 +8,11 @@
 		<parameter key="guzzle.middleware.class">GuzzleHttp\Middleware</parameter>
 		<parameter key="guzzle.formatter.class">GuzzleHttp\MessageFormatter</parameter>
 
-        <parameter key="guzzle_bundle.plugin.header.class">EightPoints\Bundle\GuzzleBundle\EventListener\HeaderSubscriber</parameter>
         <parameter key="guzzle_bundle.plugin.wsse.class">EightPoints\Guzzle\Plugin\WsseAuthPlugin</parameter>
         <parameter key="guzzle_bundle.data_collector.class">EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector</parameter>
         <parameter key="guzzle_bundle.logger.class">EightPoints\Bundle\GuzzleBundle\Log\Logger</parameter>
-		<parameter key="guzzle_bundle.middleware.class">EightPoints\Bundle\GuzzleBundle\Handler\Middleware</parameter>
-
+		<parameter key="guzzle_bundle.middleware.log.class">EightPoints\Bundle\GuzzleBundle\Middleware\LogMiddleware</parameter>
+		<parameter key="guzzle_bundle.middleware.request_header.class">EightPoints\Bundle\GuzzleBundle\Middleware\RequestHeaderMiddleware</parameter>
 
         <parameter key="guzzle.plugin.header.headers" type="collection" />
         <parameter key="guzzle.plugin.wsse.username" />
@@ -29,27 +28,33 @@
             </argument>
         </service>
 
+
 		<!-- Formatter -->
 		<service id="guzzle.formatter" class="%guzzle.formatter.class%" />
 
+
 		<!-- Middleware / Events -->
-		<service id="guzzle_bundle.middleware" class="%guzzle_bundle.middleware.class%">
+		<service id="guzzle_bundle.middleware.log" class="%guzzle_bundle.middleware.log.class%">
             <argument type="service" id="guzzle_bundle.logger" />
 			<argument type="service" id="guzzle.formatter" />
         </service>
 
+		<service id="guzzle_bundle.middleware.request_header" class="%guzzle_bundle.middleware.request_header.class%">
+            <argument id="guzzle.plugin.header.headers">%guzzle.plugin.header.headers%</argument>
+        </service>
+
+
 		<!-- Handler -->
 		<service id="guzzle.handler" class="GuzzleHttp\HandlerStack">
 			<factory class="GuzzleHttp\HandlerStack" method="create" />
+			<call method="push">
+                <argument type="expression">service('guzzle_bundle.middleware.request_header').attach()</argument>
+            </call>
             <call method="push">
-                <argument type="expression">service('guzzle_bundle.middleware').log()</argument>
+                <argument type="expression">service('guzzle_bundle.middleware.log').log()</argument>
             </call>
         </service>
 
-        <!-- HTTP Header Plugin -->
-        <service id="guzzle_bundle.plugin.header" class="%guzzle_bundle.plugin.header.class%">
-            <argument id="guzzle.plugin.header.headers">%guzzle.plugin.header.headers%</argument>
-        </service>
 
         <!-- WSSE Plugin -->
         <service id="guzzle_bundle.plugin.wsse" class="%guzzle_bundle.plugin.wsse.class%">
@@ -57,8 +62,10 @@
             <argument type="string" id="guzzle.plugin.wsse.password">%guzzle.plugin.wsse.password%</argument>
         </service>
 
+
         <!-- Logger -->
         <service id="guzzle_bundle.logger" class="%guzzle_bundle.logger.class%"></service>
+
 
 		<!-- Data Collector -->
         <service id="guzzle_bundle.data_collector" class="%guzzle_bundle.data_collector.class%" public="false">

@@ -43,37 +43,13 @@ class GuzzleExtension extends Extension {
         $config        = $processor->processConfiguration($configuration, $configs);
 
         $container->setParameter('guzzle.base_url', $config['base_url']);
-
-        if($config['headers']) {
-
-//            $this->setUpHeaders($config['headers'], $container);//@todo
-        }
+        $container->setParameter('guzzle.plugin.header.headers', $config['headers']);
 
         if(isset($config['plugin']['wsse'])) {
 
-//            $this->setUpWsse($config['plugin']['wsse'], $container);//@todo
+//            $this->setUpWsse($config['plugin']['wsse'], $container);
         }
     } // end: load
-
-    /**
-     * Set up HTTP headers
-     *
-     * @author  Florian Preusner
-     * @version 2.0
-     * @since   2013-10
-     *
-     * @param   array            $headers
-     * @param   ContainerBuilder $container
-     *
-     * @return  void
-     */
-    protected function setUpHeaders(array $headers, ContainerBuilder $container) {
-
-        $container->setParameter('guzzle.plugin.header.headers', $headers);
-
-        $container->getDefinition('guzzle.emitter')
-                  ->addMethodCall('attach', array($container->getDefinition('guzzle.plugin.header')));
-    } // end: setUpHeaders
 
     /**
      * Set up WSSE settings

@@ -1,20 +1,19 @@
 <?php
 
-namespace EightPoints\Bundle\GuzzleBundle\EventListener;
+namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
-use       GuzzleHttp\Event\BeforeEvent,
-          GuzzleHttp\Event\SubscriberInterface;
+use       Psr\Http\Message\RequestInterface;
 
 /**
  * Adds headers to request
  *
- * @package   EightPoints\Bundle\GuzzleBundle\EventListener
+ * @package   EightPoints\Bundle\GuzzleBundle\Middleware
  * @author    Florian Preusner
  *
- * @version   2.0
- * @since     2013-10
+ * @version   3.0
+ * @since     2015-06
  */
-class HeaderSubscriber implements SubscriberInterface {
+class RequestHeaderMiddleware {
 
     /**
      * @var array $headers
@@ -102,36 +101,27 @@ class HeaderSubscriber implements SubscriberInterface {
     } // end: getHeader
 
     /**
-     * {@inheritdoc}
-     *
-     * @author  Florian Preusner
-     * @version 2.0
-     * @since   2013-10
-     */
-    public function getEvents() {
-
-        return ['before' => ['onBefore']];
-    } // end: getEvents
-
-    /**
      * Add given headers to request
      *
      * @author  Florian Preusner
-     * @version 2.0
-     * @since   2013-10
+     * @version 3.0
+     * @since   2015-06
      *
-     * @param   BeforeEvent $event
-     *
-     * @return  void
+     * @return  callable
      */
-    public function onBefore(BeforeEvent $event) {
+    public function attach() {
 
-        $request = $event->getRequest();
+        return function (callable $handler) {
 
-        // make sure to keep headers that have been already set
-        foreach($this->getHeaders() as $key => $value) {
+            return function (RequestInterface $request, array $options) use ($handler) {
 
-            $request->addHeader($key, $value);
-        }
-    } // end: onBefore
-} // end: HeaderSubscriber
+                foreach($this->getHeaders() as $key => $value) {
+
+                    $request = $request->withHeader($key, $value);
+                }
+
+                return $handler($request, $options);
+            };
+        };
+    } // end: attach
+} // end: RequestHeaderMiddleware

@@ -1,6 +1,6 @@
 <?php
 
-namespace EightPoints\Bundle\GuzzleBundle\Handler;
+namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
 use       Psr\Log\LoggerInterface,
           GuzzleHttp\MessageFormatter;
@@ -14,7 +14,7 @@ use       Psr\Log\LoggerInterface,
  * @version   3.0
  * @since     2015-06
  */
-class Middleware {
+class LogMiddleware {
 
     /**
      * @var MessageFormatter

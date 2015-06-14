@@ -7,6 +7,7 @@ use       Symfony\Component\Config\FileLocator,
           Symfony\Component\DependencyInjection\Loader\XmlFileLoader,
           Symfony\Component\HttpKernel\DependencyInjection\Extension,
           Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\ExpressionLanguage\Expression;
 
 /**
  * GuzzleExtension
@@ -42,38 +43,19 @@ class GuzzleExtension extends Extension {
         $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'));
         $config        = $processor->processConfiguration($configuration, $configs);
 
-        $container->setParameter('guzzle.base_url', $config['base_url']);
+        $container->setParameter('guzzle.base_url',              $config['base_url']);
         $container->setParameter('guzzle.plugin.header.headers', $config['headers']);
 
-        if(isset($config['plugin']['wsse'])) {
+        // WSSE
+        if(isset($config['plugin']['wsse']) && $wsse = $config['plugin']['wsse']) {
 
-//            $this->setUpWsse($config['plugin']['wsse'], $container);
+            $container->setParameter('guzzle.plugin.wsse.username', $wsse['username']);
+            $container->setParameter('guzzle.plugin.wsse.password', $wsse['password']);
+
+            $container->getDefinition('guzzle.handler')
+                      ->addMethodCall('push', array(new Expression('service("guzzle_bundle.middleware.wsse").attach()')));
         }
     } // end: load
-
-    /**
-     * Set up WSSE settings
-     *
-     * @author  Florian Preusner
-     * @version 2.0
-     * @since   2013-10
-     *
-     * @param   array            $config
-     * @param   ContainerBuilder $container
-     *
-     * @return  void
-     */
-    protected function setUpWsse(array $config, ContainerBuilder $container) {
-
-        if($config['username']) {
-
-            $container->setParameter('guzzle.plugin.wsse.username', $config['username']);
-            $container->setParameter('guzzle.plugin.wsse.password', $config['password']);
-
-            $container->getDefinition('guzzle.emitter')
-                      ->addMethodCall('attach', array($container->getDefinition('guzzle.plugin.wsse')));
-        }
-    } // end: setUpWsse
 
     /**
      * Returns alias of class

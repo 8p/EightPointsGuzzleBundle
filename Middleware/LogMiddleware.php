@@ -2,8 +2,10 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
-use       Psr\Log\LoggerInterface,
-          GuzzleHttp\MessageFormatter;
+use       GuzzleHttp\Exception\RequestException,
+          GuzzleHttp\MessageFormatter,
+
+          Psr\Log\LoggerInterface;
 
 /**
  * Middleware

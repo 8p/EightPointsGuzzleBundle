@@ -9,6 +9,7 @@ GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
 ## Requirements
  - PHP 5.5 or above
+ - Symfony 2.4 or above
  - [Guzzle PHP Framework][1] (included by composer)
  - [WSSE Auth Plugin][3] (included by composer)
 

@@ -82,8 +82,8 @@ If you want to use different names for provided services you can use aliases. Th
 have any dependency to guzzle in your service name.
 ``` yaml
 services:
-   http.client:
-       alias: guzzle.client
+   crm.client:
+       alias: guzzle.client.api_crm
 ```
 
 

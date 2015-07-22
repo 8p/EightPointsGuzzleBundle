@@ -41,23 +41,32 @@ new EightPoints\Bundle\GuzzleBundle\GuzzleBundle()
 Configuration in config.yml:
 ``` yaml
 guzzle:
-    base_url: "http://api.domain.tld"
+    clients:
+        api_payment:
+            base_url: "http://api.domain.tld"
 
-    # custom headers
-    headers:
-        Accept: "application/json"
+            # custom headers
+            headers:
+                Accept: "application/json"
 
-    # plugin settings
-    plugin:
-       wsse:
-           username: acme
-           password: pa55w0rd
+            # plugin settings
+            plugin:
+                wsse:
+                    username: acme
+                    password: pa55w0rd
+                    
+        api_crm:
+            base_url: "http://api.crm.tld"
+            headers:
+                Accept: "application/json"
+                            
+        ...
 ```
 All these settings are optional. If WSSE username is defined the WSSE plugin will be injected automatically.
 
 Using services in controller:
 ``` php
-$client   = $this->get('guzzle.client');
+$client   = $this->get('guzzle.client.api_crm');
 $response = $client->get('/users');
 ```
 

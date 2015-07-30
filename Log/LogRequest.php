@@ -100,7 +100,7 @@ class LogRequest {
         $this->setHeaders($request->getHeaders());
         $this->setProtocolVersion($request->getProtocolVersion());
         $this->setMethod($request->getMethod());
-        $this->setBody($request->getBody()->__toString());
+        $this->setBody($request->getBody() ? $request->getBody()->__toString() : null);
     } // end: save()
 
     /**

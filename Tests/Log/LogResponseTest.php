@@ -43,9 +43,15 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
                                ->disableOriginalConstructor()
                                ->getMock();
 
+        $bodyMock = $this->getMockBuilder('GuzzleHttp\Psr7\Stream')
+                         ->disableOriginalConstructor()
+                         ->getMock();
+
+        $bodyMock->method('__toString')->willReturn('test body');
+
         $this->response->method('getStatusCode')->willReturn(200);
         $this->response->method('getHeaders')->willReturn($this->headers);
-        $this->response->method('getBody')->willReturn('test body');
+        $this->response->method('getBody')->willReturn($bodyMock);
         $this->response->method('getProtocolVersion')->willReturn('1.1');
     } // end: setUp()
 

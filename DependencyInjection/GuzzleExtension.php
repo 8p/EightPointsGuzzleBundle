@@ -165,7 +165,7 @@ class GuzzleExtension extends Extension {
     protected function createRequestHeaderMiddleware(ContainerBuilder $container, array $headers) {
 
         $requestHeader = new Definition($container->getParameter('guzzle_bundle.middleware.request_header.class'));
-        $requestHeader->addArgument($this->cleanHeaders($headers));
+        $requestHeader->addArgument($this->cleanUpHeaders($headers));
 
         return $requestHeader;
     } // end: createRequestHeaderMiddleware()
@@ -200,7 +200,7 @@ class GuzzleExtension extends Extension {
      *
      * @return array
      */
-    protected function cleanHeaders(array $headers) {
+    protected function cleanUpHeaders(array $headers) {
 
         foreach($headers as $name => $value) {
 

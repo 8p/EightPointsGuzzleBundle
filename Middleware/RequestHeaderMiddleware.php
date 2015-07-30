@@ -55,12 +55,15 @@ class RequestHeaderMiddleware {
      * @version 1.0
      * @since   2013-10
      *
-     * @param   array $value
+     * @param   array $headers
      * @return  void
      */
-    public function setHeaders(array $value) {
+    public function setHeaders(array $headers) {
 
-        $this->headers = $value;
+        foreach($headers as $name => $value) {
+
+            $this->addHeader($name, $value);
+        }
     } // end: setHeaders
 
     /**

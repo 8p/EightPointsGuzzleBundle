@@ -23,6 +23,11 @@ class LogResponse {
     /**
      * @var string
      */
+    protected $statusPhrase;
+
+    /**
+     * @var string
+     */
     protected $body;
 
     /**
@@ -61,7 +66,8 @@ class LogResponse {
     public function save(ResponseInterface $response) {
 
         $this->setStatusCode($response->getStatusCode());
-        $this->setBody($response->getBody());
+        $this->setStatusPhrase($response->getReasonPhrase());
+        $this->setBody($response->getBody()->__toString());
         $this->setHeaders($response->getHeaders());
         $this->setProtocolVersion($response->getProtocolVersion());
     } // end: save()
@@ -93,6 +99,34 @@ class LogResponse {
 
         $this->statusCode = $value;
     } // end: setStatusCode()
+
+    /**
+     * Return HTTP status phrase
+     *
+     * @author  Florian Preusner
+     * @version 4.0
+     * @since   2015-07
+     *
+     * @return  string
+     */
+    public function getStatusPhrase() {
+
+        return $this->statusPhrase;
+    } // end: getStatusPhrase()
+
+    /**
+     * Set HTTP status phrase
+     *
+     * @author  Florian Preusner
+     * @version 4.0
+     * @since   2015-07
+     *
+     * @param   string $value
+     */
+    public function setStatusPhrase($value) {
+
+        $this->statusPhrase = $value;
+    } // end: setStatusPhrase()
 
     /**
      * Return response body

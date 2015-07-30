@@ -58,10 +58,12 @@
 
 
 {% block head %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/playbloomguzzle/css/profiler.min.css') }}" />
-{% endblock %}
 
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/guzzle/css/main.css') }}" />
+    <script src="{{ asset('bundles/guzzle/js/jquery.min.js') }}"></script>
+{% endblock %}
 
 {% block panel %}
 

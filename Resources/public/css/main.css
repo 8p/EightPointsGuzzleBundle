@@ -1,0 +1,167 @@
+#guzzle_profiler {
+    line-height: 1;
+    font-family: "Droid Sans", sans-serif;
+    font-size: 0.9em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#guzzle_profiler pre {
+    background-color: #404040;
+    border: 1px solid #636363;
+    border-radius: 6px;
+}
+
+#guzzle_profiler textarea {
+    background-color: #404040;
+    border: 1px solid #636363;
+    border-radius: 6px;
+    min-height: 100px;
+    max-height: 250px;
+    width: 100%;
+    overflow: auto;
+    color: #EBEBEB;
+    line-height: 1.2em;
+    font: 12px Menlo, Monaco, Consolas, monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#guzzle_profiler .request {
+    width: 100%;
+    margin-bottom: 7px;
+}
+
+#guzzle_profiler table {
+    margin-bottom: 0px;
+}
+
+#guzzle_profiler table th {
+    width: 130px;
+    vertical-align: top;
+}
+
+#guzzle_profiler .request {
+    border-radius: 6px;
+}
+
+#guzzle_profiler h3 .method {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    width: 50px;
+    font-size: 0.8em;
+    text-align: center;
+    padding: 7px 0 5px;
+    border-radius: 4px;
+}
+
+#guzzle_profiler h3 .url {
+    padding-left: 10px;
+    color: black;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+#guzzle_profiler h3 .response {
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    font-size: 0.8em;
+    text-align: center;
+    padding: 7px 10px 5px 10px;
+    float: right;
+    border-radius: 4px;
+}
+
+#guzzle_profiler .request.method_get,
+#guzzle_profiler .request.method_get h3,
+#guzzle_profiler .request.method_get table,
+#guzzle_profiler .request.method_get table tr,
+#guzzle_profiler .request.method_get table th,
+#guzzle_profiler .request.method_get table td {
+    border: 1px solid #c3d9ec;
+    background-color: #e7f0f7;
+}
+
+#guzzle_profiler .request.method_get h3 .method,
+#guzzle_profiler .request.method_get h3 .response {
+    background-color: #0f6ab4;
+}
+
+#guzzle_profiler .request.method_put,
+#guzzle_profiler .request.method_put h3,
+#guzzle_profiler .request.method_put table,
+#guzzle_profiler .request.method_put table tr,
+#guzzle_profiler .request.method_put table th,
+#guzzle_profiler .request.method_put table td {
+    background-color: #f9f2e9;
+    border: 1px solid #f0e0ca;
+}
+
+#guzzle_profiler .request.method_put h3 .method,
+#guzzle_profiler .request.method_put h3 .response {
+    background-color: #c5862b;
+}
+
+#guzzle_profiler .request.method_post,
+#guzzle_profiler .request.method_post h3,
+#guzzle_profiler .request.method_post table,
+#guzzle_profiler .request.method_post table tr,
+#guzzle_profiler .request.method_post table th,
+#guzzle_profiler .request.method_post table td {
+    background-color: #e7f6ec;
+    border: 1px solid #c3e8d1;
+}
+
+#guzzle_profiler .request.method_post h3 .method,
+#guzzle_profiler .request.method_post h3 .response {
+    background-color: #10a54a;
+}
+
+#guzzle_profiler .request.method_delete,
+#guzzle_profiler .request.method_delete h3,
+#guzzle_profiler .request.method_delete table,
+#guzzle_profiler .request.method_delete table tr,
+#guzzle_profiler .request.method_delete table th,
+#guzzle_profiler .request.method_delete table td {
+    background-color: #f5e8e8;
+    border: 1px solid #e8c6c7;
+}
+
+#guzzle_profiler .request.method_delete h3 .method,
+#guzzle_profiler .request.method_delete h3 .response {
+    background-color: #a41e22;
+}
+
+#guzzle_profiler h2 {
+    font-size: 1.1em;
+    margin-top: 25px;
+}
+
+#guzzle_profiler .request h3 {
+    font-size: 1em;
+    border-width: 0px 0px 1px 0px !important;
+    padding: 5px;
+    margin: 0px;
+}
+
+#guzzle_profiler h3 a {
+    text-decoration: none;
+}
+
+#guzzle_profiler h3 a .url {
+    text-decoration: underline;
+}
+
+#guzzle_profiler h4 {
+    font-size: 1em;
+    margin: 16px 0 10px 0;
+}
+
+
+
+#guzzle_profiler .content {
+    padding: 10px;
+}

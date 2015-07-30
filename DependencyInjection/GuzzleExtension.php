@@ -69,11 +69,11 @@ class GuzzleExtension extends Extension {
 
     /**
      * @author Florian Preusner
-     * @since  2015-
+     * @since  2015-07
      *
-     * @param ContainerBuilder $container
-     * @param                  $name
-     * @param array            $config
+     * @param  ContainerBuilder $container
+     * @param  string           $name
+     * @param  array            $config
      *
      * @return Definition
      */
@@ -165,7 +165,7 @@ class GuzzleExtension extends Extension {
     protected function createRequestHeaderMiddleware(ContainerBuilder $container, array $headers) {
 
         $requestHeader = new Definition($container->getParameter('guzzle_bundle.middleware.request_header.class'));
-        $requestHeader->addArgument($headers);
+        $requestHeader->addArgument($this->cleanHeaders($headers));
 
         return $requestHeader;
     } // end: createRequestHeaderMiddleware()
@@ -189,6 +189,32 @@ class GuzzleExtension extends Extension {
 
         return $wsse;
     } // end: createWsseMiddleware()
+
+    /**
+     * Clean up HTTP headers
+     *
+     * @author Florian Preusner
+     * @since  2015-07
+     *
+     * @param  array $headers
+     *
+     * @return array
+     */
+    protected function cleanHeaders(array $headers) {
+
+        foreach($headers as $name => $value) {
+
+            // because of standard conventions in YAML dashes are converted to underscores
+            // underscores are not allowed in HTTP standard, will be replaced by dash
+            $nameClean = str_replace( '_', '-', $name);
+
+            unset($headers[$name]);
+
+            $headers[$nameClean] = $value;
+        }
+
+        return $headers;
+    } // end: cleanHeaders()
 
     /**
      * Returns alias of extension

@@ -92,13 +92,14 @@ class GuzzleExtension extends Extension {
 
         $handler = new Definition('GuzzleHttp\HandlerStack');
         $handler->setFactory(['GuzzleHttp\HandlerStack', 'create']);
-        $handler->addMethodCall('push', [$headerExpression]);
-        $handler->addMethodCall('push', [$logExpression]);
 
         // WSSE
         if(isset($config['plugin']['wsse'])
-            && $username = $config['plugin']['wsse']['username']
-            && $password = $config['plugin']['wsse']['password']) {
+            && $config['plugin']['wsse']['username']
+            && $config['plugin']['wsse']['password']) {
+
+            $username = $config['plugin']['wsse']['username'];
+            $password = $config['plugin']['wsse']['password'];
 
             $wsse            = $this->createWsseMiddleware($container, $username, $password);
             $wsseServiceName = sprintf('guzzle_bundle.middleware.wsse.%s', $name);
@@ -109,6 +110,9 @@ class GuzzleExtension extends Extension {
 
             $handler->addMethodCall('push', [$wsseExpression]);
         }
+
+        $handler->addMethodCall('push', [$headerExpression]);
+        $handler->addMethodCall('push', [$logExpression]);
 
         return $handler;
     } // end: createHandler()

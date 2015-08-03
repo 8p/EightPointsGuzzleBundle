@@ -52,7 +52,7 @@ class LogResponse {
     public function __construct(ResponseInterface $response) {
 
         $this->save($response);
-    } // end: __construct
+    } // end: __construct()
 
     /**
      * Save data

@@ -77,7 +77,7 @@ class LogRequest {
     public function __construct(RequestInterface $request) {
 
         $this->save($request);
-    } // end: __construct
+    } // end: __construct()
 
     /**
      * Save data

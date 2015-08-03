@@ -32,7 +32,7 @@ class RequestHeaderMiddleware {
     public function __construct(array $headers) {
 
         $this->setHeaders($headers);
-    } // end: __construct
+    } // end: __construct()
 
     /**
      * Retrieve headers that have been set
@@ -46,7 +46,7 @@ class RequestHeaderMiddleware {
     public function getHeaders() {
 
         return $this->headers;
-    } // end: getHeaders
+    } // end: getHeaders()
 
     /**
      * Set headers
@@ -81,7 +81,7 @@ class RequestHeaderMiddleware {
     public function addHeader($key, $value) {
 
         $this->headers[$key] = $value;
-    } // end: addHeader
+    } // end: addHeader()
 
     /**
      * Get specified header
@@ -101,7 +101,7 @@ class RequestHeaderMiddleware {
         }
 
         return null;
-    } // end: getHeader
+    } // end: getHeader()
 
     /**
      * Add given headers to request
@@ -126,5 +126,5 @@ class RequestHeaderMiddleware {
                 return $handler($request, $options);
             };
         };
-    } // end: attach
+    } // end: attach()
 } // end: RequestHeaderMiddleware

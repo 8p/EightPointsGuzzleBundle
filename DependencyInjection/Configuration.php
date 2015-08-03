@@ -40,7 +40,7 @@ class Configuration implements ConfigurationInterface {
 
         $this->alias = $alias;
         $this->debug = (boolean) $debug;
-    } // end: __construct
+    } // end: __construct()
 
     /**
      * Generates the configuration tree builder
@@ -62,7 +62,7 @@ class Configuration implements ConfigurationInterface {
                 ->end();
 
         return $builder;
-    } // end: getConfigTreeBuilder
+    } // end: getConfigTreeBuilder()
 
     /**
      * Create Clients Configuration

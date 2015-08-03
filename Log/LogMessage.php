@@ -45,7 +45,7 @@ class LogMessage {
     public function __construct($message) {
 
         $this->message = $message;
-    } // end: __construct
+    } // end: __construct()
 
     /**
      * Set log level
@@ -72,7 +72,7 @@ class LogMessage {
     public function getLevel() {
 
         return $this->level;
-    } // end: getLevel
+    } // end: getLevel()
 
     /**
      * Returning log message
@@ -86,7 +86,7 @@ class LogMessage {
     public function getMessage() {
 
         return $this->message;
-    } // end: getMessage
+    } // end: getMessage()
 
     /**
      * Set Log Request

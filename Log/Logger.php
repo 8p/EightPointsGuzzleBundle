@@ -45,7 +45,7 @@ class Logger implements LoggerInterface {
 
             if(isset($context['request'])) {
 
-                $message->setRequest(new LogRequest( $context['request']));
+                $message->setRequest(new LogRequest($context['request']));
             }
 
             if(isset($context['response'])) {

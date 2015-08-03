@@ -64,7 +64,7 @@ class RequestHeaderMiddleware {
 
             $this->addHeader($name, $value);
         }
-    } // end: setHeaders
+    } // end: setHeaders()
 
     /**
      * Add header

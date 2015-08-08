@@ -58,6 +58,11 @@ class GuzzleExtension extends Extension {
                 'handler'  => $this->createHandler($container, $name, $options)
             ];
 
+            // If present, add default options to the constructor argument for the Guzzle client
+            if (array_key_exists('options', $options)) {
+                $argument = array_merge($options['options'], $argument);
+            }
+
             $client = new Definition($container->getParameter('guzzle.http_client.class'));
             $client->addArgument($argument);
 

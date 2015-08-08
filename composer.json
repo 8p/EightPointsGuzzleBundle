@@ -28,7 +28,13 @@
   "require": {
     "php":                                ">=5.5.0",
     "guzzlehttp/guzzle":                  "~6.0",
-    "eightpoints/guzzle-wsse-middleware": "~3.0"
+    "eightpoints/guzzle-wsse-middleware": "~3.0",
+    "symfony/http-kernel":                "~2.3",
+    "psr/log":                            "~1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*",
+    "symfony/config": "*"
   },
   "target-dir": "EightPoints/Bundle/GuzzleBundle",
   "autoload": {

@@ -77,6 +77,11 @@ class Configuration implements ConfigurationInterface {
         $builder = new TreeBuilder();
         $node    = $builder->root('clients');
 
+        // Filtering function to cast scalar values to boolean
+        $boolFilter = function ($value) {
+            return (bool)$value;
+        };
+
         $node->useAttributeAsKey('name')
              ->prototype('array')
                  ->children()
@@ -85,6 +90,48 @@ class Configuration implements ConfigurationInterface {
                      ->arrayNode('headers')
                          ->prototype('scalar')
                          ->end()
+                     ->end()
+
+                     ->arrayNode('options')
+                         ->children()
+                             ->scalarNode('cert')->end()
+                             ->scalarNode('connect_timeout')->end()
+                             ->booleanNode('debug')
+                                 ->beforeNormalization()
+                                     ->ifString()->then($boolFilter)
+                                 ->end()
+                             ->end()
+                             ->booleanNode('decode_content')
+                                 ->beforeNormalization()
+                                     ->ifString()->then($boolFilter)
+                                 ->end()
+                             ->end()
+                             ->scalarNode('delay')->end()
+                             ->booleanNode('http_errors')
+                                 ->beforeNormalization()
+                                     ->ifString()->then($boolFilter)
+                                 ->end()
+                             ->end()
+                             ->scalarNode('expect')->end()
+                             ->scalarNode('ssl_key')->end()
+                             ->booleanNode('stream')
+                                 ->beforeNormalization()
+                                     ->ifString()->then($boolFilter)
+                                 ->end()
+                             ->end()
+                             ->booleanNode('synchronous')
+                                 ->beforeNormalization()
+                                     ->ifString()->then($boolFilter)
+                                 ->end()
+                             ->end()
+                             ->scalarNode('timeout')->end()
+                             ->booleanNode('verify')
+                                 ->beforeNormalization()
+                                     ->ifString()->then($boolFilter)
+                                 ->end()
+                             ->end()
+                             ->scalarNode('version')->end()
+                          ->end()
                      ->end()
 
                      ->arrayNode('plugin')

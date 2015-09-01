@@ -18,7 +18,7 @@ class RequestHeaderMiddleware {
     /**
      * @var array $headers
      */
-    private $headers;
+    private $headers = [];
 
     /**
      * Constructor

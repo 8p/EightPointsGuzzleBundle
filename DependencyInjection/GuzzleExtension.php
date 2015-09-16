@@ -126,16 +126,11 @@ class GuzzleExtension extends Extension {
 
                 $handler->addMethodCall('push', [$wsseExpression]);
             }
-             // additional plugins, should be added as service id's
-            foreach($config['plugin'] as $name => $value)
-            {
-
-            }
         }
 
         $handler->addMethodCall('push', [$headerExpression]);
         $handler->addMethodCall('push', [$logExpression]);
-        $handler->addMethodCall('push', [$eventExpression]);
+        $handler->addMethodCall('unshift', [$eventExpression]);
 
         return $handler;
     } // end: createHandler()
@@ -207,9 +202,10 @@ class GuzzleExtension extends Extension {
      *
      * @return Definition
      */
-    protected function createEventMiddleware(ContainerBuilder $container) {
+    protected function createEventMiddleware(ContainerBuilder $container, $name) {
         $eventMiddleWare = new Definition($container->getParameter('guzzle_bundle.middleware.event_dispatcher.class'));
         $eventMiddleWare->addArgument(new Reference('event_dispatcher'));
+        $eventMiddleWare->addArgument($name);
 
         return $eventMiddleWare;
     } // end: createEventMiddleware()

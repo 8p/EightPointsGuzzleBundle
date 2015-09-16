@@ -45,12 +45,12 @@ class EventDispatchMiddleware
                 $preTransactionEvent = new PreTransactionEvent($request, $this->serviceName);
 
                 $this->eventDispatcher->dispatch(GuzzleEvents::PRE_TRANSACTION, $preTransactionEvent);
-                $promise = $handler($request, $options);
+                $promise = $handler($preTransactionEvent->getTransaction(), $options);
                 return $promise->then(
                     function (ResponseInterface $response) {
                         $postTransactionEvent = new PostTransactionEvent($response, $this->serviceName);
                         $this->eventDispatcher->dispatch(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
-                        return $response;
+                        return $postTransactionEvent->getTransaction();
                     }
                 );
             };

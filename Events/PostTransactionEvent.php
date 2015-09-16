@@ -38,4 +38,14 @@ class PostTransactionEvent extends Event
     {
         return $this->response;
     }
+
+    public function setTransaction(ResponseInterface $response)
+    {
+        $this->response = $response;
+    }
+
+    public function getServiceName()
+    {
+        return $this->serviceName;
+    }
 }

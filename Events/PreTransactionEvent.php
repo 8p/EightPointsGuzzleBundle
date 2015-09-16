@@ -36,4 +36,14 @@ class PreTransactionEvent extends Event
         return $this->requestTransaction;
     }
 
+    public function setTransaction(RequestInterface $requestTransaction)
+    {
+        $this->requestTransaction = $requestTransaction;
+    }
+
+    public function getServiceName()
+    {
+        return $this->serviceName;
+    }
+
 }

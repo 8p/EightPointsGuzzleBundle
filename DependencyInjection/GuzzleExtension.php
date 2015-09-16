@@ -92,32 +92,50 @@ class GuzzleExtension extends Extension {
         $requestHeader = $this->createRequestHeaderMiddleware($container, $config['headers']);
         $container->setDefinition($headerServiceName, $requestHeader);
 
+        // Event Dispatching service
+        $eventServiceName = sprintf('guzzle_bundle.middleware.event_dispatch.%s', $name);
+        $eventService = $this->createEventMiddleware($container, $name);
+        $container->setDefinition($eventServiceName, $eventService);
+
         $headerExpression = new Expression(sprintf("service('%s').attach()", $headerServiceName));
         $logExpression    = new Expression(sprintf("service('%s').log()", $logServiceName));
+        $eventExpression  = new Expression(sprintf("service('%s').dispatchEvent()", $eventServiceName));
 
         $handler = new Definition('GuzzleHttp\HandlerStack');
         $handler->setFactory(['GuzzleHttp\HandlerStack', 'create']);
 
-        // WSSE
-        if(isset($config['plugin']['wsse'])
-            && $config['plugin']['wsse']['username']
-            && $config['plugin']['wsse']['password']) {
+        // Plugins
+        if(isset($config['plugin'])){
+            // Wsse if required
+            if (isset($config['plugin']['wsse'])
+                && $config['plugin']['wsse']['username']
+                && $config['plugin']['wsse']['password']) {
 
-            $username = $config['plugin']['wsse']['username'];
-            $password = $config['plugin']['wsse']['password'];
+                $wsseConfig = $config['plugin']['wsse'];
+                unset($config['plugin']['wsse']);
 
-            $wsse            = $this->createWsseMiddleware($container, $username, $password);
-            $wsseServiceName = sprintf('guzzle_bundle.middleware.wsse.%s', $name);
+                $username = $wsseConfig['username'];
+                $password = $$wsseConfig['password'];
 
-            $container->setDefinition($wsseServiceName, $wsse);
+                $wsse = $this->createWsseMiddleware($container, $username, $password);
+                $wsseServiceName = sprintf('guzzle_bundle.middleware.wsse.%s', $name);
 
-            $wsseExpression = new Expression(sprintf('service("%s").attach()', $wsseServiceName));
+                $container->setDefinition($wsseServiceName, $wsse);
 
-            $handler->addMethodCall('push', [$wsseExpression]);
+                $wsseExpression = new Expression(sprintf('service("%s").attach()', $wsseServiceName));
+
+                $handler->addMethodCall('push', [$wsseExpression]);
+            }
+             // additional plugins, should be added as service id's
+            foreach($config['plugin'] as $name => $value)
+            {
+
+            }
         }
 
         $handler->addMethodCall('push', [$headerExpression]);
         $handler->addMethodCall('push', [$logExpression]);
+        $handler->addMethodCall('push', [$eventExpression]);
 
         return $handler;
     } // end: createHandler()
@@ -178,6 +196,23 @@ class GuzzleExtension extends Extension {
 
         return $requestHeader;
     } // end: createRequestHeaderMiddleware()
+
+    /**
+     * Create Middleware For dispatching events
+     *
+     * @author Chris Warner
+     * @since  2015-09
+     *
+     * @param ContainerBuilder $container
+     *
+     * @return Definition
+     */
+    protected function createEventMiddleware(ContainerBuilder $container) {
+        $eventMiddleWare = new Definition($container->getParameter('guzzle_bundle.middleware.event_dispatcher.class'));
+        $eventMiddleWare->addArgument(new Reference('event_dispatcher'));
+
+        return $eventMiddleWare;
+    } // end: createEventMiddleware()
 
     /**
      * Create Middleware for WSSE

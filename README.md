@@ -75,7 +75,8 @@ $client   = $this->get('guzzle.client.api_crm');
 $response = $client->get('/users');
 ```
 
-
+## Events
+Creating events
 ## Features
 ### Symfony Debug Toolbar / Profiler
 <img src="/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />

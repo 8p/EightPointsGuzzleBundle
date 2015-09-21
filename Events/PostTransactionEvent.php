@@ -1,22 +1,25 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: chris
- * Date: 9/16/15
- * Time: 12:07 PM
- */
 
 namespace EightPoints\Bundle\GuzzleBundle\Events;
 
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * Class PostTransactionEvent
+ *
+ * @package EightPoints\Bundle\GuzzleBundle\Events
+ */
 class PostTransactionEvent extends Event
 {
     /**
      * @var ResponseInterface
      */
     protected $response;
+
+    /**
+     * @var string
+     */
     protected $serviceName;
 
     /**
@@ -32,6 +35,10 @@ class PostTransactionEvent extends Event
 
 
     /**
+     * Get the transaction from the event.
+     *
+     * This returns the transaction we are working with.
+     *
      * @return ResponseInterface
      */
     public function getTransaction()
@@ -39,11 +46,19 @@ class PostTransactionEvent extends Event
         return $this->response;
     }
 
+    /**
+     * Sets the transaction inline with the event.
+     *
+     * @param ResponseInterface $response
+     */
     public function setTransaction(ResponseInterface $response)
     {
         $this->response = $response;
     }
 
+    /**
+     * @return string
+     */
     public function getServiceName()
     {
         return $this->serviceName;

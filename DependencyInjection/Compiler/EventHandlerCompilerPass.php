@@ -5,16 +5,19 @@ use \Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Created by IntelliJ IDEA.
- * User: chris
- * Date: 9/16/15
- * Time: 2:30 PM
+ * Class EventHandlerCompilerPass
+ *
+ * @package EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler
  */
-
 class EventHandlerCompilerPass implements CompilerPassInterface
 {
     /**
-     * You can modify the container here before it is dumped to PHP code.
+     * We tag handlers with specific services to listen too.
+     *
+     * We get all event tagged services from the container.
+     * We then go through each event, and look for the value guzzle_bundle.
+     * For each one we find, we check if the service key is set, and then
+     * call setServiceName on each EventListener.
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *

@@ -99,6 +99,7 @@ class GuzzleExtension extends Extension {
 
         $headerExpression = new Expression(sprintf("service('%s').attach()", $headerServiceName));
         $logExpression    = new Expression(sprintf("service('%s').log()", $logServiceName));
+        // Create the event Dispatch Middleware
         $eventExpression  = new Expression(sprintf("service('%s').dispatchEvent()", $eventServiceName));
 
         $handler = new Definition('GuzzleHttp\HandlerStack');
@@ -130,6 +131,7 @@ class GuzzleExtension extends Extension {
 
         $handler->addMethodCall('push', [$headerExpression]);
         $handler->addMethodCall('push', [$logExpression]);
+        // goes on the end of the stack.
         $handler->addMethodCall('unshift', [$eventExpression]);
 
         return $handler;

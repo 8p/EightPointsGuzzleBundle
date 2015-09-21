@@ -9,7 +9,7 @@
 namespace EightPoints\Bundle\GuzzleBundle\Events;
 
 
-interface GuzzleEventListener
+interface GuzzleEventListenerInterface
 {
     public function setServiceName($serviceName);
 }

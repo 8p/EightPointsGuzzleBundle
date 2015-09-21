@@ -1,10 +1,10 @@
 <?php
 namespace EightPoints\Bundle\GuzzleBundle\Events;
+
 /**
- * Created by IntelliJ IDEA.
- * User: chris
- * Date: 9/16/15
- * Time: 11:59 AM
+ * Class GuzzleEvents
+ *
+ * @package EightPoints\Bundle\GuzzleBundle\Events
  */
 final class GuzzleEvents
 {

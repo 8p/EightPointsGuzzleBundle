@@ -4,10 +4,11 @@ use Psr\Http\Message\RequestInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Created by IntelliJ IDEA.
- * User: chris
- * Date: 9/16/15
- * Time: 12:04 PM
+ * Class PreTransactionEvent
+ *
+ * @package EightPoints\Bundle\GuzzleBundle\Events
+ *
+ * @author Chris Warner(chris@quadland.com)
  */
 class PreTransactionEvent extends Event
 {
@@ -15,6 +16,9 @@ class PreTransactionEvent extends Event
      * @var RequestInterface
      */
     protected $requestTransaction;
+    /**
+     * @var string
+     */
     protected $serviceName;
 
     /**
@@ -29,6 +33,10 @@ class PreTransactionEvent extends Event
     }
 
     /**
+     * Access the transaction from the Guzzle HTTP request
+     *
+     * This returns the actual Request Object from the Guzzle HTTP
+     * Reqeust.  This object will be modified by the event listener.
      * @return RequestInterface
      */
     public function getTransaction()
@@ -36,11 +44,23 @@ class PreTransactionEvent extends Event
         return $this->requestTransaction;
     }
 
+    /**
+     * Replaces the transaction with the modified one.
+     *
+     * Guzzles transaction returns a modified request object,
+     * so once it has been modified, we need to put it back on the
+     * event so it can become part of the transaction.
+     *
+     * @param RequestInterface $requestTransaction
+     */
     public function setTransaction(RequestInterface $requestTransaction)
     {
         $this->requestTransaction = $requestTransaction;
     }
 
+    /**
+     * @return string
+     */
     public function getServiceName()
     {
         return $this->serviceName;

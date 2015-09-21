@@ -76,7 +76,14 @@ $response = $client->get('/users');
 ```
 
 ## Events
-Creating events
+Handling events.  Events are dispatched before and after the request to the remote host.
+### Listening To Events
+``` xml
+        <service id="listenerID" class="Your\ListenerClass\That\Implements\GuzzleEventListenerInterface">
+            <tag name="kernel.event_listener" event="guzzle_bundle.pre_transaction" method="onPreTransaction" service="servicename"/>
+        </service>
+```
+
 ## Features
 ### Symfony Debug Toolbar / Profiler
 <img src="/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />

@@ -83,6 +83,9 @@ Handling events.  Events are dispatched before and after the request to the remo
             <tag name="kernel.event_listener" event="guzzle_bundle.pre_transaction" method="onPreTransaction" service="servicename"/>
         </service>
 ```
+Your event Listener, or Subscriber should implement GuzzleBundle\Events\GuzzleEventListenerInterface.
+Events dispatched are guzzle_bundle.pre_transaction, guzzle_bundle.post_transaction.
+The service on the tag, is so that if you have multiple REST endpoints you can define which service a particular listener is interested in.
 
 ## Features
 ### Symfony Debug Toolbar / Profiler

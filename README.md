@@ -75,6 +75,14 @@ $client   = $this->get('guzzle.client.api_crm');
 $response = $client->get('/users');
 ```
 
+## Events
+Handling events.  Events are dispatched before and after the request to the remote host.
+### Listening To Events
+``` xml
+        <service id="listenerID" class="Your\ListenerClass\That\Implements\GuzzleEventListenerInterface">
+            <tag name="kernel.event_listener" event="guzzle_bundle.pre_transaction" method="onPreTransaction" service="servicename"/>
+        </service>
+```
 
 ## Features
 ### Symfony Debug Toolbar / Profiler

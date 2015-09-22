@@ -6,7 +6,8 @@ use       EightPoints\Bundle\GuzzleBundle\DependencyInjection\GuzzleExtension;
 
 use       Symfony\Component\HttpKernel\Bundle\Bundle,
           Symfony\Component\DependencyInjection\ContainerBuilder,
-          Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+          Symfony\Component\DependencyInjection\Extension\ExtensionInterface,
+          EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler\EventHandlerCompilerPass;
 
 /**
  * Class GuzzleBundle
@@ -32,6 +33,9 @@ class GuzzleBundle extends Bundle {
     public function build(ContainerBuilder $container) {
 
         parent::build($container);
+
+        $container->addCompilerPass(new EventHandlerCompilerPass());
+
     } // end: build
 
     /**

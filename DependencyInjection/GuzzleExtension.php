@@ -116,7 +116,7 @@ class GuzzleExtension extends Extension {
                 unset($config['plugin']['wsse']);
 
                 $username = $wsseConfig['username'];
-                $password = $$wsseConfig['password'];
+                $password = $wsseConfig['password'];
 
                 $wsse = $this->createWsseMiddleware($container, $username, $password);
                 $wsseServiceName = sprintf('guzzle_bundle.middleware.wsse.%s', $name);

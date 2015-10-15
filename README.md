@@ -52,6 +52,9 @@ guzzle:
             # guzzle client options (full description here: http://guzzle.readthedocs.org/en/latest/request-options.html)
             # NOTE: "headers" option is not accepted here as it is provided as described above.
             options:
+                auth:
+                    - acme     # login
+                    - pa55w0rd # password
                 timeout: 30
 
             # plugin settings

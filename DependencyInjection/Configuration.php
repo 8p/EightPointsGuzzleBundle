@@ -94,6 +94,10 @@ class Configuration implements ConfigurationInterface {
 
                     ->arrayNode('options')
                         ->children()
+                            ->arrayNode('auth')
+                                ->prototype('scalar')
+                                ->end()
+                            ->end()
                             ->scalarNode('cert')->end()
                             ->scalarNode('connect_timeout')->end()
                             ->booleanNode('debug')

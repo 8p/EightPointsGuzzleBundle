@@ -27,6 +27,10 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
                             'Accept' => 'application/json'
                         ],
                         'options' => [
+                            'auth' => [
+                                'user',
+                                'pass'
+                            ],
                             'cert' => 'path/to/cert',
                             'connect_timeout' => 5,
                             'debug' => false,

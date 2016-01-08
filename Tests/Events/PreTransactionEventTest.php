@@ -1,0 +1,64 @@
+<?php
+
+namespace EightPoints\Bundle\GuzzleBundle\Tests\Events;
+
+use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
+
+/**
+ * Class PreTransactionEventTest
+ *
+ * @package   EightPoints\Bundle\GuzzleBundle\Test\Events
+ * @author    Florian Preusner
+ *
+ * @version   4.5
+ * @since     2016-01
+ */
+class PreTransactionEventTest extends \PHPUnit_Framework_TestCase {
+
+    /**
+     * Test Instance
+     *
+     * @author  Florian Preusner
+     * @version 4.5
+     * @since   2016-01
+     *
+     * @covers  EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::__construct
+     */
+    public function testConstruct() {
+
+        $serviceName = 'service name';
+        $request     = $this->getMock('GuzzleHttp\Psr7\Request');
+        $preEvent    = new PreTransactionEvent($request, $serviceName);
+
+        $this->assertSame($serviceName, $preEvent->getServiceName());
+    } // end: testConstruct()
+
+    /**
+     * Test Transaction
+     *
+     * @author  Florian Preusner
+     * @version 4.5
+     * @since   2016-01
+     *
+     * @covers  EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::setTransaction
+     * @covers  EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::getTransaction
+     */
+    public function testTranscation() {
+
+        $method   = 'POST';
+        $request  = $this->getMock('GuzzleHttp\Psr7\Request');
+        $preEvent = new PreTransactionEvent($request, null);
+
+        $transMock = $this->getMockBuilder('GuzzleHttp\Psr7\Request')
+                          ->getMock();
+
+        $transMock->method('getMethod')->willReturn($method);
+
+        $preEvent->setTransaction($transMock);
+
+        $transaction = $preEvent->getTransaction();
+
+        $this->assertSame($transaction, $transMock);
+        $this->assertSame($method, $transaction->getMethod());
+    } // end: testTransaction()
+} // end: PreTransactionEventTest

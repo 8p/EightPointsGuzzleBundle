@@ -7,7 +7,7 @@ use       EightPoints\Bundle\GuzzleBundle\Log\LogRequest;
 /**
  * Class LogRequestTest
  *
- * @package   EightPoints\Bundle\GuzzleBundle\Test\Log
+ * @package   EightPoints\Bundle\GuzzleBundle\Tests\Log
  * @author    Florian Preusner
  *
  * @version   2.1

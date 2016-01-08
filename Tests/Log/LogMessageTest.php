@@ -7,7 +7,7 @@ use       EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 /**
  * Class LogMessageTest
  *
- * @package   EightPoints\Bundle\GuzzleBundle\Test\Log
+ * @package   EightPoints\Bundle\GuzzleBundle\Tests\Log
  * @author    Florian Preusner
  *
  * @version   2.1

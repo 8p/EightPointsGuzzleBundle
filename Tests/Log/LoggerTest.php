@@ -8,7 +8,7 @@ use       EightPoints\Bundle\GuzzleBundle\Log\Logger,
 /**
  * Class LoggerTest
  *
- * @package   EightPoints\Bundle\GuzzleBundle\Test\Log
+ * @package   EightPoints\Bundle\GuzzleBundle\Tests\Log
  * @author    Florian Preusner
  *
  * @version   2.1

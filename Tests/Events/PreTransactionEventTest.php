@@ -27,8 +27,11 @@ class PreTransactionEventTest extends \PHPUnit_Framework_TestCase {
     public function testConstruct() {
 
         $serviceName = 'service name';
-        $request     = $this->getMock('GuzzleHttp\Psr7\Request');
-        $preEvent    = new PreTransactionEvent($request, $serviceName);
+        $request     = $this->getMockBuilder('GuzzleHttp\Psr7\Request')
+                            ->setConstructorArgs(array('GET', '/'))
+                            ->getMock();
+
+        $preEvent = new PreTransactionEvent($request, $serviceName);
 
         $this->assertSame($serviceName, $preEvent->getServiceName());
     } // end: testConstruct()
@@ -46,10 +49,14 @@ class PreTransactionEventTest extends \PHPUnit_Framework_TestCase {
     public function testTranscation() {
 
         $method   = 'POST';
-        $request  = $this->getMock('GuzzleHttp\Psr7\Request');
+        $request  = $this->getMockBuilder('GuzzleHttp\Psr7\Request')
+                         ->setConstructorArgs(array('GET', '/'))
+                         ->getMock();
+
         $preEvent = new PreTransactionEvent($request, null);
 
         $transMock = $this->getMockBuilder('GuzzleHttp\Psr7\Request')
+                          ->setConstructorArgs(array($method, '/'))
                           ->getMock();
 
         $transMock->method('getMethod')->willReturn($method);

@@ -63,7 +63,7 @@ class GuzzleExtension extends Extension {
                 $argument = array_merge($options['options'], $argument);
             }
 
-            $client = new Definition($container->getParameter('guzzle.http_client.class'));
+            $client = new Definition('%guzzle.http_client.class%');
             $client->addArgument($argument);
 
             // set service name based on client name
@@ -85,16 +85,16 @@ class GuzzleExtension extends Extension {
     protected function createHandler(ContainerBuilder $container, $name, array $config) {
 
         $logServiceName = sprintf('guzzle_bundle.middleware.log.%s', $name);
-        $log = $this->createLogMiddleware($container);
+        $log = $this->createLogMiddleware();
         $container->setDefinition($logServiceName, $log);
 
         $headerServiceName = sprintf('guzzle_bundle.middleware.request_header.%s', $name);
-        $requestHeader = $this->createRequestHeaderMiddleware($container, $config['headers']);
+        $requestHeader = $this->createRequestHeaderMiddleware($config['headers']);
         $container->setDefinition($headerServiceName, $requestHeader);
 
         // Event Dispatching service
         $eventServiceName = sprintf('guzzle_bundle.middleware.event_dispatch.%s', $name);
-        $eventService = $this->createEventMiddleware($container, $name);
+        $eventService = $this->createEventMiddleware($name);
         $container->setDefinition($eventServiceName, $eventService);
 
         $headerExpression = new Expression(sprintf("service('%s').attach()", $headerServiceName));
@@ -118,7 +118,7 @@ class GuzzleExtension extends Extension {
                 $username = $wsseConfig['username'];
                 $password = $wsseConfig['password'];
 
-                $wsse = $this->createWsseMiddleware($container, $username, $password);
+                $wsse = $this->createWsseMiddleware($username, $password);
                 $wsseServiceName = sprintf('guzzle_bundle.middleware.wsse.%s', $name);
 
                 $container->setDefinition($wsseServiceName, $wsse);
@@ -149,7 +149,7 @@ class GuzzleExtension extends Extension {
      */
     protected function createLogger(ContainerBuilder $container) {
 
-        $logger = new Definition($container->getParameter('guzzle_bundle.logger.class'));
+        $logger = new Definition('%guzzle_bundle.logger.class%');
 
         $container->setDefinition('guzzle_bundle.logger', $logger);
 
@@ -162,13 +162,11 @@ class GuzzleExtension extends Extension {
      * @author Florian Preusner
      * @since  2015-07
      *
-     * @param  ContainerBuilder $container
-     *
      * @return Definition
      */
-    protected function createLogMiddleware(ContainerBuilder $container) {
+    protected function createLogMiddleware() {
 
-        $log = new Definition($container->getParameter('guzzle_bundle.middleware.log.class'));
+        $log = new Definition('%guzzle_bundle.middleware.log.class%');
         $log->addArgument(new Reference('guzzle_bundle.logger'));
         $log->addArgument(new Reference('guzzle_bundle.formatter'));
 
@@ -181,14 +179,13 @@ class GuzzleExtension extends Extension {
      * @author Florian Preusner
      * @since  2015-07
      *
-     * @param  ContainerBuilder $container
-     * @param  array            $headers
+     * @param  array $headers
      *
      * @return Definition
      */
-    protected function createRequestHeaderMiddleware(ContainerBuilder $container, array $headers) {
+    protected function createRequestHeaderMiddleware(array $headers) {
 
-        $requestHeader = new Definition($container->getParameter('guzzle_bundle.middleware.request_header.class'));
+        $requestHeader = new Definition('%guzzle_bundle.middleware.request_header.class%');
         $requestHeader->addArgument($this->cleanUpHeaders($headers));
 
         return $requestHeader;
@@ -200,12 +197,12 @@ class GuzzleExtension extends Extension {
      * @author Chris Warner
      * @since  2015-09
      *
-     * @param ContainerBuilder $container
+     * @param string name
      *
      * @return Definition
      */
-    protected function createEventMiddleware(ContainerBuilder $container, $name) {
-        $eventMiddleWare = new Definition($container->getParameter('guzzle_bundle.middleware.event_dispatcher.class'));
+    protected function createEventMiddleware($name) {
+        $eventMiddleWare = new Definition('%guzzle_bundle.middleware.event_dispatcher.class%');
         $eventMiddleWare->addArgument(new Reference('event_dispatcher'));
         $eventMiddleWare->addArgument($name);
 
@@ -218,15 +215,14 @@ class GuzzleExtension extends Extension {
      * @author Florian Preusner
      * @since  2015-07
      *
-     * @param  ContainerBuilder $container
-     * @param  string           $username
-     * @param  string           $password
+     * @param  string  $username
+     * @param  string  $password
      *
      * @return Definition
      */
-    protected function createWsseMiddleware(ContainerBuilder $container, $username, $password) {
+    protected function createWsseMiddleware($username, $password) {
 
-        $wsse = new Definition($container->getParameter('guzzle_bundle.middleware.wsse.class'));
+        $wsse = new Definition('%guzzle_bundle.middleware.wsse.class%');
         $wsse->setArguments([$username, $password]);
 
         return $wsse;

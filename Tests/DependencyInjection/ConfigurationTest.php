@@ -31,6 +31,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
                                 'user',
                                 'pass'
                             ],
+                            'query' => [
+                            ],
                             'cert' => 'path/to/cert',
                             'connect_timeout' => 5,
                             'debug' => false,

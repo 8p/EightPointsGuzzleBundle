@@ -2,34 +2,26 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
-use       Symfony\Component\DependencyInjection\ContainerBuilder,
-          Symfony\Component\DependencyInjection\Loader\XmlFileLoader,
-          Symfony\Component\DependencyInjection\Reference,
-          Symfony\Component\DependencyInjection\Definition,
-
-          Symfony\Component\Config\FileLocator,
-          Symfony\Component\Config\Definition\Processor,
-
-          Symfony\Component\HttpKernel\DependencyInjection\Extension,
-          Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\ExpressionLanguage\Expression;
 
 /**
- * GuzzleExtension
- *
- * @package   EightPoints\Bundle\GuzzleBundle\DependencyInjection
- * @author    Florian Preusner
- *
  * @version   1.0
  * @since     2013-10
  */
-class GuzzleExtension extends Extension {
-
+class GuzzleExtension extends Extension
+{
     protected $logFormatter;
 
     /**
      * Loads the Guzzle configuration.
      *
-     * @author  Florian Preusner
      * @version 1.0
      * @since   2013-10
      *
@@ -37,9 +29,12 @@ class GuzzleExtension extends Extension {
      * @param   ContainerBuilder $container a ContainerBuilder instance
      *
      * @throws  \InvalidArgumentException
+     * @throws  \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
+     * @throws  \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
+     * @throws  \Exception
      */
-    public function load(array $configs, ContainerBuilder $container) {
-
+    public function load(array $configs, ContainerBuilder $container)
+    {
         $configPath = implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Resources', 'config'));
         $loader     = new XmlFileLoader($container, new FileLocator($configPath));
 
@@ -51,7 +46,7 @@ class GuzzleExtension extends Extension {
 
         $this->createLogger($container);
 
-        foreach($config['clients'] as $name => $options) {
+        foreach ($config['clients'] as $name => $options) {
 
             $argument = [
                 'base_uri' => $options['base_url'],
@@ -78,10 +73,9 @@ class GuzzleExtension extends Extension {
             $serviceName = sprintf('%s.client.%s', $this->getAlias(), $name);
             $container->setDefinition($serviceName, $client);
         }
-    } // end: load()
+    }
 
     /**
-     * @author Florian Preusner
      * @since  2015-07
      *
      * @param  ContainerBuilder $container
@@ -89,9 +83,11 @@ class GuzzleExtension extends Extension {
      * @param  array            $config
      *
      * @return Definition
+     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
      */
-    protected function createHandler(ContainerBuilder $container, $name, array $config) {
-
+    protected function createHandler(ContainerBuilder $container, $name, array $config)
+    {
         $logServiceName = sprintf('guzzle_bundle.middleware.log.%s', $name);
         $log = $this->createLogMiddleware();
         $container->setDefinition($logServiceName, $log);
@@ -114,7 +110,7 @@ class GuzzleExtension extends Extension {
         $handler->setFactory(['GuzzleHttp\HandlerStack', 'create']);
 
         // Plugins
-        if(isset($config['plugin'])){
+        if (isset($config['plugin'])){
             // Wsse if required
             if (isset($config['plugin']['wsse'])
                 && $config['plugin']['wsse']['username']
@@ -143,84 +139,83 @@ class GuzzleExtension extends Extension {
         $handler->addMethodCall('unshift', [$eventExpression]);
 
         return $handler;
-    } // end: createHandler()
+    }
 
     /**
      * Create Logger
      *
-     * @author Florian Preusner
      * @since  2015-07
      *
      * @param  ContainerBuilder $container
      *
      * @return Definition
+     *
+     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      */
-    protected function createLogger(ContainerBuilder $container) {
+    protected function createLogger(ContainerBuilder $container)
+    {
 
         $logger = new Definition('%guzzle_bundle.logger.class%');
 
         $container->setDefinition('guzzle_bundle.logger', $logger);
 
         return $logger;
-    } // end: createLogger()
+    }
 
     /**
      * Create Middleware for Logging
      *
-     * @author Florian Preusner
      * @since  2015-07
      *
      * @return Definition
      */
-    protected function createLogMiddleware() {
-
+    protected function createLogMiddleware()
+    {
         $log = new Definition('%guzzle_bundle.middleware.log.class%');
         $log->addArgument(new Reference('guzzle_bundle.logger'));
         $log->addArgument(new Reference('guzzle_bundle.formatter'));
 
         return $log;
-    } // end: createLogMiddleware()
+    }
 
     /**
      * Create Middleware For Request Headers
      *
-     * @author Florian Preusner
      * @since  2015-07
      *
      * @param  array $headers
      *
      * @return Definition
      */
-    protected function createRequestHeaderMiddleware(array $headers) {
-
+    protected function createRequestHeaderMiddleware(array $headers)
+    {
         $requestHeader = new Definition('%guzzle_bundle.middleware.request_header.class%');
         $requestHeader->addArgument($this->cleanUpHeaders($headers));
 
         return $requestHeader;
-    } // end: createRequestHeaderMiddleware()
+    }
 
     /**
      * Create Middleware For dispatching events
      *
-     * @author Chris Warner
      * @since  2015-09
      *
-     * @param string name
+     * @param  string $name
      *
      * @return Definition
      */
-    protected function createEventMiddleware($name) {
+    protected function createEventMiddleware($name)
+    {
         $eventMiddleWare = new Definition('%guzzle_bundle.middleware.event_dispatcher.class%');
         $eventMiddleWare->addArgument(new Reference('event_dispatcher'));
         $eventMiddleWare->addArgument($name);
 
         return $eventMiddleWare;
-    } // end: createEventMiddleware()
+    }
 
     /**
      * Create Middleware for WSSE
      *
-     * @author Florian Preusner
      * @since  2015-07
      *
      * @param  string  $username
@@ -228,31 +223,30 @@ class GuzzleExtension extends Extension {
      *
      * @return Definition
      */
-    protected function createWsseMiddleware($username, $password) {
-
+    protected function createWsseMiddleware($username, $password)
+    {
         $wsse = new Definition('%guzzle_bundle.middleware.wsse.class%');
         $wsse->setArguments([$username, $password]);
 
         return $wsse;
-    } // end: createWsseMiddleware()
+    }
 
     /**
      * Clean up HTTP headers
      *
-     * @author Florian Preusner
      * @since  2015-07
      *
      * @param  array $headers
      *
      * @return array
      */
-    protected function cleanUpHeaders(array $headers) {
-
-        foreach($headers as $name => $value) {
+    protected function cleanUpHeaders(array $headers)
+    {
+        foreach ($headers as $name => $value) {
 
             // because of standard conventions in YAML dashes are converted to underscores
             // underscores are not allowed in HTTP standard, will be replaced by dash
-            $nameClean = str_replace( '_', '-', $name);
+            $nameClean = str_replace('_', '-', $name);
 
             unset($headers[$name]);
 
@@ -260,19 +254,18 @@ class GuzzleExtension extends Extension {
         }
 
         return $headers;
-    } // end: cleanHeaders()
+    }
 
     /**
      * Returns alias of extension
      *
-     * @author  Florian Preusner
      * @version 1.1
      * @since   2013-12
      *
      * @return  string
      */
-    public function getAlias() {
-
+    public function getAlias()
+    {
         return 'guzzle';
-    } // end: getAlias()
-} // end: GuzzleExtension
+    }
+}

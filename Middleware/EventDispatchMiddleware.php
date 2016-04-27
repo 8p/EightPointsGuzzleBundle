@@ -1,6 +1,6 @@
 <?php
-namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
+namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
 use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
 use Psr\Http\Message\RequestInterface;
@@ -10,13 +10,9 @@ use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
 use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
 
 /**
- * Class EventDispatchMiddleware
- *
  * Dispatches an Event using the Symfony Event Dispatcher.
  * Dispatches a PRE_TRANSACTION event, before the transaction is sent
  * Dispatches a POST_TRANMSACTION event, when the remote hosts responds.
- *
- * @package EightPoints\Bundle\GuzzleBundle\Middleware
  */
 class EventDispatchMiddleware
 {
@@ -24,6 +20,7 @@ class EventDispatchMiddleware
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
+
     private $serviceName;
 
     /**
@@ -43,10 +40,11 @@ class EventDispatchMiddleware
     public function dispatchEvent()
     {
         return function (callable $handler) {
+
             return function (
                 RequestInterface $request,
                 array $options
-            ) use ( $handler ) {
+            ) use ($handler) {
                 // Create the Pre Transaction event.
                 $preTransactionEvent = new PreTransactionEvent($request, $this->serviceName);
 

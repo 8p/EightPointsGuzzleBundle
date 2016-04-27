@@ -10,17 +10,11 @@ use GuzzleHttp\Psr7\Uri;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Class GuzzleExtensionTest
- *
- * @package   EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection
- * @author    Florian Preusner
- * @author    Sebastian Blum
- *
- * @version   2.1
- * @since     2015-05
+ * @version 2.1
+ * @since   2015-05
  */
-class GuzzleExtensionTest extends \PHPUnit_Framework_TestCase {
-
+class GuzzleExtensionTest extends \PHPUnit_Framework_TestCase
+{
     public function testGuzzleExtension()
     {
         $container = $this->createContainer();
@@ -95,4 +89,4 @@ class GuzzleExtensionTest extends \PHPUnit_Framework_TestCase {
             ],
         ];
     }
-} // end: GuzzleExtensionTest
+}

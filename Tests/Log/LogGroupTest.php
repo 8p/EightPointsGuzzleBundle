@@ -2,31 +2,25 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
-use       EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
+use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
 
 /**
- * Class LogGroupTest
- *
- * @package   EightPoints\Bundle\GuzzleBundle\Tests\Log
- * @author    Florian Preusner
- *
  * @version   2.1
  * @since     2015-05
  */
-class LogGroupTest extends \PHPUnit_Framework_TestCase {
-
+class LogGroupTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * Test Setting/Returning Request Name
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setRequestName
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getRequestName
      */
-    public function testRequestName() {
-
+    public function testRequestName()
+    {
         $group = new LogGroup();
 
         $this->assertNull($group->getRequestName());
@@ -34,20 +28,19 @@ class LogGroupTest extends \PHPUnit_Framework_TestCase {
         $group->setRequestName('test');
 
         $this->assertSame('test', $group->getRequestName());
-    } // end: testRequestName()
+    }
 
     /**
      * Test Setting/Returning Log Messages
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setMessages
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getMessages
      */
-    public function testMessages() {
-
+    public function testMessages()
+    {
         $group = new LogGroup();
 
         $this->assertTrue(is_array($group->getMessages()));
@@ -67,7 +60,7 @@ class LogGroupTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertCount(2, $group->getMessages());
 
-        foreach($group->getMessages() as $message) {
+        foreach ($group->getMessages() as $message) {
 
             $this->assertInstanceOf('EightPoints\Bundle\GuzzleBundle\Log\LogMessage', $message);
         }
@@ -77,5 +70,5 @@ class LogGroupTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertTrue(is_array($group->getMessages()));
         $this->assertEmpty($group->getMessages());
-    } // end: testMessages()
-} // end: LogGroupTest
+    }
+}

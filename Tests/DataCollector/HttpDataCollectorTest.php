@@ -2,19 +2,14 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\DataCollector;
 
-use       EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
+use EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
 
 /**
- * Class HttpDataCollectorTest
- *
- * @package   EightPoints\Bundle\GuzzleBundle\Tests\DataCollector
- * @author    Florian Preusner
- *
  * @version   2.1
  * @since     2015-05
  */
-class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase {
-
+class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger
      */
@@ -23,27 +18,25 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase {
     /**
      * SetUp: before executing each test function
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      */
-    public function setUp() {
-
+    public function setUp()
+    {
         $this->logger = $this->getMockBuilder('EightPoints\Bundle\GuzzleBundle\Log\Logger')
                              ->getMock();
-    } // end: setUp()
+    }
 
     /**
      * Test Constructor
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::__construct
      */
-    public function testConstruct() {
-
+    public function testConstruct()
+    {
         $collector = new HttpDataCollector($this->logger);
         $data      = unserialize($collector->serialize());
         $expected  = array(
@@ -52,12 +45,11 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase {
         );
 
         $this->assertSame($expected, $data);
-    } // end: testConstruct()
+    }
 
     /**
      * Test Collecting Data
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      *
@@ -65,8 +57,8 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase {
      * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogs
      * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogGroup
      */
-    public function testCollect() {
-
+    public function testCollect()
+    {
         $this->logger->expects($this->once())
                      ->method('getMessages')
                      ->willReturn(array('test message'));
@@ -86,42 +78,40 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase {
         $logs = $collector->getLogs();
 
         /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogGroup $log */
-        foreach($logs as $log) {
+        foreach ($logs as $log) {
 
             $this->assertInstanceOf('EightPoints\Bundle\GuzzleBundle\Log\LogGroup', $log);
 
             $this->assertSame(array('test message'), $log->getMessages());
             $this->assertSame('id', $log->getRequestName());
         }
-    } // end: testCollect()
+    }
 
     /**
      * Test Collector Name
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getName
      */
-    public function testName() {
-
+    public function testName()
+    {
         $collector = new HttpDataCollector($this->logger);
 
         $this->assertSame('guzzle', $collector->getName());
-    } // end: testName()
+    }
 
     /**
      * Test Log Messages
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getMessages
      */
-    public function testMessages() {
-
+    public function testMessages()
+    {
         $this->logger->expects($this->once())
                      ->method('getMessages')
                      ->willReturn(['test message #1', 'test message #2']);
@@ -141,24 +131,23 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase {
         $messages = $collector->getMessages();
 
         /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogMessage $message */
-        foreach($messages as $i => $message) {
+        foreach ($messages as $i => $message) {
 
             $text = sprintf('test message #%d', ($i + 1));
             $this->assertSame($text, $message);
         }
-    } // end: testMessages()
+    }
 
     /**
      * Test Call Count
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getCallCount
      */
-    public function testCallCount() {
-
+    public function testCallCount()
+    {
         $this->logger->expects($this->once())
                      ->method('getMessages')
                      ->willReturn(['test message #1', 'test message #2']);
@@ -176,33 +165,31 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase {
         $collector->collect($request, $response);
 
         $this->assertSame(2, $collector->getCallCount());
-    } // end: testCallCount()
+    }
 
     /**
      * Test Error Count
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getErrorCount
      */
-    public function testErrorCount() {
-
+    public function testErrorCount()
+    {
         // implement me
-    } // end: testErrorCount()
+    }
 
     /**
      * Test Total Time
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getTotalTime
      */
-    public function testTotalTime() {
-
+    public function testTotalTime()
+    {
         // implement me
-    } // end: testTotalTime()
-} // end: HttpDataCollectorTest
+    }
+}

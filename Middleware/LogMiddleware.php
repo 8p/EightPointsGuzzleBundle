@@ -2,22 +2,16 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
-use       GuzzleHttp\Exception\RequestException,
-          GuzzleHttp\MessageFormatter,
-
-          Psr\Log\LoggerInterface;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\MessageFormatter;
+use Psr\Log\LoggerInterface;
 
 /**
- * Middleware
- *
- * @package   EightPoints\Bundle\GuzzleBundle\Handler
- * @author    Florian Preusner
- *
  * @version   3.0
  * @since     2015-06
  */
-class LogMiddleware {
-
+class LogMiddleware
+{
     /**
      * @var MessageFormatter
      */
@@ -29,32 +23,28 @@ class LogMiddleware {
     protected $logger;
 
     /**
-     * Middleware
-     *
-     * @author  Florian Preusner
      * @since   2015-06
      * @version 3.0
      *
      * @param LoggerInterface  $logger
      * @param MessageFormatter $formatter
      */
-    public function __construct(LoggerInterface $logger, MessageFormatter $formatter) {
-
+    public function __construct(LoggerInterface $logger, MessageFormatter $formatter)
+    {
         $this->logger    = $logger;
         $this->formatter = $formatter;
-    } // end: __construct()
+    }
 
     /**
      * Logging each Request
      *
-     * @author  Florian Preusner
      * @since   2015-06
      * @version 3.0
      *
      * @return  callable
      */
-    public function log() {
-
+    public function log()
+    {
         $logger    = $this->logger;
         $formatter = $this->formatter;
 
@@ -87,5 +77,5 @@ class LogMiddleware {
                 );
             };
         };
-    } // end: log()
-} // end: Middleware
+    }
+}

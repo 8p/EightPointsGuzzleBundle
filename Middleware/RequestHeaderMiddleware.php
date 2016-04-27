@@ -2,19 +2,16 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
-use       Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Adds headers to request
  *
- * @package   EightPoints\Bundle\GuzzleBundle\Middleware
- * @author    Florian Preusner
- *
  * @version   3.0
  * @since     2015-06
  */
-class RequestHeaderMiddleware {
-
+class RequestHeaderMiddleware
+{
     /**
      * @var array $headers
      */
@@ -23,53 +20,47 @@ class RequestHeaderMiddleware {
     /**
      * Constructor
      *
-     * @author  Florian Preusner
      * @version 1.0
      * @since   2013-10
      *
      * @param   array $headers
      */
-    public function __construct(array $headers) {
-
+    public function __construct(array $headers)
+    {
         $this->setHeaders($headers);
-    } // end: __construct()
+    }
 
     /**
      * Retrieve headers that have been set
      *
-     * @author  Florian Preusner
      * @version 1.0
      * @since   2013-10
      *
      * @return  array $headers
      */
-    public function getHeaders() {
-
+    public function getHeaders()
+    {
         return $this->headers;
-    } // end: getHeaders()
+    }
 
     /**
      * Set headers
      *
-     * @author  Florian Preusner
      * @version 1.0
      * @since   2013-10
      *
      * @param   array $headers
      * @return  void
      */
-    public function setHeaders(array $headers) {
-
-        foreach($headers as $name => $value) {
+    public function setHeaders(array $headers)
+    {
+        foreach ($headers as $name => $value) {
 
             $this->addHeader($name, $value);
         }
-    } // end: setHeaders()
+    }
 
     /**
-     * Add header
-     *
-     * @author  Florian Preusner
      * @version 1.0
      * @since   2013-10
      *
@@ -78,47 +69,45 @@ class RequestHeaderMiddleware {
      *
      * @return  void
      */
-    public function addHeader($key, $value) {
-
+    public function addHeader($key, $value)
+    {
         $this->headers[$key] = $value;
-    } // end: addHeader()
+    }
 
     /**
      * Get specified header
      *
-     * @author  Florian Preusner
      * @version 1.0
      * @since   2013-10
      *
      * @param   string $key
      * @return  string
      */
-    public function getHeader($key) {
-
-        if(isset($this->headers[$key])) {
+    public function getHeader($key)
+    {
+        if (array_key_exists($key, $this->headers)) {
 
             return $this->headers[$key];
         }
 
         return null;
-    } // end: getHeader()
+    }
 
     /**
      * Add given headers to request
      *
-     * @author  Florian Preusner
      * @version 3.0
      * @since   2015-06
      *
      * @return  callable
      */
-    public function attach() {
-
+    public function attach()
+    {
         return function (callable $handler) {
 
             return function (RequestInterface $request, array $options) use ($handler) {
 
-                foreach($this->getHeaders() as $key => $value) {
+                foreach ($this->getHeaders() as $key => $value) {
 
                     $request = $request->withHeader($key, $value);
                 }
@@ -126,5 +115,5 @@ class RequestHeaderMiddleware {
                 return $handler($request, $options);
             };
         };
-    } // end: attach()
-} // end: RequestHeaderMiddleware
+    }
+}

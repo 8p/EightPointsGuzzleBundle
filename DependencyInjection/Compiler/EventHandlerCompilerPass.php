@@ -1,14 +1,10 @@
 <?php
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler;
-use \Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-/**
- * Class EventHandlerCompilerPass
- *
- * @package EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler
- */
 class EventHandlerCompilerPass implements CompilerPassInterface
 {
     /**
@@ -19,25 +15,28 @@ class EventHandlerCompilerPass implements CompilerPassInterface
      * For each one we find, we check if the service key is set, and then
      * call setServiceName on each EventListener.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     *
      * @api
+     *
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @return void
+     *
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
      */
     public function process(ContainerBuilder $container)
     {
         $taggedServices = $container->findTaggedServiceIds('kernel.event_listener');
 
-        foreach($taggedServices as $id => $tags) {
+        foreach ($taggedServices as $id => $tags) {
             foreach ($tags as $attributes) {
-                if(strstr($attributes['event'], 'guzzle_bundle') !== false) {
-                    if(isset($attributes['service'])) {
-                        $container->getDefinition($id)->addMethodCall(
-                            'setServiceName', [$attributes['service']]
-                        );
-                    }
+                if (array_key_exists('service', $attributes)
+                    && false !== strstr($attributes['event'], 'guzzle_bundle')) {
+
+                    $container->getDefinition($id)->addMethodCall(
+                        'setServiceName',
+                        [$attributes['service']]
+                    );
                 }
             }
         }
     }
-
 }

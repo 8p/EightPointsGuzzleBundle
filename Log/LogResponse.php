@@ -2,19 +2,14 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Log;
 
-use       Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class LogResponse
- *
- * @package EightPoints\Bundle\GuzzleBundle\Log
- * @author  Florian Preusner
- *
  * @version 2.1
  * @since   2015-05
  */
-class LogResponse {
-
+class LogResponse
+{
     /**
      * @var integer
      */
@@ -43,172 +38,160 @@ class LogResponse {
     /**
      * Construct
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @param   ResponseInterface $response
      */
-    public function __construct(ResponseInterface $response) {
-
+    public function __construct(ResponseInterface $response)
+    {
         $this->save($response);
-    } // end: __construct()
+    }
 
     /**
      * Save data
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @param   ResponseInterface $response
      */
-    public function save(ResponseInterface $response) {
-
+    public function save(ResponseInterface $response)
+    {
         $this->setStatusCode($response->getStatusCode());
         $this->setStatusPhrase($response->getReasonPhrase());
-        $this->setBody($response->getBody()->__toString());
+        $this->setBody((string)$response->getBody());
         $this->setHeaders($response->getHeaders());
         $this->setProtocolVersion($response->getProtocolVersion());
-    } // end: save()
+    }
 
     /**
      * Return HTTP status code
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @return  integer
      */
-    public function getStatusCode() {
-
+    public function getStatusCode()
+    {
         return $this->statusCode;
-    } // end: getStatusCode()
+    }
 
     /**
      * Set HTTP status code
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @param   integer $value
      */
-    public function setStatusCode($value) {
-
+    public function setStatusCode($value)
+    {
         $this->statusCode = $value;
-    } // end: setStatusCode()
+    }
 
     /**
      * Return HTTP status phrase
      *
-     * @author  Florian Preusner
      * @version 4.0
      * @since   2015-07
      *
      * @return  string
      */
-    public function getStatusPhrase() {
-
+    public function getStatusPhrase()
+    {
         return $this->statusPhrase;
-    } // end: getStatusPhrase()
+    }
 
     /**
      * Set HTTP status phrase
      *
-     * @author  Florian Preusner
      * @version 4.0
      * @since   2015-07
      *
      * @param   string $value
      */
-    public function setStatusPhrase($value) {
-
+    public function setStatusPhrase($value)
+    {
         $this->statusPhrase = $value;
-    } // end: setStatusPhrase()
+    }
 
     /**
      * Return response body
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @return  string
      */
-    public function getBody() {
-
+    public function getBody()
+    {
         return $this->body;
-    } // end: getBody()
+    }
 
     /**
      * Set response body
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @param   string $value
      */
-    public function setBody($value) {
-
+    public function setBody($value)
+    {
         $this->body = $value;
-    } // end: setBody()
+    }
 
     /**
      * Return protocol version
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @return  string
      */
-    public function getProtocolVersion() {
-
+    public function getProtocolVersion()
+    {
         return $this->protocolVersion;
-    } // end: getProtocolVersion()
+    }
 
     /**
      * Set protocol version
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @param   string $value
      */
-    public function setProtocolVersion($value) {
-
+    public function setProtocolVersion($value)
+    {
         $this->protocolVersion = $value;
-    } // end: setProtocolVersion()
+    }
 
     /**
      * Return response headers
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @return  array
      */
-    public function getHeaders() {
-
+    public function getHeaders()
+    {
         return $this->headers;
-    } // end: getHeaders()
+    }
 
     /**
      * Set response headers
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @param   array $value
      */
-    public function setHeaders(array $value) {
-
+    public function setHeaders(array $value)
+    {
         $this->headers = $value;
-    } // end: setHeaders()
-} // end: LogResponse
+    }
+}

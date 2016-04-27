@@ -2,19 +2,15 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
-use       Symfony\Component\Config\Definition\Builder\TreeBuilder,
-          Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * Configuration
- *
- * @package EightPoints\Bundle\GuzzleBundle\DependencyInjection
- * @author  Florian Preusner
- *
  * @version 1.0
  * @since   2013-10
  */
-class Configuration implements ConfigurationInterface {
+class Configuration implements ConfigurationInterface
+{
 
     /**
      * @var string $alias
@@ -27,32 +23,29 @@ class Configuration implements ConfigurationInterface {
     protected $debug;
 
     /**
-     * Constructor
-     *
-     * @author  Florian Preusner
      * @version 1.0
      * @since   2013-10
      *
      * @param   string  $alias
      * @param   boolean $debug
      */
-    public function __construct($alias, $debug = false) {
-
+    public function __construct($alias, $debug = false)
+    {
         $this->alias = $alias;
         $this->debug = (boolean) $debug;
-    } // end: __construct()
+    }
 
     /**
      * Generates the configuration tree builder
      *
-     * @author  Florian Preusner
      * @version 1.0
      * @since   2013-10
      *
      * @return  TreeBuilder
+     * @throws  \RuntimeException
      */
-    public function getConfigTreeBuilder() {
-
+    public function getConfigTreeBuilder()
+    {
         $builder = new TreeBuilder();
         $builder->root($this->alias)
                 ->children()
@@ -62,18 +55,19 @@ class Configuration implements ConfigurationInterface {
                 ->end();
 
         return $builder;
-    } // end: getConfigTreeBuilder()
+    }
 
     /**
      * Create Clients Configuration
      *
-     * @author Florian Preusner
      * @since  2015-07
      *
-     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition|\Symfony\Component\Config\Definition\Builder\NodeDefinition
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     * @return \Symfony\Component\Config\Definition\Builder\NodeDefinition
+     * @throws \RuntimeException
      */
-    private function createClientsNode() {
-
+    private function createClientsNode()
+    {
         $builder = new TreeBuilder();
         $node    = $builder->root('clients');
 
@@ -158,5 +152,5 @@ class Configuration implements ConfigurationInterface {
             ->end();
 
         return $node;
-    } // end: createClientsNode()
-} // end: Configuration
+    }
+}

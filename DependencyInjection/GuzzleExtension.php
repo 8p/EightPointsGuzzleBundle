@@ -55,10 +55,8 @@ class GuzzleExtension extends Extension
 
             // if present, add default options to the constructor argument for the Guzzle client
             if (array_key_exists('options', $options) && is_array($options['options'])) {
-
-                foreach($options['options'] as $key => $value) {
-
-                    if($value === null || (is_array($value) && count($value) === 0)) {
+                foreach ($options['options'] as $key => $value) {
+                    if ($value === null || (is_array($value) && count($value) === 0)) {
                         continue;
                     }
 

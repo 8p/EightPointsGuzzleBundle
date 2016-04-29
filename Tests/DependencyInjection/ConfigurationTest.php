@@ -2,20 +2,15 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection;
 
-use       EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
-use       Symfony\Component\Config\Definition\Processor;
+use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
+use Symfony\Component\Config\Definition\Processor;
 
 /**
- * Class ConfigurationTest
- *
- * @package   EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection
- * @author    Florian Preusner
- *
  * @version   2.1
  * @since     2015-05
  */
-class ConfigurationTest extends \PHPUnit_Framework_TestCase {
-
+class ConfigurationTest extends \PHPUnit_Framework_TestCase
+{
     public function testSingleClientConfigWithOptions()
     {
         $config = [
@@ -63,4 +58,4 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals(array_merge($config['guzzle'], [ 'logging' => false ]), $processedConfig);
     }
-} // end: ConfigurationTest
+}

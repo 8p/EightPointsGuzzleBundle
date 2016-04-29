@@ -2,19 +2,14 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
-use       EightPoints\Bundle\GuzzleBundle\Log\LogResponse;
+use EightPoints\Bundle\GuzzleBundle\Log\LogResponse;
 
 /**
- * Class LogResponseTest
- *
- * @package   EightPoints\Bundle\GuzzleBundle\Tests\Log
- * @author    Florian Preusner
- *
  * @version   2.1
  * @since     2015-05
  */
-class LogResponseTest extends \PHPUnit_Framework_TestCase {
-
+class LogResponseTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var \GuzzleHttp\Psr7\Response
      */
@@ -33,12 +28,11 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
     /**
      * SetUp: before executing each test function
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      */
-    public function setUp() {
-
+    public function setUp()
+    {
         $this->response = $this->getMockBuilder('GuzzleHttp\Psr7\Response')
                                ->disableOriginalConstructor()
                                ->getMock();
@@ -53,12 +47,11 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
         $this->response->method('getHeaders')->willReturn($this->headers);
         $this->response->method('getBody')->willReturn($bodyMock);
         $this->response->method('getProtocolVersion')->willReturn('1.1');
-    } // end: setUp()
+    }
 
     /**
      * Test Status Code
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      *
@@ -67,17 +60,16 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getStatusCode
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setStatusCode
      */
-    public function testStatusCode() {
-
+    public function testStatusCode()
+    {
         $response = new LogResponse($this->response);
 
         $this->assertSame(200, $response->getStatusCode());
-    } // end: testStatusCode()
+    }
 
     /**
      * Test Body
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      *
@@ -86,17 +78,16 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getBody
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setBody
      */
-    public function testBody() {
-
+    public function testBody()
+    {
         $response = new LogResponse($this->response);
 
         $this->assertSame('test body', $response->getBody());
-    } // end: testBody()
+    }
 
     /**
      * Test Protocol Version
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      *
@@ -105,17 +96,16 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getProtocolVersion
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setProtocolVersion
      */
-    public function testProtocolVersion() {
-
+    public function testProtocolVersion()
+    {
         $response = new LogResponse($this->response);
 
         $this->assertSame('1.1', $response->getProtocolVersion());
-    } // end: testProtocolVersion()
+    }
 
     /**
      * Test Headers
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-06
      *
@@ -124,10 +114,10 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase {
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getHeaders
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setHeaders
      */
-    public function testHeaders() {
-
+    public function testHeaders()
+    {
         $response = new LogResponse($this->response);
 
         $this->assertSame($this->headers, $response->getHeaders());
-    } // end: testProtocolVersion()
-} // end: LogResponseTest
+    }
+}

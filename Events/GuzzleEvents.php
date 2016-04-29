@@ -1,11 +1,7 @@
 <?php
+
 namespace EightPoints\Bundle\GuzzleBundle\Events;
 
-/**
- * Class GuzzleEvents
- *
- * @package EightPoints\Bundle\GuzzleBundle\Events
- */
 final class GuzzleEvents
 {
     const PRE_TRANSACTION = 'guzzle_bundle.pre_transaction';

@@ -5,11 +5,6 @@ namespace EightPoints\Bundle\GuzzleBundle\Events;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\Event;
 
-/**
- * Class PostTransactionEvent
- *
- * @package EightPoints\Bundle\GuzzleBundle\Events
- */
 class PostTransactionEvent extends Event
 {
     /**
@@ -25,7 +20,8 @@ class PostTransactionEvent extends Event
     /**
      * PostTransactionEvent constructor.
      *
-     * @param ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param string                              $serviceName
      */
     public function __construct(ResponseInterface $response, $serviceName)
     {

@@ -2,64 +2,59 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
-use       EightPoints\Bundle\GuzzleBundle\Log\Logger,
-          EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
+use EightPoints\Bundle\GuzzleBundle\Log\Logger;
+use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 
 /**
  * Class LoggerTest
  *
  * @package   EightPoints\Bundle\GuzzleBundle\Tests\Log
- * @author    Florian Preusner
  *
  * @version   2.1
  * @since     2015-05
  */
-class LoggerTest extends \PHPUnit_Framework_TestCase {
-
-
+class LoggerTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * Test Instance
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * covers  EightPoints\Bundle\GuzzleBundle\Log\Logger::__construct
      */
-    public function testConstruct() {
-
+    public function testConstruct()
+    {
         $this->assertInstanceOf('Psr\Log\LoggerInterface', new Logger());
-    } // end: testConstruct()
+    }
 
     /**
      * Test Messages
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\Logger::hasMessages
      */
-    public function testHasMessages() {
-
+    public function testHasMessages()
+    {
         $logger = new Logger();
         $this->assertFalse($logger->hasMessages());
 
         $logger->log('test', 'test message');
         $this->assertTrue($logger->hasMessages());
-    } // end: testHasMessages()
+    }
 
     /**
      * Test Returning Messages
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\Logger::getMessages
      */
-    public function testGetMessages() {
-
+    public function testGetMessages()
+    {
         $logger = new Logger();
         $this->assertCount(0, $logger->getMessages());
 
@@ -72,7 +67,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase {
         $messages = $logger->getMessages();
 
         /** @var LogMessage $message */
-        foreach($messages as $message) {
+        foreach ($messages as $message) {
 
             $this->assertInstanceOf('EightPoints\Bundle\GuzzleBundle\Log\LogMessage', $message);
             $this->assertSame('test', $message->getLevel());
@@ -99,19 +94,18 @@ class LoggerTest extends \PHPUnit_Framework_TestCase {
         $this->assertSame('info message', $message->getMessage());
 
         $this->assertInstanceOf('EightPoints\Bundle\GuzzleBundle\Log\LogRequest', $message->getRequest());
-    } // end: testGetMessages()
+    }
 
     /**
      * Test Clearing Messages
      *
-     * @author  Florian Preusner
      * @version 2.1
      * @since   2015-05
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\Logger::clear
      */
-    public function testClear() {
-
+    public function testClear()
+    {
         $logger = new Logger();
         $logger->log('test', 'test message');
         $logger->log('test', 'test message');
@@ -123,5 +117,5 @@ class LoggerTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertCount(0, $logger->getMessages());
         $this->assertFalse($logger->hasMessages());
-    } // end: testClear()
-} // end: LoggerTest
+    }
+}

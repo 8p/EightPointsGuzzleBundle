@@ -33,8 +33,8 @@ class HttpDataCollector extends DataCollector
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
-        $this->data   = array(
-            'logs'      => array(),
+        $this->data = array(
+            'logs' => array(),
             'callCount' => 0,
         );
     }
@@ -47,7 +47,7 @@ class HttpDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        $messages  = $this->logger->getMessages();
+        $messages = $this->logger->getMessages();
         $requestId = $request->getUri();
 
         // clear log to have only messages related to Symfony request context
@@ -161,4 +161,33 @@ class HttpDataCollector extends DataCollector
 
         return $this->data['logs'][$id];
     }
+
+    /**
+     * Return the color used version
+     * @since 2016-06
+     *
+     * @return string
+     */
+    public final function getIconColor()
+    {
+        if ((float)$this->getSymfonyVersion() >= 2.8) {
+            return $this->data['iconColor'] = '#AAAAAA';
+        }
+        return $this->data['iconColor'] = '#3F3F3F';
+    }
+
+    /**
+     * Returns current version symfony
+     * @since  2016-06
+     *
+     * @return string
+     */
+    private function getSymfonyVersion()
+    {
+        $symfonyVersion = \Symfony\Component\HttpKernel\Kernel::VERSION;
+        $symfonyVersion = explode('.', $symfonyVersion, -1);
+        $symfonyMajorMinorVersion = implode('.', $symfonyVersion);
+        return $symfonyMajorMinorVersion;
+    }
+
 }

@@ -60,8 +60,9 @@ guzzle:
             # plugin settings
             plugin:
                 wsse:
-                    username: acme
-                    password: pa55w0rd
+                    username:   "acme"
+                    password:   "pa55w0rd"
+                    created_at: "-10 seconds" # optional
                     
         api_crm:
             base_url: "http://api.crm.tld"

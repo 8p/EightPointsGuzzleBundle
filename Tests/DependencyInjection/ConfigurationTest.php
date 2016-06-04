@@ -45,7 +45,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'plugin' => [
                             'wsse' => [
                                 'username' => 'user',
-                                'password' => 'pass'
+                                'password' => 'pass',
+                                'created_at' => false
                             ]
                         ]
                     ]
@@ -56,6 +57,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $processor = new Processor();
         $processedConfig = $processor->processConfiguration(new Configuration(true), $config);
 
-        $this->assertEquals(array_merge($config['guzzle'], [ 'logging' => false ]), $processedConfig);
+        $this->assertEquals(array_merge($config['guzzle'], ['logging' => false]), $processedConfig);
     }
 }

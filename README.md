@@ -72,8 +72,9 @@ guzzle:
 ```
 All these settings are optional. If WSSE username is defined the WSSE plugin will be injected automatically.
 
-Using services in controller (guzzle.client.**api_crm** represents the client name of the yaml config):
+Using services in controller (guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
 ``` php
+/** @var \GuzzleHttp\Client $client */
 $client   = $this->get('guzzle.client.api_crm');
 $response = $client->get('/users');
 ```

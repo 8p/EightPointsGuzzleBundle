@@ -144,6 +144,7 @@ class Configuration implements ConfigurationInterface
                                 ->children()
                                     ->scalarNode('username')->defaultFalse()->end()
                                     ->scalarNode('password')->defaultValue('')->end()
+                                    ->scalarNode('created_at')->defaultFalse()->end()
                                 ->end()
                             ->end()
                         ->end()

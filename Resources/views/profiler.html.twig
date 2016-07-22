@@ -71,7 +71,7 @@
                             <tr>
                                 <th>Body</th>
                                 <td>
-                                    <textarea readonly id="resposeBody">{{ message.response.body }}</textarea>
+                                    <textarea readonly id="responseBody">{{ message.response.body }}</textarea>
                                 </td>
                             </tr>
                         </table>
@@ -87,7 +87,7 @@
                 var requestBody = $('#requestBody');
                 requestBody.val(formatJson(requestBody.val()));
 
-                var responseBody = $('#resposeBody');
+                var responseBody = $('#responseBody');
                 responseBody.val(formatJson(responseBody.val()));
 
                 function formatJson(json) {

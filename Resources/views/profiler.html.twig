@@ -19,8 +19,7 @@
                     <a href="javascript:;">
                         <span class="method">{{ message.request.method }}</span>
                         <span class="url">{{ message.request.url }}</span>
-                        <span class="response">{{ message.response.statusPhrase }} ({{ message.response.statusCode }}
-                            )</span>
+                        <span class="response">{{ message.response.statusPhrase }} ({{ message.response.statusCode }})</span>
                     </a>
                 </h3>
                 <div class="content" {{ firstRequest ? 'style="display: none;"': '' }}>

@@ -93,7 +93,11 @@
 
                 function formatJson(json) {
                     if (json) {
-                        return JSON.stringify(JSON.parse(json), null, 2);
+                        try{
+                            return JSON.stringify(JSON.parse(json), null, 2);
+                        }catch(error){
+                            //different formats json ex: xml
+                        }
                     }
                 }
             </script>

@@ -119,8 +119,13 @@ class GuzzleExtension extends Extension
 
                 $username = $wsseConfig['username'];
                 $password = $wsseConfig['password'];
+                $createdAtExpression = null;
+                
+                if (isset($wsseConfig['created_at']) && $wsseConfig['created_at']) {
+                    $createdAtExpression = $wsseConfig['created_at'];
+                }
 
-                $wsse = $this->createWsseMiddleware($username, $password);
+                $wsse = $this->createWsseMiddleware($username, $password, $createdAtExpression);
                 $wsseServiceName = sprintf('guzzle_bundle.middleware.wsse.%s', $name);
 
                 $container->setDefinition($wsseServiceName, $wsse);
@@ -218,13 +223,18 @@ class GuzzleExtension extends Extension
      *
      * @param  string  $username
      * @param  string  $password
+     * @param  string  $createdAtExpression
      *
      * @return Definition
      */
-    protected function createWsseMiddleware($username, $password)
+    protected function createWsseMiddleware($username, $password, $createdAtExpression = null)
     {
         $wsse = new Definition('%guzzle_bundle.middleware.wsse.class%');
         $wsse->setArguments([$username, $password]);
+
+        if ($createdAtExpression) {
+            $wsse->addMethodCall('setCreatedAtTimeExpression', array($createdAtExpression));
+        }
 
         return $wsse;
     }

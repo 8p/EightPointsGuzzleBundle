@@ -13,18 +13,21 @@
 }
 
 #guzzle_profiler textarea {
-    background-color: #404040;
+    background-color: #222;
     border: 1px solid #636363;
     border-radius: 6px;
     min-height: 100px;
-    max-height: 250px;
-    width: 100%;
+
     overflow: auto;
     color: #EBEBEB;
     line-height: 1.2em;
     font: 12px Menlo, Monaco, Consolas, monospace;
     white-space: pre-wrap;
     word-wrap: break-word;
+    width:100%;
+    max-height:90%;
+    resize: vertical;
+
 }
 
 #guzzle_profiler .request {

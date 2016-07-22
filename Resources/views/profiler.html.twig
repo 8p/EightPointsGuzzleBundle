@@ -4,13 +4,13 @@
     </p>
 {% else %}
 
-<div id="guzzle_profiler">
+    <div id="guzzle_profiler">
 
-    {% set firstRequest = false %}
+        {% set firstRequest = false %}
 
-    {% for group in collector.logs %}
+        {% for group in collector.logs %}
 
-        <h2>Group {{ group.requestName }}</h2>
+            <h2>Group {{ group.requestName }}</h2>
 
         {% for i, message in group.messages %}
 
@@ -50,7 +50,7 @@
                             <tr>
                                 <th>Body</th>
                                 <td>
-                                    <textarea>{{ message.request.body }}</textarea>
+                                    <textarea readonly id="requestBody">{{ message.request.body }}</textarea>
                                 </td>
                             </tr>
                         </table>
@@ -71,7 +71,7 @@
                             <tr>
                                 <th>Body</th>
                                 <td>
-                                    <textarea>{{ message.response.body }}</textarea>
+                                    <textarea readonly id="responseBody">{{ message.response.body }}</textarea>
                                 </td>
                             </tr>
                         </table>
@@ -80,18 +80,34 @@
             </div>
 
             <script>
-                $("#request_{{ i }} h3 a").click(function() {
+                $("#request_{{ i }} h3 a").click(function () {
                     $("#request_{{ i }} .content").toggle("fast");
                 });
+
+                var requestBody = $('#requestBody');
+                requestBody.val(formatJson(requestBody.val()));
+
+                var responseBody = $('#responseBody');
+                responseBody.val(formatJson(responseBody.val()));
+
+                function formatJson(json) {
+                    if (json) {
+                        try{
+                            return JSON.stringify(JSON.parse(json), null, 2);
+                        }catch(error){
+                            //different formats json ex: xml
+                        }
+                    }
+                }
             </script>
 
-            {% set firstRequest = true  %}
-        {% else %}
+            {% set firstRequest = true %}
+            {% else %}
 
             <p>No Calls</p>
         {% endfor %}
-    {% endfor %}
+        {% endfor %}
 
-</div>
+    </div>
 
 {% endif %}

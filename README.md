@@ -8,12 +8,12 @@ It comes with a WSSE Auth Plugin that can be used optionally.
 GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
 ## Requirements
- - PHP 5.5 or above
- - Symfony 2.6 or above
+ - PHP 5.6 or above
+ - Symfony 2.7 or above
  - [Guzzle PHP Framework][1] (included by composer)
  - [WSSE Auth Plugin][3] (included by composer)
 
- 
+
 ## Installation
 To install this bundle, run the command below and you will get the latest version by [Packagist][4].
 
@@ -63,12 +63,12 @@ guzzle:
                     username:   "acme"
                     password:   "pa55w0rd"
                     created_at: "-10 seconds" # optional
-                    
+
         api_crm:
             base_url: "http://api.crm.tld"
             headers:
                 Accept: "application/json"
-                            
+
         ...
 ```
 All these settings are optional. If WSSE username is defined the WSSE plugin will be injected automatically.
@@ -100,7 +100,7 @@ The service on the tag, is so that if you have multiple REST endpoints you can d
 
 ## Suggestions
 Adding aliases:
-If you want to use different names for provided services you can use aliases. This is a good idea if you don't want 
+If you want to use different names for provided services you can use aliases. This is a good idea if you don't want
 have any dependency to guzzle in your service name.
 ``` yaml
 services:

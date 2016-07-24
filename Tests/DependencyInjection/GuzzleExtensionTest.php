@@ -63,7 +63,7 @@ class GuzzleExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
         $container->setParameter('kernel.debug', true);
-        $container->set('event_dispatcher', $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $container->set('event_dispatcher', $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
 
         return $container;
     }

@@ -21,7 +21,7 @@ class PostTransactionEventTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         $serviceName = 'service name';
-        $response    = $this->getMock('GuzzleHttp\Psr7\Response');
+        $response    = $this->createMock('GuzzleHttp\Psr7\Response');
         $postEvent   = new PostTransactionEvent($response, $serviceName);
 
         $this->assertSame($serviceName, $postEvent->getServiceName());
@@ -39,7 +39,7 @@ class PostTransactionEventTest extends \PHPUnit_Framework_TestCase
     public function testTranscation()
     {
         $statusCode = 204;
-        $response   = $this->getMock('GuzzleHttp\Psr7\Response');
+        $response   = $this->createMock('GuzzleHttp\Psr7\Response');
         $postEvent  = new PostTransactionEvent($response, null);
 
         $transMock = $this->getMockBuilder('GuzzleHttp\Psr7\Response')

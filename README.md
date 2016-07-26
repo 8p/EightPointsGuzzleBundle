@@ -1,4 +1,5 @@
 # Symfony GuzzleBundle [![Latest Stable Version](https://poser.pugx.org/eightpoints/guzzle-bundle/v/stable.png)](https://packagist.org/packages/eightpoints/guzzle-bundle) [![Total Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/downloads.png)](https://packagist.org/packages/eightpoints/guzzle-bundle) [![Build Status](https://travis-ci.org/8p/GuzzleBundle.svg)](https://travis-ci.org/8p/GuzzleBundle)
+[![Dependency Status](https://www.versioneye.com/user/projects/579776a874848d004b926e3c/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/579776a874848d004b926e3c)
 [![knpbundles.com](http://knpbundles.com/8p/GuzzleBundle/badge)](http://knpbundles.com/8p/GuzzleBundle)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590/big.png)](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590)
 

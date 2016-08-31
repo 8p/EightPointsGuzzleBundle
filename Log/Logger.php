@@ -40,7 +40,7 @@ class Logger implements LoggerInterface
                 $logMessage->setRequest(new LogRequest($context['request']));
             }
 
-            if (isset($context['response']) && !empty($context['response'])) {
+            if (!empty($context['response'])) {
                 $logMessage->setResponse(new LogResponse($context['response']));
             }
         }

@@ -36,7 +36,7 @@ class Logger implements LoggerInterface
         $logMessage->setLevel($level);
 
         if ($context) {
-            if (isset($context['request'])) {
+            if (!empty($context['request'])) {
                 $logMessage->setRequest(new LogRequest($context['request']));
             }
 

@@ -45,6 +45,7 @@ class LogGroupTest extends \PHPUnit_Framework_TestCase {
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setMessages
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getMessages
+     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::addMessages
      */
     public function testMessages() {
 
@@ -61,11 +62,19 @@ class LogGroupTest extends \PHPUnit_Framework_TestCase {
                          ->disableOriginalConstructor()
                          ->getMock();
 
+        $message3 = $this->getMockBuilder('EightPoints\Bundle\GuzzleBundle\Log\LogMessage')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $messages = [$message1, $message2];
 
         $group->setMessages($messages);
 
         $this->assertCount(2, $group->getMessages());
+
+        $group->addMessages([$message3]);
+
+        $this->assertCount(3, $group->getMessages());
 
         foreach($group->getMessages() as $message) {
 

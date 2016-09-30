@@ -60,7 +60,7 @@ class LogGroup
     /**
      * Add Log Messages
      *
-     * @version 4.6
+     * @version 4.5
      * @since   2016-09
      *
      * @param   array $value

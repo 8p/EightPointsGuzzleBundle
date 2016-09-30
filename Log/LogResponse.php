@@ -67,7 +67,15 @@ class LogResponse {
 
         $this->setStatusCode($response->getStatusCode());
         $this->setStatusPhrase($response->getReasonPhrase());
+
+        if($response->getBody()->isSeekable()) {
+            $readPosition = $response->getBody()->tell();
+        }
         $this->setBody($response->getBody()->__toString());
+        if($response->getBody()->isSeekable()) {
+            $response->getBody()->seek($readPosition);
+        }
+
         $this->setHeaders($response->getHeaders());
         $this->setProtocolVersion($response->getProtocolVersion());
     } // end: save()

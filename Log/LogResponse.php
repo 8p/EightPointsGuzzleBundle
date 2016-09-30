@@ -60,7 +60,19 @@ class LogResponse
     {
         $this->setStatusCode($response->getStatusCode());
         $this->setStatusPhrase($response->getReasonPhrase());
-        $this->setBody((string)$response->getBody());
+
+        // rewind to previous position after response body
+        $readPosition = null;
+        if($response->getBody()->isSeekable()) {
+            $readPosition = $response->getBody()->tell();
+        }
+
+        $this->setBody($response->getBody()->__toString());
+
+        if($readPosition) {
+            $response->getBody()->seek($readPosition);
+        }
+
         $this->setHeaders($response->getHeaders());
         $this->setProtocolVersion($response->getProtocolVersion());
     }

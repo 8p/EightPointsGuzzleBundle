@@ -93,7 +93,18 @@ class LogRequest
         $this->setHeaders($request->getHeaders());
         $this->setProtocolVersion($request->getProtocolVersion());
         $this->setMethod($request->getMethod());
-        $this->setBody($request->getBody() ? (string) $request->getBody() : null);
+
+        // rewind to previous position after logging request
+        $readPosition = null;
+        if($request->getBody() && $request->getBody()->isSeekable()) {
+            $readPosition = $request->getBody()->tell();
+        }
+
+        $this->setBody($request->getBody() ? $request->getBody()->__toString() : null);
+
+        if($readPosition) {
+            $request->getBody()->seek($readPosition);
+        }
     }
 
     /**

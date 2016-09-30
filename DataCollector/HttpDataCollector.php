@@ -62,7 +62,7 @@ class HttpDataCollector extends DataCollector {
 
         $logGroup = $this->getLogGroup($requestId);
         $logGroup->setRequestName($request->getPathInfo());
-        $logGroup->setMessages($messages);
+        $logGroup->addMessages($messages);
     } // end: collect()
 
     /**

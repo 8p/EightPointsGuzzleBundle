@@ -66,6 +66,19 @@ class LogGroup {
     } // end: setMessages()
 
     /**
+     * Add Log Messages
+     *
+     * @author  Bart Swaalf
+     * @since   2016-09
+     *
+     * @param   array $value
+     */
+    public function addMessages(array $value) {
+
+        $this->messages = array_merge($this->messages, $value);
+    } // end: addMessages()
+
+    /**
      * Return Log Messages
      *
      * @author  Florian Preusner

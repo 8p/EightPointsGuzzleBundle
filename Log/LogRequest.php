@@ -96,7 +96,7 @@ class LogRequest
 
         // rewind to previous position after logging request
         $readPosition = null;
-        if($request->getBody()->isSeekable()) {
+        if($request->getBody() && $request->getBody()->isSeekable()) {
             $readPosition = $request->getBody()->tell();
         }
 

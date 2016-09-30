@@ -58,6 +58,19 @@ class LogGroup
     }
 
     /**
+     * Add Log Messages
+     *
+     * @author  Bart Swaalf
+     * @since   2016-09
+     *
+     * @param   array $value
+     */
+    public function addMessages(array $value) {
+
+        $this->messages = array_merge($this->messages, $value);
+    }
+
+    /**
      * Return Log Messages
      *
      * @version 2.1

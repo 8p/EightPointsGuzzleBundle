@@ -54,13 +54,21 @@ class LogGroupTest extends \PHPUnit_Framework_TestCase
                          ->disableOriginalConstructor()
                          ->getMock();
 
+        $message3 = $this->getMockBuilder('EightPoints\Bundle\GuzzleBundle\Log\LogMessage')
+                         ->disableOriginalConstructor()
+                         ->getMock();
+
         $messages = [$message1, $message2];
 
         $group->setMessages($messages);
 
         $this->assertCount(2, $group->getMessages());
 
-        foreach ($group->getMessages() as $message) {
+        $group->addMessages([$message3]);
+
+        $this->assertCount(3, $group->getMessages());
+
+        foreach($group->getMessages() as $message) {
 
             $this->assertInstanceOf('EightPoints\Bundle\GuzzleBundle\Log\LogMessage', $message);
         }

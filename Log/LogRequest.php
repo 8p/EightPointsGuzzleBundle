@@ -101,11 +101,14 @@ class LogRequest {
         $this->setProtocolVersion($request->getProtocolVersion());
         $this->setMethod($request->getMethod());
 
-        if($request->getBody()->isSeekable()) {
+        $readPosition = null;
+        if($request->getBody() && $request->getBody()->isSeekable()) {
             $readPosition = $request->getBody()->tell();
         }
+
         $this->setBody($request->getBody() ? $request->getBody()->__toString() : null);
-        if($request->getBody()->isSeekable()) {
+
+        if($readPosition) {
             $request->getBody()->seek($readPosition);
         }
 

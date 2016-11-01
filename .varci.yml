@@ -24,6 +24,5 @@ ruleset:
     varci_merge:
         name:   "Automatically merge .varci.yml changes"
         events: [ pull_request ]
-        when:
-            - ".varci.yml" in files
+        when:   files has ".varci.yml"
         merge:  true

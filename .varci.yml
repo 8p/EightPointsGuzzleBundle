@@ -20,9 +20,3 @@ ruleset:
             @{{ user.login }}, the issue description is too short. Please reopen it
             once you have amended the description to contain more than the requirement
             of 50 characters.
-
-    varci_merge:
-        name:   "Automatically merge .varci.yml changes"
-        events: [ pull_request ]
-        when:   files has ".varci.yml"
-        merge:  true

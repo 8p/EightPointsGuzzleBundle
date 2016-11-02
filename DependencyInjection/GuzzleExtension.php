@@ -44,7 +44,7 @@ class GuzzleExtension extends Extension
         $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'));
         $config        = $processor->processConfiguration($configuration, $configs);
 
-        $this->createLogger($container);
+        $this->createLogger($config, $container);
 
         foreach ($config['clients'] as $name => $options) {
 
@@ -149,16 +149,21 @@ class GuzzleExtension extends Extension
      *
      * @since  2015-07
      *
+     * @param  array            $config
      * @param  ContainerBuilder $container
      *
      * @return Definition
      *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      */
-    protected function createLogger(ContainerBuilder $container)
+    protected function createLogger(array $config, ContainerBuilder $container)
     {
 
-        $logger = new Definition('%guzzle_bundle.logger.class%');
+        if ($config['logging'] === true) {
+            $logger = new Definition('%guzzle_bundle.logger.class%');
+        } else {
+            $logger = new Definition('EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger');
+        }
 
         $container->setDefinition('guzzle_bundle.logger', $logger);
 

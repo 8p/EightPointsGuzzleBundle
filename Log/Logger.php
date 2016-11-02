@@ -3,7 +3,6 @@
 namespace EightPoints\Bundle\GuzzleBundle\Log;
 
 use Psr\Log\LoggerTrait;
-use Psr\Log\LoggerInterface;
 
 /**
  * @version   2.1

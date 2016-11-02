@@ -25,7 +25,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('Psr\Log\LoggerInterface', new Logger());
+        $this->assertInstanceOf('EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface', new Logger());
     }
 
     /**

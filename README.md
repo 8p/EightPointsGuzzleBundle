@@ -45,6 +45,9 @@ new EightPoints\Bundle\GuzzleBundle\GuzzleBundle()
 Configuration in config.yml:
 ``` yaml
 guzzle:
+    # (de)activate logging/profiler; default: %kernel.debug%
+    logging: true
+
     clients:
         api_payment:
             base_url: "http://api.domain.tld"

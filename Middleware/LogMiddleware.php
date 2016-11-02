@@ -4,7 +4,7 @@ namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\MessageFormatter;
-use Psr\Log\LoggerInterface;
+use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
 
 /**
  * @version   3.0

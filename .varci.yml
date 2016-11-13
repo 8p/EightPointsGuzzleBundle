@@ -20,3 +20,9 @@ ruleset:
             @{{ user.login }}, the issue description is too short. Please reopen it
             once you have amended the description to contain more than the requirement
             of 50 characters.
+
+    remove_label_invalid_on_reopen:
+        name:   "Remove `invalid` label when issues/PRs are reopened"
+        events: [ issues, pull_request ]
+        label:  -invalid
+        when:   action = "reopened"

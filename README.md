@@ -138,6 +138,7 @@ services:
 
 ## Contributing
 👍 If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
+
 🎉 Thanks to the [contributors][5] who participated in this project.
 
 ----

@@ -1,9 +1,19 @@
+**[Requirements](#requirements)** |
+**[Installation](#installation)** |
+**[Usage](#usage)** |
+**[Events](#events)** |
+**[Features](#features)** |
+**[Suggestions](#suggestions)** |
+**[Contributing](#contributing)** |
+**[License](#license)**
+
 # Symfony GuzzleBundle
 
-[![Latest Stable Version](https://poser.pugx.org/eightpoints/guzzle-bundle/v/stable.png)](https://packagist.org/packages/eightpoints/guzzle-bundle) [![Total Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/downloads.png)](https://packagist.org/packages/eightpoints/guzzle-bundle) [![Build Status](https://travis-ci.org/8p/GuzzleBundle.svg)](https://travis-ci.org/8p/GuzzleBundle)
+[![Latest Stable Version](https://poser.pugx.org/eightpoints/guzzle-bundle/v/stable.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
+[![Total Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/downloads.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
+[![Build Status](https://travis-ci.org/8p/GuzzleBundle.svg)](https://travis-ci.org/8p/GuzzleBundle)
 [![Dependency Status](https://www.versioneye.com/user/projects/57c83100968d640039516d62/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57c83100968d640039516d62)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590/mini.png)](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590)
-
 
 
 This bundle integrates [Guzzle 6.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
@@ -11,12 +21,15 @@ It comes with a WSSE Auth Plugin that can be used optionally.
 
 GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
+----
+
 ## Requirements
  - PHP 5.6 or above
  - Symfony 2.7 or above
  - [Guzzle PHP Framework][1] (included by composer)
  - [WSSE Auth Plugin][3] (included by composer)
 
+----
 
 ## Installation
 To install this bundle, run the command below and you will get the latest version by [Packagist][4].
@@ -35,6 +48,7 @@ To use the newest (maybe unstable) version please add following into your compos
 }
 ```
 
+----
 
 ## Usage
 Load bundle in AppKernel.php:
@@ -87,6 +101,8 @@ $client   = $this->get('guzzle.client.api_crm');
 $response = $client->get('/users');
 ```
 
+----
+
 ## Events
 Handling events.  Events are dispatched before and after the request to the remote host.
 ### Listening To Events
@@ -100,10 +116,13 @@ Your event Listener, or Subscriber **MUST** implement GuzzleBundle\Events\Guzzle
 Events dispatched are guzzle_bundle.pre_transaction, guzzle_bundle.post_transaction.  
 The service on the tag, is so that if you have multiple REST endpoints you can define which service a particular listener is interested in.
 
+----
+
 ## Features
 ### Symfony Debug Toolbar / Profiler
 <img src="/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
 
+----
 
 ## Suggestions
 Adding aliases:
@@ -115,12 +134,14 @@ services:
        alias: guzzle.client.api_crm
 ```
 
+----
 
-## Authors
- - Florian Preusner ([Twitter][5])
+## Contributing
+👍 If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
 
-See also the list of [contributors][6] who participated in this project.
+🎉 Thanks to the [contributors][5] who participated in this project.
 
+----
 
 ## License
 This bundle is released under the [MIT license](Resources/meta/LICENSE)
@@ -130,5 +151,4 @@ This bundle is released under the [MIT license](Resources/meta/LICENSE)
 [2]: http://semver.org/
 [3]: https://github.com/8p/guzzle-wsse-plugin
 [4]: https://packagist.org/packages/eightpoints/guzzle-bundle
-[5]: http://twitter.com/floeH
-[6]: https://github.com/8p/GuzzleBundle/graphs/contributors
+[5]: https://github.com/8p/GuzzleBundle/graphs/contributors

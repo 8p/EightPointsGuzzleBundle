@@ -4,13 +4,13 @@
 **[Events](#events)** |
 **[Features](#features)** |
 **[Suggestions](#suggestions)** |
-**[Authors](#authors)** |
+**[Contributing](#contributing)** |
 **[License](#license)**
 
 # Symfony GuzzleBundle
 
-[![Latest Stable Version](https://poser.pugx.org/eightpoints/guzzle-bundle/v/stable.png)](https://packagist.org/packages/eightpoints/guzzle-bundle) 
-[![Total Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/downloads.png)](https://packagist.org/packages/eightpoints/guzzle-bundle) 
+[![Latest Stable Version](https://poser.pugx.org/eightpoints/guzzle-bundle/v/stable.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
+[![Total Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/downloads.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Build Status](https://travis-ci.org/8p/GuzzleBundle.svg)](https://travis-ci.org/8p/GuzzleBundle)
 [![Dependency Status](https://www.versioneye.com/user/projects/57c83100968d640039516d62/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57c83100968d640039516d62)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590/mini.png)](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590)
@@ -136,10 +136,9 @@ services:
 
 ----
 
-## Authors
- - Florian Preusner ([Twitter][5])
-
-See also the list of [contributors][6] who participated in this project.
+## Contributing
+👍 If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
+🎉 Thanks to the [contributors][5] who participated in this project.
 
 ----
 
@@ -151,5 +150,4 @@ This bundle is released under the [MIT license](Resources/meta/LICENSE)
 [2]: http://semver.org/
 [3]: https://github.com/8p/guzzle-wsse-plugin
 [4]: https://packagist.org/packages/eightpoints/guzzle-bundle
-[5]: https://twitter.com/floeH
 [6]: https://github.com/8p/GuzzleBundle/graphs/contributors

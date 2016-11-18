@@ -151,4 +151,4 @@ This bundle is released under the [MIT license](Resources/meta/LICENSE)
 [2]: http://semver.org/
 [3]: https://github.com/8p/guzzle-wsse-plugin
 [4]: https://packagist.org/packages/eightpoints/guzzle-bundle
-[6]: https://github.com/8p/GuzzleBundle/graphs/contributors
+[5]: https://github.com/8p/GuzzleBundle/graphs/contributors

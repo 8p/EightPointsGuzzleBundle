@@ -64,6 +64,11 @@ class GuzzleExtension extends Extension
                 }
             }
 
+            // header hotfix/workaround #77
+            if (isset($options['headers'])) {
+                $argument['headers'] = $this->cleanUpHeaders($options['headers']);
+            }
+
             $client = new Definition('%guzzle.http_client.class%');
             $client->addArgument($argument);
 
@@ -90,16 +95,16 @@ class GuzzleExtension extends Extension
         $log = $this->createLogMiddleware();
         $container->setDefinition($logServiceName, $log);
 
-        $headerServiceName = sprintf('guzzle_bundle.middleware.request_header.%s', $name);
-        $requestHeader = $this->createRequestHeaderMiddleware($config['headers']);
-        $container->setDefinition($headerServiceName, $requestHeader);
+//        $headerServiceName = sprintf('guzzle_bundle.middleware.request_header.%s', $name);
+//        $requestHeader = $this->createRequestHeaderMiddleware($config['headers']);
+//        $container->setDefinition($headerServiceName, $requestHeader);
 
         // Event Dispatching service
         $eventServiceName = sprintf('guzzle_bundle.middleware.event_dispatch.%s', $name);
         $eventService = $this->createEventMiddleware($name);
         $container->setDefinition($eventServiceName, $eventService);
 
-        $headerExpression = new Expression(sprintf("service('%s').attach()", $headerServiceName));
+//        $headerExpression = new Expression(sprintf("service('%s').attach()", $headerServiceName));
         $logExpression    = new Expression(sprintf("service('%s').log()", $logServiceName));
         // Create the event Dispatch Middleware
         $eventExpression  = new Expression(sprintf("service('%s').dispatchEvent()", $eventServiceName));
@@ -136,7 +141,7 @@ class GuzzleExtension extends Extension
             }
         }
 
-        $handler->addMethodCall('push', [$headerExpression]);
+//        $handler->addMethodCall('push', [$headerExpression]);
         $handler->addMethodCall('push', [$logExpression]);
         // goes on the end of the stack.
         $handler->addMethodCall('unshift', [$eventExpression]);

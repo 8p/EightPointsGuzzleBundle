@@ -109,7 +109,10 @@ class RequestHeaderMiddleware
 
                 foreach ($this->getHeaders() as $key => $value) {
 
-                    $request = $request->withHeader($key, $value);
+                    if (!array_key_exists($key, $request->getHeaders())) {
+
+                        $request = $request->withHeader($key, $value);
+                    }
                 }
 
                 return $handler($request, $options);

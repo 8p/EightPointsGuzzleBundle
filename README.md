@@ -13,7 +13,7 @@
 [![Total Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/downloads.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Build Status](https://travis-ci.org/8p/GuzzleBundle.svg)](https://travis-ci.org/8p/GuzzleBundle)
 [![Dependency Status](https://www.versioneye.com/user/projects/57c83100968d640039516d62/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57c83100968d640039516d62)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590/mini.png)](https://insight.sensiolabs.com/projects/5cf56080-9357-49a3-83b2-a3dd20a8a590)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/39a6e10b-ce29-44f6-97ce-44b2ff230424/mini.png)](https://insight.sensiolabs.com/projects/39a6e10b-ce29-44f6-97ce-44b2ff230424)
 
 
 This bundle integrates [Guzzle 6.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.

@@ -26,6 +26,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                                 'user',
                                 'pass'
                             ],
+                            'headers' => [
+                                'Accept' => 'application/json'
+                            ],
                             'query' => [
                             ],
                             'cert' => 'path/to/cert',

@@ -11,7 +11,7 @@
         <parameter key="guzzle_bundle.data_collector.class">EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector</parameter>
         <parameter key="guzzle_bundle.logger.class">EightPoints\Bundle\GuzzleBundle\Log\Logger</parameter>
 		<parameter key="guzzle_bundle.middleware.log.class">EightPoints\Bundle\GuzzleBundle\Middleware\LogMiddleware</parameter>
-		<parameter key="guzzle_bundle.middleware.request_header.class">EightPoints\Bundle\GuzzleBundle\Middleware\RequestHeaderMiddleware</parameter>
+
         <!-- Event MiddleWare Dispatcher class -->
         <parameter key="guzzle_bundle.middleware.event_dispatcher.class">EightPoints\Bundle\GuzzleBundle\Middleware\EventDispatchMiddleware</parameter>
 

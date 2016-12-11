@@ -65,6 +65,7 @@ class GuzzleExtension extends Extension
             }
 
             // header hotfix/workaround #77
+            // @deprecated
             if (isset($options['headers'])) {
                 $argument['headers'] = $this->cleanUpHeaders($options['headers']);
             }
@@ -95,16 +96,11 @@ class GuzzleExtension extends Extension
         $log = $this->createLogMiddleware();
         $container->setDefinition($logServiceName, $log);
 
-//        $headerServiceName = sprintf('guzzle_bundle.middleware.request_header.%s', $name);
-//        $requestHeader = $this->createRequestHeaderMiddleware($config['headers']);
-//        $container->setDefinition($headerServiceName, $requestHeader);
-
         // Event Dispatching service
         $eventServiceName = sprintf('guzzle_bundle.middleware.event_dispatch.%s', $name);
         $eventService = $this->createEventMiddleware($name);
         $container->setDefinition($eventServiceName, $eventService);
 
-//        $headerExpression = new Expression(sprintf("service('%s').attach()", $headerServiceName));
         $logExpression    = new Expression(sprintf("service('%s').log()", $logServiceName));
         // Create the event Dispatch Middleware
         $eventExpression  = new Expression(sprintf("service('%s').dispatchEvent()", $eventServiceName));
@@ -141,7 +137,6 @@ class GuzzleExtension extends Extension
             }
         }
 
-//        $handler->addMethodCall('push', [$headerExpression]);
         $handler->addMethodCall('push', [$logExpression]);
         // goes on the end of the stack.
         $handler->addMethodCall('unshift', [$eventExpression]);
@@ -189,23 +184,6 @@ class GuzzleExtension extends Extension
         $log->addArgument(new Reference('guzzle_bundle.formatter'));
 
         return $log;
-    }
-
-    /**
-     * Create Middleware For Request Headers
-     *
-     * @since  2015-07
-     *
-     * @param  array $headers
-     *
-     * @return Definition
-     */
-    protected function createRequestHeaderMiddleware(array $headers)
-    {
-        $requestHeader = new Definition('%guzzle_bundle.middleware.request_header.class%');
-        $requestHeader->addArgument($this->cleanUpHeaders($headers));
-
-        return $requestHeader;
     }
 
     /**

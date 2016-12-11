@@ -72,7 +72,7 @@ class GuzzleExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfigs()
     {
-        return $configs = [
+        return [
             [
                 'clients' => [
                     'test_api' => [

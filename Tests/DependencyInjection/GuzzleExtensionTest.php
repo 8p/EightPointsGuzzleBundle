@@ -29,7 +29,6 @@ class GuzzleExtensionTest extends \PHPUnit_Framework_TestCase
 
         // test Services
         $this->assertTrue($container->hasDefinition('guzzle_bundle.middleware.log.test_api'));
-        $this->assertTrue($container->hasDefinition('guzzle_bundle.middleware.request_header.test_api'));
         $this->assertTrue($container->hasDefinition('guzzle_bundle.middleware.event_dispatch.test_api'));
 
         // test WSSE Plugin

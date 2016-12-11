@@ -66,7 +66,7 @@ guzzle:
         api_payment:
             base_url: "http://api.domain.tld"
 
-            # custom headers
+            # custom headers (@deprecated, will be removed in v5; new: set headers in options)
             headers:
                 Accept: "application/json"
 
@@ -76,6 +76,10 @@ guzzle:
                 auth:
                     - acme     # login
                     - pa55w0rd # password
+
+                headers:
+                    Accept: "application/json"
+
                 timeout: 30
 
             # plugin settings

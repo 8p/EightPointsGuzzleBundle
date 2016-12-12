@@ -41,7 +41,7 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase
                          ->disableOriginalConstructor()
                          ->getMock();
 
-        $bodyMock->method('__toString')->willReturn('test body');
+        $bodyMock->method('getContents')->willReturn('test body');
 
         $this->response->method('getStatusCode')->willReturn(200);
         $this->response->method('getHeaders')->willReturn($this->headers);

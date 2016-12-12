@@ -66,7 +66,7 @@ guzzle:
         api_payment:
             base_url: "http://api.domain.tld"
 
-            # custom headers (@deprecated, will be removed in v6; new: set headers in options)
+            # custom headers (@deprecated, will be removed in v6; new: "headers" in options (see below))
             headers:
                 Accept: "application/json"
 

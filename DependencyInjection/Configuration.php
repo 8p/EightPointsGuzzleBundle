@@ -81,7 +81,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('base_url')->defaultValue(null)->end()
 
-                    // @deprecated
+                    // @todo @deprecated
                     ->arrayNode('headers')
                         ->prototype('scalar')
                         ->end()

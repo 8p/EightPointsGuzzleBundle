@@ -53,21 +53,29 @@ class GuzzleExtension extends Extension
                 'handler'  => $this->createHandler($container, $name, $options)
             ];
 
+            // header hotfix/workaround #77
+            // @todo @deprecated
+            if (isset($options['headers'])) {
+                $argument['headers'] = $this->cleanUpHeaders($options['headers']);
+            }
+
             // if present, add default options to the constructor argument for the Guzzle client
             if (array_key_exists('options', $options) && is_array($options['options'])) {
+
                 foreach ($options['options'] as $key => $value) {
+
                     if ($value === null || (is_array($value) && count($value) === 0)) {
+                        continue;
+                    }
+
+                    // @todo: cleanup
+                    if ($key === 'headers') {
+                        $argument[$key] = $this->cleanUpHeaders($value);
                         continue;
                     }
 
                     $argument[$key] = $value;
                 }
-            }
-
-            // header hotfix/workaround #77
-            // @deprecated
-            if (isset($options['headers'])) {
-                $argument['headers'] = $this->cleanUpHeaders($options['headers']);
             }
 
             $client = new Definition('%guzzle.http_client.class%');

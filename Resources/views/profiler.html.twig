@@ -19,7 +19,13 @@
                     <a href="javascript:;">
                         <span class="method">{{ message.request.method }}</span>
                         <span class="url">{{ message.request.url }}</span>
-                        <span class="response">{{ message.response.statusPhrase }} ({{ message.response.statusCode }})</span>
+                        <span class="response">
+                            {% if message.response %}
+                                {{ message.response.statusPhrase }} ({{ message.response.statusCode }})
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </span>
                     </a>
                 </h3>
                 <div class="content" {{ firstRequest ? 'style="display: none;"': '' }}>
@@ -59,22 +65,26 @@
                     <div>
                         <h4>Response</h4>
 
-                        <table>
-                            <tr>
-                                <th>Protocol Version</th>
-                                <td>{{ message.response.protocolVersion }}</td>
-                            </tr>
-                            <tr>
-                                <th>Headers</th>
-                                <td>{{ dump(message.response.headers) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Body</th>
-                                <td>
-                                    <textarea readonly id="responseBody">{{ message.response.body }}</textarea>
-                                </td>
-                            </tr>
-                        </table>
+                        {% if message.response %}
+                            <table>
+                                <tr>
+                                    <th>Protocol Version</th>
+                                    <td>{{ message.response.protocolVersion }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Headers</th>
+                                    <td>{{ dump(message.response.headers) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Body</th>
+                                    <td>
+                                        <textarea readonly id="responseBody">{{ message.response.body }}</textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        {% else %}
+                            No response available.
+                        {% endif %}
                     </div>
                 </div>
             </div>

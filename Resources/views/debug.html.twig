@@ -2,18 +2,29 @@
 
 
 {% block toolbar %}
+    {% set profiler_markup_version = profiler_markup_version|default(1) %}
+
     {% if collector.callCount %}
         {% if collector.errorCount %}
             {% set color = 'red' %}
         {% else %}
             {% set color = 'green' %}
         {% endif %}
+        {% set status_color = collector.errorCount ? 'red' : 'normal' %}
 
         {% set icon %}
-            {{ include("@Guzzle/Icons/logo.svg.twig") }}
-            <span class="sf-toolbar-status sf-toolbar-status-{{ color }}">
-                {{ collector.callCount }}
-            </span>
+            {# Symfony <2.8 toolbar #}
+            {% if profiler_markup_version == 1 %}
+                {{ include("@Guzzle/Icons/logo.svg.twig") }}
+                <span class="sf-toolbar-status sf-toolbar-status-{{ color }}">
+                    {{ collector.callCount }}
+                </span>
+            {% else %}
+                {{ include("@Guzzle/Icons/logo.svg.twig") }}
+                <span class="sf-toolbar-value">
+                   {{ collector.callCount }}
+                </span>
+            {% endif %}
         {% endset %}
 
         {% set text %}
@@ -33,7 +44,7 @@
             </div>
         {% endset %}
 
-        {% include "WebProfilerBundle:Profiler:toolbar_item.html.twig" with { "link": profiler_url } %}
+        {% include "WebProfilerBundle:Profiler:toolbar_item.html.twig" with { "link": profiler_url, status: status_color } %}
     {% endif %}
 {% endblock %}
 

@@ -2,40 +2,39 @@
 
 
 {% block toolbar %}
+    {% if collector.callCount %}
+        {% if collector.errorCount %}
+            {% set color = 'red' %}
+        {% else %}
+            {% set color = 'green' %}
+        {% endif %}
 
-    {% if collector.callCount == 0 %}
-        {% set color = 'grey' %}
-    {% elseif collector.errorCount > 0 %}
-        {% set color = 'red' %}
-    {% else %}
-        {% set color = 'green' %}
+        {% set icon %}
+            {{ include("@Guzzle/Icons/logo.svg.twig") }}
+            <span class="sf-toolbar-status sf-toolbar-status-{{ color }}">
+                {{ collector.callCount }}
+            </span>
+        {% endset %}
+
+        {% set text %}
+
+            <div class="sf-toolbar-info-piece">
+                <b>API Calls</b>
+                <span>{{ collector.callCount }}</span>
+            </div>
+
+            <div class="sf-toolbar-info-piece">
+                <b>Total time</b>
+                {% if collector.totalTime > 1.0 %}
+                    <span>{{ '%0.2f'|format(collector.totalTime) }} s</span>
+                {% else %}
+                    <span>{{ '%0.0f'|format(collector.totalTime * 1000) }} ms</span>
+                {% endif %}
+            </div>
+        {% endset %}
+
+        {% include "WebProfilerBundle:Profiler:toolbar_item.html.twig" with { "link": profiler_url } %}
     {% endif %}
-
-    {% set icon %}
-        {{ include("@Guzzle/Icons/logo.svg.twig") }}
-        <span class="sf-toolbar-status sf-toolbar-status-{{ color }}">
-            {{ collector.callCount }}
-        </span>
-    {% endset %}
-
-    {% set text %}
-
-        <div class="sf-toolbar-info-piece">
-            <b>API Calls</b>
-            <span>{{ collector.callCount }}</span>
-        </div>
-
-        <div class="sf-toolbar-info-piece">
-            <b>Total time</b>
-            {% if collector.totalTime > 1.0 %}
-                <span>{{ '%0.2f'|format(collector.totalTime) }} s</span>
-            {% else %}
-                <span>{{ '%0.0f'|format(collector.totalTime * 1000) }} ms</span>
-            {% endif %}
-        </div>
-    {% endset %}
-
-    {% include "WebProfilerBundle:Profiler:toolbar_item.html.twig" with { "link": profiler_url } %}
 {% endblock %}
 
 

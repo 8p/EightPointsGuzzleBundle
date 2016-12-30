@@ -5,7 +5,7 @@
 
     {% if collector.callCount == 0 %}
         {% set color = 'grey' %}
-    {% elseif collector.errorCount > 0 %}
+    {% elseif collector.errorCount %}
         {% set color = 'red' %}
     {% else %}
         {% set color = 'green' %}

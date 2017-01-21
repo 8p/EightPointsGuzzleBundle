@@ -12,7 +12,7 @@
 [![Latest Stable Version](https://poser.pugx.org/eightpoints/guzzle-bundle/v/stable.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Build Status](https://travis-ci.org/8p/GuzzleBundle.svg)](https://travis-ci.org/8p/GuzzleBundle)
 [![License](https://poser.pugx.org/eightpoints/guzzle-bundle/license)](https://packagist.org/packages/eightpoints/guzzle-bundle)
-[![Dependency Status](https://www.versioneye.com/user/projects/57c83100968d640039516d62/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57c83100968d640039516d62)
+[![Dependency Status](https://www.versioneye.com/user/projects/57c83100968d640039516d62/badge.svg?style=square)](https://www.versioneye.com/user/projects/57c83100968d640039516d62)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/39a6e10b-ce29-44f6-97ce-44b2ff230424/mini.png)](https://insight.sensiolabs.com/projects/39a6e10b-ce29-44f6-97ce-44b2ff230424)
 
 

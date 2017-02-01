@@ -101,7 +101,14 @@ class Configuration implements ConfigurationInterface
                                 ->prototype('scalar')
                                 ->end()
                             ->end()
-                            ->scalarNode('cert')->end()
+                            ->variableNode('cert')
+                                ->validate()
+                                    ->ifTrue(function ($v) {
+                                        return !is_string($v) && (!is_array($v) || count($v) != 2);
+                                    })
+                                    ->thenInvalid('A string or a two entries array required')
+                                ->end()
+                            ->end()
                             ->scalarNode('connect_timeout')->end()
                             ->booleanNode('debug')
                                 ->beforeNormalization()

@@ -129,7 +129,7 @@ class GuzzleExtension extends Extension
                 $username = $wsseConfig['username'];
                 $password = $wsseConfig['password'];
                 $createdAtExpression = null;
-                
+
                 if (isset($wsseConfig['created_at']) && $wsseConfig['created_at']) {
                     $createdAtExpression = $wsseConfig['created_at'];
                 }
@@ -148,6 +148,10 @@ class GuzzleExtension extends Extension
         $handler->addMethodCall('push', [$logExpression]);
         // goes on the end of the stack.
         $handler->addMethodCall('unshift', [$eventExpression]);
+
+        // The handler_stack is avaiable under "guzzle.handler_stack.NAME_OF_CLIENT_BY_CONFIG"
+        $handlerServiceName = sprintf('guzzle.handler_stack.%s', $name);
+        $container->setDefinition($handlerServiceName, $handler);
 
         return $handler;
     }

@@ -8,7 +8,7 @@ use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
  * @version   4.5
  * @since     2016-01
  */
-class PostTransactionEventTest extends \PHPUnit_Framework_TestCase
+class PostTransactionEventTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test Instance
@@ -16,7 +16,7 @@ class PostTransactionEventTest extends \PHPUnit_Framework_TestCase
      * @version 4.5
      * @since   2016-01
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::__construct
      */
     public function testConstruct()
     {
@@ -33,8 +33,8 @@ class PostTransactionEventTest extends \PHPUnit_Framework_TestCase
      * @version 4.5
      * @since   2016-01
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::setTransaction
-     * @covers  EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::getTransaction
+     * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::setTransaction
+     * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::getTransaction
      */
     public function testTranscation()
     {

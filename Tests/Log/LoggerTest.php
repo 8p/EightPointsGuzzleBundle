@@ -13,7 +13,7 @@ use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
  * @version   2.1
  * @since     2015-05
  */
-class LoggerTest extends \PHPUnit_Framework_TestCase
+class LoggerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test Instance
@@ -34,7 +34,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\Logger::hasMessages
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::hasMessages
      */
     public function testHasMessages()
     {
@@ -51,7 +51,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\Logger::getMessages
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::getMessages
      */
     public function testGetMessages()
     {
@@ -102,7 +102,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\Logger::clear
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::clear
      */
     public function testClear()
     {

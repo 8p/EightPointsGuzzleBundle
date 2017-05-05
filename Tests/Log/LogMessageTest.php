@@ -6,7 +6,7 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
  * @version   2.1
  * @since     2015-05
  */
-class LogMessageTest extends \PHPUnit_Framework_TestCase
+class LogMessageTest extends \PHPUnit\Framework\TestCase
 {
     public function test()
     {

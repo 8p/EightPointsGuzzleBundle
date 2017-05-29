@@ -86,6 +86,11 @@ class Configuration implements ConfigurationInterface
                         ->prototype('scalar')
                         ->end()
                     ->end()
+            
+                    ->arrayNode('curl')
+                        ->prototype('scalar')
+                        ->end()
+                    ->end()
 
                     ->arrayNode('options')
                         ->children()

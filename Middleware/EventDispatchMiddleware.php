@@ -8,7 +8,6 @@ use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
 use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
-use GuzzleHttp\Exception\ServerException;
 
 /**
  * Dispatches an Event using the Symfony Event Dispatcher.
@@ -66,7 +65,7 @@ class EventDispatchMiddleware
                         // Continue down the chain.
                         return $postTransactionEvent->getTransaction();
                     },
-                    function (ServerException $exception) {
+                    function ($exception) {
                         // Create hte Post Transaction event.
                         $postTransactionEvent = new PostTransactionEvent($exception->getResponse(), $this->serviceName);
 

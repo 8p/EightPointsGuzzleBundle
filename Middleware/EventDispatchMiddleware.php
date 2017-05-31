@@ -65,7 +65,7 @@ class EventDispatchMiddleware
                         // Continue down the chain.
                         return $postTransactionEvent->getTransaction();
                     },
-                    function (Exception $exception) {
+                    function (\Exception $exception) {
                         // Create hte Post Transaction event.
                         $postTransactionEvent = new PostTransactionEvent($exception->getResponse(), $this->serviceName);
 

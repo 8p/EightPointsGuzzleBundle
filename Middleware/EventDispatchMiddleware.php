@@ -64,6 +64,16 @@ class EventDispatchMiddleware
 
                         // Continue down the chain.
                         return $postTransactionEvent->getTransaction();
+                    },
+                    function (Exception $exception) {
+                        // Create hte Post Transaction event.
+                        $postTransactionEvent = new PostTransactionEvent($exception->getResponse(), $this->serviceName);
+
+                        // Dispatch the event on the symfony event dispatcher.
+                        $this->eventDispatcher->dispatch(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
+
+                        // Continue down the chain.
+                        return $postTransactionEvent->getTransaction();
                     }
                 );
             };

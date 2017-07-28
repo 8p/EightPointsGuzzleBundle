@@ -83,6 +83,7 @@ class Configuration implements ConfigurationInterface
 
                     // @todo @deprecated
                     ->arrayNode('headers')
+                        ->normalizeKeys(false)
                         ->prototype('scalar')
                         ->end()
                     ->end()
@@ -90,6 +91,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayNode('options')
                         ->children()
                             ->arrayNode('headers')
+                                ->normalizeKeys(false)
                                 ->prototype('scalar')
                                 ->end()
                             ->end()

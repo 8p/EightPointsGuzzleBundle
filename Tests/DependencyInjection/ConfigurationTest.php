@@ -196,4 +196,38 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'clients' => ['test_client' => ['options' => ['proxy' => ['http' => 'http://proxy.org']]]]
         ]), $processedConfig);
     }
+
+    public function testHeaderWithUnderscore()
+    {
+        $config = [
+            'guzzle' => [
+                'clients' => [
+                    'test_client' => [
+                        'headers' => [
+                            'Header_underscored' => 'some-random-hash',
+                            'Header-hyphened' => 'another-random-hash'
+                        ],
+                        'options' => [
+                            'headers' => [
+                                'Header_underscored' => 'some-random-hash',
+                                'Header-hyphened' => 'another-random-hash'
+                            ],
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $processor = new Processor();
+        $processedConfig = $processor->processConfiguration(new Configuration(true), $config);
+
+        $headers = $processedConfig['clients']['test_client']['headers'];
+        $optionsHeaders = $processedConfig['clients']['test_client']['options']['headers'];
+
+        foreach ([$headers, $optionsHeaders] as $headerConfig)
+        {
+            $this->assertArrayHasKey('Header_underscored', $headerConfig);
+            $this->assertArrayHasKey('Header-hyphened', $headerConfig);
+        }
+    }
 }

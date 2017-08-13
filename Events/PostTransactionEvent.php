@@ -8,7 +8,7 @@ use Symfony\Component\EventDispatcher\Event;
 class PostTransactionEvent extends Event
 {
     /**
-     * @var ResponseInterface
+     * @var ResponseInterface|null
      */
     protected $response;
 
@@ -20,10 +20,10 @@ class PostTransactionEvent extends Event
     /**
      * PostTransactionEvent constructor.
      *
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param string                              $serviceName
+     * @param \Psr\Http\Message\ResponseInterface|null  $response
+     * @param string                                    $serviceName
      */
-    public function __construct(ResponseInterface $response, $serviceName)
+    public function __construct(ResponseInterface $response = null, $serviceName)
     {
         $this->response = $response;
         $this->serviceName = $serviceName;
@@ -45,9 +45,9 @@ class PostTransactionEvent extends Event
     /**
      * Sets the transaction inline with the event.
      *
-     * @param ResponseInterface $response
+     * @param ResponseInterface|null $response
      */
-    public function setTransaction(ResponseInterface $response)
+    public function setTransaction(ResponseInterface $response = null)
     {
         $this->response = $response;
     }

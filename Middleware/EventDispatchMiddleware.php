@@ -54,7 +54,7 @@ class EventDispatchMiddleware
                 $this->eventDispatcher->dispatch(GuzzleEvents::PRE_TRANSACTION, $preTransactionEvent);
 
                 // Continue the handler chain.
-                $promise = $handler($request, $options);
+                $promise = $handler($preTransactionEvent->getTransaction(), $options);
 
                 // Handle the response form the server.
                 return $promise->then(

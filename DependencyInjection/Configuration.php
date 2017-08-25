@@ -83,6 +83,7 @@ class Configuration implements ConfigurationInterface
 
                     // @todo @deprecated
                     ->arrayNode('headers')
+                        ->normalizeKeys(false)
                         ->prototype('scalar')
                         ->end()
                     ->end()
@@ -90,6 +91,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayNode('options')
                         ->children()
                             ->arrayNode('headers')
+                                ->normalizeKeys(false)
                                 ->prototype('scalar')
                                 ->end()
                             ->end()
@@ -149,8 +151,29 @@ class Configuration implements ConfigurationInterface
                                     ->ifString()->then($boolFilter)
                                 ->end()
                             ->end()
+                            ->arrayNode('proxy')
+                                ->beforeNormalization()
+                                ->ifString()
+                                    ->then(function($v) { return ['http'=> $v]; })
+                                ->end()
+                                ->validate()
+                                    ->always(function($v) {
+                                        if (empty($v['no'])) {
+                                            unset($v['no']);
+                                        }
+                                        return $v;
+                                    })
+                                ->end()
+                                ->children()
+                                    ->scalarNode('http')->end()
+                                    ->scalarNode('https')->end()
+                                    ->arrayNode('no')
+                                        ->prototype('scalar')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
                             ->scalarNode('version')->end()
-                         ->end()
+                        ->end()
                     ->end()
 
                     ->arrayNode('plugin')

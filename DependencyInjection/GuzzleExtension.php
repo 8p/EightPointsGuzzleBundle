@@ -53,24 +53,12 @@ class GuzzleExtension extends Extension
                 'handler'  => $this->createHandler($container, $name, $options)
             ];
 
-            // header hotfix/workaround #77
-            // @todo @deprecated
-            if (isset($options['headers'])) {
-                $argument['headers'] = $this->cleanUpHeaders($options['headers']);
-            }
-
             // if present, add default options to the constructor argument for the Guzzle client
             if (array_key_exists('options', $options) && is_array($options['options'])) {
 
                 foreach ($options['options'] as $key => $value) {
 
                     if ($value === null || (is_array($value) && count($value) === 0)) {
-                        continue;
-                    }
-
-                    // @todo: cleanup
-                    if ($key === 'headers') {
-                        $argument[$key] = $this->cleanUpHeaders($value);
                         continue;
                     }
 
@@ -233,31 +221,6 @@ class GuzzleExtension extends Extension
         }
 
         return $wsse;
-    }
-
-    /**
-     * Clean up HTTP headers
-     *
-     * @since  2015-07
-     *
-     * @param  array $headers
-     *
-     * @return array
-     */
-    protected function cleanUpHeaders(array $headers)
-    {
-        foreach ($headers as $name => $value) {
-
-            // because of standard conventions in YAML dashes are converted to underscores
-            // underscores are not allowed in HTTP standard, will be replaced by dash
-            $nameClean = str_replace('_', '-', $name);
-
-            unset($headers[$name]);
-
-            $headers[$nameClean] = $value;
-        }
-
-        return $headers;
     }
 
     /**

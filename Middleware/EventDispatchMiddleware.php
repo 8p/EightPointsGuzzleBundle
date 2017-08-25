@@ -3,6 +3,8 @@
 namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
 use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
+use Exception;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -53,17 +55,31 @@ class EventDispatchMiddleware
 
                 // Continue the handler chain.
                 $promise = $handler($preTransactionEvent->getTransaction(), $options);
-                // Handle the response form teh server.
+
+                // Handle the response form the server.
                 return $promise->then(
                     function (ResponseInterface $response) {
-                        // Create hte Post Transaction event.
+                        // Create the Post Transaction event.
                         $postTransactionEvent = new PostTransactionEvent($response, $this->serviceName);
 
                         // Dispatch the event on the symfony event dispatcher.
                         $this->eventDispatcher->dispatch(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
 
                         // Continue down the chain.
-                        return $postTransactionEvent->getTransaction();
+                        return $response;
+                    },
+                    function (Exception $reason) {
+                        // Get the response. The response in a RequestException can be null too.
+                        $response = $reason instanceof RequestException ? $reason->getResponse() : null;
+
+                        // Create the Post Transaction event.
+                        $postTransactionEvent = new PostTransactionEvent($response, $this->serviceName);
+
+                        // Dispatch the event on the symfony event dispatcher.
+                        $this->eventDispatcher->dispatch(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
+
+                        // Continue down the chain.
+                        return \GuzzleHttp\Promise\rejection_for($reason);
                     }
                 );
             };

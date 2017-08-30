@@ -40,9 +40,8 @@ class GuzzleExtension extends Extension
 
         $loader->load('services.xml');
 
-        $processor     = new Processor();
         $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'));
-        $config        = $processor->processConfiguration($configuration, $configs);
+        $config        = $this->processConfiguration($configuration, $configs);
 
         $this->createLogger($config, $container);
 

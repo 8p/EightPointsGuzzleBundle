@@ -50,7 +50,8 @@ class EventDispatchMiddlewareTest extends \PHPUnit_Framework_TestCase
     {
         $eventDispatchMiddleware = new EventDispatchMiddleware($this->eventDispatcher, 'main');
         $eventDispatcherResult = $eventDispatchMiddleware->dispatchEvent();
-        $eventDispatcherResult($this->handler)($this->request, []);
+        $result = $eventDispatcherResult($this->handler);
+        $result($this->request, []);
 
         $this->assertTrue(is_callable($this->promise->onFulfilled));
         $this->assertTrue(is_callable($this->promise->onRejected));

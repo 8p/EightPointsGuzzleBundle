@@ -53,7 +53,9 @@ class LogMiddlewareTest extends \PHPUnit_Framework_TestCase
     public function testLog()
     {
         $logMiddleware = new LogMiddleware($this->logger, $this->formatter);
-        $logMiddleware->log()($this->handler)($this->request, []);
+        $result = $logMiddleware->log();
+        $result = $result($this->handler);
+        $result($this->request, []);
 
         $this->assertTrue(is_callable($this->promise->onFulfilled));
         $this->assertTrue(is_callable($this->promise->onRejected));

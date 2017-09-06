@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection;
 
+use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\GuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection\Fixtures\FakeClient;
 use EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection\Fixtures\FakeWsseAuthMiddleware;
@@ -53,6 +54,14 @@ class GuzzleExtensionTest extends \PHPUnit_Framework_TestCase
 
         $wsse = $container->get('guzzle_bundle.middleware.wsse.test_api');
         $this->assertInstanceOf(FakeWsseAuthMiddleware::class, $wsse);
+    }
+
+    public function testGetConfiguration()
+    {
+        $extension = new GuzzleExtension();
+        $configuration = $extension->getConfiguration([], $this->createContainer());
+
+        $this->assertInstanceOf(Configuration::class, $configuration);
     }
 
     /**

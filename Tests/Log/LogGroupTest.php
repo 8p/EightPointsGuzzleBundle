@@ -38,6 +38,7 @@ class LogGroupTest extends \PHPUnit_Framework_TestCase
      *
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setMessages
      * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getMessages
+     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::addMessages
      */
     public function testMessages()
     {
@@ -69,7 +70,6 @@ class LogGroupTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(3, $group->getMessages());
 
         foreach($group->getMessages() as $message) {
-
             $this->assertInstanceOf('EightPoints\Bundle\GuzzleBundle\Log\LogMessage', $message);
         }
 

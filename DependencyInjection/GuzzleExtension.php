@@ -20,6 +20,14 @@ class GuzzleExtension extends Extension
     protected $logFormatter;
 
     /**
+     * {@inheritdoc}
+     */
+    public function getConfiguration(array $config, ContainerBuilder $container)
+    {
+        return new Configuration($this->getAlias(), $container->getParameter('kernel.debug'));
+    }
+
+    /**
      * Loads the Guzzle configuration.
      *
      * @version 1.0

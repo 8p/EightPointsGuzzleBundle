@@ -37,6 +37,11 @@ class GuzzleExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(WsseAuthMiddleware::class, $wsse);
         $this->assertSame('my-user', $wsse->getUsername());
         $this->assertSame('my-pass', $wsse->getPassword());
+		
+        // test Client with custom class
+        $this->assertTrue($container->hasDefinition('guzzle.client.test_api_with_custom_class'));
+        $definition = $container->getDefinition('guzzle.client.test_api_with_custom_class');
+        $this->assertSame('CustomGuzzleClass', $definition->getClass());
     }
 
     public function testOverwriteClasses()
@@ -83,6 +88,9 @@ class GuzzleExtensionTest extends \PHPUnit_Framework_TestCase
                                 'password' => 'my-pass',
                             ],
                         ],
+                    ],
+                    'test_api_with_custom_class' => [
+                        'class' => 'CustomGuzzleClass',
                     ],
                 ],
             ],

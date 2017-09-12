@@ -57,7 +57,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                                 'password' => 'pass',
                                 'created_at' => false
                             ]
-                        ]
+                        ],
+						'class' => '%guzzle.http_client.class%',
                     ]
                 ]
             ]
@@ -112,7 +113,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                                 'password' => 'pass',
                                 'created_at' => false
                             ]
-                        ]
+                        ],
+						'class' => '%guzzle.http_client.class%',
                     ]
                 ]
             ]
@@ -180,7 +182,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                                 'password' => 'pass',
                                 'created_at' => false
                             ]
-                        ]
+                        ],
+						'class' => '%guzzle.http_client.class%',
                     ]
                 ]
             ]

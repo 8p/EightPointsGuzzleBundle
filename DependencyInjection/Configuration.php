@@ -79,6 +79,7 @@ class Configuration implements ConfigurationInterface
         $node->useAttributeAsKey('name')
             ->prototype('array')
                 ->children()
+                    ->scalarNode('class')->defaultValue('%guzzle.http_client.class%')->end()
                     ->scalarNode('base_url')->defaultValue(null)->end()
 
                     // @todo @deprecated

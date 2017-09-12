@@ -65,7 +65,7 @@ class GuzzleExtension extends Extension
                 }
             }
 
-            $client = new Definition('%guzzle.http_client.class%');
+            $client = new Definition($options['class']);
             $client->addArgument($argument);
 
             // set service name based on client name

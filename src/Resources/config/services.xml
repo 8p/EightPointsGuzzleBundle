@@ -28,7 +28,7 @@
 
 		<!-- Data Collector -->
         <service id="guzzle_bundle.data_collector" class="%guzzle_bundle.data_collector.class%" public="false">
-            <tag name="data_collector" template="GuzzleBundle::debug" id="guzzle" />
+            <tag name="data_collector" template="@EightPointsGuzzle/debug.html.twig" id="eight_points_guzzle" />
             <argument type="service" id="guzzle_bundle.logger" />
         </service>
     </services>

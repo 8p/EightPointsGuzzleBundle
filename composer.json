@@ -39,10 +39,14 @@
     "phpunit/phpunit": "~5.4",
     "symfony/config":  "2.3|~3.0"
   },
-  "target-dir": "EightPoints/Bundle/GuzzleBundle",
   "autoload": {
-    "psr-0": {
-      "EightPoints\\Bundle\\GuzzleBundle": ""
+    "psr-4": {
+      "EightPoints\\Bundle\\GuzzleBundle\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "EightPoints\\Bundle\\GuzzleBundle\\Tests\\": "tests"
     }
   }
 }

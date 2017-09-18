@@ -66,7 +66,7 @@ class HttpDataCollector extends DataCollector
      */
     public function getName()
     {
-        return 'guzzle';
+        return 'eight_points_guzzle';
     }
 
     /**

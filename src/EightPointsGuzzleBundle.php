@@ -12,10 +12,10 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
  * @version   1.0
  * @since     2013-10
  */
-class GuzzleBundle extends Bundle
+class EightPointsGuzzleBundle extends Bundle
 {
     /**
-     * Build GuzzleBundle
+     * Build EightPointsGuzzleBundle
      *
      * @version 1.0
      * @since   2013-10

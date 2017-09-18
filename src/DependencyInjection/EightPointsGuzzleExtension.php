@@ -240,6 +240,6 @@ class EightPointsGuzzleExtension extends Extension
      */
     public function getAlias()
     {
-        return 'guzzle';
+        return 'eight_points_guzzle';
     }
 }

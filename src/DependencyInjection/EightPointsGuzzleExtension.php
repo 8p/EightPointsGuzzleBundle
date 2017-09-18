@@ -15,7 +15,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
  * @version   1.0
  * @since     2013-10
  */
-class GuzzleExtension extends Extension
+class EightPointsGuzzleExtension extends Extension
 {
     protected $logFormatter;
 

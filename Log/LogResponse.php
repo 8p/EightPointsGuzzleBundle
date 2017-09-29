@@ -10,34 +10,22 @@ use Psr\Http\Message\ResponseInterface;
  */
 class LogResponse
 {
-    /**
-     * @var integer
-     */
+    /** @var integer */
     protected $statusCode;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $statusPhrase;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $body;
 
-    /**
-     * @var array
-     */
-    protected $headers = array();
+    /** @var array */
+    protected $headers = [];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $protocolVersion;
 
     /**
-     * Construct
-     *
      * @version 2.1
      * @since   2015-05
      *

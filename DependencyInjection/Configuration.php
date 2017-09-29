@@ -11,15 +11,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-
-    /**
-     * @var string $alias
-     */
+    /** @var string */
     protected $alias;
 
-    /**
-     * @var boolean $debug
-     */
+    /** @var boolean */
     protected $debug;
 
     /**
@@ -29,10 +24,10 @@ class Configuration implements ConfigurationInterface
      * @param   string  $alias
      * @param   boolean $debug
      */
-    public function __construct($alias, $debug = false)
+    public function __construct(string $alias, bool $debug = false)
     {
         $this->alias = $alias;
-        $this->debug = (boolean) $debug;
+        $this->debug = $debug;
     }
 
     /**

@@ -12,14 +12,10 @@ use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
  */
 class LogMiddleware
 {
-    /**
-     * @var MessageFormatter
-     */
+    /** @var MessageFormatter */
     protected $formatter;
 
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     protected $logger;
 
     /**

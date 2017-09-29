@@ -7,28 +7,21 @@ use Symfony\Component\EventDispatcher\Event;
 
 class PostTransactionEvent extends Event
 {
-    /**
-     * @var ResponseInterface|null
-     */
+    /** @var ResponseInterface|null */
     protected $response;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $serviceName;
 
     /**
-     * PostTransactionEvent constructor.
-     *
-     * @param \Psr\Http\Message\ResponseInterface|null  $response
-     * @param string                                    $serviceName
+     * @param ResponseInterface|null $response
+     * @param string                 $serviceName
      */
-    public function __construct(ResponseInterface $response = null, $serviceName)
+    public function __construct(ResponseInterface $response = null, string $serviceName)
     {
         $this->response = $response;
         $this->serviceName = $serviceName;
     }
-
 
     /**
      * Get the transaction from the event.

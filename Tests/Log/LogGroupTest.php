@@ -3,12 +3,14 @@
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
 use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
+use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @version   2.1
  * @since     2015-05
  */
-class LogGroupTest extends \PHPUnit\Framework\TestCase
+class LogGroupTest extends TestCase
 {
     /**
      * Test Setting/Returning Request Name
@@ -16,8 +18,8 @@ class LogGroupTest extends \PHPUnit\Framework\TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setRequestName
-     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getRequestName
+     * @covers LogGroup::setRequestName
+     * @covers LogGroup::getRequestName
      */
     public function testRequestName()
     {
@@ -36,9 +38,9 @@ class LogGroupTest extends \PHPUnit\Framework\TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers  \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setMessages
-     * @covers  \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getMessages
-     * @covers  \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::addMessages
+     * @covers  LogGroup::setMessages
+     * @covers  LogGroup::getMessages
+     * @covers  LogGroup::addMessages
      */
     public function testMessages()
     {
@@ -47,15 +49,15 @@ class LogGroupTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_array($group->getMessages()));
         $this->assertEmpty($group->getMessages());
 
-        $message1 = $this->getMockBuilder('EightPoints\Bundle\GuzzleBundle\Log\LogMessage')
+        $message1 = $this->getMockBuilder(LogMessage::class)
                          ->disableOriginalConstructor()
                          ->getMock();
 
-        $message2 = $this->getMockBuilder('EightPoints\Bundle\GuzzleBundle\Log\LogMessage')
+        $message2 = $this->getMockBuilder(LogMessage::class)
                          ->disableOriginalConstructor()
                          ->getMock();
 
-        $message3 = $this->getMockBuilder('EightPoints\Bundle\GuzzleBundle\Log\LogMessage')
+        $message3 = $this->getMockBuilder(LogMessage::class)
                          ->disableOriginalConstructor()
                          ->getMock();
 
@@ -70,7 +72,7 @@ class LogGroupTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(3, $group->getMessages());
 
         foreach($group->getMessages() as $message) {
-            $this->assertInstanceOf('EightPoints\Bundle\GuzzleBundle\Log\LogMessage', $message);
+            $this->assertInstanceOf(LogMessage::class, $message);
         }
 
         // reset messages

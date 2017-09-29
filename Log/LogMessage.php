@@ -8,29 +8,19 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
  */
 class LogMessage
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $message;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $level;
 
-    /**
-     * @var LogRequest
-     */
+    /** @var LogRequest */
     protected $request;
 
-    /**
-     * @var LogResponse
-     */
+    /** @var LogResponse */
     protected $response;
 
     /**
-     * Constructor
-     *
      * @version 2.1
      * @since   2014-11
      *

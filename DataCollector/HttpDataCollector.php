@@ -4,9 +4,11 @@ namespace EightPoints\Bundle\GuzzleBundle\DataCollector;
 
 use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
 use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
+use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Collecting http data for Symfony profiler
@@ -17,14 +19,10 @@ use Symfony\Component\HttpFoundation\Response;
 class HttpDataCollector extends DataCollector
 {
 
-    /**
-     * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger $logger
-     */
+    /** @var Logger $logger */
     protected $logger;
 
     /**
-     * Constructor
-     *
      * @version 2.1
      * @since   2014-11
      *
@@ -33,10 +31,10 @@ class HttpDataCollector extends DataCollector
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
-        $this->data = array(
-            'logs' => array(),
+        $this->data = [
+            'logs' => [],
             'callCount' => 0,
-        );
+        ];
     }
 
     /**
@@ -79,7 +77,7 @@ class HttpDataCollector extends DataCollector
      */
     public function getLogs()
     {
-        return array_key_exists('logs', $this->data) ? $this->data['logs'] : array();
+        return array_key_exists('logs', $this->data) ? $this->data['logs'] : [];
     }
 
     /**
@@ -92,12 +90,10 @@ class HttpDataCollector extends DataCollector
      */
     public function getMessages()
     {
-        $messages = array();
+        $messages = [];
 
         foreach ($this->getLogs() as $log) {
-
             foreach ($log->getMessages() as $message) {
-
                 $messages[] = $message;
             }
         }
@@ -152,10 +148,9 @@ class HttpDataCollector extends DataCollector
      * @param   string $id
      * @return  LogGroup
      */
-    protected function getLogGroup($id)
+    protected function getLogGroup(string $id)
     {
         if (!isset($this->data['logs'][$id])) {
-
             $this->data['logs'][$id] = new LogGroup();
         }
 
@@ -173,6 +168,7 @@ class HttpDataCollector extends DataCollector
         if ((float)$this->getSymfonyVersion() >= 2.8) {
             return $this->data['iconColor'] = '#AAAAAA';
         }
+
         return $this->data['iconColor'] = '#3F3F3F';
     }
 
@@ -184,9 +180,10 @@ class HttpDataCollector extends DataCollector
      */
     private function getSymfonyVersion()
     {
-        $symfonyVersion = \Symfony\Component\HttpKernel\Kernel::VERSION;
+        $symfonyVersion = Kernel::VERSION;
         $symfonyVersion = explode('.', $symfonyVersion, -1);
         $symfonyMajorMinorVersion = implode('.', $symfonyVersion);
+
         return $symfonyMajorMinorVersion;
     }
 

@@ -14,23 +14,21 @@ use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
 /**
  * Dispatches an Event using the Symfony Event Dispatcher.
  * Dispatches a PRE_TRANSACTION event, before the transaction is sent
- * Dispatches a POST_TRANMSACTION event, when the remote hosts responds.
+ * Dispatches a POST_TRANSACTION event, when the remote hosts responds.
  */
 class EventDispatchMiddleware
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
+    /** @var string */
     private $serviceName;
 
     /**
-     * EventDispatchMiddleware constructor.
-     *
      * @param EventDispatcherInterface $eventDispatcher
+     * @param string $serviceName
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, $serviceName)
+    public function __construct(EventDispatcherInterface $eventDispatcher, string $serviceName)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->serviceName = $serviceName;

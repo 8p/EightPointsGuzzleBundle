@@ -2,12 +2,13 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
+use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
+use GuzzleHttp\HandlerStack;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\ExpressionLanguage\Expression;
 
@@ -17,8 +18,6 @@ use Symfony\Component\ExpressionLanguage\Expression;
  */
 class GuzzleExtension extends Extension
 {
-    protected $logFormatter;
-
     /**
      * {@inheritdoc}
      */
@@ -43,7 +42,7 @@ class GuzzleExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configPath = implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Resources', 'config'));
+        $configPath = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'Resources', 'config']);
         $loader     = new XmlFileLoader($container, new FileLocator($configPath));
 
         $loader->load('services.xml');
@@ -93,7 +92,7 @@ class GuzzleExtension extends Extension
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
      */
-    protected function createHandler(ContainerBuilder $container, $name, array $config)
+    protected function createHandler(ContainerBuilder $container, string $name, array $config)
     {
         $logServiceName = sprintf('guzzle_bundle.middleware.log.%s', $name);
         $log = $this->createLogMiddleware();
@@ -108,11 +107,11 @@ class GuzzleExtension extends Extension
         // Create the event Dispatch Middleware
         $eventExpression  = new Expression(sprintf("service('%s').dispatchEvent()", $eventServiceName));
 
-        $handler = new Definition('GuzzleHttp\HandlerStack');
-        $handler->setFactory(['GuzzleHttp\HandlerStack', 'create']);
+        $handler = new Definition(HandlerStack::class);
+        $handler->setFactory([HandlerStack::class, 'create']);
 
         // Plugins
-        if (isset($config['plugin'])){
+        if (isset($config['plugin'])) {
             // Wsse if required
             if (isset($config['plugin']['wsse'])
                 && $config['plugin']['wsse']['username']
@@ -165,7 +164,7 @@ class GuzzleExtension extends Extension
         if ($config['logging'] === true) {
             $logger = new Definition('%guzzle_bundle.logger.class%');
         } else {
-            $logger = new Definition('EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger');
+            $logger = new Definition(DevNullLogger::class);
         }
 
         $container->setDefinition('guzzle_bundle.logger', $logger);
@@ -198,7 +197,7 @@ class GuzzleExtension extends Extension
      *
      * @return Definition
      */
-    protected function createEventMiddleware($name)
+    protected function createEventMiddleware(string $name)
     {
         $eventMiddleWare = new Definition('%guzzle_bundle.middleware.event_dispatcher.class%');
         $eventMiddleWare->addArgument(new Reference('event_dispatcher'));
@@ -224,7 +223,7 @@ class GuzzleExtension extends Extension
         $wsse->setArguments([$username, $password]);
 
         if ($createdAtExpression) {
-            $wsse->addMethodCall('setCreatedAtTimeExpression', array($createdAtExpression));
+            $wsse->addMethodCall('setCreatedAtTimeExpression', [$createdAtExpression]);
         }
 
         return $wsse;

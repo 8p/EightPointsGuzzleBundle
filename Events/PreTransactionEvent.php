@@ -7,23 +7,17 @@ use Symfony\Component\EventDispatcher\Event;
 
 class PreTransactionEvent extends Event
 {
-    /**
-     * @var RequestInterface
-     */
+    /** @var RequestInterface */
     protected $requestTransaction;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $serviceName;
 
     /**
-     * PreTransactionEvent constructor.
-     *
-     * @param \Psr\Http\Message\RequestInterface $requestTransaction
-     * @param string                             $serviceName
+     * @param RequestInterface $requestTransaction
+     * @param string           $serviceName
      */
-    public function __construct(RequestInterface $requestTransaction, $serviceName)
+    public function __construct(RequestInterface $requestTransaction, string $serviceName)
     {
         $this->requestTransaction = $requestTransaction;
         $this->serviceName = $serviceName;
@@ -35,7 +29,7 @@ class PreTransactionEvent extends Event
      * This returns the actual Request Object from the Guzzle HTTP Request.
      * This object will be modified by the event listener.
      *
-     * @return \Psr\Http\Message\RequestInterface
+     * @return RequestInterface
      */
     public function getTransaction()
     {
@@ -49,7 +43,7 @@ class PreTransactionEvent extends Event
      * so once it has been modified, we need to put it back on the
      * event so it can become part of the transaction.
      *
-     * @param \Psr\Http\Message\RequestInterface $requestTransaction
+     * @param RequestInterface $requestTransaction
      */
     public function setTransaction(RequestInterface $requestTransaction)
     {

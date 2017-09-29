@@ -4,6 +4,7 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
 use EightPoints\Bundle\GuzzleBundle\Log\LogRequest;
 use GuzzleHttp\Psr7\Stream;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
@@ -11,7 +12,7 @@ use Psr\Http\Message\UriInterface;
  * @version   2.1
  * @since     2015-05
  */
-class LogRequestTest extends \PHPUnit\Framework\TestCase
+class LogRequestTest extends TestCase
 {
     /** @var RequestInterface */
     protected $request;

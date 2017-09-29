@@ -3,6 +3,7 @@
 namespace EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection;
 
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
@@ -10,7 +11,7 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
  * @version   2.1
  * @since     2015-05
  */
-class ConfigurationTest extends \PHPUnit\Framework\TestCase
+class ConfigurationTest extends TestCase
 {
     public function testSingleClientConfigWithOptions()
     {

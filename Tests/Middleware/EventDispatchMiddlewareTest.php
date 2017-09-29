@@ -5,11 +5,12 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Middleware;
 use EightPoints\Bundle\GuzzleBundle\Middleware\EventDispatchMiddleware;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\RejectedPromise;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class EventDispatchMiddlewareTest extends \PHPUnit_Framework_TestCase
+class EventDispatchMiddlewareTest extends TestCase
 {
     /** @var EventDispatcher */
     private $eventDispatcher;

@@ -8,13 +8,15 @@ use EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection\Fixtures\FakeClien
 use EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection\Fixtures\FakeWsseAuthMiddleware;
 use EightPoints\Guzzle\WsseAuthMiddleware;
 use GuzzleHttp\Psr7\Uri;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @version 2.1
  * @since   2015-05
  */
-class GuzzleExtensionTest extends \PHPUnit\Framework\TestCase
+class GuzzleExtensionTest extends TestCase
 {
     public function testGuzzleExtension()
     {
@@ -76,7 +78,7 @@ class GuzzleExtensionTest extends \PHPUnit\Framework\TestCase
     {
         $container = new ContainerBuilder();
         $container->setParameter('kernel.debug', true);
-        $container->set('event_dispatcher', $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $container->set('event_dispatcher', $this->createMock(EventDispatcherInterface::class));
 
         return $container;
     }

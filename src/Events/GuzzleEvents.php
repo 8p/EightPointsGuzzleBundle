@@ -4,6 +4,6 @@ namespace EightPoints\Bundle\GuzzleBundle\Events;
 
 final class GuzzleEvents
 {
-    const PRE_TRANSACTION = 'guzzle_bundle.pre_transaction';
-    const POST_TRANSACTION = 'guzzle_bundle.post_transaction';
+    const PRE_TRANSACTION = 'eight_points_guzzle.pre_transaction';
+    const POST_TRANSACTION = 'eight_points_guzzle.post_transaction';
 }

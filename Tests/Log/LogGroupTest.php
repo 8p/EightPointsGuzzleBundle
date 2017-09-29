@@ -8,7 +8,7 @@ use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
  * @version   2.1
  * @since     2015-05
  */
-class LogGroupTest extends \PHPUnit_Framework_TestCase
+class LogGroupTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test Setting/Returning Request Name
@@ -16,8 +16,8 @@ class LogGroupTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setRequestName
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getRequestName
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setRequestName
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getRequestName
      */
     public function testRequestName()
     {
@@ -36,9 +36,9 @@ class LogGroupTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setMessages
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getMessages
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogGroup::addMessages
+     * @covers  \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setMessages
+     * @covers  \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getMessages
+     * @covers  \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::addMessages
      */
     public function testMessages()
     {

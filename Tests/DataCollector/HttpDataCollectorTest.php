@@ -8,7 +8,7 @@ use EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
  * @version   2.1
  * @since     2015-05
  */
-class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
+class HttpDataCollectorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger

@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * @version 2.1
  * @since   2015-05
  */
-class GuzzleExtensionTest extends \PHPUnit_Framework_TestCase
+class GuzzleExtensionTest extends \PHPUnit\Framework\TestCase
 {
     public function testGuzzleExtension()
     {

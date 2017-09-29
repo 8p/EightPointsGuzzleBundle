@@ -44,6 +44,11 @@ class ConfigurationTest extends \PHPUnit\Framework\TestCase
                             'synchronous' => true,
                             'timeout' => 30,
                             'verify' => true,
+                            'proxy' => [
+                                'http' => 'http://proxy.org',
+                                'https' => 'https://proxy.org',
+                                'no' => ['host.com', 'host.org']
+                            ],
                             'version' => '1.1'
                         ],
                         'plugin' => [
@@ -52,7 +57,8 @@ class ConfigurationTest extends \PHPUnit\Framework\TestCase
                                 'password' => 'pass',
                                 'created_at' => false
                             ]
-                        ]
+                        ],
+						'class' => '%guzzle.http_client.class%',
                     ]
                 ]
             ]
@@ -107,7 +113,8 @@ class ConfigurationTest extends \PHPUnit\Framework\TestCase
                                 'password' => 'pass',
                                 'created_at' => false
                             ]
-                        ]
+                        ],
+						'class' => '%guzzle.http_client.class%',
                     ]
                 ]
             ]
@@ -145,5 +152,85 @@ class ConfigurationTest extends \PHPUnit\Framework\TestCase
 
         $processor = new Processor();
         $processor->processConfiguration(new Configuration(true), $config);
+    }
+
+    public function testSingleClientConfigWithProxyAsString()
+    {
+        $config = [
+            'guzzle' => [
+                'clients' => [
+                    'test_client' => [
+                        'base_url' => 'http://baseurl/path',
+                        'headers' => [
+                            'Accept' => 'application/json'
+                        ],
+                        'options' => [
+                            'auth' => [
+                                'user',
+                                'pass'
+                            ],
+                            'headers' => [
+                                'Accept' => 'application/json'
+                            ],
+                            'query' => [
+                            ],
+                            'proxy' => 'http://proxy.org'
+                        ],
+                        'plugin' => [
+                            'wsse' => [
+                                'username' => 'user',
+                                'password' => 'pass',
+                                'created_at' => false
+                            ]
+                        ],
+						'class' => '%guzzle.http_client.class%',
+                    ]
+                ]
+            ]
+        ];
+
+        $processor = new Processor();
+        $processedConfig = $processor->processConfiguration(new Configuration(true), $config);
+
+        unset($config['guzzle']['clients']['test_client']['options']['proxy']);
+
+        $this->assertEquals(array_merge_recursive($config['guzzle'], [
+            'logging' => false,
+            'clients' => ['test_client' => ['options' => ['proxy' => ['http' => 'http://proxy.org']]]]
+        ]), $processedConfig);
+    }
+
+    public function testHeaderWithUnderscore()
+    {
+        $config = [
+            'guzzle' => [
+                'clients' => [
+                    'test_client' => [
+                        'headers' => [
+                            'Header_underscored' => 'some-random-hash',
+                            'Header-hyphened' => 'another-random-hash'
+                        ],
+                        'options' => [
+                            'headers' => [
+                                'Header_underscored' => 'some-random-hash',
+                                'Header-hyphened' => 'another-random-hash'
+                            ],
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $processor = new Processor();
+        $processedConfig = $processor->processConfiguration(new Configuration(true), $config);
+
+        $headers = $processedConfig['clients']['test_client']['headers'];
+        $optionsHeaders = $processedConfig['clients']['test_client']['options']['headers'];
+
+        foreach ([$headers, $optionsHeaders] as $headerConfig)
+        {
+            $this->assertArrayHasKey('Header_underscored', $headerConfig);
+            $this->assertArrayHasKey('Header-hyphened', $headerConfig);
+        }
     }
 }

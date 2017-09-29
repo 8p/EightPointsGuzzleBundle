@@ -65,8 +65,8 @@ class LogGroup
      *
      * @param   array $value
      */
-    public function addMessages(array $value) {
-
+    public function addMessages(array $value)
+    {
         $this->messages = array_merge($this->messages, $value);
     }
 

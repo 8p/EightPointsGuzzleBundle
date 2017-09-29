@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection;
 
+use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\GuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection\Fixtures\FakeClient;
 use EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection\Fixtures\FakeWsseAuthMiddleware;
@@ -37,6 +38,11 @@ class GuzzleExtensionTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(WsseAuthMiddleware::class, $wsse);
         $this->assertSame('my-user', $wsse->getUsername());
         $this->assertSame('my-pass', $wsse->getPassword());
+		
+        // test Client with custom class
+        $this->assertTrue($container->hasDefinition('guzzle.client.test_api_with_custom_class'));
+        $definition = $container->getDefinition('guzzle.client.test_api_with_custom_class');
+        $this->assertSame('CustomGuzzleClass', $definition->getClass());
     }
 
     public function testOverwriteClasses()
@@ -53,6 +59,14 @@ class GuzzleExtensionTest extends \PHPUnit\Framework\TestCase
 
         $wsse = $container->get('guzzle_bundle.middleware.wsse.test_api');
         $this->assertInstanceOf(FakeWsseAuthMiddleware::class, $wsse);
+    }
+
+    public function testGetConfiguration()
+    {
+        $extension = new GuzzleExtension();
+        $configuration = $extension->getConfiguration([], $this->createContainer());
+
+        $this->assertInstanceOf(Configuration::class, $configuration);
     }
 
     /**
@@ -83,6 +97,9 @@ class GuzzleExtensionTest extends \PHPUnit\Framework\TestCase
                                 'password' => 'my-pass',
                             ],
                         ],
+                    ],
+                    'test_api_with_custom_class' => [
+                        'class' => 'CustomGuzzleClass',
                     ],
                 ],
             ],

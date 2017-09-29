@@ -65,7 +65,7 @@ class GuzzleExtensionTest extends TestCase
 
     public function testGetConfiguration()
     {
-        $extension = new GuzzleExtension();
+        $extension = new EightPointsGuzzleExtension();
         $configuration = $extension->getConfiguration([], $this->createContainer());
 
         $this->assertInstanceOf(Configuration::class, $configuration);

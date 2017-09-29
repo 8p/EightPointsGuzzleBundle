@@ -25,8 +25,6 @@ class LoggerTest extends TestCase
      *
      * @version 2.1
      * @since   2015-05
-     *
-     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::__construct
      */
     public function testConstruct()
     {

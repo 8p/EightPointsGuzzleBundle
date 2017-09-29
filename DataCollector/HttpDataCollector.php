@@ -62,7 +62,7 @@ class HttpDataCollector extends DataCollector
      * @version 2.1
      * @since   2014-11
      */
-    public function getName()
+    public function getName() : string
     {
         return 'guzzle';
     }
@@ -75,7 +75,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return  array $logs
      */
-    public function getLogs()
+    public function getLogs() : array
     {
         return array_key_exists('logs', $this->data) ? $this->data['logs'] : [];
     }
@@ -88,7 +88,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return  array
      */
-    public function getMessages()
+    public function getMessages() : array
     {
         $messages = [];
 
@@ -109,7 +109,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return  integer
      */
-    public function getCallCount()
+    public function getCallCount() : int
     {
         return count($this->getMessages());
     }
@@ -122,7 +122,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return  integer
      */
-    public function getErrorCount()
+    public function getErrorCount() : int
     {
         return 0; //@todo
     }
@@ -134,7 +134,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return float
      */
-    public function getTotalTime()
+    public function getTotalTime() : float
     {
         return 0; //@todo
     }
@@ -148,7 +148,7 @@ class HttpDataCollector extends DataCollector
      * @param   string $id
      * @return  LogGroup
      */
-    protected function getLogGroup(string $id)
+    protected function getLogGroup(string $id) : LogGroup
     {
         if (!isset($this->data['logs'][$id])) {
             $this->data['logs'][$id] = new LogGroup();
@@ -163,7 +163,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return string
      */
-    public final function getIconColor()
+    public final function getIconColor() : string
     {
         if ((float)$this->getSymfonyVersion() >= 2.8) {
             return $this->data['iconColor'] = '#AAAAAA';
@@ -178,7 +178,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return string
      */
-    private function getSymfonyVersion()
+    private function getSymfonyVersion() : string
     {
         $symfonyVersion = Kernel::VERSION;
         $symfonyVersion = explode('.', $symfonyVersion, -1);

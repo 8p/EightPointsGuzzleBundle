@@ -108,7 +108,7 @@ class HttpDataCollectorTest extends TestCase
     {
         $collector = new HttpDataCollector($this->logger);
 
-        $this->assertSame('guzzle', $collector->getName());
+        $this->assertSame('eight_points_guzzle', $collector->getName());
     }
 
     /**

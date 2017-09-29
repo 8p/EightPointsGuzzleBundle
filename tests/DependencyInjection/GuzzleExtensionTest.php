@@ -25,25 +25,25 @@ class GuzzleExtensionTest extends TestCase
         $extension->load($this->getConfigs(), $container);
 
         // test Client
-        $this->assertTrue($container->hasDefinition('guzzle.client.test_api'));
-        $testApi = $container->get('guzzle.client.test_api');
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.client.test_api'));
+        $testApi = $container->get('eight_points_guzzle.client.test_api');
         $this->assertInstanceOf('GuzzleHttp\Client', $testApi);
         $this->assertEquals(new Uri('//api.domain.tld/path'), $testApi->getConfig('base_uri'));
 
         // test Services
-        $this->assertTrue($container->hasDefinition('guzzle_bundle.middleware.log.test_api'));
-        $this->assertTrue($container->hasDefinition('guzzle_bundle.middleware.event_dispatch.test_api'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.event_dispatch.test_api'));
 
         // test WSSE Plugin
-        $this->assertTrue($container->hasDefinition('guzzle_bundle.middleware.wsse.test_api'));
-        $wsse = $container->get('guzzle_bundle.middleware.wsse.test_api');
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.wsse.test_api'));
+        $wsse = $container->get('eight_points_guzzle.middleware.wsse.test_api');
         $this->assertInstanceOf(WsseAuthMiddleware::class, $wsse);
         $this->assertSame('my-user', $wsse->getUsername());
         $this->assertSame('my-pass', $wsse->getPassword());
 
         // test Client with custom class
-        $this->assertTrue($container->hasDefinition('guzzle.client.test_api_with_custom_class'));
-        $definition = $container->getDefinition('guzzle.client.test_api_with_custom_class');
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.client.test_api_with_custom_class'));
+        $definition = $container->getDefinition('eight_points_guzzle.client.test_api_with_custom_class');
         $this->assertSame('CustomGuzzleClass', $definition->getClass());
     }
 
@@ -53,13 +53,13 @@ class GuzzleExtensionTest extends TestCase
         $extension = new EightPointsGuzzleExtension();
         $extension->load($this->getConfigs(), $container);
 
-        $container->setParameter('guzzle.http_client.class', FakeClient::class);
-        $container->setParameter('guzzle_bundle.middleware.wsse.class', FakeWsseAuthMiddleware::class);
+        $container->setParameter('eight_points_guzzle.http_client.class', FakeClient::class);
+        $container->setParameter('eight_points_guzzle.middleware.wsse.class', FakeWsseAuthMiddleware::class);
 
-        $client = $container->get('guzzle.client.test_api', FakeClient::class);
+        $client = $container->get('eight_points_guzzle.client.test_api', FakeClient::class);
         $this->assertInstanceOf(FakeClient::class, $client);
 
-        $wsse = $container->get('guzzle_bundle.middleware.wsse.test_api');
+        $wsse = $container->get('eight_points_guzzle.middleware.wsse.test_api');
         $this->assertInstanceOf(FakeWsseAuthMiddleware::class, $wsse);
     }
 

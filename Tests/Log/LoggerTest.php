@@ -26,7 +26,7 @@ class LoggerTest extends TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers  Logger::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::__construct
      */
     public function testConstruct()
     {
@@ -39,7 +39,7 @@ class LoggerTest extends TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers Logger::hasMessages
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::hasMessages
      */
     public function testHasMessages()
     {
@@ -56,7 +56,7 @@ class LoggerTest extends TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers Logger::getMessages
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::getMessages
      */
     public function testGetMessages()
     {
@@ -106,7 +106,7 @@ class LoggerTest extends TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers Logger::clear
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::clear
      */
     public function testClear()
     {

@@ -38,7 +38,7 @@ class HttpDataCollectorTest extends TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  HttpDataCollector::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::__construct
      */
     public function testConstruct()
     {
@@ -58,9 +58,9 @@ class HttpDataCollectorTest extends TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  HttpDataCollector::collect
-     * @covers  HttpDataCollector::getLogs
-     * @covers  HttpDataCollector::getLogGroup
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::collect
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogs
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogGroup
      */
     public function testCollect()
     {
@@ -102,7 +102,7 @@ class HttpDataCollectorTest extends TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  HttpDataCollector::getName
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getName
      */
     public function testName()
     {
@@ -117,7 +117,7 @@ class HttpDataCollectorTest extends TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  HttpDataCollector::getMessages
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getMessages
      */
     public function testMessages()
     {
@@ -157,7 +157,7 @@ class HttpDataCollectorTest extends TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  HttpDataCollector::getCallCount
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getCallCount
      */
     public function testCallCount()
     {
@@ -190,7 +190,7 @@ class HttpDataCollectorTest extends TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  HttpDataCollector::getErrorCount
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getErrorCount
      */
     public function testErrorCount()
     {
@@ -203,7 +203,7 @@ class HttpDataCollectorTest extends TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  HttpDataCollector::getTotalTime
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getTotalTime
      */
     public function testTotalTime()
     {

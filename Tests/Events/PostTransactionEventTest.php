@@ -18,7 +18,7 @@ class PostTransactionEventTest extends TestCase
      * @version 4.5
      * @since   2016-01
      *
-     * @covers PostTransactionEvent::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::__construct
      */
     public function testConstruct()
     {
@@ -35,8 +35,8 @@ class PostTransactionEventTest extends TestCase
      * @version 4.5
      * @since   2016-01
      *
-     * @covers PostTransactionEvent::setTransaction
-     * @covers PostTransactionEvent::getTransaction
+     * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::setTransaction
+     * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::getTransaction
      */
     public function testTransaction()
     {

@@ -18,7 +18,7 @@ class PreTransactionEventTest extends TestCase
      * @version 4.5
      * @since   2016-01
      *
-     * @covers PreTransactionEvent::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::__construct
      */
     public function testConstruct()
     {

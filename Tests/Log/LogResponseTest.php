@@ -54,10 +54,10 @@ class LogResponseTest extends TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers LogResponse::__construct
-     * @covers LogResponse::save
-     * @covers LogResponse::getStatusCode
-     * @covers LogResponse::setStatusCode
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getStatusCode
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setStatusCode
      */
     public function testStatusCode()
     {
@@ -72,10 +72,10 @@ class LogResponseTest extends TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers LogResponse::__construct
-     * @covers LogResponse::save
-     * @covers LogResponse::getBody
-     * @covers LogResponse::setBody
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getBody
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setBody
      */
     public function testBody()
     {
@@ -90,10 +90,10 @@ class LogResponseTest extends TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers LogResponse::__construct
-     * @covers LogResponse::save
-     * @covers LogResponse::getProtocolVersion
-     * @covers LogResponse::setProtocolVersion
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getProtocolVersion
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setProtocolVersion
      */
     public function testProtocolVersion()
     {
@@ -108,10 +108,10 @@ class LogResponseTest extends TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers LogResponse::__construct
-     * @covers LogResponse::save
-     * @covers LogResponse::getHeaders
-     * @covers LogResponse::setHeaders
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getHeaders
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setHeaders
      */
     public function testHeaders()
     {

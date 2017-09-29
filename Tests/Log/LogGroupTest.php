@@ -18,8 +18,8 @@ class LogGroupTest extends TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers LogGroup::setRequestName
-     * @covers LogGroup::getRequestName
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setRequestName
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getRequestName
      */
     public function testRequestName()
     {
@@ -38,9 +38,9 @@ class LogGroupTest extends TestCase
      * @version 2.1
      * @since   2015-05
      *
-     * @covers  LogGroup::setMessages
-     * @covers  LogGroup::getMessages
-     * @covers  LogGroup::addMessages
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setMessages
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getMessages
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::addMessages
      */
     public function testMessages()
     {

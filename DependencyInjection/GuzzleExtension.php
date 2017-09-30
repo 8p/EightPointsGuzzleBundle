@@ -21,7 +21,7 @@ class GuzzleExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function getConfiguration(array $config, ContainerBuilder $container)
+    public function getConfiguration(array $config, ContainerBuilder $container) : Configuration
     {
         return new Configuration($this->getAlias(), $container->getParameter('kernel.debug'));
     }
@@ -53,17 +53,14 @@ class GuzzleExtension extends Extension
         $this->createLogger($config, $container);
 
         foreach ($config['clients'] as $name => $options) {
-
             $argument = [
                 'base_uri' => $options['base_url'],
                 'handler'  => $this->createHandler($container, $name, $options)
             ];
 
             // if present, add default options to the constructor argument for the Guzzle client
-            if (array_key_exists('options', $options) && is_array($options['options'])) {
-
+            if (isset($options['options']) && is_array($options['options'])) {
                 foreach ($options['options'] as $key => $value) {
-
                     if ($value === null || (is_array($value) && count($value) === 0)) {
                         continue;
                     }

@@ -64,7 +64,7 @@ class Logger implements LoggerInterface
      *
      * @return  boolean
      */
-    public function hasMessages()
+    public function hasMessages() : bool
     {
         return $this->getMessages() ? true : false;
     }
@@ -77,7 +77,7 @@ class Logger implements LoggerInterface
      *
      * @return  array
      */
-    public function getMessages()
+    public function getMessages() : array
     {
         return $this->messages;
     }

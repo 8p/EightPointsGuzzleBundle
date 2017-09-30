@@ -31,7 +31,7 @@ class PreTransactionEvent extends Event
      *
      * @return RequestInterface
      */
-    public function getTransaction()
+    public function getTransaction() : RequestInterface
     {
         return $this->requestTransaction;
     }
@@ -53,7 +53,7 @@ class PreTransactionEvent extends Event
     /**
      * @return string
      */
-    public function getServiceName()
+    public function getServiceName() : string
     {
         return $this->serviceName;
     }

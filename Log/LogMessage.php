@@ -36,11 +36,11 @@ class LogMessage
      *
      * @since  2015-05
      *
-     * @param  string $value
+     * @param  string $level
      */
-    public function setLevel($value)
+    public function setLevel($level)
     {
-        $this->level = $value;
+        $this->level = $level;
     }
 
     /**

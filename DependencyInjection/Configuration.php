@@ -39,7 +39,7 @@ class Configuration implements ConfigurationInterface
      * @return  TreeBuilder
      * @throws  \RuntimeException
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder() : TreeBuilder
     {
         $builder = new TreeBuilder();
         $builder->root($this->alias)

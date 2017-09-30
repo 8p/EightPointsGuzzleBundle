@@ -30,7 +30,7 @@ class PostTransactionEvent extends Event
      *
      * @return ResponseInterface
      */
-    public function getTransaction()
+    public function getTransaction() : ResponseInterface
     {
         return $this->response;
     }
@@ -48,7 +48,7 @@ class PostTransactionEvent extends Event
     /**
      * @return string
      */
-    public function getServiceName()
+    public function getServiceName() : string
     {
         return $this->serviceName;
     }

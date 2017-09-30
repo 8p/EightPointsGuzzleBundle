@@ -92,7 +92,7 @@ class GuzzleExtension extends Extension
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
      */
-    protected function createHandler(ContainerBuilder $container, string $name, array $config)
+    protected function createHandler(ContainerBuilder $container, string $name, array $config) : Definition
     {
         $logServiceName = sprintf('guzzle_bundle.middleware.log.%s', $name);
         $log = $this->createLogMiddleware();
@@ -158,7 +158,7 @@ class GuzzleExtension extends Extension
      *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      */
-    protected function createLogger(array $config, ContainerBuilder $container)
+    protected function createLogger(array $config, ContainerBuilder $container) : Definition
     {
 
         if ($config['logging'] === true) {
@@ -179,7 +179,7 @@ class GuzzleExtension extends Extension
      *
      * @return Definition
      */
-    protected function createLogMiddleware()
+    protected function createLogMiddleware() : Definition
     {
         $log = new Definition('%guzzle_bundle.middleware.log.class%');
         $log->addArgument(new Reference('guzzle_bundle.logger'));
@@ -197,7 +197,7 @@ class GuzzleExtension extends Extension
      *
      * @return Definition
      */
-    protected function createEventMiddleware(string $name)
+    protected function createEventMiddleware(string $name) : Definition
     {
         $eventMiddleWare = new Definition('%guzzle_bundle.middleware.event_dispatcher.class%');
         $eventMiddleWare->addArgument(new Reference('event_dispatcher'));
@@ -217,7 +217,7 @@ class GuzzleExtension extends Extension
      *
      * @return Definition
      */
-    protected function createWsseMiddleware($username, $password, $createdAtExpression = null)
+    protected function createWsseMiddleware($username, $password, $createdAtExpression = null) : Definition
     {
         $wsse = new Definition('%guzzle_bundle.middleware.wsse.class%');
         $wsse->setArguments([$username, $password]);
@@ -237,7 +237,7 @@ class GuzzleExtension extends Extension
      *
      * @return  string
      */
-    public function getAlias()
+    public function getAlias() : string
     {
         return 'guzzle';
     }

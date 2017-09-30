@@ -22,7 +22,7 @@ class LogGroup
      *
      * @param   string $value
      */
-    public function setRequestName($value)
+    public function setRequestName(string $value)
     {
         $this->requestName = $value;
     }
@@ -74,7 +74,7 @@ class LogGroup
      *
      * @return  array
      */
-    public function getMessages()
+    public function getMessages() : array
     {
         return $this->messages;
     }

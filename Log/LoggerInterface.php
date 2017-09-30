@@ -25,12 +25,12 @@ interface LoggerInterface extends PsrLoggerInterface
      *
      * @return  boolean
      */
-    public function hasMessages();
+    public function hasMessages() : bool;
 
     /**
      * Return log messages
      *
      * @return  array
      */
-    public function getMessages();
+    public function getMessages() : array;
 }

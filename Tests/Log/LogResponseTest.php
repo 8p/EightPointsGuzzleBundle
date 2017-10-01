@@ -3,21 +3,20 @@
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
 use EightPoints\Bundle\GuzzleBundle\Log\LogResponse;
+use PHPUnit\Framework\TestCase;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Stream;
 
 /**
  * @version   2.1
  * @since     2015-05
  */
-class LogResponseTest extends \PHPUnit_Framework_TestCase
+class LogResponseTest extends TestCase
 {
-    /**
-     * @var \GuzzleHttp\Psr7\Response
-     */
+    /** @var Response */
     protected $response;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $headers = [
         'Date'          => ['Sun, 07 Jun 2015 16:32:50 GMT'],
         'Expires'       => ['-1'],
@@ -33,11 +32,11 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->response = $this->getMockBuilder('GuzzleHttp\Psr7\Response')
+        $this->response = $this->getMockBuilder(Response::class)
                                ->disableOriginalConstructor()
                                ->getMock();
 
-        $bodyMock = $this->getMockBuilder('GuzzleHttp\Psr7\Stream')
+        $bodyMock = $this->getMockBuilder(Stream::class)
                          ->disableOriginalConstructor()
                          ->getMock();
 
@@ -55,10 +54,10 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getStatusCode
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setStatusCode
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getStatusCode
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setStatusCode
      */
     public function testStatusCode()
     {
@@ -73,10 +72,10 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getBody
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setBody
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getBody
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setBody
      */
     public function testBody()
     {
@@ -91,10 +90,10 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getProtocolVersion
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setProtocolVersion
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getProtocolVersion
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setProtocolVersion
      */
     public function testProtocolVersion()
     {
@@ -109,10 +108,10 @@ class LogResponseTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getHeaders
-     * @covers  EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setHeaders
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getHeaders
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setHeaders
      */
     public function testHeaders()
     {

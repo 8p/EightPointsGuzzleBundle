@@ -7,10 +7,11 @@ use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Promise\RejectedPromise;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class LogMiddlewareTest extends \PHPUnit_Framework_TestCase
+class LogMiddlewareTest extends TestCase
 {
     /** @var LoggerInterface */
     protected $logger;

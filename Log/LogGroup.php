@@ -8,14 +8,10 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
  */
 class LogGroup
 {
-    /**
-     * @var array
-     */
-    protected $messages = array();
+    /** @var array */
+    protected $messages = [];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $requestName;
 
     /**
@@ -26,7 +22,7 @@ class LogGroup
      *
      * @param   string $value
      */
-    public function setRequestName($value)
+    public function setRequestName(string $value)
     {
         $this->requestName = $value;
     }
@@ -78,7 +74,7 @@ class LogGroup
      *
      * @return  array
      */
-    public function getMessages()
+    public function getMessages() : array
     {
         return $this->messages;
     }

@@ -3,12 +3,14 @@
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Events;
 
 use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
+use GuzzleHttp\Psr7\Request;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @version   4.5
  * @since     2016-01
  */
-class PreTransactionEventTest extends \PHPUnit_Framework_TestCase
+class PreTransactionEventTest extends TestCase
 {
     /**
      * Test Instance
@@ -16,13 +18,13 @@ class PreTransactionEventTest extends \PHPUnit_Framework_TestCase
      * @version 4.5
      * @since   2016-01
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::__construct
      */
     public function testConstruct()
     {
         $serviceName = 'service name';
-        $request     = $this->getMockBuilder('GuzzleHttp\Psr7\Request')
-                            ->setConstructorArgs(array('GET', '/'))
+        $request     = $this->getMockBuilder(Request::class)
+                            ->setConstructorArgs(['GET', '/'])
                             ->getMock();
 
         $preEvent = new PreTransactionEvent($request, $serviceName);
@@ -36,20 +38,20 @@ class PreTransactionEventTest extends \PHPUnit_Framework_TestCase
      * @version 4.5
      * @since   2016-01
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::setTransaction
-     * @covers  EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::getTransaction
+     * @covers \EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::setTransaction
+     * @covers \EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::getTransaction
      */
-    public function testTranscation()
+    public function testTransaction()
     {
         $method   = 'POST';
-        $request  = $this->getMockBuilder('GuzzleHttp\Psr7\Request')
-                         ->setConstructorArgs(array('GET', '/'))
+        $request  = $this->getMockBuilder(Request::class)
+                         ->setConstructorArgs(['GET', '/'])
                          ->getMock();
 
-        $preEvent = new PreTransactionEvent($request, null);
+        $preEvent = new PreTransactionEvent($request, 'main');
 
-        $transMock = $this->getMockBuilder('GuzzleHttp\Psr7\Request')
-                          ->setConstructorArgs(array($method, '/'))
+        $transMock = $this->getMockBuilder(Request::class)
+                          ->setConstructorArgs([$method, '/'])
                           ->getMock();
 
         $transMock->method('getMethod')->willReturn($method);

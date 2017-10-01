@@ -2,7 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Log;
 
-use Psr\Log;
+use Psr\Log\LoggerInterface as PsrLoggerInterface;
 
 /**
  * Interface LoggerInterface
@@ -10,7 +10,7 @@ use Psr\Log;
  * @author  SuRiKmAn <surikman@surikman.sk>
  * @package EightPoints\Bundle\GuzzleBundle\Log
  */
-interface LoggerInterface extends Log\LoggerInterface
+interface LoggerInterface extends PsrLoggerInterface
 {
 
     /**
@@ -25,12 +25,12 @@ interface LoggerInterface extends Log\LoggerInterface
      *
      * @return  boolean
      */
-    public function hasMessages();
+    public function hasMessages() : bool;
 
     /**
      * Return log messages
      *
      * @return  array
      */
-    public function getMessages();
+    public function getMessages() : array;
 }

@@ -12,14 +12,10 @@ use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
  */
 class LogMiddleware
 {
-    /**
-     * @var MessageFormatter
-     */
+    /** @var MessageFormatter */
     protected $formatter;
 
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     protected $logger;
 
     /**
@@ -41,9 +37,9 @@ class LogMiddleware
      * @since   2015-06
      * @version 3.0
      *
-     * @return  callable
+     * @return \Closure
      */
-    public function log()
+    public function log() : \Closure
     {
         $logger    = $this->logger;
         $formatter = $this->formatter;

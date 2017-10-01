@@ -3,15 +3,20 @@
 namespace EightPoints\Bundle\GuzzleBundle\Tests\DataCollector;
 
 use EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
+use EightPoints\Bundle\GuzzleBundle\Log\Logger;
+use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @version   2.1
  * @since     2015-05
  */
-class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
+class HttpDataCollectorTest extends TestCase
 {
     /**
-     * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger
+     * @var Logger
      */
     protected $logger;
 
@@ -23,7 +28,7 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->logger = $this->getMockBuilder('EightPoints\Bundle\GuzzleBundle\Log\Logger')
+        $this->logger = $this->getMockBuilder(Logger::class)
                              ->getMock();
     }
 
@@ -33,16 +38,16 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::__construct
      */
     public function testConstruct()
     {
         $collector = new HttpDataCollector($this->logger);
         $data      = unserialize($collector->serialize());
-        $expected  = array(
-            'logs'      => array(),
+        $expected  = [
+            'logs'      => [],
             'callCount' => 0,
-        );
+        ];
 
         $this->assertSame($expected, $data);
     }
@@ -53,21 +58,26 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::collect
-     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogs
-     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogGroup
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::collect
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogs
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogGroup
      */
     public function testCollect()
     {
         $this->logger->expects($this->once())
                      ->method('getMessages')
-                     ->willReturn(array('test message'));
+                     ->willReturn(['test message']);
 
         $collector = new HttpDataCollector($this->logger);
-        $response  = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')
+        $response  = $this->getMockBuilder(Response::class)
                           ->getMock();
-        $request   = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
+
+        $request = $this->getMockBuilder(Request::class)
                           ->getMock();
+
+        $request->expects($this->once())
+                ->method('getUri')
+                ->willReturn('someRandomUrlId');
 
         $request->expects($this->once())
                 ->method('getPathInfo')
@@ -77,12 +87,11 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
 
         $logs = $collector->getLogs();
 
-        /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogGroup $log */
+        /** @var LogGroup $log */
         foreach ($logs as $log) {
+            $this->assertInstanceOf(LogGroup::class, $log);
 
-            $this->assertInstanceOf('EightPoints\Bundle\GuzzleBundle\Log\LogGroup', $log);
-
-            $this->assertSame(array('test message'), $log->getMessages());
+            $this->assertSame(['test message'], $log->getMessages());
             $this->assertSame('id', $log->getRequestName());
         }
     }
@@ -93,7 +102,7 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getName
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getName
      */
     public function testName()
     {
@@ -108,7 +117,7 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getMessages
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getMessages
      */
     public function testMessages()
     {
@@ -117,10 +126,14 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
                      ->willReturn(['test message #1', 'test message #2']);
 
         $collector = new HttpDataCollector($this->logger);
-        $response  = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')
+        $response  = $this->getMockBuilder(Response::class)
                           ->getMock();
-        $request   = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
+        $request   = $this->getMockBuilder(Request::class)
                           ->getMock();
+
+        $request->expects($this->once())
+                ->method('getUri')
+                ->willReturn('someRandomUrlId');
 
         $request->expects($this->once())
                 ->method('getPathInfo')
@@ -144,7 +157,7 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getCallCount
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getCallCount
      */
     public function testCallCount()
     {
@@ -153,10 +166,14 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
                      ->willReturn(['test message #1', 'test message #2']);
 
         $collector = new HttpDataCollector($this->logger);
-        $response  = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')
+        $response  = $this->getMockBuilder(Response::class)
                           ->getMock();
-        $request   = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
+        $request   = $this->getMockBuilder(Request::class)
                           ->getMock();
+
+        $request->expects($this->once())
+                ->method('getUri')
+                ->willReturn('someRandomUrlId');
 
         $request->expects($this->once())
                 ->method('getPathInfo')
@@ -173,11 +190,11 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getErrorCount
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getErrorCount
      */
     public function testErrorCount()
     {
-        // implement me
+        $this->markTestSkipped('must be implemented.');
     }
 
     /**
@@ -186,10 +203,10 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
      * @version 2.1
      * @since   2015-06
      *
-     * @covers  EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getTotalTime
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getTotalTime
      */
     public function testTotalTime()
     {
-        // implement me
+        $this->markTestSkipped('must be implemented.');
     }
 }

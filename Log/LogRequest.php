@@ -10,59 +10,37 @@ use Psr\Http\Message\RequestInterface;
  */
 class LogRequest
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $host;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     protected $port;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $url;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $path;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $scheme;
 
-    /**
-     * @var array
-     */
-    protected $headers = array();
+    /** @var array */
+    protected $headers = [];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $protocolVersion;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $method;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $body;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $resource;
 
     /**
-     * Construct
-     *
      * @version 2.1
      * @since   2015-05
      *
@@ -96,13 +74,13 @@ class LogRequest
 
         // rewind to previous position after logging request
         $readPosition = null;
-        if($request->getBody() && $request->getBody()->isSeekable()) {
+        if ($request->getBody() && $request->getBody()->isSeekable()) {
             $readPosition = $request->getBody()->tell();
         }
 
         $this->setBody($request->getBody() ? $request->getBody()->__toString() : null);
 
-        if($readPosition) {
+        if ($readPosition) {
             $request->getBody()->seek($readPosition);
         }
     }
@@ -351,7 +329,6 @@ class LogRequest
      */
     public function getResource()
     {
-
         return $this->resource;
     }
 

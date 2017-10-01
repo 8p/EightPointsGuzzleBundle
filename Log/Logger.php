@@ -12,10 +12,8 @@ class Logger implements LoggerInterface
 {
     use LoggerTrait;
 
-    /**
-     * @var array
-     */
-    private $messages = array();
+    /** @var array */
+    private $messages = [];
 
     /**
      * Log message
@@ -29,7 +27,7 @@ class Logger implements LoggerInterface
      *
      * @return  void
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         $logMessage = new LogMessage($message);
         $logMessage->setLevel($level);
@@ -55,7 +53,7 @@ class Logger implements LoggerInterface
      */
     public function clear()
     {
-        $this->messages = array();
+        $this->messages = [];
     }
 
     /**
@@ -66,7 +64,7 @@ class Logger implements LoggerInterface
      *
      * @return  boolean
      */
-    public function hasMessages()
+    public function hasMessages() : bool
     {
         return $this->getMessages() ? true : false;
     }
@@ -79,7 +77,7 @@ class Logger implements LoggerInterface
      *
      * @return  array
      */
-    public function getMessages()
+    public function getMessages() : array
     {
         return $this->messages;
     }

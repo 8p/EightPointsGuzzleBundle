@@ -39,7 +39,7 @@ class DevNullLogger implements LoggerInterface
      *
      * @return  boolean
      */
-    public function hasMessages()
+    public function hasMessages() : bool
     {
         return false;
     }
@@ -49,7 +49,7 @@ class DevNullLogger implements LoggerInterface
      *
      * @return  array
      */
-    public function getMessages()
+    public function getMessages() : array
     {
         return [];
     }

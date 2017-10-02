@@ -16,7 +16,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
  * @version   1.0
  * @since     2013-10
  */
-class GuzzleExtension extends Extension
+class EightPointsGuzzleExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -91,12 +91,12 @@ class GuzzleExtension extends Extension
      */
     protected function createHandler(ContainerBuilder $container, string $name, array $config) : Definition
     {
-        $logServiceName = sprintf('guzzle_bundle.middleware.log.%s', $name);
+        $logServiceName = sprintf('eight_points_guzzle.middleware.log.%s', $name);
         $log = $this->createLogMiddleware();
         $container->setDefinition($logServiceName, $log);
 
         // Event Dispatching service
-        $eventServiceName = sprintf('guzzle_bundle.middleware.event_dispatch.%s', $name);
+        $eventServiceName = sprintf('eight_points_guzzle.middleware.event_dispatch.%s', $name);
         $eventService = $this->createEventMiddleware($name);
         $container->setDefinition($eventServiceName, $eventService);
 
@@ -126,7 +126,7 @@ class GuzzleExtension extends Extension
                 }
 
                 $wsse = $this->createWsseMiddleware($username, $password, $createdAtExpression);
-                $wsseServiceName = sprintf('guzzle_bundle.middleware.wsse.%s', $name);
+                $wsseServiceName = sprintf('eight_points_guzzle.middleware.wsse.%s', $name);
 
                 $container->setDefinition($wsseServiceName, $wsse);
 
@@ -159,12 +159,12 @@ class GuzzleExtension extends Extension
     {
 
         if ($config['logging'] === true) {
-            $logger = new Definition('%guzzle_bundle.logger.class%');
+            $logger = new Definition('%eight_points_guzzle.logger.class%');
         } else {
             $logger = new Definition(DevNullLogger::class);
         }
 
-        $container->setDefinition('guzzle_bundle.logger', $logger);
+        $container->setDefinition('eight_points_guzzle.logger', $logger);
 
         return $logger;
     }
@@ -178,9 +178,9 @@ class GuzzleExtension extends Extension
      */
     protected function createLogMiddleware() : Definition
     {
-        $log = new Definition('%guzzle_bundle.middleware.log.class%');
-        $log->addArgument(new Reference('guzzle_bundle.logger'));
-        $log->addArgument(new Reference('guzzle_bundle.formatter'));
+        $log = new Definition('%eight_points_guzzle.middleware.log.class%');
+        $log->addArgument(new Reference('eight_points_guzzle.logger'));
+        $log->addArgument(new Reference('eight_points_guzzle.formatter'));
 
         return $log;
     }
@@ -196,7 +196,7 @@ class GuzzleExtension extends Extension
      */
     protected function createEventMiddleware(string $name) : Definition
     {
-        $eventMiddleWare = new Definition('%guzzle_bundle.middleware.event_dispatcher.class%');
+        $eventMiddleWare = new Definition('%eight_points_guzzle.middleware.event_dispatcher.class%');
         $eventMiddleWare->addArgument(new Reference('event_dispatcher'));
         $eventMiddleWare->addArgument($name);
 
@@ -216,7 +216,7 @@ class GuzzleExtension extends Extension
      */
     protected function createWsseMiddleware($username, $password, $createdAtExpression = null) : Definition
     {
-        $wsse = new Definition('%guzzle_bundle.middleware.wsse.class%');
+        $wsse = new Definition('%eight_points_guzzle.middleware.wsse.class%');
         $wsse->setArguments([$username, $password]);
 
         if ($createdAtExpression) {
@@ -236,6 +236,6 @@ class GuzzleExtension extends Extension
      */
     public function getAlias() : string
     {
-        return 'guzzle';
+        return 'eight_points_guzzle';
     }
 }

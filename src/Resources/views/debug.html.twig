@@ -1,5 +1,4 @@
-{% extends "WebProfilerBundle:Profiler:layout.html.twig" %}
-
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
 
 {% block toolbar %}
     {% set profiler_markup_version = profiler_markup_version|default(1) %}
@@ -15,12 +14,12 @@
         {% set icon %}
             {# Symfony <2.8 toolbar #}
             {% if profiler_markup_version == 1 %}
-                {{ include("@Guzzle/Icons/logo.svg.twig") }}
+                {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
                 <span class="sf-toolbar-status sf-toolbar-status-{{ color }}">
                     {{ collector.callCount }}
                 </span>
             {% else %}
-                {{ include("@Guzzle/Icons/logo.svg.twig") }}
+                {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
                 <span class="sf-toolbar-value">
                    {{ collector.callCount }}
                 </span>
@@ -44,7 +43,7 @@
             </div>
         {% endset %}
 
-        {% include "WebProfilerBundle:Profiler:toolbar_item.html.twig" with { "link": profiler_url, status: status_color } %}
+        {% include "@WebProfiler/Profiler/toolbar_item.html.twig" with { "link": profiler_url, status: status_color } %}
     {% endif %}
 {% endblock %}
 
@@ -53,7 +52,7 @@
 
     <span class="label">
         <span class="icon">
-            {{ include("@Guzzle/Icons/logo.svg.twig") }}
+            {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
         </span>
         <strong>Guzzle</strong>
         <span class="count">
@@ -67,13 +66,13 @@
 
     {{ parent() }}
 
-    <link rel="stylesheet" href="{{ asset('bundles/guzzle/css/main.css') }}" />
-    <script src="{{ asset('bundles/guzzle/js/jquery.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('bundles/eightpointsguzzle/css/main.css') }}" />
+    <script src="{{ asset('bundles/eightpointsguzzle/js/jquery.min.js') }}"></script>
 {% endblock %}
 
 {% block panel %}
 
     <h2>Logs</h2>
 
-    {% include 'GuzzleBundle::profiler.html.twig' with { 'collector': collector } %}
+    {% include '@EightPointsGuzzle/profiler.html.twig' with { 'collector': collector } %}
 {% endblock %}

@@ -61,7 +61,7 @@ new EightPoints\Bundle\GuzzleBundle\GuzzleBundle()
 
 Configuration in config.yml:
 ``` yaml
-guzzle:
+eight_points_guzzle:
     # (de)activate logging/profiler; default: %kernel.debug%
     logging: true
 
@@ -101,10 +101,10 @@ guzzle:
 ```
 All these settings are optional. If WSSE username is defined the WSSE plugin will be injected automatically.
 
-Using services in controller (guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
+Using services in controller (eight_points_guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
 ``` php
 /** @var \GuzzleHttp\Client $client */
-$client   = $this->get('guzzle.client.api_crm');
+$client   = $this->get('eight_points_guzzle.client.api_crm');
 $response = $client->get('/users');
 ```
 
@@ -115,12 +115,12 @@ Handling events.  Events are dispatched before and after the request to the remo
 ### Listening To Events
 ```xml
     <service id="listenerID" class="Your\ListenerClass\That\Implements\GuzzleEventListenerInterface">  
-        <tag name="kernel.event_listener" event="guzzle_bundle.pre_transaction" method="onPreTransaction" service="servicename"/>  
+        <tag name="kernel.event_listener" event="eight_points_guzzle.pre_transaction" method="onPreTransaction" service="servicename"/>  
     </service>  
 ```
 
 Your event Listener, or Subscriber **MUST** implement GuzzleBundle\Events\GuzzleEventListenerInterface.  
-Events dispatched are guzzle_bundle.pre_transaction, guzzle_bundle.post_transaction.  
+Events dispatched are eight_points_guzzle.pre_transaction, eight_points_guzzle.post_transaction.  
 The service on the tag, is so that if you have multiple REST endpoints you can define which service a particular listener is interested in.
 
 ----
@@ -138,7 +138,7 @@ have any dependency to guzzle in your service name.
 ``` yaml
 services:
    crm.client:
-       alias: guzzle.client.api_crm
+       alias: eight_points_guzzle.client.api_crm
 ```
 
 ----

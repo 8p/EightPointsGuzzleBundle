@@ -59,7 +59,7 @@ class ConfigurationTest extends TestCase
                                 'created_at' => false
                             ]
                         ],
-						'class' => '%guzzle.http_client.class%',
+						'class' => '%eight_points_guzzle_bundle.http_client.class%',
                     ]
                 ]
             ]
@@ -115,7 +115,7 @@ class ConfigurationTest extends TestCase
                                 'created_at' => false
                             ]
                         ],
-						'class' => '%guzzle.http_client.class%',
+						'class' => '%eight_points_guzzle_bundle.http_client.class%',
                     ]
                 ]
             ]
@@ -184,7 +184,7 @@ class ConfigurationTest extends TestCase
                                 'created_at' => false
                             ]
                         ],
-						'class' => '%guzzle.http_client.class%',
+						'class' => '%eight_points_guzzle_bundle.http_client.class%',
                     ]
                 ]
             ]

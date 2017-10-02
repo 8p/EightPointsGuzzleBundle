@@ -12,7 +12,7 @@ class EventHandlerCompilerPass implements CompilerPassInterface
      * We tag handlers with specific services to listen too.
      *
      * We get all event tagged services from the container.
-     * We then go through each event, and look for the value guzzle_bundle.
+     * We then go through each event, and look for the value eight_points_guzzle_bundle.
      * For each one we find, we check if the service key is set, and then
      * call setServiceName on each EventListener.
      *

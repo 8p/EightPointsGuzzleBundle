@@ -2,7 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle;
 
-use EightPoints\Bundle\GuzzleBundle\DependencyInjection\GuzzleExtension;
+use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler\EventHandlerCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -12,10 +12,10 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
  * @version   1.0
  * @since     2013-10
  */
-class GuzzleBundle extends Bundle
+class EightPointsGuzzleBundle extends Bundle
 {
     /**
-     * Build GuzzleBundle
+     * Build EightPointsGuzzleBundle
      *
      * @version 1.0
      * @since   2013-10
@@ -48,7 +48,7 @@ class GuzzleBundle extends Bundle
     {
         if (null === $this->extension) {
 
-            $extension = new GuzzleExtension();
+            $extension = new EightPointsGuzzleExtension();
 
             if (!$extension instanceof ExtensionInterface) {
 

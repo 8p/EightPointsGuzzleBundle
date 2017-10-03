@@ -14,6 +14,17 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
  */
 class EightPointsGuzzleBundle extends Bundle
 {
+    /** @var array */
+    protected $plugins = [];
+
+    /**
+     * @param array $plugins
+     */
+    public function __construct(array $plugins = [])
+    {
+        $this->plugins = $plugins;
+    }
+
     /**
      * Build EightPointsGuzzleBundle
      *
@@ -27,8 +38,11 @@ class EightPointsGuzzleBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new EventHandlerCompilerPass());
+        foreach ($this->plugins as $plugin) {
+            $plugin->build($container);
+        }
 
+        $container->addCompilerPass(new EventHandlerCompilerPass());
     }
 
     /**
@@ -48,11 +62,11 @@ class EightPointsGuzzleBundle extends Bundle
     {
         if (null === $this->extension) {
 
-            $extension = new EightPointsGuzzleExtension();
+            $extension = new EightPointsGuzzleExtension($this->plugins);
 
             if (!$extension instanceof ExtensionInterface) {
 
-                $message = sprintf('%s is not a instance of ExtensionInterface', $extension->getClass());
+                $message = sprintf('%s is not a instance of ExtensionInterface', get_class($extension));
 
                 throw new \LogicException($message);
             }
@@ -61,5 +75,12 @@ class EightPointsGuzzleBundle extends Bundle
         }
 
         return $this->extension;
+    }
+
+    public function boot()
+    {
+        foreach ($this->plugins as $plugin) {
+            $plugin->boot($this->container);
+        }
     }
 }

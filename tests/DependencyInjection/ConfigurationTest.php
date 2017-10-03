@@ -52,13 +52,7 @@ class ConfigurationTest extends TestCase
                             ],
                             'version' => '1.1'
                         ],
-                        'plugin' => [
-                            'wsse' => [
-                                'username' => 'user',
-                                'password' => 'pass',
-                                'created_at' => false
-                            ]
-                        ],
+                        'plugin' => [],
 						'class' => '%eight_points_guzzle_bundle.http_client.class%',
                     ]
                 ]
@@ -108,13 +102,7 @@ class ConfigurationTest extends TestCase
                             'verify' => true,
                             'version' => '1.1'
                         ],
-                        'plugin' => [
-                            'wsse' => [
-                                'username' => 'user',
-                                'password' => 'pass',
-                                'created_at' => false
-                            ]
-                        ],
+                        'plugin' => [],
 						'class' => '%eight_points_guzzle_bundle.http_client.class%',
                     ]
                 ]
@@ -177,13 +165,7 @@ class ConfigurationTest extends TestCase
                             ],
                             'proxy' => 'http://proxy.org'
                         ],
-                        'plugin' => [
-                            'wsse' => [
-                                'username' => 'user',
-                                'password' => 'pass',
-                                'created_at' => false
-                            ]
-                        ],
+                        'plugin' => [],
 						'class' => '%eight_points_guzzle_bundle.http_client.class%',
                     ]
                 ]

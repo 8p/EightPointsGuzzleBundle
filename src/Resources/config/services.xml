@@ -16,10 +16,6 @@
         <parameter key="eight_points_guzzle.middleware.event_dispatcher.class">EightPoints\Bundle\GuzzleBundle\Middleware\EventDispatchMiddleware</parameter>
 
         <parameter key="eight_points_guzzle.plugin.header.headers" type="collection" />
-
-        <parameter key="eight_points_guzzle.middleware.wsse.class">EightPoints\Guzzle\WsseAuthMiddleware</parameter>
-        <parameter key="eight_points_guzzle.plugin.wsse.username" />
-        <parameter key="eight_points_guzzle.plugin.wsse.password" />
     </parameters>
 
     <services>

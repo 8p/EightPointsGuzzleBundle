@@ -20,7 +20,6 @@
 
 
 This bundle integrates [Guzzle 6.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
-It comes with a WSSE Auth Plugin that can be used optionally.
 
 GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
@@ -30,7 +29,6 @@ GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
  - PHP 7.0 or above
  - Symfony 2.7 or above
  - [Guzzle PHP Framework][1] (included by composer)
- - [WSSE Auth Plugin][3] (included by composer)
 
 ----
 
@@ -86,11 +84,7 @@ eight_points_guzzle:
                 timeout: 30
 
             # plugin settings
-            plugin:
-                wsse:
-                    username:   "acme"
-                    password:   "pa55w0rd"
-                    created_at: "-10 seconds" # optional
+            plugin: ~
 
         api_crm:
             base_url: "http://api.crm.tld"
@@ -99,7 +93,7 @@ eight_points_guzzle:
 
         ...
 ```
-All these settings are optional. If WSSE username is defined the WSSE plugin will be injected automatically.
+All these settings are optional.
 
 Using services in controller (eight_points_guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
 ``` php
@@ -124,6 +118,9 @@ Events dispatched are eight_points_guzzle.pre_transaction, eight_points_guzzle.p
 The service on the tag, is so that if you have multiple REST endpoints you can define which service a particular listener is interested in.
 
 ----
+
+## Plugins
+WSSE - https://github.com/8p/guzzle-wsse-plugin
 
 ## Features
 ### Symfony Debug Toolbar / Profiler

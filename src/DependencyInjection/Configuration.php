@@ -17,17 +17,22 @@ class Configuration implements ConfigurationInterface
     /** @var boolean */
     protected $debug;
 
+    /** @var array */
+    protected $plugin;
+
     /**
      * @version 1.0
      * @since   2013-10
      *
      * @param   string  $alias
      * @param   boolean $debug
+     * @param   array   $plugin
      */
-    public function __construct(string $alias, bool $debug = false)
+    public function __construct(string $alias, bool $debug = false, array $plugin = [])
     {
         $this->alias = $alias;
         $this->debug = $debug;
+        $this->plugin = $plugin;
     }
 
     /**
@@ -71,10 +76,11 @@ class Configuration implements ConfigurationInterface
             return (bool)$value;
         };
 
-        $node->useAttributeAsKey('name')
+        $nodeChildren = $node->useAttributeAsKey('name')
             ->prototype('array')
-                ->children()
-                    ->scalarNode('class')->defaultValue('%eight_points_guzzle.http_client.class%')->end()
+                ->children();
+
+        $nodeChildren->scalarNode('class')->defaultValue('%eight_points_guzzle.http_client.class%')->end()
                     ->scalarNode('base_url')->defaultValue(null)->end()
 
                     // @todo @deprecated
@@ -170,23 +176,13 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->scalarNode('version')->end()
                         ->end()
-                    ->end()
+                    ->end();
 
-                    ->arrayNode('plugin')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->arrayNode('wsse')
-                                ->addDefaultsIfNotSet()
-                                ->children()
-                                    ->scalarNode('username')->defaultFalse()->end()
-                                    ->scalarNode('password')->defaultValue('')->end()
-                                    ->scalarNode('created_at')->defaultFalse()->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end();
+        $pluginsNode = $nodeChildren->arrayNode('plugin')->addDefaultsIfNotSet();
+
+        foreach ($this->plugin as $plugin) {
+            $pluginsNode->children()->append($plugin->getConfiguration());
+        }
 
         return $node;
     }

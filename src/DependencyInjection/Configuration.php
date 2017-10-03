@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     protected $debug;
 
     /** @var array */
-    protected $plugin;
+    protected $plugins;
 
     /**
      * @version 1.0
@@ -26,13 +26,13 @@ class Configuration implements ConfigurationInterface
      *
      * @param   string  $alias
      * @param   boolean $debug
-     * @param   array   $plugin
+     * @param   array   $plugins
      */
-    public function __construct(string $alias, bool $debug = false, array $plugin = [])
+    public function __construct(string $alias, bool $debug = false, array $plugins = [])
     {
         $this->alias = $alias;
         $this->debug = $debug;
-        $this->plugin = $plugin;
+        $this->plugins = $plugins;
     }
 
     /**
@@ -180,7 +180,7 @@ class Configuration implements ConfigurationInterface
 
         $pluginsNode = $nodeChildren->arrayNode('plugin')->addDefaultsIfNotSet();
 
-        foreach ($this->plugin as $plugin) {
+        foreach ($this->plugins as $plugin) {
             $pluginsNode->children()->append($plugin->getConfiguration());
         }
 

@@ -2,6 +2,8 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
+use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzlePlugin;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -17,7 +19,7 @@ class Configuration implements ConfigurationInterface
     /** @var boolean */
     protected $debug;
 
-    /** @var array */
+    /** @var EightPointsGuzzlePlugin[] */
     protected $plugins;
 
     /**
@@ -181,7 +183,11 @@ class Configuration implements ConfigurationInterface
         $pluginsNode = $nodeChildren->arrayNode('plugin')->addDefaultsIfNotSet();
 
         foreach ($this->plugins as $plugin) {
-            $pluginsNode->children()->append($plugin->getConfiguration());
+            $pluginNode = new ArrayNodeDefinition($plugin->getPluginName());
+
+            $plugin->addConfiguration($pluginNode);
+
+            $pluginsNode->children()->append($pluginNode);
         }
 
         return $node;

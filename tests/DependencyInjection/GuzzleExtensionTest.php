@@ -5,8 +5,6 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection\Fixtures\FakeClient;
-use EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection\Fixtures\FakeWsseAuthMiddleware;
-use EightPoints\Guzzle\WsseAuthMiddleware;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

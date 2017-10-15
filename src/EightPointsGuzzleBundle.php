@@ -14,15 +14,17 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
  */
 class EightPointsGuzzleBundle extends Bundle
 {
-    /** @var array */
+    /** @var EightPointsGuzzlePlugin[] */
     protected $plugins = [];
 
     /**
-     * @param array $plugins
+     * @param EightPointsGuzzlePlugin[] $plugins
      */
     public function __construct(array $plugins = [])
     {
-        $this->plugins = $plugins;
+        foreach ($plugins as $plugin) {
+            $this->registerPlugin($plugin);
+        }
     }
 
     /**
@@ -77,10 +79,21 @@ class EightPointsGuzzleBundle extends Bundle
         return $this->extension;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function boot()
     {
         foreach ($this->plugins as $plugin) {
-            $plugin->boot($this->container);
+            $plugin->boot();
         }
+    }
+
+    /**
+     * @param EightPointsGuzzlePlugin $plugin
+     */
+    protected function registerPlugin(EightPointsGuzzlePlugin $plugin)
+    {
+        $this->plugins[] = $plugin;
     }
 }

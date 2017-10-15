@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
+use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzlePlugin;
 use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
 use GuzzleHttp\HandlerStack;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,11 +19,11 @@ use Symfony\Component\ExpressionLanguage\Expression;
  */
 class EightPointsGuzzleExtension extends Extension
 {
-    /** @var array */
+    /** @var EightPointsGuzzlePlugin[] */
     protected $plugins;
 
     /**
-     * @param array $plugins
+     * @param EightPointsGuzzlePlugin[] $plugins
      */
     public function __construct(array $plugins = [])
     {
@@ -63,7 +64,7 @@ class EightPointsGuzzleExtension extends Extension
 
         foreach ($this->plugins as $plugin) {
             $container->addObjectResource(new \ReflectionClass(get_class($plugin)));
-            $plugin->getContainerExtension()->load($config, $container);
+            $plugin->load($config, $container);
         }
 
         $this->createLogger($config, $container);
@@ -124,7 +125,7 @@ class EightPointsGuzzleExtension extends Extension
         $handler->setFactory([HandlerStack::class, 'create']);
 
         foreach ($this->plugins as $plugin) {
-            $plugin->load($config['plugin'][$plugin->getPluginName()], $container, $name, $handler);
+            $plugin->loadForClient($config['plugin'][$plugin->getPluginName()], $container, $name, $handler);
         }
 
         $handler->addMethodCall('push', [$logExpression]);
@@ -192,29 +193,6 @@ class EightPointsGuzzleExtension extends Extension
         $eventMiddleWare->addArgument($name);
 
         return $eventMiddleWare;
-    }
-
-    /**
-     * Create Middleware for WSSE
-     *
-     * @since  2015-07
-     *
-     * @param  string  $username
-     * @param  string  $password
-     * @param  string  $createdAtExpression
-     *
-     * @return Definition
-     */
-    protected function createWsseMiddleware($username, $password, $createdAtExpression = null) : Definition
-    {
-        $wsse = new Definition('%eight_points_guzzle.middleware.wsse.class%');
-        $wsse->setArguments([$username, $password]);
-
-        if ($createdAtExpression) {
-            $wsse->addMethodCall('setCreatedAtTimeExpression', [$createdAtExpression]);
-        }
-
-        return $wsse;
     }
 
     /**

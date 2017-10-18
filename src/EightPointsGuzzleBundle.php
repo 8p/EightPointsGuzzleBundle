@@ -4,6 +4,7 @@ namespace EightPoints\Bundle\GuzzleBundle;
 
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler\EventHandlerCompilerPass;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
@@ -91,9 +92,21 @@ class EightPointsGuzzleBundle extends Bundle
 
     /**
      * @param EightPointsGuzzleBundlePlugin $plugin
+     *
+     * @throws InvalidConfigurationException
      */
     protected function registerPlugin(EightPointsGuzzleBundlePlugin $plugin)
     {
+        // Check plugins name duplication
+        foreach ($this->plugins as $registeredPlugin) {
+            if ($registeredPlugin->getPluginName() === $plugin->getPluginName()) {
+                throw new InvalidConfigurationException(sprintf(
+                    'Trying to connect two plugins with same name: %s',
+                    $plugin->getPluginName()
+                ));
+            }
+        }
+
         $this->plugins[] = $plugin;
     }
 }

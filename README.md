@@ -120,11 +120,11 @@ The service on the tag, is so that if you have multiple REST endpoints you can d
 ----
 
 ## Plugins
-WSSE - https://github.com/8p/guzzle-wsse-plugin
+WSSE - https://github.com/gregurco/GuzzleBundleWssePlugin
 
 ## Features
 ### Symfony Debug Toolbar / Profiler
-<img src="/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
+<img src="/src/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
 
 ----
 
@@ -148,7 +148,7 @@ services:
 ----
 
 ## License
-This bundle is released under the [MIT license](Resources/meta/LICENSE)
+This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 
 
 [1]: http://guzzlephp.org/

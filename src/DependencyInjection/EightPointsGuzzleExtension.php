@@ -2,7 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
-use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzlePlugin;
+use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
 use GuzzleHttp\HandlerStack;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -19,11 +19,11 @@ use Symfony\Component\ExpressionLanguage\Expression;
  */
 class EightPointsGuzzleExtension extends Extension
 {
-    /** @var EightPointsGuzzlePlugin[] */
+    /** @var EightPointsGuzzleBundlePlugin[] */
     protected $plugins;
 
     /**
-     * @param EightPointsGuzzlePlugin[] $plugins
+     * @param EightPointsGuzzleBundlePlugin[] $plugins
      */
     public function __construct(array $plugins = [])
     {

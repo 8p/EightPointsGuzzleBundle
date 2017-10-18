@@ -2,7 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
-use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzlePlugin;
+use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
     /** @var boolean */
     protected $debug;
 
-    /** @var EightPointsGuzzlePlugin[] */
+    /** @var EightPointsGuzzleBundlePlugin[] */
     protected $plugins;
 
     /**

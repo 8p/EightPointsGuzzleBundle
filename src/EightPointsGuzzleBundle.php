@@ -14,11 +14,11 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
  */
 class EightPointsGuzzleBundle extends Bundle
 {
-    /** @var EightPointsGuzzlePlugin[] */
+    /** @var EightPointsGuzzleBundlePlugin[] */
     protected $plugins = [];
 
     /**
-     * @param EightPointsGuzzlePlugin[] $plugins
+     * @param EightPointsGuzzleBundlePlugin[] $plugins
      */
     public function __construct(array $plugins = [])
     {
@@ -90,9 +90,9 @@ class EightPointsGuzzleBundle extends Bundle
     }
 
     /**
-     * @param EightPointsGuzzlePlugin $plugin
+     * @param EightPointsGuzzleBundlePlugin $plugin
      */
-    protected function registerPlugin(EightPointsGuzzlePlugin $plugin)
+    protected function registerPlugin(EightPointsGuzzleBundlePlugin $plugin)
     {
         $this->plugins[] = $plugin;
     }

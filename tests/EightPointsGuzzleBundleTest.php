@@ -78,6 +78,10 @@ class EightPointsGuzzleBundleTest extends TestCase
     {
         $bundle = new EightPointsGuzzleBundle();
 
-        $this->assertInstanceOf(EightPointsGuzzleExtension::class, $bundle->getContainerExtension());
+        $extension = $bundle->getContainerExtension();
+        $this->assertInstanceOf(EightPointsGuzzleExtension::class, $extension);
+
+        // assert that on each call new extension is not created
+        $this->assertSame($extension, $bundle->getContainerExtension());
     }
 }

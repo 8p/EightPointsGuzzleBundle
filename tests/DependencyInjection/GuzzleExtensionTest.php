@@ -61,7 +61,7 @@ class GuzzleExtensionTest extends TestCase
     /**
      * @return ContainerBuilder
      */
-    private function createContainer()
+    private function createContainer() : ContainerBuilder
     {
         $container = new ContainerBuilder();
         $container->setParameter('kernel.debug', true);
@@ -73,7 +73,7 @@ class GuzzleExtensionTest extends TestCase
     /**
      * @return array
      */
-    private function getConfigs()
+    private function getConfigs() : array
     {
         return [
             [

@@ -60,7 +60,7 @@ class ConfigurationTest extends TestCase
         ];
 
         $processor = new Processor();
-        $processedConfig = $processor->processConfiguration(new Configuration(true), $config);
+        $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
         $this->assertEquals(array_merge($config['guzzle'], ['logging' => false]), $processedConfig);
     }
@@ -110,7 +110,7 @@ class ConfigurationTest extends TestCase
         ];
 
         $processor = new Processor();
-        $processedConfig = $processor->processConfiguration(new Configuration(true), $config);
+        $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
         $this->assertEquals(array_merge($config['guzzle'], ['logging' => false]), $processedConfig);
     }
@@ -140,7 +140,7 @@ class ConfigurationTest extends TestCase
         $this->expectException(InvalidConfigurationException::class);
 
         $processor = new Processor();
-        $processor->processConfiguration(new Configuration(true), $config);
+        $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
     }
 
     public function testSingleClientConfigWithProxyAsString()
@@ -173,7 +173,7 @@ class ConfigurationTest extends TestCase
         ];
 
         $processor = new Processor();
-        $processedConfig = $processor->processConfiguration(new Configuration(true), $config);
+        $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
         unset($config['guzzle']['clients']['test_client']['options']['proxy']);
 
@@ -205,13 +205,12 @@ class ConfigurationTest extends TestCase
         ];
 
         $processor = new Processor();
-        $processedConfig = $processor->processConfiguration(new Configuration(true), $config);
+        $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
         $headers = $processedConfig['clients']['test_client']['headers'];
         $optionsHeaders = $processedConfig['clients']['test_client']['options']['headers'];
 
-        foreach ([$headers, $optionsHeaders] as $headerConfig)
-        {
+        foreach ([$headers, $optionsHeaders] as $headerConfig) {
             $this->assertArrayHasKey('Header_underscored', $headerConfig);
             $this->assertArrayHasKey('Header-hyphened', $headerConfig);
         }

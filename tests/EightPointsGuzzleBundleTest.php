@@ -2,10 +2,14 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests;
 
+use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler\EventHandlerCompilerPass;
+use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle;
 use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EightPointsGuzzleBundleTest extends TestCase
@@ -40,5 +44,40 @@ class EightPointsGuzzleBundleTest extends TestCase
             ->willReturn('wsse');
 
         new EightPointsGuzzleBundle([$firstPlugin, $secondPlugin]);
+    }
+
+    public function testBoot()
+    {
+        $plugin = $this->getMockBuilder(EightPointsGuzzleBundlePlugin::class)->getMock();
+        $plugin->expects($this->once())->method('boot');
+
+        $bundle = new EightPointsGuzzleBundle([$plugin]);
+        $bundle->boot();
+    }
+
+    public function testBuild()
+    {
+        $container = new ContainerBuilder();
+
+        $plugin = $this->getMockBuilder(EightPointsGuzzleBundlePlugin::class)->getMock();
+        $plugin->expects($this->once())->method('build');
+
+        $bundle = new EightPointsGuzzleBundle([$plugin]);
+        $bundle->build($container);
+
+        // assert that compiler pass was registered
+        $this->assertCount(1, array_filter(
+            $container->getCompiler()->getPassConfig()->getPasses(),
+            function (CompilerPassInterface $pass) {
+                return $pass instanceof EventHandlerCompilerPass;
+            }
+        ));
+    }
+
+    public function testGetContainerExtension()
+    {
+        $bundle = new EightPointsGuzzleBundle();
+
+        $this->assertInstanceOf(EightPointsGuzzleExtension::class, $bundle->getContainerExtension());
     }
 }

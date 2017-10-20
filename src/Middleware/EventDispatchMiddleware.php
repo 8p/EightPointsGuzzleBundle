@@ -64,7 +64,7 @@ class EventDispatchMiddleware
                         $this->eventDispatcher->dispatch(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
 
                         // Continue down the chain.
-                        return $response;
+                        return $postTransactionEvent->getTransaction();
                     },
                     function (Exception $reason) {
                         // Get the response. The response in a RequestException can be null too.

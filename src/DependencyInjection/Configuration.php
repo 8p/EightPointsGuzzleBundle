@@ -2,6 +2,8 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
+use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -17,17 +19,22 @@ class Configuration implements ConfigurationInterface
     /** @var boolean */
     protected $debug;
 
+    /** @var EightPointsGuzzleBundlePlugin[] */
+    protected $plugins;
+
     /**
      * @version 1.0
      * @since   2013-10
      *
      * @param   string  $alias
      * @param   boolean $debug
+     * @param   array   $plugins
      */
-    public function __construct(string $alias, bool $debug = false)
+    public function __construct(string $alias, bool $debug = false, array $plugins = [])
     {
         $this->alias = $alias;
         $this->debug = $debug;
+        $this->plugins = $plugins;
     }
 
     /**
@@ -71,10 +78,11 @@ class Configuration implements ConfigurationInterface
             return (bool)$value;
         };
 
-        $node->useAttributeAsKey('name')
+        $nodeChildren = $node->useAttributeAsKey('name')
             ->prototype('array')
-                ->children()
-                    ->scalarNode('class')->defaultValue('%eight_points_guzzle.http_client.class%')->end()
+                ->children();
+
+        $nodeChildren->scalarNode('class')->defaultValue('%eight_points_guzzle.http_client.class%')->end()
                     ->scalarNode('base_url')->defaultValue(null)->end()
 
                     // @todo @deprecated
@@ -170,23 +178,17 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->scalarNode('version')->end()
                         ->end()
-                    ->end()
+                    ->end();
 
-                    ->arrayNode('plugin')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->arrayNode('wsse')
-                                ->addDefaultsIfNotSet()
-                                ->children()
-                                    ->scalarNode('username')->defaultFalse()->end()
-                                    ->scalarNode('password')->defaultValue('')->end()
-                                    ->scalarNode('created_at')->defaultFalse()->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end();
+        $pluginsNode = $nodeChildren->arrayNode('plugin')->addDefaultsIfNotSet();
+
+        foreach ($this->plugins as $plugin) {
+            $pluginNode = new ArrayNodeDefinition($plugin->getPluginName());
+
+            $plugin->addConfiguration($pluginNode);
+
+            $pluginsNode->children()->append($pluginNode);
+        }
 
         return $node;
     }

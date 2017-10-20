@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
+use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
 use GuzzleHttp\HandlerStack;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,12 +19,23 @@ use Symfony\Component\ExpressionLanguage\Expression;
  */
 class EightPointsGuzzleExtension extends Extension
 {
+    /** @var EightPointsGuzzleBundlePlugin[] */
+    protected $plugins;
+
+    /**
+     * @param EightPointsGuzzleBundlePlugin[] $plugins
+     */
+    public function __construct(array $plugins = [])
+    {
+        $this->plugins = $plugins;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function getConfiguration(array $config, ContainerBuilder $container) : Configuration
     {
-        return new Configuration($this->getAlias(), $container->getParameter('kernel.debug'));
+        return new Configuration($this->getAlias(), $container->getParameter('kernel.debug'), $this->plugins);
     }
 
     /**
@@ -47,8 +59,13 @@ class EightPointsGuzzleExtension extends Extension
 
         $loader->load('services.xml');
 
-        $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'));
+        $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'), $this->plugins);
         $config        = $this->processConfiguration($configuration, $configs);
+
+        foreach ($this->plugins as $plugin) {
+            $container->addObjectResource(new \ReflectionClass(get_class($plugin)));
+            $plugin->load($config, $container);
+        }
 
         $this->createLogger($config, $container);
 
@@ -107,33 +124,8 @@ class EightPointsGuzzleExtension extends Extension
         $handler = new Definition(HandlerStack::class);
         $handler->setFactory([HandlerStack::class, 'create']);
 
-        // Plugins
-        if (isset($config['plugin'])) {
-            // Wsse if required
-            if (isset($config['plugin']['wsse'])
-                && $config['plugin']['wsse']['username']
-                && $config['plugin']['wsse']['password']) {
-
-                $wsseConfig = $config['plugin']['wsse'];
-                unset($config['plugin']['wsse']);
-
-                $username = $wsseConfig['username'];
-                $password = $wsseConfig['password'];
-                $createdAtExpression = null;
-                
-                if (isset($wsseConfig['created_at']) && $wsseConfig['created_at']) {
-                    $createdAtExpression = $wsseConfig['created_at'];
-                }
-
-                $wsse = $this->createWsseMiddleware($username, $password, $createdAtExpression);
-                $wsseServiceName = sprintf('eight_points_guzzle.middleware.wsse.%s', $name);
-
-                $container->setDefinition($wsseServiceName, $wsse);
-
-                $wsseExpression = new Expression(sprintf('service("%s").attach()', $wsseServiceName));
-
-                $handler->addMethodCall('push', [$wsseExpression]);
-            }
+        foreach ($this->plugins as $plugin) {
+            $plugin->loadForClient($config['plugin'][$plugin->getPluginName()], $container, $name, $handler);
         }
 
         $handler->addMethodCall('push', [$logExpression]);
@@ -201,29 +193,6 @@ class EightPointsGuzzleExtension extends Extension
         $eventMiddleWare->addArgument($name);
 
         return $eventMiddleWare;
-    }
-
-    /**
-     * Create Middleware for WSSE
-     *
-     * @since  2015-07
-     *
-     * @param  string  $username
-     * @param  string  $password
-     * @param  string  $createdAtExpression
-     *
-     * @return Definition
-     */
-    protected function createWsseMiddleware($username, $password, $createdAtExpression = null) : Definition
-    {
-        $wsse = new Definition('%eight_points_guzzle.middleware.wsse.class%');
-        $wsse->setArguments([$username, $password]);
-
-        if ($createdAtExpression) {
-            $wsse->addMethodCall('setCreatedAtTimeExpression', [$createdAtExpression]);
-        }
-
-        return $wsse;
     }
 
     /**

@@ -20,17 +20,15 @@
 
 
 This bundle integrates [Guzzle 6.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
-It comes with a WSSE Auth Plugin that can be used optionally.
 
 GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
 ----
 
 ## Requirements
- - PHP 5.6 or above
+ - PHP 7.0 or above
  - Symfony 2.7 or above
  - [Guzzle PHP Framework][1] (included by composer)
- - [WSSE Auth Plugin][3] (included by composer)
 
 ----
 
@@ -61,7 +59,7 @@ new EightPoints\Bundle\GuzzleBundle\GuzzleBundle()
 
 Configuration in config.yml:
 ``` yaml
-guzzle:
+eight_points_guzzle:
     # (de)activate logging/profiler; default: %kernel.debug%
     logging: true
 
@@ -86,11 +84,7 @@ guzzle:
                 timeout: 30
 
             # plugin settings
-            plugin:
-                wsse:
-                    username:   "acme"
-                    password:   "pa55w0rd"
-                    created_at: "-10 seconds" # optional
+            plugin: ~
 
         api_crm:
             base_url: "http://api.crm.tld"
@@ -99,12 +93,12 @@ guzzle:
 
         ...
 ```
-All these settings are optional. If WSSE username is defined the WSSE plugin will be injected automatically.
+All these settings are optional.
 
-Using services in controller (guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
+Using services in controller (eight_points_guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
 ``` php
 /** @var \GuzzleHttp\Client $client */
-$client   = $this->get('guzzle.client.api_crm');
+$client   = $this->get('eight_points_guzzle.client.api_crm');
 $response = $client->get('/users');
 ```
 
@@ -115,19 +109,22 @@ Handling events.  Events are dispatched before and after the request to the remo
 ### Listening To Events
 ```xml
     <service id="listenerID" class="Your\ListenerClass\That\Implements\GuzzleEventListenerInterface">  
-        <tag name="kernel.event_listener" event="guzzle_bundle.pre_transaction" method="onPreTransaction" service="servicename"/>  
+        <tag name="kernel.event_listener" event="eight_points_guzzle.pre_transaction" method="onPreTransaction" service="servicename"/>  
     </service>  
 ```
 
 Your event Listener, or Subscriber **MUST** implement GuzzleBundle\Events\GuzzleEventListenerInterface.  
-Events dispatched are guzzle_bundle.pre_transaction, guzzle_bundle.post_transaction.  
+Events dispatched are eight_points_guzzle.pre_transaction, eight_points_guzzle.post_transaction.  
 The service on the tag, is so that if you have multiple REST endpoints you can define which service a particular listener is interested in.
 
 ----
 
+## Plugins
+WSSE - https://github.com/gregurco/GuzzleBundleWssePlugin
+
 ## Features
 ### Symfony Debug Toolbar / Profiler
-<img src="/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
+<img src="/src/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
 
 ----
 
@@ -138,7 +135,7 @@ have any dependency to guzzle in your service name.
 ``` yaml
 services:
    crm.client:
-       alias: guzzle.client.api_crm
+       alias: eight_points_guzzle.client.api_crm
 ```
 
 ----
@@ -151,7 +148,7 @@ services:
 ----
 
 ## License
-This bundle is released under the [MIT license](Resources/meta/LICENSE)
+This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 
 
 [1]: http://guzzlephp.org/

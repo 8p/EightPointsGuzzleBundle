@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="eight_points_guzzle.http_client.class">GuzzleHttp\Client</parameter>
+        <parameter key="eight_points_guzzle.middleware.class">GuzzleHttp\Middleware</parameter>
+        <parameter key="eight_points_guzzle.formatter.class">GuzzleHttp\MessageFormatter</parameter>
+
+        <parameter key="eight_points_guzzle.data_collector.class">EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector</parameter>
+        <parameter key="eight_points_guzzle.logger.class">EightPoints\Bundle\GuzzleBundle\Log\Logger</parameter>
+        <parameter key="eight_points_guzzle.middleware.log.class">EightPoints\Bundle\GuzzleBundle\Middleware\LogMiddleware</parameter>
+
+        <!-- Event MiddleWare Dispatcher class -->
+        <parameter key="eight_points_guzzle.middleware.event_dispatcher.class">EightPoints\Bundle\GuzzleBundle\Middleware\EventDispatchMiddleware</parameter>
+
+        <parameter key="eight_points_guzzle.plugin.header.headers" type="collection" />
+    </parameters>
+
+    <services>
+        <!-- Formatter -->
+        <service id="eight_points_guzzle.formatter" class="%eight_points_guzzle.formatter.class%" />
+
+        <!-- Data Collector -->
+        <service id="eight_points_guzzle.data_collector" class="%eight_points_guzzle.data_collector.class%" public="false">
+            <tag name="data_collector" template="@EightPointsGuzzle/debug.html.twig" id="eight_points_guzzle" />
+            <argument type="service" id="eight_points_guzzle.logger" />
+        </service>
+    </services>
+</container>

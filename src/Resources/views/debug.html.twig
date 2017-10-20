@@ -1,0 +1,78 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set profiler_markup_version = profiler_markup_version|default(1) %}
+
+    {% if collector.callCount %}
+        {% if collector.errorCount %}
+            {% set color = 'red' %}
+        {% else %}
+            {% set color = 'green' %}
+        {% endif %}
+        {% set status_color = collector.errorCount ? 'red' : 'normal' %}
+
+        {% set icon %}
+            {# Symfony <2.8 toolbar #}
+            {% if profiler_markup_version == 1 %}
+                {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
+                <span class="sf-toolbar-status sf-toolbar-status-{{ color }}">
+                    {{ collector.callCount }}
+                </span>
+            {% else %}
+                {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
+                <span class="sf-toolbar-value">
+                   {{ collector.callCount }}
+                </span>
+            {% endif %}
+        {% endset %}
+
+        {% set text %}
+
+            <div class="sf-toolbar-info-piece">
+                <b>API Calls</b>
+                <span>{{ collector.callCount }}</span>
+            </div>
+
+            <div class="sf-toolbar-info-piece">
+                <b>Total time</b>
+                {% if collector.totalTime > 1.0 %}
+                    <span>{{ '%0.2f'|format(collector.totalTime) }} s</span>
+                {% else %}
+                    <span>{{ '%0.0f'|format(collector.totalTime * 1000) }} ms</span>
+                {% endif %}
+            </div>
+        {% endset %}
+
+        {% include "@WebProfiler/Profiler/toolbar_item.html.twig" with { "link": profiler_url, status: status_color } %}
+    {% endif %}
+{% endblock %}
+
+
+{% block menu %}
+
+    <span class="label">
+        <span class="icon">
+            {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
+        </span>
+        <strong>Guzzle</strong>
+        <span class="count">
+            <span>{{ collector.callCount }}</span>
+        </span>
+    </span>
+{% endblock %}
+
+
+{% block head %}
+
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/eightpointsguzzle/css/main.css') }}" />
+    <script src="{{ asset('bundles/eightpointsguzzle/js/jquery.min.js') }}"></script>
+{% endblock %}
+
+{% block panel %}
+
+    <h2>Logs</h2>
+
+    {% include '@EightPointsGuzzle/profiler.html.twig' with { 'collector': collector } %}
+{% endblock %}

@@ -31,8 +31,8 @@ class ConfigurationTest extends TestCase
                             'headers' => [
                                 'Accept' => 'application/json'
                             ],
-                            'query' => [
-                            ],
+                            'query' => [],
+                            'curl' => [],
                             'cert' => 'path/to/cert',
                             'connect_timeout' => 5,
                             'debug' => false,
@@ -83,8 +83,8 @@ class ConfigurationTest extends TestCase
                             'headers' => [
                                 'Accept' => 'application/json'
                             ],
-                            'query' => [
-                            ],
+                            'query' => [],
+                            'curl' => [],
                             'cert' => [
                                 'path/to/cert',
                                 'password'
@@ -131,6 +131,7 @@ class ConfigurationTest extends TestCase
                                 'password',
                                 'Invalid'
                             ],
+                            'curl' => [],
                         ],
                     ]
                 ]
@@ -161,8 +162,8 @@ class ConfigurationTest extends TestCase
                             'headers' => [
                                 'Accept' => 'application/json'
                             ],
-                            'query' => [
-                            ],
+                            'query' => [],
+                            'curl' => [],
                             'proxy' => 'http://proxy.org'
                         ],
                         'plugin' => [],

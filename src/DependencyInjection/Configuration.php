@@ -6,6 +6,7 @@ use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * @version 1.0
@@ -105,6 +106,33 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->arrayNode('query')
                                 ->prototype('scalar')
+                                ->end()
+                            ->end()
+                            ->arrayNode('curl')
+                                ->beforeNormalization()
+                                    ->ifArray()
+                                        ->then(function (array $curlOptions) {
+                                            $result = [];
+
+                                            foreach ($curlOptions as $key => $value) {
+                                                $optionName = 'CURLOPT_' . strtoupper($key);
+
+                                                if (!defined($optionName)) {
+                                                    throw new InvalidConfigurationException(sprintf(
+                                                        'Invalid curl option in eight_points_guzzle: %s. ' .
+                                                        'Ex: use sslversion for CURLOPT_SSLVERSION option. ' . PHP_EOL .
+                                                        'See all available options: http://php.net/manual/en/function.curl-setopt.php',
+                                                        $key
+                                                    ));
+                                                }
+
+                                                $result[constant($optionName)] = $value;
+                                            }
+
+                                            return $result;
+                                        })
+                                    ->end()
+                                    ->prototype('scalar')
                                 ->end()
                             ->end()
                             ->variableNode('cert')

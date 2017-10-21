@@ -1,6 +1,7 @@
 **[Requirements](#requirements)** |
 **[Installation](#installation)** |
 **[Usage](#usage)** |
+**[Plugins](#plugins)** |
 **[Events](#events)** |
 **[Features](#features)** |
 **[Suggestions](#suggestions)** |

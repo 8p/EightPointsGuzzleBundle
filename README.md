@@ -107,7 +107,7 @@ This bundle allows to register and integrate plugins to extend functionality of 
 All plugins will be activated/connected through bundle constructor in AppKernel, like this:
 
 ``` php 
-new EightPoints\Bundle\GuzzleBundle\GuzzleBundle([
+new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle([
     new Gregurco\Bundle\GuzzleBundleWssePlugin\GuzzleBundleWssePlugin(),
 ])
 ```

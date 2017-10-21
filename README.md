@@ -54,7 +54,7 @@ To use the newest (maybe unstable) version please add following into your compos
 ## Usage
 Load bundle in AppKernel.php:
 ``` php
-new EightPoints\Bundle\GuzzleBundle\GuzzleBundle()
+new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle()
 ```
 
 Configuration in config.yml:
@@ -118,7 +118,8 @@ new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle([
 ----
 
 ## Events
-Handling events.  Events are dispatched before and after the request to the remote host.
+Handling events. Events are dispatched before and after the request to the remote host.
+
 ### Listening To Events
 ```xml
     <service id="listenerID" class="Your\ListenerClass\That\Implements\GuzzleEventListenerInterface">  
@@ -133,6 +134,7 @@ The service on the tag, is so that if you have multiple REST endpoints you can d
 ----
 
 ## Features
+
 ### Symfony Debug Toolbar / Profiler
 <img src="/src/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
 

@@ -12,7 +12,7 @@
 [![Total Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/downloads.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Monthly Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/d/monthly.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Latest Stable Version](https://poser.pugx.org/eightpoints/guzzle-bundle/v/stable.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
-[![Build Status](https://travis-ci.org/8p/GuzzleBundle.svg)](https://travis-ci.org/8p/GuzzleBundle)
+[![Build Status](https://travis-ci.org/8p/EightPointsGuzzleBundle.svg)](https://travis-ci.org/8p/EightPointsGuzzleBundle)
 [![License](https://poser.pugx.org/eightpoints/guzzle-bundle/license)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Dependency Status](https://www.versioneye.com/user/projects/57c83100968d640039516d62/badge.svg?style=square)](https://www.versioneye.com/user/projects/57c83100968d640039516d62)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/39a6e10b-ce29-44f6-97ce-44b2ff230424/mini.png)](https://insight.sensiolabs.com/projects/39a6e10b-ce29-44f6-97ce-44b2ff230424)
@@ -66,10 +66,6 @@ eight_points_guzzle:
     clients:
         api_payment:
             base_url: "http://api.domain.tld"
-
-            # custom headers (@deprecated, will be removed in v6; new: "headers" in options (see below))
-            headers:
-                Accept: "application/json"
 
             # guzzle client options (full description here: https://guzzle.readthedocs.org/en/latest/request-options.html)
             # NOTE: "headers" option is not accepted here as it is provided as described above.

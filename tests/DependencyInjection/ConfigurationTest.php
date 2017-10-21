@@ -20,9 +20,6 @@ class ConfigurationTest extends TestCase
                 'clients' => [
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
-                        'headers' => [
-                            'Accept' => 'application/json'
-                        ],
                         'options' => [
                             'auth' => [
                                 'user',
@@ -72,9 +69,6 @@ class ConfigurationTest extends TestCase
                 'clients' => [
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
-                        'headers' => [
-                            'Accept' => 'application/json'
-                        ],
                         'options' => [
                             'auth' => [
                                 'user',
@@ -122,10 +116,10 @@ class ConfigurationTest extends TestCase
                 'clients' => [
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
-                        'headers' => [
-                            'Accept' => 'application/json'
-                        ],
                         'options' => [
+                            'headers' => [
+                                'Accept' => 'application/json'
+                            ],
                             'cert' => [
                                 'path/to/cert',
                                 'password',
@@ -150,9 +144,6 @@ class ConfigurationTest extends TestCase
                 'clients' => [
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
-                        'headers' => [
-                            'Accept' => 'application/json'
-                        ],
                         'options' => [
                             'auth' => [
                                 'user',
@@ -189,10 +180,6 @@ class ConfigurationTest extends TestCase
             'guzzle' => [
                 'clients' => [
                     'test_client' => [
-                        'headers' => [
-                            'Header_underscored' => 'some-random-hash',
-                            'Header-hyphened' => 'another-random-hash'
-                        ],
                         'options' => [
                             'headers' => [
                                 'Header_underscored' => 'some-random-hash',
@@ -207,12 +194,9 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
         $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
-        $headers = $processedConfig['clients']['test_client']['headers'];
-        $optionsHeaders = $processedConfig['clients']['test_client']['options']['headers'];
+        $headers = $processedConfig['clients']['test_client']['options']['headers'];
 
-        foreach ([$headers, $optionsHeaders] as $headerConfig) {
-            $this->assertArrayHasKey('Header_underscored', $headerConfig);
-            $this->assertArrayHasKey('Header-hyphened', $headerConfig);
-        }
+        $this->assertArrayHasKey('Header_underscored', $headers);
+        $this->assertArrayHasKey('Header-hyphened', $headers);
     }
 }

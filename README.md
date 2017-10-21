@@ -67,10 +67,6 @@ eight_points_guzzle:
         api_payment:
             base_url: "http://api.domain.tld"
 
-            # custom headers (@deprecated, will be removed in v6; new: "headers" in options (see below))
-            headers:
-                Accept: "application/json"
-
             # guzzle client options (full description here: https://guzzle.readthedocs.org/en/latest/request-options.html)
             # NOTE: "headers" option is not accepted here as it is provided as described above.
             options:

@@ -225,7 +225,7 @@ class ConfigurationTest extends TestCase
         $curlConfig = $processedConfig['clients']['test_client']['options']['curl'];
         $this->assertCount(1, $curlConfig);
         $this->assertArrayHasKey(CURLOPT_SSLVERSION, $curlConfig);
-        $this->assertEquals($curlConfig[CURLOPT_SSLVERSION], CURL_HTTP_VERSION_1_0);
+        $this->assertEquals($curlConfig[CURLOPT_SSLVERSION], CURL_HTTP_VERSION_1_1);
     }
 
     public function testInvalidCurlOption()

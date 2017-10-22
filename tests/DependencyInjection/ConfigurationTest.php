@@ -209,7 +209,7 @@ class ConfigurationTest extends TestCase
                     'test_client' => [
                         'options' => [
                             'curl' => [
-                                'sslversion' => CURL_HTTP_VERSION_1_0,
+                                'sslversion' => CURL_HTTP_VERSION_1_1,
                             ]
                         ]
                     ]

@@ -77,6 +77,11 @@ eight_points_guzzle:
 
                 headers:
                     Accept: "application/json"
+                
+                # Find proper php const, for example CURLOPT_SSLVERSION, remove CURLOPT_ and transform to lower case.
+                # List of curl options: http://php.net/manual/en/function.curl-setopt.php
+                curl:
+                    sslversion: 1 # or !php/const:CURL_HTTP_VERSION_1_0 for symfony >= 3.2
 
                 timeout: 30
 

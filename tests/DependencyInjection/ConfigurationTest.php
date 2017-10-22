@@ -16,7 +16,7 @@ class ConfigurationTest extends TestCase
     public function testSingleClientConfigWithOptions()
     {
         $config = [
-            'guzzle' => [
+            'eight_points_guzzle' => [
                 'clients' => [
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
@@ -59,13 +59,13 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
         $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
-        $this->assertEquals(array_merge($config['guzzle'], ['logging' => false]), $processedConfig);
+        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false]), $processedConfig);
     }
 
     public function testSingleClientConfigWithCertAsArray()
     {
         $config = [
-            'guzzle' => [
+            'eight_points_guzzle' => [
                 'clients' => [
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
@@ -106,13 +106,13 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
         $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
-        $this->assertEquals(array_merge($config['guzzle'], ['logging' => false]), $processedConfig);
+        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false]), $processedConfig);
     }
 
     public function testInvalidCertConfiguration()
     {
         $config = [
-            'guzzle' => [
+            'eight_points_guzzle' => [
                 'clients' => [
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
@@ -141,7 +141,7 @@ class ConfigurationTest extends TestCase
     public function testSingleClientConfigWithProxyAsString()
     {
         $config = [
-            'guzzle' => [
+            'eight_points_guzzle' => [
                 'clients' => [
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
@@ -167,9 +167,9 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
         $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
-        unset($config['guzzle']['clients']['test_client']['options']['proxy']);
+        unset($config['eight_points_guzzle']['clients']['test_client']['options']['proxy']);
 
-        $this->assertEquals(array_merge_recursive($config['guzzle'], [
+        $this->assertEquals(array_merge_recursive($config['eight_points_guzzle'], [
             'logging' => false,
             'clients' => ['test_client' => ['options' => ['proxy' => ['http' => 'http://proxy.org']]]]
         ]), $processedConfig);
@@ -178,7 +178,7 @@ class ConfigurationTest extends TestCase
     public function testHeaderWithUnderscore()
     {
         $config = [
-            'guzzle' => [
+            'eight_points_guzzle' => [
                 'clients' => [
                     'test_client' => [
                         'options' => [
@@ -199,5 +199,54 @@ class ConfigurationTest extends TestCase
 
         $this->assertArrayHasKey('Header_underscored', $headers);
         $this->assertArrayHasKey('Header-hyphened', $headers);
+    }
+
+    public function testCurlOption()
+    {
+        $config = [
+            'eight_points_guzzle' => [
+                'clients' => [
+                    'test_client' => [
+                        'options' => [
+                            'curl' => [
+                                'sslversion' => CURL_HTTP_VERSION_1_0,
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $processor = new Processor();
+        $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
+
+        $this->assertTrue(isset($processedConfig['clients']['test_client']['options']['curl']));
+
+        $curlConfig = $processedConfig['clients']['test_client']['options']['curl'];
+        $this->assertCount(1, $curlConfig);
+        $this->assertArrayHasKey(CURLOPT_SSLVERSION, $curlConfig);
+        $this->assertEquals($curlConfig[CURLOPT_SSLVERSION], CURL_HTTP_VERSION_1_0);
+    }
+
+    public function testInvalidCurlOption()
+    {
+        $this->expectException(InvalidConfigurationException::class);
+
+        $config = [
+            'eight_points_guzzle' => [
+                'clients' => [
+                    'test_client' => [
+                        'options' => [
+                            'curl' => [
+                                'invalid_option' => true,
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $processor = new Processor();
+        $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
     }
 }

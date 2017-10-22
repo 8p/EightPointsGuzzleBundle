@@ -1,6 +1,7 @@
 **[Requirements](#requirements)** |
 **[Installation](#installation)** |
 **[Usage](#usage)** |
+**[Plugins](#plugins)** |
 **[Events](#events)** |
 **[Features](#features)** |
 **[Suggestions](#suggestions)** |
@@ -12,10 +13,10 @@
 [![Total Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/downloads.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Monthly Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/d/monthly.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Latest Stable Version](https://poser.pugx.org/eightpoints/guzzle-bundle/v/stable.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
-[![Build Status](https://travis-ci.org/8p/GuzzleBundle.svg)](https://travis-ci.org/8p/GuzzleBundle)
+[![Build Status](https://travis-ci.org/8p/EightPointsGuzzleBundle.svg)](https://travis-ci.org/8p/EightPointsGuzzleBundle)
 [![License](https://poser.pugx.org/eightpoints/guzzle-bundle/license)](https://packagist.org/packages/eightpoints/guzzle-bundle)
-[![Dependency Status](https://www.versioneye.com/user/projects/57c83100968d640039516d62/badge.svg?style=square)](https://www.versioneye.com/user/projects/57c83100968d640039516d62)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/39a6e10b-ce29-44f6-97ce-44b2ff230424/mini.png)](https://insight.sensiolabs.com/projects/39a6e10b-ce29-44f6-97ce-44b2ff230424)
+[![Dependency Status](https://www.versioneye.com/user/projects/59ebb26715f0d71dd281adb2/badge.svg?style=square)](https://www.versioneye.com/user/projects/59ebb26715f0d71dd281adb2)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5619922c-2705-40d8-ba68-a8f6ce71b50e/mini.png)](https://insight.sensiolabs.com/projects/5619922c-2705-40d8-ba68-a8f6ce71b50e)
 
 
 
@@ -33,7 +34,7 @@ GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 ----
 
 ## Installation
-To install this bundle, run the command below and you will get the latest version by [Packagist][4].
+To install this bundle, run the command below and you will get the latest version by [Packagist][3].
 
 ``` bash
 composer require eightpoints/guzzle-bundle
@@ -54,7 +55,7 @@ To use the newest (maybe unstable) version please add following into your compos
 ## Usage
 Load bundle in AppKernel.php:
 ``` php
-new EightPoints\Bundle\GuzzleBundle\GuzzleBundle()
+new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle()
 ```
 
 Configuration in config.yml:
@@ -66,10 +67,6 @@ eight_points_guzzle:
     clients:
         api_payment:
             base_url: "http://api.domain.tld"
-
-            # custom headers (@deprecated, will be removed in v6; new: "headers" in options (see below))
-            headers:
-                Accept: "application/json"
 
             # guzzle client options (full description here: https://guzzle.readthedocs.org/en/latest/request-options.html)
             # NOTE: "headers" option is not accepted here as it is provided as described above.
@@ -104,8 +101,26 @@ $response = $client->get('/users');
 
 ----
 
+## Plugins
+This bundle allows to register and integrate plugins to extend functionality of guzzle and this bundle.
+
+### Usage
+All plugins will be activated/connected through bundle constructor in AppKernel, like this:
+
+``` php 
+new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle([
+    new Gregurco\Bundle\GuzzleBundleWssePlugin\GuzzleBundleWssePlugin(),
+])
+```
+
+### Known and Supported Plugins
+- [gregurco/GuzzleBundleWssePlugin][4]
+
+----
+
 ## Events
-Handling events.  Events are dispatched before and after the request to the remote host.
+Handling events. Events are dispatched before and after the request to the remote host.
+
 ### Listening To Events
 ```xml
     <service id="listenerID" class="Your\ListenerClass\That\Implements\GuzzleEventListenerInterface">  
@@ -119,10 +134,8 @@ The service on the tag, is so that if you have multiple REST endpoints you can d
 
 ----
 
-## Plugins
-WSSE - https://github.com/gregurco/GuzzleBundleWssePlugin
-
 ## Features
+
 ### Symfony Debug Toolbar / Profiler
 <img src="/src/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
 
@@ -153,6 +166,6 @@ This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 
 [1]: http://guzzlephp.org/
 [2]: http://semver.org/
-[3]: https://github.com/8p/guzzle-wsse-plugin
-[4]: https://packagist.org/packages/eightpoints/guzzle-bundle
+[3]: https://packagist.org/packages/eightpoints/guzzle-bundle
+[4]: https://github.com/gregurco/GuzzleBundleWssePlugin
 [5]: https://github.com/8p/GuzzleBundle/graphs/contributors

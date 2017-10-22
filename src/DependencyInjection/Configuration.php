@@ -86,13 +86,6 @@ class Configuration implements ConfigurationInterface
         $nodeChildren->scalarNode('class')->defaultValue('%eight_points_guzzle.http_client.class%')->end()
                     ->scalarNode('base_url')->defaultValue(null)->end()
 
-                    // @todo @deprecated
-                    ->arrayNode('headers')
-                        ->normalizeKeys(false)
-                        ->prototype('scalar')
-                        ->end()
-                    ->end()
-
                     ->arrayNode('options')
                         ->children()
                             ->arrayNode('headers')

@@ -120,6 +120,7 @@ new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle([
 
 ### Known and Supported Plugins
 - [gregurco/GuzzleBundleWssePlugin][4]
+- [gregurco/GuzzleBundleCachePlugin][5]
 
 ----
 
@@ -161,7 +162,7 @@ services:
 ## Contributing
 👍 If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
 
-🎉 Thanks to the [contributors][5] who participated in this project.
+🎉 Thanks to the [contributors][6] who participated in this project.
 
 ----
 
@@ -173,4 +174,5 @@ This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 [2]: http://semver.org/
 [3]: https://packagist.org/packages/eightpoints/guzzle-bundle
 [4]: https://github.com/gregurco/GuzzleBundleWssePlugin
-[5]: https://github.com/8p/GuzzleBundle/graphs/contributors
+[5]: https://github.com/gregurco/GuzzleBundleCachePlugin
+[6]: https://github.com/8p/GuzzleBundle/graphs/contributors

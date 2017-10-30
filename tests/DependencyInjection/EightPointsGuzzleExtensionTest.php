@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * @version 2.1
  * @since   2015-05
  */
-class GuzzleExtensionTest extends TestCase
+class EightPointsGuzzleExtensionTest extends TestCase
 {
     public function testGuzzleExtension()
     {

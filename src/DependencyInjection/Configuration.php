@@ -46,7 +46,7 @@ class Configuration implements ConfigurationInterface
      *
      * @throws  \RuntimeException
      *
-     * @return  TreeBuilder
+     * @return  \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
     public function getConfigTreeBuilder() : TreeBuilder
     {
@@ -68,7 +68,7 @@ class Configuration implements ConfigurationInterface
      *
      * @throws \RuntimeException
      *
-     * @return ArrayNodeDefinition
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
      */
     private function createClientsNode() : ArrayNodeDefinition
     {

@@ -95,7 +95,8 @@ eight_points_guzzle:
 
         ...
 ```
-All these settings are optional.
+Allowed options: headers, allow_redirects, auth, query, curl, cert, connect_timeout, debug, decode_content, delay, form_params, multipart, sink, http_errors, expect, ssl_key, stream, synchronous, timeout, verify, cookies, proxy, version. All these settings are optional.  
+Description for all options and examples of parameters can be found [here][4].
 
 Using services in controller (eight_points_guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
 ``` php
@@ -119,8 +120,8 @@ new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle([
 ```
 
 ### Known and Supported Plugins
-- [gregurco/GuzzleBundleWssePlugin][4]
-- [gregurco/GuzzleBundleCachePlugin][5]
+- [gregurco/GuzzleBundleWssePlugin][5]
+- [gregurco/GuzzleBundleCachePlugin][6]
 
 ----
 
@@ -162,7 +163,7 @@ services:
 ## Contributing
 👍 If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
 
-🎉 Thanks to the [contributors][6] who participated in this project.
+🎉 Thanks to the [contributors][7] who participated in this project.
 
 ----
 
@@ -173,6 +174,7 @@ This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 [1]: http://guzzlephp.org/
 [2]: http://semver.org/
 [3]: https://packagist.org/packages/eightpoints/guzzle-bundle
-[4]: https://github.com/gregurco/GuzzleBundleWssePlugin
-[5]: https://github.com/gregurco/GuzzleBundleCachePlugin
-[6]: https://github.com/8p/GuzzleBundle/graphs/contributors
+[4]: http://docs.guzzlephp.org/en/latest/request-options.html
+[5]: https://github.com/gregurco/GuzzleBundleWssePlugin
+[6]: https://github.com/gregurco/GuzzleBundleCachePlugin
+[7]: https://github.com/8p/GuzzleBundle/graphs/contributors

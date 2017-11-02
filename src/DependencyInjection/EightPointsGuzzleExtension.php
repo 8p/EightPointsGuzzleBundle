@@ -123,14 +123,14 @@ class EightPointsGuzzleExtension extends Extension
 
         $handler = new Definition(HandlerStack::class);
         $handler->setFactory([HandlerStack::class, 'create']);
+        $handler->addMethodCall('push', [$logExpression, 'log']);
 
         foreach ($this->plugins as $plugin) {
             $plugin->loadForClient($config['plugin'][$plugin->getPluginName()], $container, $name, $handler);
         }
 
-        $handler->addMethodCall('push', [$logExpression]);
         // goes on the end of the stack.
-        $handler->addMethodCall('unshift', [$eventExpression]);
+        $handler->addMethodCall('unshift', [$eventExpression, 'events']);
 
         return $handler;
     }

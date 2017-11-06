@@ -179,4 +179,4 @@ This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 [5]: https://github.com/gregurco/GuzzleBundleWssePlugin
 [6]: https://github.com/gregurco/GuzzleBundleCachePlugin
 [7]: https://github.com/gregurco/GuzzleBundleOAuth2Plugin
-[8]: https://github.com/8p/GuzzleBundle/graphs/contributors
+[8]: https://github.com/8p/EightPointsGuzzleBundle/graphs/contributors

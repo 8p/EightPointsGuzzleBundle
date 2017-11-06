@@ -122,6 +122,7 @@ new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle([
 ### Known and Supported Plugins
 - [gregurco/GuzzleBundleWssePlugin][5]
 - [gregurco/GuzzleBundleCachePlugin][6]
+- [gregurco/GuzzleBundleOAuth2Plugin][7]
 
 ----
 
@@ -163,7 +164,7 @@ services:
 ## Contributing
 👍 If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
 
-🎉 Thanks to the [contributors][7] who participated in this project.
+🎉 Thanks to the [contributors][8] who participated in this project.
 
 ----
 
@@ -177,4 +178,5 @@ This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 [4]: http://docs.guzzlephp.org/en/latest/request-options.html
 [5]: https://github.com/gregurco/GuzzleBundleWssePlugin
 [6]: https://github.com/gregurco/GuzzleBundleCachePlugin
-[7]: https://github.com/8p/GuzzleBundle/graphs/contributors
+[7]: https://github.com/gregurco/GuzzleBundleOAuth2Plugin
+[8]: https://github.com/8p/GuzzleBundle/graphs/contributors

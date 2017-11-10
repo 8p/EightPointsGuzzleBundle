@@ -5,6 +5,8 @@ namespace EightPoints\Bundle\GuzzleBundle\DataCollector;
 use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
 use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
+use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
+use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -133,7 +135,9 @@ class HttpDataCollector extends DataCollector
      */
     public function getErrorCount() : int
     {
-        return 0; //@todo
+        return count(array_filter($this->getMessages(), function (LogMessage $message) {
+            return $message->getLevel() === LogLevel::ERROR;
+        }));
     }
 
     /**

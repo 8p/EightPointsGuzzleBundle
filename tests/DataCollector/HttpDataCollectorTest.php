@@ -5,7 +5,9 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\DataCollector;
 use EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
+use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -231,7 +233,35 @@ class HttpDataCollectorTest extends TestCase
      */
     public function testErrorCount()
     {
-        $this->markTestSkipped('must be implemented.');
+        $errorMessage = new LogMessage('error log message');
+        $errorMessage->setLevel(LogLevel::ERROR);
+
+        $infoMessage = new LogMessage('info log message');
+        $infoMessage->setLevel(LogLevel::INFO);
+
+        $this->logger->expects($this->once())
+            ->method('getMessages')
+            ->willReturn([$errorMessage, $infoMessage]);
+
+        $collector = new HttpDataCollector($this->logger);
+
+        $response = $this->getMockBuilder(Response::class)
+            ->getMock();
+
+        $request = $this->getMockBuilder(Request::class)
+            ->getMock();
+
+        $request->expects($this->once())
+            ->method('getUri')
+            ->willReturn('someRandomUrlId');
+
+        $request->expects($this->once())
+            ->method('getPathInfo')
+            ->willReturn('id');
+
+        $collector->collect($request, $response);
+
+        $this->assertEquals(1, $collector->getErrorCount());
     }
 
     /**

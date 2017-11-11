@@ -234,28 +234,6 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($curlConfig[CURLOPT_SSLVERSION], CURL_HTTP_VERSION_1_1);
     }
 
-    public function testInvalidCurlOption()
-    {
-        $this->expectException(InvalidConfigurationException::class);
-
-        $config = [
-            'eight_points_guzzle' => [
-                'clients' => [
-                    'test_client' => [
-                        'options' => [
-                            'curl' => [
-                                'invalid_option' => true,
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ];
-
-        $processor = new Processor();
-        $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
-    }
-
     /**
      * @dataProvider provideValidOptionValues
      *
@@ -386,6 +364,67 @@ class ConfigurationTest extends TestCase
             'version is float' => [[
                 'version' => 1.1,
             ]],
+        ];
+    }
+
+    /**
+     * @dataProvider provideInvalidOptionValues
+     *
+     * @param array $options
+     * @param string $exceptionMessage
+     */
+    public function testInvalidOptions(array $options, string $exceptionMessage)
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage($exceptionMessage);
+
+        $config = [
+            'eight_points_guzzle' => [
+                'clients' => [
+                    'test_client' => [
+                        'options' => $options
+                    ]
+                ]
+            ]
+        ];
+
+        $processor = new Processor();
+        $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideInvalidOptionValues() : array
+    {
+        return [
+            'form_params and multipart at the same time' => [
+                'options' => [
+                    'form_params' => ['foo' => 'bar'],
+                    'multipart' => ['baz' => 'bar'],
+                ],
+                'exception message' => 'You cannot use form_params and multipart at the same time.',
+            ],
+            'invalid curl option' => [
+                'options' => [
+                    'curl' => [
+                        'invalid_option' => true,
+                    ],
+                ],
+                'exception message' => 'Invalid curl option',
+            ],
+            'cert as array with one value' => [
+                'options' => [
+                    'cert' => ['/path/to/cert.pem'],
+                ],
+                'exception message' => 'cert can be: string or array with two entries',
+            ],
+            'ssl_key as array with one value' => [
+                'options' => [
+                    'ssl_key' => ['/path/to/cert.pem'],
+                ],
+                'exception message' => 'ssl_key can be: string or array with two entries',
+            ],
         ];
     }
 }

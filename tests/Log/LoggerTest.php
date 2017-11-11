@@ -9,6 +9,7 @@ use EightPoints\Bundle\GuzzleBundle\Log\LogRequest;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LogLevel;
 
 /**
  * Class LoggerTest
@@ -44,7 +45,7 @@ class LoggerTest extends TestCase
         $logger = new Logger();
         $this->assertFalse($logger->hasMessages());
 
-        $logger->log('test', 'test message');
+        $logger->log(LogLevel::ERROR, 'test message');
         $this->assertTrue($logger->hasMessages());
     }
 
@@ -61,10 +62,10 @@ class LoggerTest extends TestCase
         $logger = new Logger();
         $this->assertCount(0, $logger->getMessages());
 
-        $logger->log('test', 'test message');
+        $logger->log(LogLevel::ERROR, 'test message');
         $this->assertCount(1, $logger->getMessages());
 
-        $logger->log('test', 'second test message');
+        $logger->log(LogLevel::ERROR, 'second test message');
         $this->assertCount(2, $logger->getMessages());
 
         $messages = $logger->getMessages();
@@ -72,7 +73,7 @@ class LoggerTest extends TestCase
         /** @var LogMessage $message */
         foreach ($messages as $message) {
             $this->assertInstanceOf(LogMessage::class, $message);
-            $this->assertSame('test', $message->getLevel());
+            $this->assertSame(LogLevel::ERROR, $message->getLevel());
             $this->assertContains('test message', $message->getMessage());
             $this->assertNull($message->getRequest());
             $this->assertNull($message->getResponse());
@@ -89,10 +90,10 @@ class LoggerTest extends TestCase
         $requestMock->method('getHeaders')->willReturn([]);
         $requestMock->method('getUri')->willReturn($uriMock);
 
-        $logger->log('info', 'info message', ['request' => $requestMock]);
+        $logger->log(LogLevel::INFO, 'info message', ['request' => $requestMock]);
 
         $message = $logger->getMessages()[2];
-        $this->assertSame('info', $message->getLevel());
+        $this->assertSame(LogLevel::INFO, $message->getLevel());
         $this->assertSame('info message', $message->getMessage());
 
         $this->assertInstanceOf(LogRequest::class, $message->getRequest());
@@ -109,8 +110,8 @@ class LoggerTest extends TestCase
     public function testClear()
     {
         $logger = new Logger();
-        $logger->log('test', 'test message');
-        $logger->log('test', 'test message');
+        $logger->log(LogLevel::ERROR, 'test message');
+        $logger->log(LogLevel::ERROR, 'test message');
 
         $this->assertCount(2, $logger->getMessages());
         $this->assertTrue($logger->hasMessages());

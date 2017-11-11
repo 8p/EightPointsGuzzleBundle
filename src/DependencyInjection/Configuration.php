@@ -90,6 +90,12 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                     ->arrayNode('options')
+                        ->validate()
+                            ->ifTrue(function ($options) {
+                                return count($options['form_params']) && count($options['multipart']);
+                            })
+                            ->thenInvalid('You cannot use form_params and multipart at the same time.')
+                        ->end()
                         ->children()
                             ->arrayNode('headers')
                                 ->normalizeKeys(false)

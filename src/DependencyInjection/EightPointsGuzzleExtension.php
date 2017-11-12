@@ -3,8 +3,6 @@
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
 use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
-use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
-use GuzzleHttp\HandlerStack;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
@@ -12,6 +10,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\ExpressionLanguage\Expression;
+use GuzzleHttp\HandlerStack;
 
 /**
  * @version   1.0
@@ -61,18 +60,22 @@ class EightPointsGuzzleExtension extends Extension
 
         $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'), $this->plugins);
         $config        = $this->processConfiguration($configuration, $configs);
+        $logging       = $config['logging'] === true;
 
         foreach ($this->plugins as $plugin) {
             $container->addObjectResource(new \ReflectionClass(get_class($plugin)));
             $plugin->load($config, $container);
         }
 
-        $this->createLogger($config, $container);
+        if ($logging) {
+            $this->defineLogger($container);
+            $this->defineDataCollector($container);
+        }
 
         foreach ($config['clients'] as $name => $options) {
             $argument = [
                 'base_uri' => $options['base_url'],
-                'handler'  => $this->createHandler($container, $name, $options)
+                'handler'  => $this->createHandler($container, $name, $options, $logging)
             ];
 
             // if present, add default options to the constructor argument for the Guzzle client
@@ -99,34 +102,33 @@ class EightPointsGuzzleExtension extends Extension
      * @since  2015-07
      *
      * @param  ContainerBuilder $container
-     * @param  string           $name
-     * @param  array            $config
+     * @param  string           $clientName
+     * @param  array            $options
+     * @param  bool             $logging
      *
      * @return Definition
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
      */
-    protected function createHandler(ContainerBuilder $container, string $name, array $config) : Definition
+    protected function createHandler(ContainerBuilder $container, string $clientName, array $options, bool $logging) : Definition
     {
-        $logServiceName = sprintf('eight_points_guzzle.middleware.log.%s', $name);
-        $log = $this->createLogMiddleware();
-        $container->setDefinition($logServiceName, $log);
-
         // Event Dispatching service
-        $eventServiceName = sprintf('eight_points_guzzle.middleware.event_dispatch.%s', $name);
-        $eventService = $this->createEventMiddleware($name);
+        $eventServiceName = sprintf('eight_points_guzzle.middleware.event_dispatch.%s', $clientName);
+        $eventService = $this->createEventMiddleware($clientName);
         $container->setDefinition($eventServiceName, $eventService);
 
-        $logExpression    = new Expression(sprintf("service('%s').log()", $logServiceName));
         // Create the event Dispatch Middleware
         $eventExpression  = new Expression(sprintf("service('%s').dispatchEvent()", $eventServiceName));
 
         $handler = new Definition(HandlerStack::class);
         $handler->setFactory([HandlerStack::class, 'create']);
-        $handler->addMethodCall('push', [$logExpression, 'log']);
+
+        if ($logging) {
+            $this->defineLogMiddleware($container, $handler, $clientName);
+        }
 
         foreach ($this->plugins as $plugin) {
-            $plugin->loadForClient($config['plugin'][$plugin->getPluginName()], $container, $name, $handler);
+            $plugin->loadForClient($options['plugin'][$plugin->getPluginName()], $container, $clientName, $handler);
         }
 
         // goes on the end of the stack.
@@ -136,45 +138,57 @@ class EightPointsGuzzleExtension extends Extension
     }
 
     /**
-     * Create Logger
+     * Define Logger
      *
      * @since  2015-07
      *
-     * @param  array            $config
      * @param  ContainerBuilder $container
-     *
-     * @return Definition
      *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      */
-    protected function createLogger(array $config, ContainerBuilder $container) : Definition
+    protected function defineLogger(ContainerBuilder $container)
     {
-
-        if ($config['logging'] === true) {
-            $logger = new Definition('%eight_points_guzzle.logger.class%');
-        } else {
-            $logger = new Definition(DevNullLogger::class);
-        }
-
-        $container->setDefinition('eight_points_guzzle.logger', $logger);
-
-        return $logger;
+        $loggerDefinition = new Definition('%eight_points_guzzle.logger.class%');
+        $container->setDefinition('eight_points_guzzle.logger', $loggerDefinition);
     }
 
     /**
-     * Create Middleware for Logging
+     * Define Data Collector
      *
      * @since  2015-07
      *
-     * @return Definition
+     * @param  ContainerBuilder $container
+     *
+     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      */
-    protected function createLogMiddleware() : Definition
+    protected function defineDataCollector(ContainerBuilder $container)
     {
-        $log = new Definition('%eight_points_guzzle.middleware.log.class%');
-        $log->addArgument(new Reference('eight_points_guzzle.logger'));
-        $log->addArgument(new Reference('eight_points_guzzle.formatter'));
+        $dataCollectorDefinition = new Definition('%eight_points_guzzle.data_collector.class%');
+        $dataCollectorDefinition->setPublic(false);
+        $dataCollectorDefinition->addTag('data_collector', [
+            'id' => 'eight_points_guzzle',
+            'template' => '@EightPointsGuzzle/debug.html.twig',
+        ]);
+        $container->setDefinition('eight_points_guzzle.data_collector', $dataCollectorDefinition);
+    }
 
-        return $log;
+    /**
+     * Define Log Middleware for client
+     *
+     * @param ContainerBuilder $container
+     * @param Definition $handler
+     * @param string $clientName
+     */
+    protected function defineLogMiddleware(ContainerBuilder $container, Definition $handler, string $clientName)
+    {
+        $logMiddlewareDefinitionName = sprintf('eight_points_guzzle.middleware.log.%s', $clientName);
+        $logMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.log.class%');
+        $logMiddlewareDefinition->addArgument(new Reference('eight_points_guzzle.logger'));
+        $logMiddlewareDefinition->addArgument(new Reference('eight_points_guzzle.formatter'));
+        $container->setDefinition($logMiddlewareDefinitionName, $logMiddlewareDefinition);
+
+        $logExpression = new Expression(sprintf("service('%s').log()", $logMiddlewareDefinitionName));
+        $handler->addMethodCall('push', [$logExpression, 'log']);
     }
 
     /**

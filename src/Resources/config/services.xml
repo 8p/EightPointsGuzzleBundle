@@ -17,15 +17,4 @@
 
         <parameter key="eight_points_guzzle.plugin.header.headers" type="collection" />
     </parameters>
-
-    <services>
-        <!-- Formatter -->
-        <service id="eight_points_guzzle.formatter" class="%eight_points_guzzle.formatter.class%" />
-
-        <!-- Data Collector -->
-        <service id="eight_points_guzzle.data_collector" class="%eight_points_guzzle.data_collector.class%" public="false">
-            <tag name="data_collector" template="@EightPointsGuzzle/debug.html.twig" id="eight_points_guzzle" />
-            <argument type="service" id="eight_points_guzzle.logger" />
-        </service>
-    </services>
 </container>

@@ -165,6 +165,7 @@ class EightPointsGuzzleExtension extends Extension
     protected function defineDataCollector(ContainerBuilder $container)
     {
         $dataCollectorDefinition = new Definition('%eight_points_guzzle.data_collector.class%');
+        $dataCollectorDefinition->addArgument(new Reference('eight_points_guzzle.logger'));
         $dataCollectorDefinition->setPublic(false);
         $dataCollectorDefinition->addTag('data_collector', [
             'id' => 'eight_points_guzzle',

@@ -17,9 +17,4 @@
 
         <parameter key="eight_points_guzzle.plugin.header.headers" type="collection" />
     </parameters>
-
-    <services>
-        <!-- Formatter -->
-        <service id="eight_points_guzzle.formatter" class="%eight_points_guzzle.formatter.class%" />
-    </services>
 </container>

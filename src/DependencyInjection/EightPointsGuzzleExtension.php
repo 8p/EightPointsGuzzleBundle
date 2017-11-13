@@ -70,6 +70,7 @@ class EightPointsGuzzleExtension extends Extension
         if ($logging) {
             $this->defineLogger($container);
             $this->defineDataCollector($container);
+            $this->defineFormatter($container);
         }
 
         foreach ($config['clients'] as $name => $options) {
@@ -170,6 +171,19 @@ class EightPointsGuzzleExtension extends Extension
             'template' => '@EightPointsGuzzle/debug.html.twig',
         ]);
         $container->setDefinition('eight_points_guzzle.data_collector', $dataCollectorDefinition);
+    }
+
+    /**
+     * Define Formatter
+     *
+     * @param  ContainerBuilder $container
+     *
+     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
+     */
+    protected function defineFormatter(ContainerBuilder $container)
+    {
+        $formatterDefinition = new Definition('%eight_points_guzzle.formatter.class%');
+        $container->setDefinition('eight_points_guzzle.formatter', $formatterDefinition);
     }
 
     /**

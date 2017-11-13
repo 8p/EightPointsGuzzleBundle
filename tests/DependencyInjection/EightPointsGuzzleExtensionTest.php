@@ -71,6 +71,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         // test logging services (logger, data collector and log middleware for each client)
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.logger'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.data_collector'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.formatter'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.log.test_api_with_custom_class'));
 
@@ -90,6 +91,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
 
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.logger'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.data_collector'));
+        $this->assertFalse($container->hasDefinition('eight_points_guzzle.formatter'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api_with_custom_class'));
 

@@ -16,11 +16,6 @@ env:
     - DEPENDENCIES='dev' SYMFONY_VERSION='3.4.*@dev' # LTS
     - SYMFONY_VERSION=dev-master
 
-matrix:
-    exclude:
-        - php: 7.0
-        - env: SYMFONY_VERSION=dev-master # requires PHP ^7.1.3
-
 before_install:
     - composer self-update
     - if [ "$DEPENDENCIES" == "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
@@ -35,6 +30,9 @@ notifications:
         - "florian.preusner@8points.de"
 
 matrix:
+    exclude:
+        - php: 7
+        - env: SYMFONY_VERSION=dev-master # requires PHP ^7.1.3
     allow_failures:
         - env: SYMFONY_VERSION=dev-master
         - php: nightly

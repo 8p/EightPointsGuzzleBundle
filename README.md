@@ -90,8 +90,9 @@ eight_points_guzzle:
 
         api_crm:
             base_url: "http://api.crm.tld"
-            headers:
-                Accept: "application/json"
+            options:            
+                headers:
+                    Accept: "application/json"
 
         ...
 ```

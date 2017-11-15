@@ -1,8 +1,11 @@
 language: php
 
+sudo: false
+
 php:
     - 7.0
     - 7.1
+    - 7.2
     - nightly
 
 env:
@@ -10,12 +13,15 @@ env:
     - SYMFONY_VERSION=2.8.* # LTS
     - SYMFONY_VERSION=3.2.*
     - SYMFONY_VERSION=3.3.*
-    - SYMFONY_VERSION=3.4.* # LTS
+    - DEPENDENCIES='dev' SYMFONY_VERSION='3.4.*@dev' # LTS
     - SYMFONY_VERSION=dev-master
 
-before_script:
+before_install:
     - composer self-update
-    - composer require symfony/symfony:${SYMFONY_VERSION}
+    - if [ "$DEPENDENCIES" == "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
+    - if [ "$SYMFONY_VERSION" != "" ]; then composer --no-update require symfony/symfony:${SYMFONY_VERSION}; fi;
+
+install: composer update
 
 script: ./vendor/bin/phpunit --coverage-text
 
@@ -27,3 +33,4 @@ matrix:
     allow_failures:
         - env: SYMFONY_VERSION=dev-master
         - php: nightly
+        - php: 7.2

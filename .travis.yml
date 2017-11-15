@@ -6,8 +6,11 @@ php:
     - nightly
 
 env:
+    - SYMFONY_VERSION=2.7.* # LTS
+    - SYMFONY_VERSION=2.8.* # LTS
     - SYMFONY_VERSION=3.2.*
     - SYMFONY_VERSION=3.3.*
+    - SYMFONY_VERSION=3.4.* # LTS
     - SYMFONY_VERSION=dev-master
 
 before_script:

@@ -36,4 +36,4 @@ matrix:
     allow_failures:
         - env: SYMFONY_VERSION=dev-master
         - php: nightly
-        - php: 7.2
+        - php: 7.2 # Remove when PHP 7.2 will be released

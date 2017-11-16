@@ -92,6 +92,7 @@ class EightPointsGuzzleExtension extends Extension
 
             $client = new Definition($options['class']);
             $client->addArgument($argument);
+            $client->setPublic(true);
 
             // set service name based on client name
             $serviceName = sprintf('%s.client.%s', $this->getAlias(), $name);
@@ -123,6 +124,7 @@ class EightPointsGuzzleExtension extends Extension
 
         $handler = new Definition(HandlerStack::class);
         $handler->setFactory([HandlerStack::class, 'create']);
+        $handler->setPublic(true);
 
         if ($logging) {
             $this->defineLogMiddleware($container, $handler, $clientName);
@@ -150,6 +152,7 @@ class EightPointsGuzzleExtension extends Extension
     protected function defineLogger(ContainerBuilder $container)
     {
         $loggerDefinition = new Definition('%eight_points_guzzle.logger.class%');
+        $loggerDefinition->setPublic(true);
         $container->setDefinition('eight_points_guzzle.logger', $loggerDefinition);
     }
 
@@ -184,6 +187,7 @@ class EightPointsGuzzleExtension extends Extension
     protected function defineFormatter(ContainerBuilder $container)
     {
         $formatterDefinition = new Definition('%eight_points_guzzle.formatter.class%');
+        $formatterDefinition->setPublic(true);
         $container->setDefinition('eight_points_guzzle.formatter', $formatterDefinition);
     }
 
@@ -200,6 +204,7 @@ class EightPointsGuzzleExtension extends Extension
         $logMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.log.class%');
         $logMiddlewareDefinition->addArgument(new Reference('eight_points_guzzle.logger'));
         $logMiddlewareDefinition->addArgument(new Reference('eight_points_guzzle.formatter'));
+        $logMiddlewareDefinition->setPublic(true);
         $container->setDefinition($logMiddlewareDefinitionName, $logMiddlewareDefinition);
 
         $logExpression = new Expression(sprintf("service('%s').log()", $logMiddlewareDefinitionName));
@@ -220,6 +225,7 @@ class EightPointsGuzzleExtension extends Extension
         $eventMiddleWare = new Definition('%eight_points_guzzle.middleware.event_dispatcher.class%');
         $eventMiddleWare->addArgument(new Reference('event_dispatcher'));
         $eventMiddleWare->addArgument($name);
+        $eventMiddleWare->setPublic(true);
 
         return $eventMiddleWare;
     }

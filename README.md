@@ -172,7 +172,6 @@ services:
 ## License
 This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 
-
 [1]: http://guzzlephp.org/
 [2]: http://semver.org/
 [3]: https://packagist.org/packages/eightpoints/guzzle-bundle

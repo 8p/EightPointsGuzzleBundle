@@ -79,7 +79,18 @@ after:
 $this->get('eight_points_guzzle.client.api_crm');
 ```
 
-### Step 5: WSSE plugin
+### Step 5: if you have created any services, you should change name
+before:
+```xml
+<argument type="service" id="guzzle.client.xyz" />
+```
+
+after:
+```xml
+<argument type="service" id="eight_points_guzzle.client.xyz" />
+```
+
+### Step 6: WSSE plugin
 
 WSSE plugin was moved to separate repository.
 If you are using WSSE then follow install guide from [gregurco/guzzle-bundle-wsse-plugin](https://github.com/gregurco/GuzzleBundleWssePlugin).

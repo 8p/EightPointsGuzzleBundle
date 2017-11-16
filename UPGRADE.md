@@ -68,10 +68,18 @@ eight_points_guzzle:
                     Accept: "application/json"
 ```
 
-### Step 4: WSSE plugin
+### Step 4: client call
+before:
+```php
+$this->get('guzzle.client.api_crm');
+```
+
+after:
+```php
+$this->get('eight_points_guzzle.client.api_crm');
+```
+
+### Step 5: WSSE plugin
 
 WSSE plugin was moved to separate repository.
 If you are using WSSE then follow install guide from [gregurco/guzzle-bundle-wsse-plugin](https://github.com/gregurco/GuzzleBundleWssePlugin).
-
-
-

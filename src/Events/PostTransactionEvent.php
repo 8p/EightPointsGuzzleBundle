@@ -28,9 +28,9 @@ class PostTransactionEvent extends Event
      *
      * This returns the transaction we are working with.
      *
-     * @return ResponseInterface
+     * @return ResponseInterface|null
      */
-    public function getTransaction() : ResponseInterface
+    public function getTransaction()
     {
         return $this->response;
     }

@@ -49,6 +49,7 @@ class HttpDataCollectorTest extends TestCase
         $expected  = [
             'logs'      => [],
             'callCount' => 0,
+            'totalTime' => 0,
         ];
 
         $this->assertSame($expected, $data);

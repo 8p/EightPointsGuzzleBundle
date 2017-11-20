@@ -12,7 +12,9 @@ class Logger implements LoggerInterface
 {
     use LoggerTrait;
 
-    /** @var LogMessage[] */
+    /**
+     * @var \EightPoints\Bundle\GuzzleBundle\Log\LogMessage[]
+     */
     private $messages = [];
 
     /**
@@ -32,7 +34,7 @@ class Logger implements LoggerInterface
         $logMessage = new LogMessage($message);
         $logMessage->setLevel($level);
 
-        if ($context) {
+        if (!empty($context)) {
             if (!empty($context['request'])) {
                 $logMessage->setRequest(new LogRequest($context['request']));
             }
@@ -75,7 +77,7 @@ class Logger implements LoggerInterface
      * @version 2.1
      * @since   2014-11
      *
-     * @return  LogMessage[]
+     * @return  \EightPoints\Bundle\GuzzleBundle\Log\LogMessage[]
      */
     public function getMessages() : array
     {

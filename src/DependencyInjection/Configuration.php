@@ -14,13 +14,19 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
  */
 class Configuration implements ConfigurationInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $alias;
 
-    /** @var boolean */
+    /**
+     * @var boolean
+     */
     protected $debug;
 
-    /** @var EightPointsGuzzleBundlePlugin[] */
+    /**
+     * @var \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[]
+     */
     protected $plugins;
 
     /**
@@ -73,7 +79,9 @@ class Configuration implements ConfigurationInterface
     private function createClientsNode() : ArrayNodeDefinition
     {
         $builder = new TreeBuilder();
-        $node    = $builder->root('clients');
+
+        /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node */
+        $node = $builder->root('clients');
 
         $nodeChildren = $node->useAttributeAsKey('name')
             ->prototype('array')

@@ -8,11 +8,11 @@ use GuzzleHttp\TransferStats;
 
 class RequestTimeMiddleware
 {
-    /** @var HttpDataCollector */
+    /** @var \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector */
     private $dataCollector;
 
     /**
-     * @param HttpDataCollector $dataCollector
+     * @param \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector $dataCollector
      */
     public function __construct(HttpDataCollector $dataCollector)
     {

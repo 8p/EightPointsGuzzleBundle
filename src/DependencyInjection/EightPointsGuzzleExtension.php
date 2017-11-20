@@ -195,8 +195,8 @@ class EightPointsGuzzleExtension extends Extension
     /**
      * Define Request Time Middleware
      *
-     * @param ContainerBuilder $container
-     * @param Definition $handler
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\Definition $handler
      * @param string $clientName
      */
     protected function defineRequestTimeMiddleware(ContainerBuilder $container, Definition $handler, string $clientName)

@@ -41,11 +41,11 @@ class RequestTimeMiddleware
      * Create callback for on_stats options.
      * If request has on_stats option, it will be called inside of this callback.
      *
-     * @param null|\Closure $initialOnStats
+     * @param null|callable $initialOnStats
      *
      * @return \Closure
      */
-    protected function getOnStatsCallback(\Closure $initialOnStats = null) : \Closure
+    protected function getOnStatsCallback($initialOnStats) : \Closure
     {
         return function (TransferStats $stats) use ($initialOnStats) {
             if (is_callable($initialOnStats)) {

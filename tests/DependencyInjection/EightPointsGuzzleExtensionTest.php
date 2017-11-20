@@ -74,6 +74,8 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.formatter'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.log.test_api_with_custom_class'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.request_time.test_api'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.request_time.test_api_with_custom_class'));
 
         // test log middleware in handler of the client
         $this->assertCount(1, $this->getClientLogMiddleware($container, 'eight_points_guzzle.client.test_api'));
@@ -94,6 +96,8 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.formatter'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api_with_custom_class'));
+        $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.request_time.test_api'));
+        $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.request_time.test_api_with_custom_class'));
 
         // test log middleware in handler of the client
         $this->assertCount(0, $this->getClientLogMiddleware($container, 'eight_points_guzzle.client.test_api'));

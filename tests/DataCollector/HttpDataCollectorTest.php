@@ -216,12 +216,16 @@ class HttpDataCollectorTest extends TestCase
 
         $collector->collect($request, $response);
 
-        $this->assertSame(2, $collector->getCallCount());
+        $collector->addTotalTime(3.14);
+
+        $this->assertEquals(2, $collector->getCallCount());
+        $this->assertEquals(3.14, $collector->getTotalTime());
 
         $collector->reset();
 
         $this->assertSame(0, $collector->getCallCount());
         $this->assertCount(0, $collector->getLogs());
+        $this->assertEquals(0, $collector->getTotalTime());
     }
 
     /**
@@ -268,13 +272,18 @@ class HttpDataCollectorTest extends TestCase
     /**
      * Test Total Time
      *
-     * @version 2.1
-     * @since   2015-06
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getTotalTime
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::addTotalTime()
      */
     public function testTotalTime()
     {
-        $this->markTestSkipped('must be implemented.');
+        $collector = new HttpDataCollector($this->logger);
+        $this->assertEquals(0, $collector->getTotalTime());
+
+        $collector->addTotalTime(3.14);
+        $this->assertEquals(3.14, $collector->getTotalTime());
+
+        $collector->addTotalTime(2.17);
+        $this->assertEquals(5.31, $collector->getTotalTime());
     }
 }

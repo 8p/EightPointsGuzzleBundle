@@ -4,7 +4,6 @@ namespace EightPoints\Bundle\GuzzleBundle\DataCollector;
 
 use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
 use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
-use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
@@ -21,7 +20,7 @@ use Symfony\Component\HttpKernel\Kernel;
 class HttpDataCollector extends DataCollector
 {
 
-    /** @var Logger $logger */
+    /** @var LoggerInterface $logger */
     protected $logger;
 
     /**

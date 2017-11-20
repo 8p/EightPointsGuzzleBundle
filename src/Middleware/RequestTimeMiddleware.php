@@ -47,9 +47,9 @@ class RequestTimeMiddleware
      */
     protected function getOnStatsCallback(\Closure $initialOnStats = null) : \Closure
     {
-        return  function (TransferStats $stats) use ($initialOnStats) {
+        return function (TransferStats $stats) use ($initialOnStats) {
             if (is_callable($initialOnStats)) {
-                call_user_func($initialOnStats);
+                call_user_func($initialOnStats, $stats);
             }
 
             $this->dataCollector->addTotalTime((float)$stats->getTransferTime());

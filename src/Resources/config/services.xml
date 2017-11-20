@@ -13,5 +13,9 @@
         <parameter key="eight_points_guzzle.middleware.log.class">EightPoints\Bundle\GuzzleBundle\Middleware\LogMiddleware</parameter>
         <parameter key="eight_points_guzzle.middleware.event_dispatcher.class">EightPoints\Bundle\GuzzleBundle\Middleware\EventDispatchMiddleware</parameter>
         <parameter key="eight_points_guzzle.middleware.request_time.class">EightPoints\Bundle\GuzzleBundle\Middleware\RequestTimeMiddleware</parameter>
+
+        <!-- Deprecated! Remove them in v8.0 -->
+        <parameter key="eight_points_guzzle.middleware.class">GuzzleHttp\Middleware</parameter>
+        <parameter key="eight_points_guzzle.plugin.header.headers" type="collection" />
     </parameters>
 </container>

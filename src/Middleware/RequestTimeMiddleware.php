@@ -30,7 +30,7 @@ class RequestTimeMiddleware
             RequestInterface $request,
             array $options
         ) use ($handler) {
-            $options['on_stats'] = $this->getOnStatsCallback($options['on_stats']);
+            $options['on_stats'] = $this->getOnStatsCallback(isset($options['on_stats']) ? $options['on_stats'] : null);
 
             // Continue the handler chain.
             return $handler($request, $options);

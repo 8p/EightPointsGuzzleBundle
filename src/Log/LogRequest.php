@@ -80,7 +80,7 @@ class LogRequest
 
         $this->setBody($request->getBody() ? $request->getBody()->__toString() : null);
 
-        if ($readPosition) {
+        if ($readPosition !== null) {
             $request->getBody()->seek($readPosition);
         }
     }

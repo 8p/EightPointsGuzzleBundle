@@ -19,8 +19,7 @@ use Symfony\Component\HttpKernel\Kernel;
  */
 class HttpDataCollector extends DataCollector
 {
-
-    /*** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger */
+    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger */
     protected $logger;
 
     /**

@@ -128,6 +128,7 @@ class EightPointsGuzzleExtension extends Extension
 
         if ($logging) {
             $this->defineLogMiddleware($container, $handler, $clientName);
+            $this->defineRequestTimeMiddleware($container, $handler, $clientName);
         }
 
         foreach ($this->plugins as $plugin) {
@@ -189,6 +190,25 @@ class EightPointsGuzzleExtension extends Extension
         $formatterDefinition = new Definition('%eight_points_guzzle.formatter.class%');
         $formatterDefinition->setPublic(true);
         $container->setDefinition('eight_points_guzzle.formatter', $formatterDefinition);
+    }
+
+    /**
+     * Define Request Time Middleware
+     *
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\Definition $handler
+     * @param string $clientName
+     */
+    protected function defineRequestTimeMiddleware(ContainerBuilder $container, Definition $handler, string $clientName)
+    {
+        $requestTimeMiddlewareDefinitionName = sprintf('eight_points_guzzle.middleware.request_time.%s', $clientName);
+        $requestTimeMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.request_time.class%');
+        $requestTimeMiddlewareDefinition->addArgument(new Reference('eight_points_guzzle.data_collector'));
+        $requestTimeMiddlewareDefinition->setPublic(false);
+        $container->setDefinition($requestTimeMiddlewareDefinitionName, $requestTimeMiddlewareDefinition);
+
+        $requestTimeExpression = new Expression(sprintf("service('%s')", $requestTimeMiddlewareDefinitionName));
+        $handler->addMethodCall('push', [$requestTimeExpression, 'request_time']);
     }
 
     /**

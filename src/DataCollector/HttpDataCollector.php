@@ -19,10 +19,7 @@ use Symfony\Component\HttpKernel\Kernel;
  */
 class HttpDataCollector extends DataCollector
 {
-
-    /**
-     * @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
-     */
+    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger */
     protected $logger;
 
     /**
@@ -76,6 +73,7 @@ class HttpDataCollector extends DataCollector
         $this->data = [
             'logs' => [],
             'callCount' => 0,
+            'totalTime' => 0,
         ];
     }
 
@@ -150,7 +148,15 @@ class HttpDataCollector extends DataCollector
      */
     public function getTotalTime() : float
     {
-        return 0; //@todo
+        return $this->data['totalTime'];
+    }
+
+    /**
+     * @param float $time
+     */
+    public function addTotalTime(float $time)
+    {
+        $this->data['totalTime'] += $time;
     }
 
     /**

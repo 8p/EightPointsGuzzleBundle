@@ -12,18 +12,18 @@ use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
  */
 class LogMiddleware
 {
-    /** @var MessageFormatter */
+    /** @var \GuzzleHttp\MessageFormatter */
     protected $formatter;
 
-    /** @var LoggerInterface */
+    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface */
     protected $logger;
 
     /**
      * @since   2015-06
      * @version 3.0
      *
-     * @param LoggerInterface  $logger
-     * @param MessageFormatter $formatter
+     * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
+     * @param \GuzzleHttp\MessageFormatter $formatter
      */
     public function __construct(LoggerInterface $logger, MessageFormatter $formatter)
     {

@@ -44,7 +44,7 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   RequestInterface $request
+     * @param \Psr\Http\Message\RequestInterface $request
      */
     public function __construct(RequestInterface $request)
     {
@@ -57,7 +57,9 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   RequestInterface $request
+     * @param \Psr\Http\Message\RequestInterface $request
+     *
+     * @return void
      */
     protected function save(RequestInterface $request)
     {
@@ -91,7 +93,7 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @return  string
+     * @return string
      */
     public function getHost()
     {
@@ -104,7 +106,9 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setHost($value)
     {
@@ -117,7 +121,7 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @return  integer
+     * @return integer
      */
     public function getPort()
     {
@@ -130,7 +134,9 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   integer $value
+     * @param integer $value
+     *
+     * @return void
      */
     public function setPort($value)
     {
@@ -143,7 +149,7 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @return  string
+     * @return string
      */
     public function getUrl()
     {
@@ -156,7 +162,9 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setUrl($value)
     {
@@ -169,7 +177,7 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @return  string
+     * @return string
      */
     public function getPath()
     {
@@ -182,7 +190,9 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setPath($value)
     {
@@ -195,7 +205,7 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @return  string
+     * @return string
      */
     public function getScheme()
     {
@@ -208,7 +218,9 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setScheme($value)
     {
@@ -234,7 +246,9 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   array $value
+     * @param array $value
+     *
+     * @return void
      */
     public function setHeaders(array $value)
     {
@@ -247,7 +261,7 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @return  string
+     * @return string
      */
     public function getProtocolVersion()
     {
@@ -260,7 +274,9 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setProtocolVersion($value)
     {
@@ -273,7 +289,7 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @return  string
+     * @return string
      */
     public function getMethod()
     {
@@ -286,7 +302,9 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setMethod($value)
     {
@@ -299,7 +317,7 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @return  string
+     * @return string
      */
     public function getBody()
     {
@@ -312,7 +330,9 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setBody($value)
     {
@@ -325,7 +345,7 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @return  string
+     * @return string
      */
     public function getResource()
     {
@@ -338,7 +358,9 @@ class LogRequest
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setResource($value)
     {

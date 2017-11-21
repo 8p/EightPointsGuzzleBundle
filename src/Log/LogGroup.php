@@ -20,7 +20,9 @@ class LogGroup
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setRequestName(string $value)
     {
@@ -33,7 +35,7 @@ class LogGroup
      * @version 2.1
      * @since   2015-05
      *
-     * @return  string
+     * @return string
      */
     public function getRequestName()
     {
@@ -46,7 +48,9 @@ class LogGroup
      * @version 2.1
      * @since   2015-05
      *
-     * @param   array $value
+     * @param array $value
+     *
+     * @return void
      */
     public function setMessages(array $value)
     {
@@ -59,7 +63,9 @@ class LogGroup
      * @version 4.5
      * @since   2016-09
      *
-     * @param   array $value
+     * @param array $value
+     *
+     * @return void
      */
     public function addMessages(array $value)
     {
@@ -72,7 +78,7 @@ class LogGroup
      * @version 2.1
      * @since   2015-05
      *
-     * @return  array
+     * @return array
      */
     public function getMessages() : array
     {

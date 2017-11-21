@@ -23,11 +23,11 @@ class Logger implements LoggerInterface
      * @version 2.1
      * @since   2014-11
      *
-     * @param   string $level
-     * @param   string $message
-     * @param   array  $context
+     * @param string $level
+     * @param string $message
+     * @param array  $context
      *
-     * @return  void
+     * @return void
      */
     public function log($level, $message, array $context = [])
     {
@@ -64,7 +64,7 @@ class Logger implements LoggerInterface
      * @version 2.1
      * @since   2015-05
      *
-     * @return  boolean
+     * @return boolean
      */
     public function hasMessages() : bool
     {
@@ -77,7 +77,7 @@ class Logger implements LoggerInterface
      * @version 2.1
      * @since   2014-11
      *
-     * @return  \EightPoints\Bundle\GuzzleBundle\Log\LogMessage[]
+     * @return \EightPoints\Bundle\GuzzleBundle\Log\LogMessage[]
      */
     public function getMessages() : array
     {

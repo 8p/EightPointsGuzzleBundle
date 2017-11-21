@@ -14,17 +14,17 @@ class LogMessage
     /** @var string */
     protected $level;
 
-    /** @var LogRequest */
+    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogRequest */
     protected $request;
 
-    /** @var LogResponse */
+    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogResponse */
     protected $response;
 
     /**
      * @version 2.1
      * @since   2014-11
      *
-     * @param   string $message
+     * @param string $message
      */
     public function __construct($message)
     {
@@ -34,9 +34,11 @@ class LogMessage
     /**
      * Set log level
      *
-     * @since  2015-05
+     * @since 2015-05
      *
-     * @param  string $level
+     * @param string $level
+     *
+     * @return void
      */
     public function setLevel($level)
     {
@@ -49,7 +51,7 @@ class LogMessage
      * @version 2.1
      * @since   2014-11
      *
-     * @return  string
+     * @return string
      */
     public function getLevel()
     {
@@ -62,7 +64,7 @@ class LogMessage
      * @version 2.1
      * @since   2014-11
      *
-     * @return  string
+     * @return string
      */
     public function getMessage()
     {
@@ -75,7 +77,9 @@ class LogMessage
      * @version 2.1
      * @since   2015-05
      *
-     * @param   LogRequest $value
+     * @param \EightPoints\Bundle\GuzzleBundle\Log\LogRequest $value
+     *
+     * @return void
      */
     public function setRequest(LogRequest $value)
     {
@@ -88,7 +92,7 @@ class LogMessage
      * @version 2.1
      * @since   2015-05
      *
-     * @return  LogRequest
+     * @return \EightPoints\Bundle\GuzzleBundle\Log\LogRequest
      */
     public function getRequest()
     {
@@ -101,7 +105,9 @@ class LogMessage
      * @version 2.1
      * @since   2015-05
      *
-     * @param   LogResponse $value
+     * @param \EightPoints\Bundle\GuzzleBundle\Log\LogResponse $value
+     *
+     * @return void
      */
     public function setResponse(LogResponse $value)
     {
@@ -114,7 +120,7 @@ class LogMessage
      * @version 2.1
      * @since   2015-05
      *
-     * @return  LogResponse
+     * @return \EightPoints\Bundle\GuzzleBundle\Log\LogResponse
      */
     public function getResponse()
     {

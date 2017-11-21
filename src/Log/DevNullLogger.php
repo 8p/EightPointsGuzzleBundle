@@ -5,12 +5,9 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
 use Psr\Log\LoggerTrait;
 
 /**
- * Class DevNullLogger
- *
  * @author    SuRiKmAn <surikman@surikman.sk>
  * @version   5.0
  * @since     2016-11
- * @package   EightPoints\Bundle\GuzzleBundle\Log
  */
 class DevNullLogger implements LoggerInterface
 {
@@ -37,7 +34,7 @@ class DevNullLogger implements LoggerInterface
     /**
      * Return if messages exist or not
      *
-     * @return  boolean
+     * @return boolean
      */
     public function hasMessages() : bool
     {
@@ -47,7 +44,7 @@ class DevNullLogger implements LoggerInterface
     /**
      * Return log messages
      *
-     * @return  array
+     * @return array
      */
     public function getMessages() : array
     {

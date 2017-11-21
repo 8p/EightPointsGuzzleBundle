@@ -12,8 +12,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 
 /**
- * Class LoggerTest
- *
  * @package   EightPoints\Bundle\GuzzleBundle\Tests\Log
  *
  * @version   2.1

@@ -2,7 +2,6 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
-use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -33,9 +32,9 @@ class Configuration implements ConfigurationInterface
      * @version 1.0
      * @since   2013-10
      *
-     * @param   string  $alias
-     * @param   boolean $debug
-     * @param   array   $plugins
+     * @param string $alias
+     * @param boolean $debug
+     * @param array $plugins
      */
     public function __construct(string $alias, bool $debug = false, array $plugins = [])
     {
@@ -50,9 +49,9 @@ class Configuration implements ConfigurationInterface
      * @version 1.0
      * @since   2013-10
      *
-     * @throws  \RuntimeException
+     * @throws \RuntimeException
      *
-     * @return  \Symfony\Component\Config\Definition\Builder\TreeBuilder
+     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
     public function getConfigTreeBuilder() : TreeBuilder
     {
@@ -70,7 +69,7 @@ class Configuration implements ConfigurationInterface
     /**
      * Create Clients Configuration
      *
-     * @since  2015-07
+     * @since 2015-07
      *
      * @throws \RuntimeException
      *

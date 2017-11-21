@@ -13,7 +13,7 @@ use GuzzleHttp\Psr7\Stream;
  */
 class LogResponseTest extends TestCase
 {
-    /** @var Response */
+    /** @var \GuzzleHttp\Psr7\Response */
     protected $response;
 
     /** @var array */

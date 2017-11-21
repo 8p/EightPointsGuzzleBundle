@@ -14,12 +14,10 @@ use Psr\Http\Message\UriInterface;
  */
 class LogRequestTest extends TestCase
 {
-    /** @var RequestInterface */
+    /** @var \Psr\Http\Message\RequestInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $request;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $headers = [
         'Date'          => ['Sun, 07 Jun 2015 16:32:50 GMT'],
         'Expires'       => ['-1'],

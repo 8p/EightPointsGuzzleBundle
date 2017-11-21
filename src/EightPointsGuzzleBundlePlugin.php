@@ -16,7 +16,9 @@ interface EightPointsGuzzleBundlePlugin
     public function getPluginName() : string;
 
     /**
-     * @param ArrayNodeDefinition $pluginNode
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $pluginNode
+     *
+     * @return void
      */
     public function addConfiguration(ArrayNodeDefinition $pluginNode);
 
@@ -24,7 +26,9 @@ interface EightPointsGuzzleBundlePlugin
      * Load this plugin: define services, load service definition files, etc.
      *
      * @param array $configs
-     * @param ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
      */
     public function load(array $configs, ContainerBuilder $container);
 
@@ -32,21 +36,27 @@ interface EightPointsGuzzleBundlePlugin
      * Add configuration nodes for this plugin to the provided node.
      *
      * @param array $config
-     * @param ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      * @param string $clientName
-     * @param Definition $handler
+     * @param \Symfony\Component\DependencyInjection\Definition $handler
+     *
+     * @return void
      */
     public function loadForClient(array $config, ContainerBuilder $container, string $clientName, Definition $handler);
 
     /**
      * When the container is generated for the first time, you can register compiler passes inside this method.
      *
-     * @param ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
      */
     public function build(ContainerBuilder $container);
 
     /**
      * When the bundles are booted, you can do any runtime initialization required inside this method.
+     *
+     * @return void
      */
     public function boot();
 }

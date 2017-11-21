@@ -29,7 +29,7 @@ class LogResponse
      * @version 2.1
      * @since   2015-05
      *
-     * @param   ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response
      */
     public function __construct(ResponseInterface $response)
     {
@@ -42,7 +42,9 @@ class LogResponse
      * @version 2.1
      * @since   2015-05
      *
-     * @param   ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
+     * @return void
      */
     public function save(ResponseInterface $response)
     {
@@ -65,7 +67,7 @@ class LogResponse
      * @version 2.1
      * @since   2015-05
      *
-     * @return  integer
+     * @return integer
      */
     public function getStatusCode()
     {
@@ -78,7 +80,9 @@ class LogResponse
      * @version 2.1
      * @since   2015-05
      *
-     * @param   integer $value
+     * @param integer $value
+     *
+     * @return void
      */
     public function setStatusCode($value)
     {
@@ -91,7 +95,7 @@ class LogResponse
      * @version 4.0
      * @since   2015-07
      *
-     * @return  string
+     * @return string
      */
     public function getStatusPhrase()
     {
@@ -104,7 +108,9 @@ class LogResponse
      * @version 4.0
      * @since   2015-07
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setStatusPhrase($value)
     {
@@ -117,7 +123,7 @@ class LogResponse
      * @version 2.1
      * @since   2015-05
      *
-     * @return  string
+     * @return string
      */
     public function getBody()
     {
@@ -130,7 +136,9 @@ class LogResponse
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setBody($value)
     {
@@ -143,7 +151,7 @@ class LogResponse
      * @version 2.1
      * @since   2015-05
      *
-     * @return  string
+     * @return string
      */
     public function getProtocolVersion()
     {
@@ -156,7 +164,9 @@ class LogResponse
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $value
+     * @param string $value
+     *
+     * @return void
      */
     public function setProtocolVersion($value)
     {
@@ -169,7 +179,7 @@ class LogResponse
      * @version 2.1
      * @since   2015-05
      *
-     * @return  array
+     * @return array
      */
     public function getHeaders()
     {
@@ -182,7 +192,9 @@ class LogResponse
      * @version 2.1
      * @since   2015-05
      *
-     * @param   array $value
+     * @param array $value
+     *
+     * @return void
      */
     public function setHeaders(array $value)
     {

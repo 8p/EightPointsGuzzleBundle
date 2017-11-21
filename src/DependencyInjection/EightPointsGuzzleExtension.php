@@ -2,7 +2,6 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
-use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
@@ -18,11 +17,11 @@ use GuzzleHttp\HandlerStack;
  */
 class EightPointsGuzzleExtension extends Extension
 {
-    /** @var EightPointsGuzzleBundlePlugin[] */
+    /** @var \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[] */
     protected $plugins;
 
     /**
-     * @param EightPointsGuzzleBundlePlugin[] $plugins
+     * @param \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[] $plugins
      */
     public function __construct(array $plugins = [])
     {
@@ -43,13 +42,15 @@ class EightPointsGuzzleExtension extends Extension
      * @version 1.0
      * @since   2013-10
      *
-     * @param   array            $configs   an array of configuration settings
-     * @param   ContainerBuilder $container a ContainerBuilder instance
+     * @param array $configs an array of configuration settings
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container a ContainerBuilder instance
      *
-     * @throws  \InvalidArgumentException
-     * @throws  \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
-     * @throws  \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
-     * @throws  \Exception
+     * @throws \InvalidArgumentException
+     * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
+     * @throws \Exception
+     *
+     * @return void
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -103,14 +104,15 @@ class EightPointsGuzzleExtension extends Extension
     /**
      * @since  2015-07
      *
-     * @param  ContainerBuilder $container
-     * @param  string           $clientName
-     * @param  array            $options
-     * @param  bool             $logging
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param string $clientName
+     * @param array $options
+     * @param bool $logging
      *
-     * @return Definition
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
+     *
+     * @return \Symfony\Component\DependencyInjection\Definition
      */
     protected function createHandler(ContainerBuilder $container, string $clientName, array $options, bool $logging) : Definition
     {
@@ -144,11 +146,13 @@ class EightPointsGuzzleExtension extends Extension
     /**
      * Define Logger
      *
-     * @since  2015-07
+     * @since 2015-07
      *
-     * @param  ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
+     *
+     * @return void
      */
     protected function defineLogger(ContainerBuilder $container)
     {
@@ -160,11 +164,13 @@ class EightPointsGuzzleExtension extends Extension
     /**
      * Define Data Collector
      *
-     * @since  2015-07
+     * @since 2015-07
      *
-     * @param  ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
+     *
+     * @return void
      */
     protected function defineDataCollector(ContainerBuilder $container)
     {
@@ -181,9 +187,11 @@ class EightPointsGuzzleExtension extends Extension
     /**
      * Define Formatter
      *
-     * @param  ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
+     *
+     * @return void
      */
     protected function defineFormatter(ContainerBuilder $container)
     {
@@ -198,6 +206,8 @@ class EightPointsGuzzleExtension extends Extension
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      * @param \Symfony\Component\DependencyInjection\Definition $handler
      * @param string $clientName
+     *
+     * @return void
      */
     protected function defineRequestTimeMiddleware(ContainerBuilder $container, Definition $handler, string $clientName)
     {
@@ -214,9 +224,11 @@ class EightPointsGuzzleExtension extends Extension
     /**
      * Define Log Middleware for client
      *
-     * @param ContainerBuilder $container
-     * @param Definition $handler
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\Definition $handler
      * @param string $clientName
+     *
+     * @return void
      */
     protected function defineLogMiddleware(ContainerBuilder $container, Definition $handler, string $clientName)
     {
@@ -234,11 +246,11 @@ class EightPointsGuzzleExtension extends Extension
     /**
      * Create Middleware For dispatching events
      *
-     * @since  2015-09
+     * @since 2015-09
      *
-     * @param  string $name
+     * @param string $name
      *
-     * @return Definition
+     * @return \Symfony\Component\DependencyInjection\Definition
      */
     protected function createEventMiddleware(string $name) : Definition
     {
@@ -256,7 +268,7 @@ class EightPointsGuzzleExtension extends Extension
      * @version 1.1
      * @since   2013-12
      *
-     * @return  string
+     * @return string
      */
     public function getAlias() : string
     {

@@ -26,7 +26,7 @@ class HttpDataCollector extends DataCollector
      * @version 2.1
      * @since   2014-11
      *
-     * @param   \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
+     * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
     {
@@ -67,6 +67,8 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Resets this data collector to its initial state.
+     *
+     * @return void
      */
     public function reset()
     {
@@ -83,7 +85,7 @@ class HttpDataCollector extends DataCollector
      * @version 2.1
      * @since   2014-11
      *
-     * @return  array $logs
+     * @return array
      */
     public function getLogs() : array
     {
@@ -96,7 +98,7 @@ class HttpDataCollector extends DataCollector
      * @version 2.1
      * @since   2015-05
      *
-     * @return  array
+     * @return array
      */
     public function getMessages() : array
     {
@@ -117,7 +119,7 @@ class HttpDataCollector extends DataCollector
      * @version 2.1
      * @since   2015-05
      *
-     * @return  integer
+     * @return integer
      */
     public function getCallCount() : int
     {
@@ -130,7 +132,7 @@ class HttpDataCollector extends DataCollector
      * @version 2.2
      * @since   2015-05
      *
-     * @return  integer
+     * @return integer
      */
     public function getErrorCount() : int
     {
@@ -142,7 +144,7 @@ class HttpDataCollector extends DataCollector
     /**
      * Get total time of all requests
      *
-     * @since  2015-05
+     * @since 2015-05
      *
      * @return float
      */
@@ -153,6 +155,8 @@ class HttpDataCollector extends DataCollector
 
     /**
      * @param float $time
+     *
+     * @return void
      */
     public function addTotalTime(float $time)
     {
@@ -165,8 +169,9 @@ class HttpDataCollector extends DataCollector
      * @version 2.1
      * @since   2015-05
      *
-     * @param   string $id
-     * @return  LogGroup
+     * @param string $id
+     *
+     * @return \EightPoints\Bundle\GuzzleBundle\Log\LogGroup
      */
     protected function getLogGroup(string $id) : LogGroup
     {
@@ -179,6 +184,7 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Return the color used version
+     *
      * @since 2016-06
      *
      * @return string
@@ -194,7 +200,8 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Returns current version symfony
-     * @since  2016-06
+     *
+     * @since 2016-06
      *
      * @return string
      */

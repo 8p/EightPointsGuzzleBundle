@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class HttpDataCollectorTest extends TestCase
 {
     /**
-     * @var Logger|\PHPUnit_Framework_MockObject_MockObject
+     * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $logger;
 
@@ -30,8 +30,7 @@ class HttpDataCollectorTest extends TestCase
      */
     public function setUp()
     {
-        $this->logger = $this->getMockBuilder(Logger::class)
-                             ->getMock();
+        $this->logger = $this->getMockBuilder(Logger::class)->getMock();
     }
 
     /**
@@ -273,7 +272,7 @@ class HttpDataCollectorTest extends TestCase
      * Test Total Time
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getTotalTime
-     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::addTotalTime()
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::addTotalTime
      */
     public function testTotalTime()
     {

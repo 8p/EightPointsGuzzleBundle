@@ -3,7 +3,7 @@
 👍 First off, thanks for taking the time to contribute! 🎉
 
 ## Reporting a Bug
-Whenever you find a bug in this bundle, we kindly ask you to report it. It helps us make a better GuzzleBundle.
+Whenever you find a bug in this bundle, we kindly ask you to report it. It helps us make a better EightPointsGuzzleBundle.
 Report it using the official bug [tracker][1] and follow some basic rules:
 
 - Use the title field to clearly describe the issue
@@ -20,11 +20,33 @@ If you would like to implement a new feature, please submit an issue with a prop
 
 
 ## Coding Standards
+### General rule
 When contributing code to this bundle, you must follow the [Symfony coding standards][2]. To make a long story short, here is the golden rule: Imitate the existing Symfony code.
-Most open-source Bundles and libraries used by Symfony also follow the same guidelines, and you should too.
-
+Most open-source Bundles and libraries used by Symfony also follow the same guidelines, and you should too.  
 Remember that the main advantage of standards is that every piece of code looks and feels familiar, it's not about this or that being more readable.
 
+### Annotations
+Rules:
+- write full path of classes
+- write `@param` if method has parameters
+- write `@return`
+- don't align parameters
 
-[1]: https://github.com/8p/GuzzleBundle/issues
+Example:
+```php
+/**
+ * @param array $config
+ * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
+ *
+ * @return bool
+ */
+public function randomMethod(array $config, LoggerInterface $logger) : bool
+{
+    // method logic
+    
+    return true;
+}
+```
+
+[1]: https://github.com/8p/EightPointsGuzzleBundle/issues
 [2]: https://symfony.com/doc/current/contributing/code/standards.html

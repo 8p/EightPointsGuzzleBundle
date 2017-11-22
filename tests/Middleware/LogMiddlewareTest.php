@@ -13,25 +13,25 @@ use Psr\Http\Message\ResponseInterface;
 
 class LogMiddlewareTest extends TestCase
 {
-    /** @var LoggerInterface */
+    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $logger;
 
-    /** @var MessageFormatter */
+    /** @var \GuzzleHttp\MessageFormatter|\PHPUnit_Framework_MockObject_MockObject */
     protected $formatter;
 
-    /** @var callable */
+    /** @var callable|\PHPUnit_Framework_MockObject_MockObject */
     protected $handler;
 
-    /** @var FlexiblePromise */
+    /** @var \EightPoints\Bundle\GuzzleBundle\Tests\Middleware\FlexiblePromise */
     protected $promise;
 
-    /** @var RequestInterface */
+    /** @var \Psr\Http\Message\RequestInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $request;
 
-    /** @var ResponseInterface */
+    /** @var \Psr\Http\Message\ResponseInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $response;
 
-    /** @var RequestException */
+    /** @var \GuzzleHttp\Exception\RequestException|\PHPUnit_Framework_MockObject_MockObject */
     protected $requestException;
 
     public function setUp()

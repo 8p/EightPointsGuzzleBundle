@@ -12,22 +12,22 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class EventDispatchMiddlewareTest extends TestCase
 {
-    /** @var EventDispatcher */
+    /** @var \Symfony\Component\EventDispatcher\EventDispatcher|\PHPUnit_Framework_MockObject_MockObject */
     private $eventDispatcher;
 
-    /** @var callable */
+    /** @var callable|\PHPUnit_Framework_MockObject_MockObject */
     private $handler;
 
-    /** @var RequestInterface */
+    /** @var \Psr\Http\Message\RequestInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $request;
 
     /** @var FlexiblePromise */
     private $promise;
 
-    /** @var ResponseInterface */
+    /** @var \Psr\Http\Message\ResponseInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $response;
 
-    /** @var RequestException */
+    /** @var \GuzzleHttp\Exception\RequestException|\PHPUnit_Framework_MockObject_MockObject */
     private $requestException;
 
     public function setUp()

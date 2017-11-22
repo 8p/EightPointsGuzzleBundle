@@ -9,17 +9,13 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * @version   1.0
- * @since     2013-10
- */
 class EightPointsGuzzleBundle extends Bundle
 {
-    /** @var EightPointsGuzzleBundlePlugin[] */
+    /** @var \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[] */
     protected $plugins = [];
 
     /**
-     * @param EightPointsGuzzleBundlePlugin[] $plugins
+     * @param \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[] $plugins
      */
     public function __construct(array $plugins = [])
     {
@@ -31,11 +27,9 @@ class EightPointsGuzzleBundle extends Bundle
     /**
      * Build EightPointsGuzzleBundle
      *
-     * @version 1.0
-     * @since   2013-10
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
-     * @param   ContainerBuilder $container
-     * @return  void
+     * @return void
      */
     public function build(ContainerBuilder $container)
     {
@@ -53,12 +47,7 @@ class EightPointsGuzzleBundle extends Bundle
      *  - no naming convention of alias needed
      *  - extension class can be moved easily now
      *
-     * @see     getContainerExtension
-     *
-     * @version 1.1
-     * @since   2013-12
-     *
-     * @return  ExtensionInterface The container extension
+     * @return \Symfony\Component\DependencyInjection\Extension\ExtensionInterface The container extension
      */
     public function getContainerExtension() : ExtensionInterface
     {
@@ -80,9 +69,11 @@ class EightPointsGuzzleBundle extends Bundle
     }
 
     /**
-     * @param EightPointsGuzzleBundlePlugin $plugin
+     * @param \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin $plugin
      *
-     * @throws InvalidConfigurationException
+     * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     *
+     * @return void
      */
     protected function registerPlugin(EightPointsGuzzleBundlePlugin $plugin)
     {

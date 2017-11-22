@@ -113,7 +113,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
     }
 
     /**
-     * @return ContainerBuilder
+     * @return \Symfony\Component\DependencyInjection\ContainerBuilder
      */
     private function createContainer() : ContainerBuilder
     {
@@ -145,7 +145,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
     }
 
     /**
-     * @param ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      * @param string $clientName
      *
      * @return array

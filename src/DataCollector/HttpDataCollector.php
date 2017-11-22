@@ -13,20 +13,14 @@ use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Collecting http data for Symfony profiler
- *
- * @version 2.1
- * @since   2014-11
  */
 class HttpDataCollector extends DataCollector
 {
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger */
+    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface */
     protected $logger;
 
     /**
-     * @version 2.1
-     * @since   2014-11
-     *
-     * @param   \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
+     * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
     {
@@ -37,9 +31,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * {@inheritdoc}
-     *
-     * @version 2.1
-     * @since   2014-11
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
@@ -56,9 +47,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * {@inheritdoc}
-     *
-     * @version 2.1
-     * @since   2014-11
      */
     public function getName() : string
     {
@@ -67,6 +55,8 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Resets this data collector to its initial state.
+     *
+     * @return void
      */
     public function reset()
     {
@@ -80,10 +70,7 @@ class HttpDataCollector extends DataCollector
     /**
      * Returning log entries
      *
-     * @version 2.1
-     * @since   2014-11
-     *
-     * @return  array $logs
+     * @return array
      */
     public function getLogs() : array
     {
@@ -93,10 +80,7 @@ class HttpDataCollector extends DataCollector
     /**
      * Get all messages
      *
-     * @version 2.1
-     * @since   2015-05
-     *
-     * @return  array
+     * @return array
      */
     public function getMessages() : array
     {
@@ -114,10 +98,7 @@ class HttpDataCollector extends DataCollector
     /**
      * Return amount of http calls
      *
-     * @version 2.1
-     * @since   2015-05
-     *
-     * @return  integer
+     * @return integer
      */
     public function getCallCount() : int
     {
@@ -127,10 +108,7 @@ class HttpDataCollector extends DataCollector
     /**
      * Get Error Count
      *
-     * @version 2.2
-     * @since   2015-05
-     *
-     * @return  integer
+     * @return integer
      */
     public function getErrorCount() : int
     {
@@ -142,8 +120,6 @@ class HttpDataCollector extends DataCollector
     /**
      * Get total time of all requests
      *
-     * @since  2015-05
-     *
      * @return float
      */
     public function getTotalTime() : float
@@ -153,6 +129,8 @@ class HttpDataCollector extends DataCollector
 
     /**
      * @param float $time
+     *
+     * @return void
      */
     public function addTotalTime(float $time)
     {
@@ -162,11 +140,9 @@ class HttpDataCollector extends DataCollector
     /**
      * Returns (new) LogGroup based on given id
      *
-     * @version 2.1
-     * @since   2015-05
+     * @param string $id
      *
-     * @param   string $id
-     * @return  LogGroup
+     * @return \EightPoints\Bundle\GuzzleBundle\Log\LogGroup
      */
     protected function getLogGroup(string $id) : LogGroup
     {
@@ -179,7 +155,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Return the color used version
-     * @since 2016-06
      *
      * @return string
      */
@@ -194,7 +169,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Returns current version symfony
-     * @since  2016-06
      *
      * @return string
      */

@@ -4,10 +4,6 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
 
 use Psr\Http\Message\ResponseInterface;
 
-/**
- * @version 2.1
- * @since   2015-05
- */
 class LogResponse
 {
     /** @var integer */
@@ -26,10 +22,7 @@ class LogResponse
     protected $protocolVersion;
 
     /**
-     * @version 2.1
-     * @since   2015-05
-     *
-     * @param   ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response
      */
     public function __construct(ResponseInterface $response)
     {
@@ -39,10 +32,9 @@ class LogResponse
     /**
      * Save data
      *
-     * @version 2.1
-     * @since   2015-05
+     * @param \Psr\Http\Message\ResponseInterface $response
      *
-     * @param   ResponseInterface $response
+     * @return void
      */
     public function save(ResponseInterface $response)
     {
@@ -62,10 +54,7 @@ class LogResponse
     /**
      * Return HTTP status code
      *
-     * @version 2.1
-     * @since   2015-05
-     *
-     * @return  integer
+     * @return integer
      */
     public function getStatusCode()
     {
@@ -75,10 +64,9 @@ class LogResponse
     /**
      * Set HTTP status code
      *
-     * @version 2.1
-     * @since   2015-05
+     * @param integer $value
      *
-     * @param   integer $value
+     * @return void
      */
     public function setStatusCode($value)
     {
@@ -88,10 +76,7 @@ class LogResponse
     /**
      * Return HTTP status phrase
      *
-     * @version 4.0
-     * @since   2015-07
-     *
-     * @return  string
+     * @return string
      */
     public function getStatusPhrase()
     {
@@ -101,10 +86,9 @@ class LogResponse
     /**
      * Set HTTP status phrase
      *
-     * @version 4.0
-     * @since   2015-07
+     * @param string $value
      *
-     * @param   string $value
+     * @return void
      */
     public function setStatusPhrase($value)
     {
@@ -114,10 +98,7 @@ class LogResponse
     /**
      * Return response body
      *
-     * @version 2.1
-     * @since   2015-05
-     *
-     * @return  string
+     * @return string
      */
     public function getBody()
     {
@@ -127,10 +108,9 @@ class LogResponse
     /**
      * Set response body
      *
-     * @version 2.1
-     * @since   2015-05
+     * @param string $value
      *
-     * @param   string $value
+     * @return void
      */
     public function setBody($value)
     {
@@ -140,10 +120,7 @@ class LogResponse
     /**
      * Return protocol version
      *
-     * @version 2.1
-     * @since   2015-05
-     *
-     * @return  string
+     * @return string
      */
     public function getProtocolVersion()
     {
@@ -153,10 +130,9 @@ class LogResponse
     /**
      * Set protocol version
      *
-     * @version 2.1
-     * @since   2015-05
+     * @param string $value
      *
-     * @param   string $value
+     * @return void
      */
     public function setProtocolVersion($value)
     {
@@ -166,10 +142,7 @@ class LogResponse
     /**
      * Return response headers
      *
-     * @version 2.1
-     * @since   2015-05
-     *
-     * @return  array
+     * @return array
      */
     public function getHeaders()
     {
@@ -179,10 +152,9 @@ class LogResponse
     /**
      * Set response headers
      *
-     * @version 2.1
-     * @since   2015-05
+     * @param array $value
      *
-     * @param   array $value
+     * @return void
      */
     public function setHeaders(array $value)
     {

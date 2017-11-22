@@ -4,7 +4,6 @@ namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
 class EventHandlerCompilerPass implements CompilerPassInterface
 {
@@ -16,12 +15,11 @@ class EventHandlerCompilerPass implements CompilerPassInterface
      * For each one we find, we check if the service key is set, and then
      * call setServiceName on each EventListener.
      *
-     * @api
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
-     * @param  ContainerBuilder $container
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
+     *
      * @return void
-     *
-     * @throws InvalidArgumentException
      */
     public function process(ContainerBuilder $container)
     {

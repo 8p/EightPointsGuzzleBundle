@@ -18,14 +18,14 @@ use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
  */
 class EventDispatchMiddleware
 {
-    /** @var EventDispatcherInterface */
+    /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface */
     private $eventDispatcher;
 
     /** @var string */
     private $serviceName;
 
     /**
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param string $serviceName
      */
     public function __construct(EventDispatcherInterface $eventDispatcher, string $serviceName)

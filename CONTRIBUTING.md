@@ -28,7 +28,7 @@ Remember that the main advantage of standards is that every piece of code looks 
 ### Annotations
 Rules:
 - write full path of classes
-- write `@param` is method has parameters
+- write `@param` if method has parameters
 - write `@return`
 - don't align parameters
 

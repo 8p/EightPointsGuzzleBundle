@@ -2,10 +2,6 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Log;
 
-/**
- * @version   2.1
- * @since     2014-11
- */
 class LogMessage
 {
     /** @var string */
@@ -21,9 +17,6 @@ class LogMessage
     protected $response;
 
     /**
-     * @version 2.1
-     * @since   2014-11
-     *
      * @param string $message
      */
     public function __construct($message)
@@ -33,8 +26,6 @@ class LogMessage
 
     /**
      * Set log level
-     *
-     * @since 2015-05
      *
      * @param string $level
      *
@@ -48,9 +39,6 @@ class LogMessage
     /**
      * Returning log level
      *
-     * @version 2.1
-     * @since   2014-11
-     *
      * @return string
      */
     public function getLevel()
@@ -61,9 +49,6 @@ class LogMessage
     /**
      * Returning log message
      *
-     * @version 2.1
-     * @since   2014-11
-     *
      * @return string
      */
     public function getMessage()
@@ -73,9 +58,6 @@ class LogMessage
 
     /**
      * Set Log Request
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param \EightPoints\Bundle\GuzzleBundle\Log\LogRequest $value
      *
@@ -89,9 +71,6 @@ class LogMessage
     /**
      * Get Log Request
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return \EightPoints\Bundle\GuzzleBundle\Log\LogRequest
      */
     public function getRequest()
@@ -101,9 +80,6 @@ class LogMessage
 
     /**
      * Set Log Response
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param \EightPoints\Bundle\GuzzleBundle\Log\LogResponse $value
      *
@@ -116,9 +92,6 @@ class LogMessage
 
     /**
      * Get Log Response
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @return \EightPoints\Bundle\GuzzleBundle\Log\LogResponse
      */

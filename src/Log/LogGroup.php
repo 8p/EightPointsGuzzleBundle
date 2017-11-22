@@ -2,10 +2,6 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Log;
 
-/**
- * @version 2.1
- * @since   2015-05
- */
 class LogGroup
 {
     /** @var array */
@@ -16,9 +12,6 @@ class LogGroup
 
     /**
      * Set Request Name
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param string $value
      *
@@ -32,9 +25,6 @@ class LogGroup
     /**
      * Get Request Name
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return string
      */
     public function getRequestName()
@@ -44,9 +34,6 @@ class LogGroup
 
     /**
      * Set Log Messages
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param array $value
      *
@@ -60,9 +47,6 @@ class LogGroup
     /**
      * Add Log Messages
      *
-     * @version 4.5
-     * @since   2016-09
-     *
      * @param array $value
      *
      * @return void
@@ -74,9 +58,6 @@ class LogGroup
 
     /**
      * Return Log Messages
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @return array
      */

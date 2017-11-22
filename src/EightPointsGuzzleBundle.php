@@ -9,10 +9,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * @version   1.0
- * @since     2013-10
- */
 class EightPointsGuzzleBundle extends Bundle
 {
     /** @var \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[] */
@@ -30,9 +26,6 @@ class EightPointsGuzzleBundle extends Bundle
 
     /**
      * Build EightPointsGuzzleBundle
-     *
-     * @version 1.0
-     * @since   2013-10
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
@@ -53,9 +46,6 @@ class EightPointsGuzzleBundle extends Bundle
      * Overwrite getContainerExtension
      *  - no naming convention of alias needed
      *  - extension class can be moved easily now
-     *
-     * @version 1.1
-     * @since   2013-12
      *
      * @return \Symfony\Component\DependencyInjection\Extension\ExtensionInterface The container extension
      */

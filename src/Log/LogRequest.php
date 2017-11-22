@@ -4,10 +4,6 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
 
 use Psr\Http\Message\RequestInterface;
 
-/**
- * @version 2.1
- * @since   2015-05
- */
 class LogRequest
 {
     /** @var string */
@@ -41,9 +37,6 @@ class LogRequest
     protected $resource;
 
     /**
-     * @version 2.1
-     * @since   2015-05
-     *
      * @param \Psr\Http\Message\RequestInterface $request
      */
     public function __construct(RequestInterface $request)
@@ -53,9 +46,6 @@ class LogRequest
 
     /**
      * Save data
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param \Psr\Http\Message\RequestInterface $request
      *
@@ -90,9 +80,6 @@ class LogRequest
     /**
      * Return host
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return string
      */
     public function getHost()
@@ -102,9 +89,6 @@ class LogRequest
 
     /**
      * Set request host
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param string $value
      *
@@ -118,9 +102,6 @@ class LogRequest
     /**
      * Return port
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return integer
      */
     public function getPort()
@@ -130,9 +111,6 @@ class LogRequest
 
     /**
      * Set port
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param integer $value
      *
@@ -146,9 +124,6 @@ class LogRequest
     /**
      * Return url
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return string
      */
     public function getUrl()
@@ -158,9 +133,6 @@ class LogRequest
 
     /**
      * Set url
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param string $value
      *
@@ -174,9 +146,6 @@ class LogRequest
     /**
      * Return path
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return string
      */
     public function getPath()
@@ -186,9 +155,6 @@ class LogRequest
 
     /**
      * Set path
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param string $value
      *
@@ -202,9 +168,6 @@ class LogRequest
     /**
      * Return scheme
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return string
      */
     public function getScheme()
@@ -214,9 +177,6 @@ class LogRequest
 
     /**
      * Set scheme
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param string $value
      *
@@ -230,9 +190,6 @@ class LogRequest
     /**
      * Return headers
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return array
      */
     public function getHeaders()
@@ -242,9 +199,6 @@ class LogRequest
 
     /**
      * Set headers
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param array $value
      *
@@ -258,9 +212,6 @@ class LogRequest
     /**
      * Return protocol version
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return string
      */
     public function getProtocolVersion()
@@ -270,9 +221,6 @@ class LogRequest
 
     /**
      * Set protocol version
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param string $value
      *
@@ -286,9 +234,6 @@ class LogRequest
     /**
      * Return method
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return string
      */
     public function getMethod()
@@ -298,9 +243,6 @@ class LogRequest
 
     /**
      * Set method
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param string $value
      *
@@ -314,9 +256,6 @@ class LogRequest
     /**
      * Return body
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return string
      */
     public function getBody()
@@ -326,9 +265,6 @@ class LogRequest
 
     /**
      * Set body
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param string $value
      *
@@ -342,9 +278,6 @@ class LogRequest
     /**
      * Return resource
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return string
      */
     public function getResource()
@@ -354,9 +287,6 @@ class LogRequest
 
     /**
      * Set resource
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @param string $value
      *

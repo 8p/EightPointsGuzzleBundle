@@ -13,19 +13,13 @@ use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Collecting http data for Symfony profiler
- *
- * @version 2.1
- * @since   2014-11
  */
 class HttpDataCollector extends DataCollector
 {
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger */
+    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface */
     protected $logger;
 
     /**
-     * @version 2.1
-     * @since   2014-11
-     *
      * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
@@ -37,9 +31,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * {@inheritdoc}
-     *
-     * @version 2.1
-     * @since   2014-11
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
@@ -56,9 +47,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * {@inheritdoc}
-     *
-     * @version 2.1
-     * @since   2014-11
      */
     public function getName() : string
     {
@@ -82,9 +70,6 @@ class HttpDataCollector extends DataCollector
     /**
      * Returning log entries
      *
-     * @version 2.1
-     * @since   2014-11
-     *
      * @return array
      */
     public function getLogs() : array
@@ -94,9 +79,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Get all messages
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @return array
      */
@@ -116,9 +98,6 @@ class HttpDataCollector extends DataCollector
     /**
      * Return amount of http calls
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @return integer
      */
     public function getCallCount() : int
@@ -128,9 +107,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Get Error Count
-     *
-     * @version 2.2
-     * @since   2015-05
      *
      * @return integer
      */
@@ -143,8 +119,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Get total time of all requests
-     *
-     * @since 2015-05
      *
      * @return float
      */
@@ -166,9 +140,6 @@ class HttpDataCollector extends DataCollector
     /**
      * Returns (new) LogGroup based on given id
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @param string $id
      *
      * @return \EightPoints\Bundle\GuzzleBundle\Log\LogGroup
@@ -185,8 +156,6 @@ class HttpDataCollector extends DataCollector
     /**
      * Return the color used version
      *
-     * @since 2016-06
-     *
      * @return string
      */
     public final function getIconColor() : string
@@ -200,8 +169,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Returns current version symfony
-     *
-     * @since 2016-06
      *
      * @return string
      */

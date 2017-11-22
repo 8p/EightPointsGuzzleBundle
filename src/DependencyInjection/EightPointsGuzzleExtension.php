@@ -11,10 +11,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\ExpressionLanguage\Expression;
 use GuzzleHttp\HandlerStack;
 
-/**
- * @version   1.0
- * @since     2013-10
- */
 class EightPointsGuzzleExtension extends Extension
 {
     /** @var \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[] */
@@ -38,9 +34,6 @@ class EightPointsGuzzleExtension extends Extension
 
     /**
      * Loads the Guzzle configuration.
-     *
-     * @version 1.0
-     * @since   2013-10
      *
      * @param array $configs an array of configuration settings
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container a ContainerBuilder instance
@@ -102,8 +95,6 @@ class EightPointsGuzzleExtension extends Extension
     }
 
     /**
-     * @since  2015-07
-     *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      * @param string $clientName
      * @param array $options
@@ -146,8 +137,6 @@ class EightPointsGuzzleExtension extends Extension
     /**
      * Define Logger
      *
-     * @since 2015-07
-     *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
@@ -163,8 +152,6 @@ class EightPointsGuzzleExtension extends Extension
 
     /**
      * Define Data Collector
-     *
-     * @since 2015-07
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
@@ -246,8 +233,6 @@ class EightPointsGuzzleExtension extends Extension
     /**
      * Create Middleware For dispatching events
      *
-     * @since 2015-09
-     *
      * @param string $name
      *
      * @return \Symfony\Component\DependencyInjection\Definition
@@ -264,9 +249,6 @@ class EightPointsGuzzleExtension extends Extension
 
     /**
      * Returns alias of extension
-     *
-     * @version 1.1
-     * @since   2013-12
      *
      * @return string
      */

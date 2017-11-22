@@ -5,9 +5,7 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
 use Psr\Log\LoggerTrait;
 
 /**
- * @author    SuRiKmAn <surikman@surikman.sk>
- * @version   5.0
- * @since     2016-11
+ * @author SuRiKmAn <surikman@surikman.sk>
  */
 class DevNullLogger implements LoggerInterface
 {

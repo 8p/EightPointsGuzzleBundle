@@ -4,24 +4,15 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
 
 use Psr\Log\LoggerTrait;
 
-/**
- * @version   2.1
- * @since     2014-11
- */
 class Logger implements LoggerInterface
 {
     use LoggerTrait;
 
-    /**
-     * @var \EightPoints\Bundle\GuzzleBundle\Log\LogMessage[]
-     */
+    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogMessage[] */
     private $messages = [];
 
     /**
      * Log message
-     *
-     * @version 2.1
-     * @since   2014-11
      *
      * @param string $level
      * @param string $message
@@ -50,8 +41,7 @@ class Logger implements LoggerInterface
     /**
      * Clear messages list
      *
-     * @version 2.1
-     * @since   2015-05
+     * @return void
      */
     public function clear()
     {
@@ -60,9 +50,6 @@ class Logger implements LoggerInterface
 
     /**
      * Return if messages exist or not
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @return boolean
      */
@@ -73,9 +60,6 @@ class Logger implements LoggerInterface
 
     /**
      * Return log messages
-     *
-     * @version 2.1
-     * @since   2014-11
      *
      * @return \EightPoints\Bundle\GuzzleBundle\Log\LogMessage[]
      */

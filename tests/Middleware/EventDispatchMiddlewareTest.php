@@ -3,64 +3,48 @@
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Middleware;
 
 use EightPoints\Bundle\GuzzleBundle\Middleware\EventDispatchMiddleware;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise\RejectedPromise;
+use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
+use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class EventDispatchMiddlewareTest extends TestCase
 {
-    /** @var \Symfony\Component\EventDispatcher\EventDispatcher|\PHPUnit_Framework_MockObject_MockObject */
-    private $eventDispatcher;
-
-    /** @var callable|\PHPUnit_Framework_MockObject_MockObject */
-    private $handler;
-
-    /** @var \Psr\Http\Message\RequestInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $request;
-
-    /** @var FlexiblePromise */
-    private $promise;
-
-    /** @var \Psr\Http\Message\ResponseInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $response;
-
-    /** @var \GuzzleHttp\Exception\RequestException|\PHPUnit_Framework_MockObject_MockObject */
-    private $requestException;
-
-    public function setUp()
-    {
-        $this->eventDispatcher = $this->getMockBuilder(EventDispatcher::class)->getMock();
-        $this->request = $this->getMockBuilder(RequestInterface::class)->getMock();
-        $this->response = $this->getMockBuilder(ResponseInterface::class)->getMock();
-        $this->requestException = $this->getMockBuilder(RequestException::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->requestException->method('getResponse')->willReturn($this->response);
-
-        $this->promise = new FlexiblePromise();
-
-        $this->handler = $this->getMockBuilder(\StdClass::class)->setMethods(['__invoke'])->getMock();
-        $this->handler->method('__invoke')->willReturn($this->promise);
-    }
-
+    /**
+     * Test that listeners for 'eight_points_guzzle.pre_transaction' and
+     * 'eight_points_guzzle.post_transaction' are called.
+     */
     public function testDispatchEvent()
     {
-        $eventDispatchMiddleware = new EventDispatchMiddleware($this->eventDispatcher, 'main');
+        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $preTransactionEvent */
+        $preTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $preTransactionEvent->expects($this->once())
+            ->method('__invoke');
+
+        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $postTransactionEvent */
+        $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $postTransactionEvent->expects($this->once())
+            ->method('__invoke');
+
+        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher->addListener(GuzzleEvents::PRE_TRANSACTION, $preTransactionEvent);
+        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
+
+        $request = new Request('POST', 'http://api.domain.tld');
+        $handler = new MockHandler([new Response(200)]);
+
+        $eventDispatchMiddleware = new EventDispatchMiddleware($eventDispatcher, 'main');
         $eventDispatcherResult = $eventDispatchMiddleware->dispatchEvent();
-        $result = $eventDispatcherResult($this->handler);
-        $result($this->request, []);
+        $result = $eventDispatcherResult($handler);
+        /** @var \GuzzleHttp\Promise\Promise $promise */
+        $promise = $result($request, []);
 
-        $this->assertTrue(is_callable($this->promise->onFulfilled));
-        $this->assertTrue(is_callable($this->promise->onRejected));
+        $this->assertInstanceOf(PromiseInterface::class, $promise);
 
-        $promiseResponse = call_user_func($this->promise->onFulfilled, $this->response);
-        $this->assertInstanceOf(ResponseInterface::class, $promiseResponse);
-
-        $rejectionPromise = call_user_func($this->promise->onRejected, $this->requestException);
-        $this->assertInstanceOf(RejectedPromise::class, $rejectionPromise);
+        $promise->wait();
     }
 }

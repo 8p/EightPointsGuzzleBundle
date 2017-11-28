@@ -33,12 +33,14 @@ GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 ----
 
 ## Installation
+##### Command line:
 To install this bundle, run the command below and you will get the latest version by [Packagist][3].
 
 ``` bash
 composer require eightpoints/guzzle-bundle
 ```
 
+##### composer.json
 To use the newest (maybe unstable) version please add following into your composer.json:
 
 ``` json
@@ -48,6 +50,16 @@ To use the newest (maybe unstable) version please add following into your compos
     }
 }
 ```
+
+##### Using Symfony Flex
+Also it is possible to install bundle through [Symfony Flex][9]. It works for Symfony 3.3 and higher.  
+Bundle will be added to kernel file and default configuration will be created automatically.
+
+```bash
+composer config extra.symfony.allow-contrib true
+composer require eightpoints/guzzle-bundle
+```
+_Note: for symfony 3.3 and 3.4 you should install symfony/flex by yourself. From 4.0 it is included be default._
 
 ----
 
@@ -179,3 +191,4 @@ This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 [6]: https://github.com/gregurco/GuzzleBundleCachePlugin
 [7]: https://github.com/gregurco/GuzzleBundleOAuth2Plugin
 [8]: https://github.com/8p/EightPointsGuzzleBundle/graphs/contributors
+[9]: https://github.com/symfony/flex

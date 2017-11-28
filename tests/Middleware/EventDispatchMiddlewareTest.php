@@ -26,12 +26,18 @@ class EventDispatchMiddlewareTest extends TestCase
         /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $preTransactionEvent */
         $preTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
         $preTransactionEvent->expects($this->once())
-            ->method('__invoke');
+            ->method('__invoke')
+            ->with($this->callback(function(PreTransactionEvent $event){
+                return $event->getServiceName() === 'main';
+            }));
 
         /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $postTransactionEvent */
         $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
         $postTransactionEvent->expects($this->once())
-            ->method('__invoke');
+            ->method('__invoke')
+            ->with($this->callback(function(PostTransactionEvent $event){
+                return $event->getServiceName() === 'main';
+            }));
 
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addListener(GuzzleEvents::PRE_TRANSACTION, $preTransactionEvent);
@@ -133,7 +139,10 @@ class EventDispatchMiddlewareTest extends TestCase
         /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $postTransactionEvent */
         $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
         $postTransactionEvent->expects($this->once())
-            ->method('__invoke');
+            ->method('__invoke')
+            ->with($this->callback(function(PostTransactionEvent $event){
+                return $event->getServiceName() === 'main';
+            }));
 
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);

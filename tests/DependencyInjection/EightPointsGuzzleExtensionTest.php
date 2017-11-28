@@ -12,10 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Uri;
 
-/**
- * @version 2.1
- * @since   2015-05
- */
 class EightPointsGuzzleExtensionTest extends TestCase
 {
     public function testGuzzleExtension()

@@ -6,17 +6,10 @@ use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @version   4.5
- * @since     2016-01
- */
 class PreTransactionEventTest extends TestCase
 {
     /**
      * Test Instance
-     *
-     * @version 4.5
-     * @since   2016-01
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::__construct
      */
@@ -34,9 +27,6 @@ class PreTransactionEventTest extends TestCase
 
     /**
      * Test Transaction
-     *
-     * @version 4.5
-     * @since   2016-01
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::setTransaction
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::getTransaction

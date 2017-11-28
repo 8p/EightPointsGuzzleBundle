@@ -79,7 +79,22 @@ after:
 $this->get('eight_points_guzzle.client.api_crm');
 ```
 
-### Step 5: if you have created any services, you should change name
+### Step 5: event listeners definition
+before:
+```xml
+<service id="listenerID" class="Your\ListenerClass\That\Implements\GuzzleEventListenerInterface">  
+    <tag name="kernel.event_listener" event="guzzle_bundle.pre_transaction" method="onPreTransaction" service="servicename"/>  
+</service>  
+```
+
+after:
+```xml
+<service id="listenerID" class="Your\ListenerClass\That\Implements\GuzzleEventListenerInterface">  
+    <tag name="kernel.event_listener" event="eight_points_guzzle.pre_transaction" method="onPreTransaction" service="servicename"/>  
+</service>  
+```
+
+### Step 6: if you have created any services, you should change name
 before:
 ```xml
 <argument type="service" id="guzzle.client.xyz" />
@@ -90,7 +105,7 @@ after:
 <argument type="service" id="eight_points_guzzle.client.xyz" />
 ```
 
-### Step 6: WSSE plugin
+### Step 7: WSSE plugin
 
 WSSE plugin was moved to separate repository.
 If you are using WSSE then follow install guide from [gregurco/guzzle-bundle-wsse-plugin](https://github.com/gregurco/GuzzleBundleWssePlugin).

@@ -160,24 +160,10 @@ class HttpDataCollector extends DataCollector
      */
     public final function getIconColor() : string
     {
-        if ((float)$this->getSymfonyVersion() >= 2.8) {
+        if (version_compare(Kernel::VERSION, '2.8.0', '>=')) {
             return $this->data['iconColor'] = '#AAAAAA';
         }
 
         return $this->data['iconColor'] = '#3F3F3F';
-    }
-
-    /**
-     * Returns current version symfony
-     *
-     * @return string
-     */
-    private function getSymfonyVersion() : string
-    {
-        $symfonyVersion = Kernel::VERSION;
-        $symfonyVersion = explode('.', $symfonyVersion, -1);
-        $symfonyMajorMinorVersion = implode('.', $symfonyVersion);
-
-        return $symfonyMajorMinorVersion;
     }
 }

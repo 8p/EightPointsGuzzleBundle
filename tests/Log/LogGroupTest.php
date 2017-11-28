@@ -6,17 +6,10 @@ use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
 use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @version   2.1
- * @since     2015-05
- */
 class LogGroupTest extends TestCase
 {
     /**
      * Test Setting/Returning Request Name
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setRequestName
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getRequestName
@@ -34,9 +27,6 @@ class LogGroupTest extends TestCase
 
     /**
      * Test Setting/Returning Log Messages
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setMessages
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getMessages

@@ -7,10 +7,6 @@ use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Stream;
 
-/**
- * @version   2.1
- * @since     2015-05
- */
 class LogResponseTest extends TestCase
 {
     /** @var \GuzzleHttp\Psr7\Response */
@@ -26,9 +22,6 @@ class LogResponseTest extends TestCase
 
     /**
      * SetUp: before executing each test function
-     *
-     * @version 2.1
-     * @since   2015-06
      */
     public function setUp()
     {
@@ -46,13 +39,11 @@ class LogResponseTest extends TestCase
         $this->response->method('getHeaders')->willReturn($this->headers);
         $this->response->method('getBody')->willReturn($bodyMock);
         $this->response->method('getProtocolVersion')->willReturn('1.1');
+        $this->response->method('getReasonPhrase')->willReturn('OK message');
     }
 
     /**
      * Test Status Code
-     *
-     * @version 2.1
-     * @since   2015-06
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
@@ -69,9 +60,6 @@ class LogResponseTest extends TestCase
     /**
      * Test Body
      *
-     * @version 2.1
-     * @since   2015-06
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getBody
@@ -86,9 +74,6 @@ class LogResponseTest extends TestCase
 
     /**
      * Test Protocol Version
-     *
-     * @version 2.1
-     * @since   2015-06
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
@@ -105,9 +90,6 @@ class LogResponseTest extends TestCase
     /**
      * Test Headers
      *
-     * @version 2.1
-     * @since   2015-06
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getHeaders
@@ -118,5 +100,17 @@ class LogResponseTest extends TestCase
         $response = new LogResponse($this->response);
 
         $this->assertSame($this->headers, $response->getHeaders());
+    }
+
+    /**
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setStatusPhrase
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getStatusPhrase
+     */
+    public function testGetStatusPhrase()
+    {
+        $logResponse = new LogResponse($this->response);
+
+        $this->assertEquals('OK message', $logResponse->getStatusPhrase());
     }
 }

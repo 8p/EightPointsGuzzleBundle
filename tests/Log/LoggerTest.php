@@ -6,24 +6,17 @@ use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
 use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 use EightPoints\Bundle\GuzzleBundle\Log\LogRequest;
+use EightPoints\Bundle\GuzzleBundle\Log\LogResponse;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 
-/**
- * @package   EightPoints\Bundle\GuzzleBundle\Tests\Log
- *
- * @version   2.1
- * @since     2015-05
- */
 class LoggerTest extends TestCase
 {
     /**
      * Test Instance
-     *
-     * @version 2.1
-     * @since   2015-05
      */
     public function testConstruct()
     {
@@ -32,9 +25,6 @@ class LoggerTest extends TestCase
 
     /**
      * Test Messages
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::hasMessages
      */
@@ -49,9 +39,6 @@ class LoggerTest extends TestCase
 
     /**
      * Test Returning Messages
-     *
-     * @version 2.1
-     * @since   2015-05
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::getMessages
      */
@@ -78,12 +65,12 @@ class LoggerTest extends TestCase
         }
 
         $uriMock = $this->getMockBuilder(Uri::class)
-                            ->disableOriginalConstructor()
-                            ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $requestMock = $this->getMockBuilder(Request::class)
-                            ->disableOriginalConstructor()
-                            ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $requestMock->method('getHeaders')->willReturn([]);
         $requestMock->method('getUri')->willReturn($uriMock);
@@ -100,9 +87,6 @@ class LoggerTest extends TestCase
     /**
      * Test Clearing Messages
      *
-     * @version 2.1
-     * @since   2015-05
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::clear
      */
     public function testClear()
@@ -118,5 +102,57 @@ class LoggerTest extends TestCase
 
         $this->assertCount(0, $logger->getMessages());
         $this->assertFalse($logger->hasMessages());
+    }
+
+    /**
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::log
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::setRequest
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::getRequest
+     */
+    public function testLogWithRequest()
+    {
+        $request = new Request('GET', 'http://api.domain.tld');
+
+        $logger = new Logger();
+        $logger->log(LogLevel::INFO, 'message', ['request' => $request]);
+
+        $this->assertCount(1, $logger->getMessages());
+
+        /** @var LogMessage $message */
+        $message = array_values($logger->getMessages())[0];
+        $logRequest = $message->getRequest();
+        $this->assertInstanceOf(LogRequest::class, $logRequest);
+        $this->assertEquals('GET', $logRequest->getMethod());
+        $this->assertEquals('http://api.domain.tld', $logRequest->getUrl());
+    }
+
+    /**
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::log
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::setResponse
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::getResponse
+     */
+    public function testLogWithResponse()
+    {
+        $response = new Response(
+            201,
+            ['some-test-header' => 'some-test-value'],
+            'body'
+        );
+
+        $logger = new Logger();
+        $logger->log(LogLevel::INFO, 'message', ['response' => $response]);
+
+        $this->assertCount(1, $logger->getMessages());
+
+        /** @var LogMessage $message */
+        $message = array_values($logger->getMessages())[0];
+        $logResponse = $message->getResponse();
+        $this->assertInstanceOf(LogResponse::class, $logResponse);
+        $this->assertEquals(201, $logResponse->getStatusCode());
+        $this->assertEquals(
+            ['some-test-header' => ['some-test-value']],
+            $logResponse->getHeaders()
+        );
+        $this->assertEquals('body', $logResponse->getBody());
     }
 }

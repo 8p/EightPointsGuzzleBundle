@@ -8,10 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
-/**
- * @version   2.1
- * @since     2015-05
- */
 class LogRequestTest extends TestCase
 {
     /** @var \Psr\Http\Message\RequestInterface|\PHPUnit_Framework_MockObject_MockObject */
@@ -27,9 +23,6 @@ class LogRequestTest extends TestCase
 
     /**
      * SetUp: before executing each test function
-     *
-     * @version 2.1
-     * @since   2015-06
      */
     public function setUp()
     {
@@ -107,5 +100,17 @@ class LogRequestTest extends TestCase
     {
         $logRequest = new LogRequest($this->request);
         $this->assertEquals('test body', $logRequest->getBody());
+    }
+
+    /**
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogRequest::setResource
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogRequest::getResource
+     */
+    public function testResource()
+    {
+        $logRequest = new LogRequest($this->request);
+        $logRequest->setResource('test-resource-value');
+
+        $this->assertEquals('test-resource-value', $logRequest->getResource());
     }
 }

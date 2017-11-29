@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler;
 
+use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -27,9 +28,7 @@ class EventHandlerCompilerPass implements CompilerPassInterface
 
         foreach ($taggedServices as $id => $tags) {
             foreach ($tags as $attributes) {
-                if (array_key_exists('service', $attributes)
-                    && false !== strstr($attributes['event'], 'guzzle_bundle')) {
-
+                if (isset($attributes['service']) && in_array($attributes['event'], GuzzleEvents::EVENTS, true)) {
                     $container->getDefinition($id)->addMethodCall(
                         'setServiceName',
                         [$attributes['service']]

@@ -4,6 +4,7 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection;
 
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
+use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection\Fixtures\FakeClient;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -12,10 +13,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Uri;
 
-/**
- * @version 2.1
- * @since   2015-05
- */
 class EightPointsGuzzleExtensionTest extends TestCase
 {
     public function testGuzzleExtension()
@@ -45,10 +42,10 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $extension = new EightPointsGuzzleExtension();
         $extension->load($this->getConfigs(), $container);
 
-        $container->setParameter('eight_points_guzzle.http_client.class', FakeClient::class);
+        $container->setParameter('eight_points_guzzle.http_client.class', \stdClass::class);
 
-        $client = $container->get('eight_points_guzzle.client.test_api', FakeClient::class);
-        $this->assertInstanceOf(FakeClient::class, $client);
+        $client = $container->get('eight_points_guzzle.client.test_api');
+        $this->assertInstanceOf(\stdClass::class, $client);
     }
 
     public function testLoadWithLogging()
@@ -110,6 +107,79 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $configuration = $extension->getConfiguration([], $this->createContainer());
 
         $this->assertInstanceOf(Configuration::class, $configuration);
+    }
+
+    public function testLoadWithPlugin()
+    {
+        $plugin = $this->createMock(EightPointsGuzzleBundlePlugin::class);
+        $plugin->expects($this->exactly(2))
+            ->method('getPluginName')
+            ->willReturn('test');
+
+        $plugin->expects($this->once())
+            ->method('addConfiguration');
+
+        $plugin->expects($this->once())
+            ->method('load');
+
+        $plugin->expects($this->once())
+            ->method('loadForClient');
+
+        $config = [
+            [
+                'clients' => [
+                    'test_api' => [
+                        'base_url' => '//api.domain.tld/path',
+                        'plugin' => [
+                            'test' => [],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension([$plugin]);
+        $extension->load($config, $container);
+    }
+
+    public function testLoadWithOptions()
+    {
+        $config = [
+            [
+                'clients' => [
+                    'test_api' => [
+                        'base_url' => '//api.domain.tld/path',
+                        'options' => [
+                            'auth' => ['acme', 'pa55w0rd'],
+                            'headers' => [
+                                'Accept' => 'application/json',
+                            ],
+                            'timeout' => 30,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($config, $container);
+
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.client.test_api'));
+        $definition = $container->getDefinition('eight_points_guzzle.client.test_api');
+        $this->assertCount(1, $definition->getArguments());
+        $this->assertArraySubset(
+            [
+                'base_uri' => '//api.domain.tld/path',
+                'auth' => ['acme', 'pa55w0rd'],
+                'headers' => [
+                    'Accept' => 'application/json',
+                ],
+                'timeout' => 30,
+            ],
+            $definition->getArgument(0)
+        );
     }
 
     /**

@@ -11,10 +11,6 @@ use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @version   2.1
- * @since     2015-05
- */
 class HttpDataCollectorTest extends TestCase
 {
     /**
@@ -24,9 +20,6 @@ class HttpDataCollectorTest extends TestCase
 
     /**
      * SetUp: before executing each test function
-     *
-     * @version 2.1
-     * @since   2015-06
      */
     public function setUp()
     {
@@ -35,9 +28,6 @@ class HttpDataCollectorTest extends TestCase
 
     /**
      * Test Constructor
-     *
-     * @version 2.1
-     * @since   2015-06
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::__construct
      */
@@ -56,9 +46,6 @@ class HttpDataCollectorTest extends TestCase
 
     /**
      * Test Collecting Data
-     *
-     * @version 2.1
-     * @since   2015-06
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::collect
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogs
@@ -101,9 +88,6 @@ class HttpDataCollectorTest extends TestCase
     /**
      * Test Collector Name
      *
-     * @version 2.1
-     * @since   2015-06
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getName
      */
     public function testName()
@@ -115,9 +99,6 @@ class HttpDataCollectorTest extends TestCase
 
     /**
      * Test Log Messages
-     *
-     * @version 2.1
-     * @since   2015-06
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getMessages
      */
@@ -155,9 +136,6 @@ class HttpDataCollectorTest extends TestCase
 
     /**
      * Test Call Count
-     *
-     * @version 2.1
-     * @since   2015-06
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getCallCount
      */
@@ -230,9 +208,6 @@ class HttpDataCollectorTest extends TestCase
     /**
      * Test Error Count
      *
-     * @version 2.1
-     * @since   2015-06
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getErrorCount
      */
     public function testErrorCount()
@@ -284,5 +259,16 @@ class HttpDataCollectorTest extends TestCase
 
         $collector->addTotalTime(2.17);
         $this->assertEquals(5.31, $collector->getTotalTime());
+    }
+
+    /**
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getIconColor
+     */
+    public function testGetIconColor()
+    {
+        $collector = new HttpDataCollector($this->logger);
+        $color = $collector->getIconColor();
+
+        $this->assertRegExp('/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/', $color);
     }
 }

@@ -7,10 +7,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
-/**
- * @version   2.1
- * @since     2015-05
- */
 class ConfigurationTest extends TestCase
 {
     public function testSingleClientConfigWithOptions()

@@ -2,69 +2,65 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Middleware;
 
+use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Middleware\LogMiddleware;
-use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\MessageFormatter;
-use GuzzleHttp\Promise\RejectedPromise;
+use GuzzleHttp\Promise\PromiseInterface;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Request;
+use Psr\Log\LogLevel;
 
 class LogMiddlewareTest extends TestCase
 {
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $logger;
-
-    /** @var \GuzzleHttp\MessageFormatter|\PHPUnit_Framework_MockObject_MockObject */
-    protected $formatter;
-
-    /** @var callable|\PHPUnit_Framework_MockObject_MockObject */
-    protected $handler;
-
-    /** @var \EightPoints\Bundle\GuzzleBundle\Tests\Middleware\FlexiblePromise */
-    protected $promise;
-
-    /** @var \Psr\Http\Message\RequestInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $request;
-
-    /** @var \Psr\Http\Message\ResponseInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $response;
-
-    /** @var \GuzzleHttp\Exception\RequestException|\PHPUnit_Framework_MockObject_MockObject */
-    protected $requestException;
-
-    public function setUp()
-    {
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
-        $this->formatter = $this->getMockBuilder(MessageFormatter::class)->getMock();
-        $this->request = $this->getMockBuilder(RequestInterface::class)->getMock();
-        $this->response = $this->getMockBuilder(ResponseInterface::class)->getMock();
-        $this->requestException = $this->getMockBuilder(RequestException::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->requestException->method('getResponse')->willReturn($this->response);
-        $this->promise = new FlexiblePromise();
-
-        $this->handler = $this->getMockBuilder(\StdClass::class)->setMethods(['__invoke'])->getMock();
-        $this->handler->method('__invoke')->willReturn($this->promise);
-    }
-
     public function testLog()
     {
-        $logMiddleware = new LogMiddleware($this->logger, $this->formatter);
-        $result = $logMiddleware->log();
-        $result = $result($this->handler);
-        $result($this->request, []);
+        $logger = new Logger();
+        $request = new Request('POST', 'http://api.domain.tld');
+        $handler = new MockHandler([new Response(200)]);
 
-        $this->assertTrue(is_callable($this->promise->onFulfilled));
-        $this->assertTrue(is_callable($this->promise->onRejected));
+        $logMiddleware = new LogMiddleware($logger, new MessageFormatter());
+        $logCallback = $logMiddleware->log();
 
-        $promiseResponse = call_user_func($this->promise->onFulfilled, $this->response);
-        $this->assertInstanceOf(ResponseInterface::class, $promiseResponse);
+        $this->assertTrue(is_callable($logCallback));
 
-        $rejectionPromise = call_user_func($this->promise->onRejected, $this->requestException);
-        $this->assertInstanceOf(RejectedPromise::class, $rejectionPromise);
+        $result = $logCallback($handler);
+        /** @var \GuzzleHttp\Promise\Promise $promise */
+        $promise = $result($request, []);
+
+        $this->assertInstanceOf(PromiseInterface::class, $promise);
+
+        $promise->wait();
+
+        $messages = $logger->getMessages();
+        $this->assertCount(1, $messages);
+        $this->assertEquals(LogLevel::INFO, $messages[0]->getLevel());
+    }
+
+    public function testRejectFromLog()
+    {
+        $logger = new Logger();
+        $request = new Request('POST', 'http://api.domain.tld');
+        $exception = new RequestException('message', $request);
+        $handler = new MockHandler([$exception]);
+
+        $logMiddleware = new LogMiddleware($logger, new MessageFormatter());
+        $logCallback = $logMiddleware->log();
+
+        $this->assertTrue(is_callable($logCallback));
+
+        $result = $logCallback($handler);
+        /** @var \GuzzleHttp\Promise\Promise $promise */
+        $promise = $result($request, []);
+
+        $this->assertInstanceOf(PromiseInterface::class, $promise);
+
+        $promise->wait(false);
+
+        $messages = $logger->getMessages();
+        $this->assertCount(1, $messages);
+        $this->assertEquals(LogLevel::NOTICE, $messages[0]->getLevel());
     }
 }

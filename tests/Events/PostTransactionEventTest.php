@@ -6,17 +6,10 @@ use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Response;
 
-/**
- * @version   4.5
- * @since     2016-01
- */
 class PostTransactionEventTest extends TestCase
 {
     /**
      * Test Instance
-     *
-     * @version 4.5
-     * @since   2016-01
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::__construct
      */
@@ -31,9 +24,6 @@ class PostTransactionEventTest extends TestCase
 
     /**
      * Test Transaction
-     *
-     * @version 4.5
-     * @since   2016-01
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::setTransaction
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::getTransaction

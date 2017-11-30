@@ -5,13 +5,13 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
-use EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection\Fixtures\FakeClient;
-use PHPUnit\Framework\TestCase;
+use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use GuzzleHttp\Client;
+use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Client;
 
 class EightPointsGuzzleExtensionTest extends TestCase
 {
@@ -36,16 +36,95 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertSame('CustomGuzzleClass', $definition->getClass());
     }
 
-    public function testOverwriteClasses()
+    public function testOverwriteHttpClientClass()
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
         $extension->load($this->getConfigs(), $container);
-
         $container->setParameter('eight_points_guzzle.http_client.class', \stdClass::class);
 
-        $client = $container->get('eight_points_guzzle.client.test_api');
-        $this->assertInstanceOf(\stdClass::class, $client);
+        $this->assertInstanceOf(
+            \stdClass::class,
+            $container->get('eight_points_guzzle.client.test_api')
+        );
+    }
+
+    public function testOverrideFormatterClass()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($this->getConfigs(), $container);
+        $container->setParameter('eight_points_guzzle.formatter.class', \stdClass::class);
+
+        $this->assertInstanceOf(
+            \stdClass::class,
+            $container->get('eight_points_guzzle.formatter')
+        );
+    }
+
+    public function testOverrideDataCollectorClass()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($this->getConfigs(), $container);
+        $container->setParameter('eight_points_guzzle.data_collector.class', \stdClass::class);
+
+        $this->assertInstanceOf(
+            \stdClass::class,
+            $container->get('eight_points_guzzle.data_collector')
+        );
+    }
+
+    public function testOverrideLoggerClass()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($this->getConfigs(), $container);
+        $container->setParameter('eight_points_guzzle.logger.class', DevNullLogger::class);
+
+        $this->assertInstanceOf(
+            DevNullLogger::class,
+            $container->get('eight_points_guzzle.logger')
+        );
+    }
+
+    public function testOverrideLogMiddlewareClass()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($this->getConfigs(), $container);
+        $container->setParameter('eight_points_guzzle.middleware.log.class', \stdClass::class);
+
+        $this->assertInstanceOf(
+            \stdClass::class,
+            $container->get('eight_points_guzzle.middleware.log.test_api')
+        );
+    }
+
+    public function testOverrideEventDispatchMiddlewareClass()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($this->getConfigs(), $container);
+        $container->setParameter('eight_points_guzzle.middleware.event_dispatcher.class', \stdClass::class);
+
+        $this->assertInstanceOf(
+            \stdClass::class,
+            $container->get('eight_points_guzzle.middleware.event_dispatch.test_api')
+        );
+    }
+
+    public function testOverrideRequestTimeMiddlewareClass()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($this->getConfigs(), $container);
+        $container->setParameter('eight_points_guzzle.middleware.request_time.class', \stdClass::class);
+
+        $this->assertInstanceOf(
+            \stdClass::class,
+            $container->get('eight_points_guzzle.middleware.request_time.test_api')
+        );
     }
 
     public function testLoadWithLogging()

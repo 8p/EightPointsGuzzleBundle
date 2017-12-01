@@ -234,7 +234,7 @@ class EightPointsGuzzleExtension extends Extension
     }
 
     /**
-     * @param Definition $handler
+     * @param \Symfony\Component\DependencyInjection\Definition $handler
      *
      * @return void
      */
@@ -262,7 +262,7 @@ class EightPointsGuzzleExtension extends Extension
     }
 
     /**
-     * @param ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
      * @return void
      */
@@ -275,7 +275,7 @@ class EightPointsGuzzleExtension extends Extension
     }
 
     /**
-     * @param ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
      * @return void
      */

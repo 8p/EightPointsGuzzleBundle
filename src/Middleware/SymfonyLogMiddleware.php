@@ -8,15 +8,15 @@ use Psr\Log\LoggerInterface;
 
 class SymfonyLogMiddleware
 {
-    /** @var MessageFormatter */
+    /** @var \GuzzleHttp\MessageFormatter */
     protected $formatter;
 
-    /** @var LoggerInterface */
+    /** @var \Psr\Log\LoggerInterface */
     protected $logger;
 
     /**
-     * @param LoggerInterface  $logger
-     * @param MessageFormatter $formatter
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param \GuzzleHttp\MessageFormatter $formatter
      */
     public function __construct(LoggerInterface $logger, MessageFormatter $formatter)
     {

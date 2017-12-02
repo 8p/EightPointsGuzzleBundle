@@ -160,9 +160,9 @@ The service on the tag, is so that if you have multiple REST endpoints you can d
 <img src="/src/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
 
 ### Symfony logs
-All request are logged into symfony default logger (`@logger` service) with next format:
+All requests are logged into symfony default logger (`@logger` service) with next format:
 ```
-[datetime] eight_points_guzzle.LEVEL: {method} {uri} {code} 
+[{datetime}] eight_points_guzzle.{log_level}: {method} {uri} {code} 
 ```
 Example:
 ```

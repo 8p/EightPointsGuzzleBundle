@@ -4,15 +4,21 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <!-- classes -->
         <parameter key="eight_points_guzzle.http_client.class">GuzzleHttp\Client</parameter>
         <parameter key="eight_points_guzzle.formatter.class">GuzzleHttp\MessageFormatter</parameter>
-
+        <parameter key="eight_points_guzzle.symfony_log_formatter.class">GuzzleHttp\MessageFormatter</parameter>
         <parameter key="eight_points_guzzle.data_collector.class">EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector</parameter>
         <parameter key="eight_points_guzzle.logger.class">EightPoints\Bundle\GuzzleBundle\Log\Logger</parameter>
 
+        <!-- middlewares -->
         <parameter key="eight_points_guzzle.middleware.log.class">EightPoints\Bundle\GuzzleBundle\Middleware\LogMiddleware</parameter>
         <parameter key="eight_points_guzzle.middleware.event_dispatcher.class">EightPoints\Bundle\GuzzleBundle\Middleware\EventDispatchMiddleware</parameter>
         <parameter key="eight_points_guzzle.middleware.request_time.class">EightPoints\Bundle\GuzzleBundle\Middleware\RequestTimeMiddleware</parameter>
+        <parameter key="eight_points_guzzle.middleware.symfony_log.class">EightPoints\Bundle\GuzzleBundle\Middleware\SymfonyLogMiddleware</parameter>
+
+        <!-- parameters -->
+        <parameter key="eight_points_guzzle.symfony_log_formatter.pattern">{method} {uri} {code}</parameter>
 
         <!-- Deprecated! Remove them in v8.0 -->
         <parameter key="eight_points_guzzle.middleware.class">GuzzleHttp\Middleware</parameter>

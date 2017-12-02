@@ -159,6 +159,18 @@ The service on the tag, is so that if you have multiple REST endpoints you can d
 ### Symfony Debug Toolbar / Profiler
 <img src="/src/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
 
+### Symfony logs
+All requests are logged into symfony default logger (`@logger` service) with next format:
+```
+[{datetime}] eight_points_guzzle.{log_level}: {method} {uri} {code} 
+```
+Example:
+```
+[2017-12-01 00:00:00] eight_points_guzzle.INFO: GET http://api.domain.tld 200
+```
+
+You can change message format by overriding `eight_points_guzzle.symfony_log_formatter.pattern` parameter. See allowed variables [here][10].
+
 ----
 
 ## Suggestions
@@ -192,3 +204,4 @@ This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 [7]: https://github.com/gregurco/GuzzleBundleOAuth2Plugin
 [8]: https://github.com/8p/EightPointsGuzzleBundle/graphs/contributors
 [9]: https://github.com/symfony/flex
+[10]: https://github.com/guzzle/guzzle/blob/6.3.0/src/MessageFormatter.php#L14

@@ -65,6 +65,8 @@ class EightPointsGuzzleExtension extends Extension
             $this->defineLogger($container);
             $this->defineDataCollector($container);
             $this->defineFormatter($container);
+            $this->defineSymfonyLogFormatter($container);
+            $this->defineSymfonyLogMiddleware($container);
         }
 
         foreach ($config['clients'] as $name => $options) {
@@ -122,6 +124,7 @@ class EightPointsGuzzleExtension extends Extension
         if ($logging) {
             $this->defineLogMiddleware($container, $handler, $clientName);
             $this->defineRequestTimeMiddleware($container, $handler, $clientName);
+            $this->attachSymfonyLogMiddlewareToHandler($handler);
         }
 
         foreach ($this->plugins as $plugin) {
@@ -231,6 +234,17 @@ class EightPointsGuzzleExtension extends Extension
     }
 
     /**
+     * @param \Symfony\Component\DependencyInjection\Definition $handler
+     *
+     * @return void
+     */
+    protected function attachSymfonyLogMiddlewareToHandler(Definition $handler)
+    {
+        $logExpression = new Expression(sprintf("service('%s')", 'eight_points_guzzle.middleware.symfony_log'));
+        $handler->addMethodCall('push', [$logExpression, 'symfony_log']);
+    }
+
+    /**
      * Create Middleware For dispatching events
      *
      * @param string $name
@@ -245,6 +259,34 @@ class EightPointsGuzzleExtension extends Extension
         $eventMiddleWare->setPublic(true);
 
         return $eventMiddleWare;
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    protected function defineSymfonyLogFormatter(ContainerBuilder $container)
+    {
+        $formatterDefinition = new Definition('%eight_points_guzzle.symfony_log_formatter.class%');
+        $formatterDefinition->setArguments(['%eight_points_guzzle.symfony_log_formatter.pattern%']);
+        $formatterDefinition->setPublic(true);
+        $container->setDefinition('eight_points_guzzle.symfony_log_formatter', $formatterDefinition);
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    protected function defineSymfonyLogMiddleware(ContainerBuilder $container)
+    {
+        $logMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.symfony_log.class%');
+        $logMiddlewareDefinition->addArgument(new Reference('logger'));
+        $logMiddlewareDefinition->addArgument(new Reference('eight_points_guzzle.symfony_log_formatter'));
+        $logMiddlewareDefinition->setPublic(true);
+        $logMiddlewareDefinition->addTag('monolog.logger', ['channel' => 'eight_points_guzzle']);
+        $container->setDefinition('eight_points_guzzle.middleware.symfony_log', $logMiddlewareDefinition);
     }
 
     /**

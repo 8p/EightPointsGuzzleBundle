@@ -6,6 +6,8 @@ use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
+use EightPoints\Bundle\GuzzleBundle\Log\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -62,6 +64,34 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
+    public function testOverrideSymfonyLogFormatterClass()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($this->getConfigs(), $container);
+        $container->setParameter('eight_points_guzzle.symfony_log_formatter.class', \stdClass::class);
+
+        $this->assertInstanceOf(
+            \stdClass::class,
+            $container->get('eight_points_guzzle.symfony_log_formatter')
+        );
+    }
+
+    public function testOverrideSymfonyLogFormatterPatternClass()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($this->getConfigs(), $container);
+        $container->setParameter('eight_points_guzzle.symfony_log_formatter.pattern', '{uri} {code}');
+
+        $container->compile();
+
+        $this->assertEquals(
+            '{uri} {code}',
+            $container->getDefinition('eight_points_guzzle.symfony_log_formatter')->getArgument(0)
+        );
+    }
+
     public function testOverrideDataCollectorClass()
     {
         $container = $this->createContainer();
@@ -98,6 +128,19 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertInstanceOf(
             \stdClass::class,
             $container->get('eight_points_guzzle.middleware.log.test_api')
+        );
+    }
+
+    public function testOverrideSymfonyLogMiddlewareClass()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($this->getConfigs(), $container);
+        $container->setParameter('eight_points_guzzle.middleware.symfony_log.class', \stdClass::class);
+
+        $this->assertInstanceOf(
+            \stdClass::class,
+            $container->get('eight_points_guzzle.middleware.symfony_log')
         );
     }
 
@@ -148,6 +191,8 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.logger'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.data_collector'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.formatter'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.symfony_log_formatter'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.symfony_log'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.log.test_api_with_custom_class'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.request_time.test_api'));
@@ -170,6 +215,8 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.logger'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.data_collector'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.formatter'));
+        $this->assertFalse($container->hasDefinition('eight_points_guzzle.symfony_log_formatter'));
+        $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.symfony_log'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api_with_custom_class'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.request_time.test_api'));
@@ -269,6 +316,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $container = new ContainerBuilder();
         $container->setParameter('kernel.debug', true);
         $container->set('event_dispatcher', $this->createMock(EventDispatcherInterface::class));
+        $container->set('logger', $this->createMock(LoggerInterface::class));
 
         return $container;
     }

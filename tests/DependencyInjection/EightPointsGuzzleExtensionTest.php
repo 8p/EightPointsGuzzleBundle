@@ -192,6 +192,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.data_collector'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.formatter'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.symfony_log_formatter'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.twig_extension.debug'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.symfony_log'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.log.test_api_with_custom_class'));
@@ -216,6 +217,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.data_collector'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.formatter'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.symfony_log_formatter'));
+        $this->assertFalse($container->hasDefinition('eight_points_guzzle.twig_extension.debug'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.symfony_log'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api_with_custom_class'));

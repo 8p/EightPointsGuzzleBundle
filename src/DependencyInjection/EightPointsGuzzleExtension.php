@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\ExpressionLanguage\Expression;
+use Twig\Extension\DebugExtension;
 use GuzzleHttp\HandlerStack;
 
 class EightPointsGuzzleExtension extends Extension
@@ -62,6 +63,7 @@ class EightPointsGuzzleExtension extends Extension
         }
 
         if ($logging) {
+            $this->defineTwigDebugExtension($container);
             $this->defineLogger($container);
             $this->defineDataCollector($container);
             $this->defineFormatter($container);
@@ -135,6 +137,19 @@ class EightPointsGuzzleExtension extends Extension
         $handler->addMethodCall('unshift', [$eventExpression, 'events']);
 
         return $handler;
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     *
+     * @return void
+     */
+    protected function defineTwigDebugExtension(ContainerBuilder $container)
+    {
+        $twigDebugExtensionDefinition = new Definition(DebugExtension::class);
+        $twigDebugExtensionDefinition->addTag('twig.extension');
+        $twigDebugExtensionDefinition->setPublic(false);
+        $container->setDefinition('eight_points_guzzle.twig_extension.debug', $twigDebugExtensionDefinition);
     }
 
     /**

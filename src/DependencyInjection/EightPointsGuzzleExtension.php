@@ -146,6 +146,8 @@ class EightPointsGuzzleExtension extends Extension
      */
     protected function defineTwigDebugExtension(ContainerBuilder $container)
     {
+        return; // TODO temporary disable
+
         $twigDebugExtensionDefinition = new Definition(DebugExtension::class);
         $twigDebugExtensionDefinition->addTag('twig.extension');
         $twigDebugExtensionDefinition->setPublic(false);
@@ -219,7 +221,7 @@ class EightPointsGuzzleExtension extends Extension
         $requestTimeMiddlewareDefinitionName = sprintf('eight_points_guzzle.middleware.request_time.%s', $clientName);
         $requestTimeMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.request_time.class%');
         $requestTimeMiddlewareDefinition->addArgument(new Reference('eight_points_guzzle.data_collector'));
-        $requestTimeMiddlewareDefinition->setPublic(false);
+        $requestTimeMiddlewareDefinition->setPublic(true);
         $container->setDefinition($requestTimeMiddlewareDefinitionName, $requestTimeMiddlewareDefinition);
 
         $requestTimeExpression = new Expression(sprintf("service('%s')", $requestTimeMiddlewareDefinitionName));

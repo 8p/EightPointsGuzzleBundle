@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
+use EightPoints\Bundle\GuzzleBundle\Twig\Extension\DebugExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
@@ -9,7 +10,6 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\ExpressionLanguage\Expression;
-use Twig\Extension\DebugExtension;
 use GuzzleHttp\HandlerStack;
 
 class EightPointsGuzzleExtension extends Extension
@@ -146,8 +146,6 @@ class EightPointsGuzzleExtension extends Extension
      */
     protected function defineTwigDebugExtension(ContainerBuilder $container)
     {
-        return; // TODO temporary disable
-
         $twigDebugExtensionDefinition = new Definition(DebugExtension::class);
         $twigDebugExtensionDefinition->addTag('twig.extension');
         $twigDebugExtensionDefinition->setPublic(false);

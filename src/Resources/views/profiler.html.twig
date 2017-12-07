@@ -16,7 +16,7 @@
 
             <div id="request_{{ i }}" class="request method_{{ message.request.method | lower }}">
                 <h3>
-                    <a href="javascript:;">
+                    <a href="javascript:void(0);">
                         <span class="method">{{ message.request.method }}</span>
                         <span class="url">{{ message.request.url }}</span>
                         <span class="response">
@@ -51,7 +51,7 @@
                             </tr>
                             <tr>
                                 <th>Headers</th>
-                                <td>{{ dump(message.request.headers) }}</td>
+                                <td>{{ eight_points_guzzle_dump(message.request.headers) }}</td>
                             </tr>
                             <tr>
                                 <th>Body</th>
@@ -73,7 +73,7 @@
                                 </tr>
                                 <tr>
                                     <th>Headers</th>
-                                    <td>{{ dump(message.response.headers) }}</td>
+                                    <td>{{ eight_points_guzzle_dump(message.response.headers) }}</td>
                                 </tr>
                                 <tr>
                                     <th>Body</th>

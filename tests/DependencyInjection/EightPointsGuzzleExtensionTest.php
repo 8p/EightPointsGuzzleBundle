@@ -6,7 +6,6 @@ use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
-use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -192,7 +191,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.data_collector'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.formatter'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.symfony_log_formatter'));
-        // $this->assertTrue($container->hasDefinition('eight_points_guzzle.twig_extension.debug')); // @ TODO temporary disable
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.twig_extension.debug'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.symfony_log'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.log.test_api_with_custom_class'));
@@ -217,7 +216,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.data_collector'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.formatter'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.symfony_log_formatter'));
-        // $this->assertFalse($container->hasDefinition('eight_points_guzzle.twig_extension.debug')); // @ TODO temporary disable
+        $this->assertFalse($container->hasDefinition('eight_points_guzzle.twig_extension.debug'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.symfony_log'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api_with_custom_class'));

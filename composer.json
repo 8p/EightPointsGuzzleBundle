@@ -35,9 +35,10 @@
     "psr/log":                            "~1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "~6.1",
-    "symfony/config":  "~2.7|~3.0|~4.0",
-    "twig/twig":       "~1.5|~2.0"
+    "phpunit/phpunit":    "~6.1",
+    "twig/twig":          "~1.5|~2.0",
+    "symfony/config":     "~2.7|~3.0|~4.0",
+    "symfony/var-dumper": "~2.7|~3.0|~4.0"
   },
   "autoload": {
     "psr-4": {

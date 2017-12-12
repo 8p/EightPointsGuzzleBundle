@@ -180,10 +180,10 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
 
         $collector = new HttpDataCollector($this->logger);
 
-        $response = $this->getMockBuilder(Response::class)
+        $response = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')
             ->getMock();
 
-        $request = $this->getMockBuilder(Request::class)
+        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
             ->getMock();
 
         $request->expects($this->once())

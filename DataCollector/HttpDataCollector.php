@@ -33,10 +33,8 @@ class HttpDataCollector extends DataCollector
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
-        $this->data = array(
-            'logs' => array(),
-            'callCount' => 0,
-        );
+
+        $this->reset();
     }
 
     /**
@@ -67,6 +65,17 @@ class HttpDataCollector extends DataCollector
     public function getName()
     {
         return 'guzzle';
+    }
+
+    /**
+     * Resets this data collector to its initial state.
+     */
+    public function reset()
+    {
+        $this->data = [
+            'logs' => [],
+            'callCount' => 0,
+        ];
     }
 
     /**

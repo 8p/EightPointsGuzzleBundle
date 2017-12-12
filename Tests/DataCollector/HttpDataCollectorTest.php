@@ -11,7 +11,7 @@ use EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
 class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger
+     * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $logger;
 
@@ -165,6 +165,43 @@ class HttpDataCollectorTest extends \PHPUnit_Framework_TestCase
         $collector->collect($request, $response);
 
         $this->assertSame(2, $collector->getCallCount());
+    }
+
+    /**
+     * Test reset method
+     *
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::reset
+     */
+    public function testReset()
+    {
+        $this->logger->expects($this->once())
+            ->method('getMessages')
+            ->willReturn(['test message #1', 'test message #2']);
+
+        $collector = new HttpDataCollector($this->logger);
+
+        $response = $this->getMockBuilder(Response::class)
+            ->getMock();
+
+        $request = $this->getMockBuilder(Request::class)
+            ->getMock();
+
+        $request->expects($this->once())
+            ->method('getUri')
+            ->willReturn('someRandomUrlId');
+
+        $request->expects($this->once())
+            ->method('getPathInfo')
+            ->willReturn('id');
+
+        $collector->collect($request, $response);
+
+        $this->assertSame(2, $collector->getCallCount());
+
+        $collector->reset();
+
+        $this->assertSame(0, $collector->getCallCount());
+        $this->assertCount(0, $collector->getLogs());
     }
 
     /**

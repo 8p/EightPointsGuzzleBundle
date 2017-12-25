@@ -64,12 +64,12 @@ _Note: for symfony 3.3 and 3.4 you should install symfony/flex by yourself. From
 ----
 
 ## Usage
-Load bundle in AppKernel.php:
+##### Load bundle in AppKernel.php:
 ``` php
 new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle()
 ```
 
-Configuration in config.yml:
+##### Configuration in config.yml:
 ``` yaml
 eight_points_guzzle:
     # (de)activate logging/profiler; default: %kernel.debug%
@@ -109,6 +109,15 @@ eight_points_guzzle:
 ```
 Allowed options: headers, allow_redirects, auth, query, curl, cert, connect_timeout, debug, decode_content, delay, form_params, multipart, sink, http_errors, expect, ssl_key, stream, synchronous, timeout, verify, cookies, proxy, version. All these settings are optional.  
 Description for all options and examples of parameters can be found [here][4].
+
+##### Install assets _(if it's not performed automatically)_:
+``` bash
+# for symfony >= 3.0
+bin/console assets:install
+
+# for symfony < 3.0
+app/console assets:install
+```
 
 Using services in controller (eight_points_guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
 ``` php

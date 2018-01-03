@@ -197,9 +197,9 @@ services:
 ## Contributing
 👍 If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
 
-<img src="/src/Resources/doc/img/icon_slack.png" alt="Slack" title="Slack" style="width: 23px; margin-right: -4px;" /> Join our Slack channel on [Symfony Devs][10] for discussions, questions and more (direct links: [Web](https://symfony-devs.slack.com/messages/C8LUKU6JD) or [App](slack://channel?team=U3FCBT5J7&id=C8LUKU6JD).
+<img src="/src/Resources/doc/img/icon_slack.png" alt="Slack" title="Slack" style="width: 23px; margin-right: -4px;" /> Join our Slack channel on [Symfony Devs][10] for discussions, questions and more: [#8p-guzzlebundle][11].
 
-🎉 Thanks to the [contributors][11] who participated in this project.
+🎉 Thanks to the [contributors][12] who participated in this project.
 
 ----
 
@@ -216,6 +216,7 @@ This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 [8]: https://github.com/gregurco/GuzzleBundleOAuth2Plugin
 [9]: https://github.com/guzzle/guzzle/blob/6.3.0/src/MessageFormatter.php#L14
 [10]: https://symfony.com/slack-invite
-[11]: https://github.com/8p/EightPointsGuzzleBundle/graphs/contributors
+[11]: https://symfony-devs.slack.com/messages/C8LUKU6JD
+[12]: https://github.com/8p/EightPointsGuzzleBundle/graphs/contributors
 
 

@@ -197,7 +197,7 @@ services:
 ## Contributing
 👍 If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
 
-[![Slack](https://cdn3.iconfinder.com/data/icons/social-media-logos-flat-colorful-1/2048/5362_-_Slack-20.png)](https://slack.com) Join our Slack channel on [Symfony Devs][10] for discussions, questions and more (direct links: [Web][11] or [App][12]).
+<img src="/src/Resources/doc/img/icon_slack.png" alt="Slack" title="Slack" style="width: 19px" /> Join our Slack channel on [Symfony Devs][10] for discussions, questions and more (direct links: [Web][11] or [App][12]).
 
 🎉 Thanks to the [contributors][13] who participated in this project.
 

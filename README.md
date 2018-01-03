@@ -199,7 +199,7 @@ services:
 
 [![Slack](https://a.slack-edge.com/436da/marketing/img/meta/favicon-32.png)](https://slack.com) Join our Slack channel on Symfony Devs for discussions, questions and more. (direct links: [Web][10], [App][11])
 
-🎉 Thanks to the [contributors][10] who participated in this project.
+🎉 Thanks to the [contributors][12] who participated in this project.
 
 ----
 

@@ -52,7 +52,7 @@ To use the newest (maybe unstable) version please add following into your compos
 ```
 
 ##### Using Symfony Flex
-Also it is possible to install bundle through [Symfony Flex][9]. It works for Symfony 3.3 and higher.  
+Also it is possible to install bundle through [Symfony Flex][4]. It works for Symfony 3.3 and higher.  
 Bundle will be added to kernel file and default configuration will be created automatically.
 
 ```bash
@@ -108,7 +108,7 @@ eight_points_guzzle:
         ...
 ```
 Allowed options: headers, allow_redirects, auth, query, curl, cert, connect_timeout, debug, decode_content, delay, form_params, multipart, sink, http_errors, expect, ssl_key, stream, synchronous, timeout, verify, cookies, proxy, version. All these settings are optional.  
-Description for all options and examples of parameters can be found [here][4].
+Description for all options and examples of parameters can be found [here][5].
 
 ##### Install assets _(if it's not performed automatically)_:
 ``` bash
@@ -141,9 +141,9 @@ new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle([
 ```
 
 ### Known and Supported Plugins
-- [gregurco/GuzzleBundleWssePlugin][5]
-- [gregurco/GuzzleBundleCachePlugin][6]
-- [gregurco/GuzzleBundleOAuth2Plugin][7]
+- [gregurco/GuzzleBundleWssePlugin][6]
+- [gregurco/GuzzleBundleCachePlugin][7]
+- [gregurco/GuzzleBundleOAuth2Plugin][8]
 
 ----
 
@@ -178,7 +178,7 @@ Example:
 [2017-12-01 00:00:00] eight_points_guzzle.INFO: GET http://api.domain.tld 200
 ```
 
-You can change message format by overriding `eight_points_guzzle.symfony_log_formatter.pattern` parameter. See allowed variables [here][10].
+You can change message format by overriding `eight_points_guzzle.symfony_log_formatter.pattern` parameter. See allowed variables [here][9].
 
 ----
 
@@ -197,7 +197,9 @@ services:
 ## Contributing
 👍 If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
 
-🎉 Thanks to the [contributors][8] who participated in this project.
+<img src="/src/Resources/doc/img/icon_slack.png" alt="Slack" title="Slack" style="width: 23px; margin-right: -4px;" /> Join our Slack channel on [Symfony Devs][10] for discussions, questions and more: [#8p-guzzlebundle][11].
+
+🎉 Thanks to the [contributors][12] who participated in this project.
 
 ----
 
@@ -207,10 +209,14 @@ This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 [1]: http://guzzlephp.org/
 [2]: http://semver.org/
 [3]: https://packagist.org/packages/eightpoints/guzzle-bundle
-[4]: http://docs.guzzlephp.org/en/latest/request-options.html
-[5]: https://github.com/gregurco/GuzzleBundleWssePlugin
-[6]: https://github.com/gregurco/GuzzleBundleCachePlugin
-[7]: https://github.com/gregurco/GuzzleBundleOAuth2Plugin
-[8]: https://github.com/8p/EightPointsGuzzleBundle/graphs/contributors
-[9]: https://github.com/symfony/flex
-[10]: https://github.com/guzzle/guzzle/blob/6.3.0/src/MessageFormatter.php#L14
+[4]: https://github.com/symfony/flex
+[5]: http://docs.guzzlephp.org/en/latest/request-options.html
+[6]: https://github.com/gregurco/GuzzleBundleWssePlugin
+[7]: https://github.com/gregurco/GuzzleBundleCachePlugin
+[8]: https://github.com/gregurco/GuzzleBundleOAuth2Plugin
+[9]: https://github.com/guzzle/guzzle/blob/6.3.0/src/MessageFormatter.php#L14
+[10]: https://symfony.com/slack-invite
+[11]: https://symfony-devs.slack.com/messages/C8LUKU6JD
+[12]: https://github.com/8p/EightPointsGuzzleBundle/graphs/contributors
+
+

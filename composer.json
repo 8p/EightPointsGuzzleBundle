@@ -1,7 +1,7 @@
 {
   "name":        "eightpoints/guzzle-bundle",
   "type":        "symfony-bundle",
-  "description": "Integrates Guzzle 6.x, a PHP HTTP Client, into Symfony. Comes with easy and powerful configuration options and optional plugins.",
+  "description": "Integrates Guzzle 6.x, a PHP HTTP Client, into Symfony 2/3/4. Comes with easy and powerful configuration options and optional plugins.",
   "keywords": [
     "bundle",
     "guzzle",

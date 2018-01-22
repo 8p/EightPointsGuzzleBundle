@@ -156,7 +156,19 @@ class Configuration implements ConfigurationInterface
                                     ->thenInvalid('cert can be: string or array with two entries (path and password)')
                                 ->end()
                             ->end()
-                            ->floatNode('connect_timeout')->end()
+                            ->scalarNode('connect_timeout')
+                                ->beforeNormalization()
+                                    ->always(function ($v) {
+                                        return is_numeric($v) ? (float) $v : $v;
+                                    })
+                                ->end()
+                                ->validate()
+                                    ->ifTrue(function ($v) {
+                                        return !is_float($v) && !(is_string($v) && strpos($v, 'env_') === 0);
+                                    })
+                                    ->thenInvalid('connect_timeout can be: float')
+                                ->end()
+                            ->end()
                             ->booleanNode('debug')->end()
                             ->variableNode('decode_content')
                                 ->validate()
@@ -202,7 +214,32 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->booleanNode('stream')->end()
                             ->booleanNode('synchronous')->end()
-                            ->floatNode('timeout')->end()
+                            ->scalarNode('read_timeout')
+                                ->beforeNormalization()
+                                    ->always(function ($v) {
+                                        return is_numeric($v) ? (float) $v : $v;
+                                    })
+                                ->end()
+                                ->validate()
+                                    ->ifTrue(function ($v) {
+                                        return !is_float($v) && !(is_string($v) && strpos($v, 'env_') === 0);
+                                    })
+                                    ->thenInvalid('read_timeout can be: float')
+                                ->end()
+                            ->end()
+                            ->scalarNode('timeout')
+                                ->beforeNormalization()
+                                    ->always(function ($v) {
+                                        return is_numeric($v) ? (float) $v : $v;
+                                    })
+                                ->end()
+                                ->validate()
+                                    ->ifTrue(function ($v) {
+                                        return !is_float($v) && !(is_string($v) && strpos($v, 'env_') === 0);
+                                    })
+                                    ->thenInvalid('timeout can be: float')
+                                ->end()
+                            ->end()
                             ->variableNode('verify')
                                 ->validate()
                                     ->ifTrue(function ($v) {

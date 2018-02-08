@@ -39,6 +39,7 @@ class ConfigurationTest extends TestCase
                             'stream' => true,
                             'synchronous' => true,
                             'timeout' => 30,
+                            'read_timeout' => 30,
                             'verify' => true,
                             'proxy' => [
                                 'http' => 'http://proxy.org',
@@ -93,6 +94,7 @@ class ConfigurationTest extends TestCase
                             'stream' => true,
                             'synchronous' => true,
                             'timeout' => 30,
+                            'read_timeout' => 30,
                             'verify' => true,
                             'version' => '1.1',
                         ],
@@ -292,6 +294,15 @@ class ConfigurationTest extends TestCase
             'connect_timeout is float' => [[
                 'connect_timeout' => 3.14,
             ]],
+            'connect_timeout is string' => [[
+                'connect_timeout' => '3.14',
+            ]],
+            'connect_timeout is pure environment variable' => [[
+                'connect_timeout' => 'env_CONNECT_TIMEOUT_62364f6ed52bf3207e119ceff9760661',
+            ]],
+            'connect_timeout is type-casted environment variable' => [[
+                'connect_timeout' => 'env_float_CONNECT_TIMEOUT_62364f6ed52bf3207e119ceff9760661',
+            ]],
             'decode_content is boolean' => [[
                 'decode_content' => true,
             ]],
@@ -334,6 +345,27 @@ class ConfigurationTest extends TestCase
             ]],
             'timeout is float' => [[
                 'timeout' => 3.14,
+            ]],
+            'timeout is string' => [[
+                'timeout' => '3.14',
+            ]],
+            'timeout is pure environment variable' => [[
+                'timeout' => 'env_TIMEOUT_62364f6ed52bf3207e119ceff9760661',
+            ]],
+            'timeout is type-casted environment variable' => [[
+                'timeout' => 'env_float_TIMEOUT_62364f6ed52bf3207e119ceff9760661',
+            ]],
+            'read_timeout is float' => [[
+                'read_timeout' => 3.14,
+            ]],
+            'read_timeout is string' => [[
+                'read_timeout' => '3.14',
+            ]],
+            'read_timeout is pure environment variable' => [[
+                'read_timeout' => 'env_READ_TIMEOUT_62364f6ed52bf3207e119ceff9760661',
+            ]],
+            'read_timeout is type-casted environment variable' => [[
+                'connect_timeout' => 'env_float_READ_TIMEOUT_62364f6ed52bf3207e119ceff9760661',
             ]],
             'verify is bool' => [[
                 'verify' => true,

@@ -41,4 +41,12 @@ class DebugExtension extends \Twig_Extension
 
         return stream_get_contents($dump);
     }
+
+    /**
+     * @return string
+     */
+    public function getName() : string
+    {
+        return get_class($this);
+    }
 }

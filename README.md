@@ -144,6 +144,8 @@ new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle([
 - [gregurco/GuzzleBundleWssePlugin][6]
 - [gregurco/GuzzleBundleCachePlugin][7]
 - [gregurco/GuzzleBundleOAuth2Plugin][8]
+- [neirda24/GuzzleBundleHeaderForwardPlugin][13]
+- [neirda24/GuzzleBundleHeaderDisableCachePlugin][14]
 
 ----
 
@@ -218,5 +220,7 @@ This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 [10]: https://symfony.com/slack-invite
 [11]: https://symfony-devs.slack.com/messages/C8LUKU6JD
 [12]: https://github.com/8p/EightPointsGuzzleBundle/graphs/contributors
+[13]: https://github.com/Neirda24/GuzzleBundleHeaderForwardPlugin
+[14]: https://github.com/Neirda24/GuzzleBundleHeaderDisableCachePlugin
 
 

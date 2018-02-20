@@ -96,8 +96,12 @@ class Configuration implements ConfigurationInterface
                                 ->prototype('scalar')
                                 ->end()
                             ->end()
-                            ->arrayNode('auth')
-                                ->prototype('scalar')
+                            ->variableNode('auth')
+                                ->validate()
+                                    ->ifTrue(function ($v) {
+                                        return !is_array($v) && !is_string($v);
+                                    })
+                                    ->thenInvalid('auth can be: string or array')
                                 ->end()
                             ->end()
                             ->arrayNode('query')

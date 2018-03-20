@@ -49,7 +49,6 @@
 
 
 {% block menu %}
-
     <span class="label">
         <span class="icon">
             {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
@@ -63,15 +62,12 @@
 
 
 {% block head %}
-
     {{ parent() }}
 
     <link rel="stylesheet" href="{{ asset('bundles/eightpointsguzzle/css/main.css') }}" />
-    <script src="{{ asset('bundles/eightpointsguzzle/js/jquery.min.js') }}"></script>
 {% endblock %}
 
 {% block panel %}
-
     <h2>Logs</h2>
 
     {% include '@EightPointsGuzzle/profiler.html.twig' with { 'collector': collector } %}

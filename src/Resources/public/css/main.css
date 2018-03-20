@@ -163,8 +163,10 @@
     margin: 16px 0 10px 0;
 }
 
-
-
 #guzzle_profiler .content {
     padding: 10px;
+}
+
+.content.hide {
+    display: none;
 }

@@ -3,121 +3,130 @@
         <em>No calls</em>
     </p>
 {% else %}
-
     <div id="guzzle_profiler">
-
-        {% set firstRequest = false %}
-
         {% for group in collector.logs %}
-
             <h2>Group {{ group.requestName }}</h2>
 
-        {% for i, message in group.messages %}
+            {% for message in group.messages %}
+                <div class="request method_{{ message.request.method | lower }}">
+                    <h3>
+                        <a href="javascript: void(0);">
+                            <span class="method">{{ message.request.method }}</span>
+                            <span class="url">{{ message.request.url }}</span>
+                            <span class="response">
+                                {% if message.response %}
+                                    {{ message.response.statusPhrase }} ({{ message.response.statusCode }})
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </span>
+                        </a>
+                    </h3>
 
-            <div id="request_{{ i }}" class="request method_{{ message.request.method | lower }}">
-                <h3>
-                    <a href="javascript:void(0);">
-                        <span class="method">{{ message.request.method }}</span>
-                        <span class="url">{{ message.request.url }}</span>
-                        <span class="response">
-                            {% if message.response %}
-                                {{ message.response.statusPhrase }} ({{ message.response.statusCode }})
-                            {% else %}
-                                N/A
-                            {% endif %}
-                        </span>
-                    </a>
-                </h3>
-                <div class="content" {{ firstRequest ? 'style="display: none;"': '' }}>
-                    <h4>Basic</h4>
-                    <table>
-                        <tr>
-                            <th>Log Level</th>
-                            <td>{{ message.level }}</td>
-                        </tr>
-                        <tr>
-                            <th>Message</th>
-                            <td>{{ message.message }}</td>
-                        </tr>
-                    </table>
-
-                    <div>
-                        <h4>Request</h4>
+                    <div class="content {{ loop.index0 ? 'hide': '' }}">
+                        <h4>Basic</h4>
 
                         <table>
                             <tr>
-                                <th>Protocol Version</th>
-                                <td>{{ message.request.protocolVersion }}</td>
+                                <th>Log Level</th>
+                                <td>{{ message.level }}</td>
                             </tr>
+
                             <tr>
-                                <th>Headers</th>
-                                <td>{{ eight_points_guzzle_dump(message.request.headers) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Body</th>
-                                <td>
-                                    <textarea readonly id="requestBody">{{ message.request.body }}</textarea>
-                                </td>
+                                <th>Message</th>
+                                <td>{{ message.message }}</td>
                             </tr>
                         </table>
-                    </div>
 
-                    <div>
-                        <h4>Response</h4>
+                        <div>
+                            <h4>Request</h4>
 
-                        {% if message.response %}
                             <table>
                                 <tr>
                                     <th>Protocol Version</th>
-                                    <td>{{ message.response.protocolVersion }}</td>
+                                    <td>{{ message.request.protocolVersion }}</td>
                                 </tr>
+
                                 <tr>
                                     <th>Headers</th>
-                                    <td>{{ eight_points_guzzle_dump(message.response.headers) }}</td>
+                                    <td>{{ eight_points_guzzle_dump(message.request.headers) }}</td>
                                 </tr>
+
                                 <tr>
                                     <th>Body</th>
                                     <td>
-                                        <textarea readonly id="responseBody">{{ message.response.body }}</textarea>
+                                        <textarea readonly class="format-json">{{ message.request.body }}</textarea>
                                     </td>
                                 </tr>
                             </table>
-                        {% else %}
-                            No response available.
-                        {% endif %}
+                        </div>
+
+                        <div>
+                            <h4>Response</h4>
+
+                            {% if message.response %}
+                                <table>
+                                    <tr>
+                                        <th>Protocol Version</th>
+                                        <td>{{ message.response.protocolVersion }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Headers</th>
+                                        <td>{{ eight_points_guzzle_dump(message.response.headers) }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Body</th>
+                                        <td>
+                                            <textarea readonly class="format-json">{{ message.response.body }}</textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                            {% else %}
+                                No response available.
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <script>
-                $("#request_{{ i }} h3 a").click(function () {
-                    $("#request_{{ i }} .content").toggle("fast");
-                });
-
-                var requestBody = $('#requestBody');
-                requestBody.val(formatJson(requestBody.val()));
-
-                var responseBody = $('#responseBody');
-                responseBody.val(formatJson(responseBody.val()));
-
-                function formatJson(json) {
-                    if (json) {
-                        try{
-                            return JSON.stringify(JSON.parse(json), null, 2);
-                        }catch(error){
-                            //different formats json ex: xml
-                        }
-                    }
-                }
-            </script>
-
-            {% set firstRequest = true %}
             {% else %}
-
-            <p>No Calls</p>
+                <p>No Calls</p>
+            {% endfor %}
         {% endfor %}
-        {% endfor %}
-
     </div>
 
+    <script>
+        // Do requests block collapsable
+        var requests = document.querySelectorAll('.request h3 a');
+        requests.forEach(function(request) {
+            request.onclick = function(el) {
+                var parent = findParentByClass(el.target, 'request');
+                var content = parent.querySelector('.content');
+
+                if (content) {
+                    content.classList.toggle('hide');
+                }
+            }
+        });
+
+        function findParentByClass(el, cls) {
+            while ((el = el.parentNode) && el.classList.contains(cls) === false) {}
+
+            return el;
+        }
+
+        // Format json field
+        var formatJsonTextareas = document.querySelectorAll('textarea.format-json');
+        formatJsonTextareas.forEach(function(formatJsonTextarea) {
+            var value = formatJsonTextarea.value;
+
+            if (value) {
+                try {
+                    formatJsonTextarea.value = JSON.stringify(JSON.parse(value), null, 2);
+                } catch (error) {
+                    //different formats json ex: xml
+                }
+            }
+        });
+    </script>
 {% endif %}

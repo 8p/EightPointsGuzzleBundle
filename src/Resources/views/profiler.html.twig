@@ -3,17 +3,17 @@
         <em>No calls</em>
     </p>
 {% else %}
-    <div id="guzzle_profiler">
+    <div id="gb_profiler">
         {% for group in collector.logs %}
             <h2>Group {{ group.requestName }}</h2>
 
             {% for message in group.messages %}
-                <div class="request method_{{ message.request.method | lower }}">
+                <div class="gb_request gb_request--{{ message.request.method | lower }}">
                     <h3>
                         <a href="javascript: void(0);">
-                            <span class="method">{{ message.request.method }}</span>
-                            <span class="url">{{ message.request.url }}</span>
-                            <span class="response">
+                            <span class="gb_request__method">{{ message.request.method }}</span>
+                            <span class="gb_request__url">{{ message.request.url }}</span>
+                            <span class="gb_request__response">
                                 {% if message.response %}
                                     {{ message.response.statusPhrase }} ({{ message.response.statusCode }})
                                 {% else %}
@@ -23,7 +23,7 @@
                         </a>
                     </h3>
 
-                    <div class="content {{ loop.index0 ? 'hide': '' }}">
+                    <div class="gb_content {{ loop.index0 ? 'gb_content--hide': '' }}">
                         <h4>Basic</h4>
 
                         <table>
@@ -97,14 +97,14 @@
 
     <script>
         // Do requests block collapsable
-        var requests = document.querySelectorAll('.request h3 a');
+        var requests = document.querySelectorAll('.gb_request h3 a');
         requests.forEach(function(request) {
             request.onclick = function(el) {
-                var parent = findParentByClass(el.target, 'request');
-                var content = parent.querySelector('.content');
+                var parent = findParentByClass(el.target, 'gb_request');
+                var content = parent.querySelector('.gb_content');
 
                 if (content) {
-                    content.classList.toggle('hide');
+                    content.classList.toggle('gb_content--hide');
                 }
             }
         });

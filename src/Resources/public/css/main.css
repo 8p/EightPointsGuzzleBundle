@@ -1,4 +1,4 @@
-#guzzle_profiler {
+#gb_profiler {
     line-height: 1;
     font-family: "Droid Sans", sans-serif;
     font-size: 0.9em;
@@ -6,13 +6,13 @@
     margin-right: auto;
 }
 
-#guzzle_profiler pre {
+#gb_profiler pre {
     background-color: #404040;
     border: 1px solid #636363;
     border-radius: 6px;
 }
 
-#guzzle_profiler textarea {
+#gb_profiler textarea {
     background-color: #222;
     border: 1px solid #636363;
     border-radius: 6px;
@@ -30,25 +30,22 @@
 
 }
 
-#guzzle_profiler .request {
+#gb_profiler .gb_request {
     width: 100%;
     margin-bottom: 7px;
+    border-radius: 6px;
 }
 
-#guzzle_profiler table {
-    margin-bottom: 0px;
+#gb_profiler table {
+    margin-bottom: 0;
 }
 
-#guzzle_profiler table th {
+#gb_profiler table th {
     width: 130px;
     vertical-align: top;
 }
 
-#guzzle_profiler .request {
-    border-radius: 6px;
-}
-
-#guzzle_profiler h3 .method {
+#gb_profiler h3 .gb_request__method {
     text-transform: uppercase;
     text-decoration: none;
     color: white;
@@ -60,14 +57,14 @@
     border-radius: 4px;
 }
 
-#guzzle_profiler h3 .url {
+#gb_profiler h3 .gb_request__url {
     padding-left: 10px;
     color: black;
     text-decoration: none;
     font-weight: normal;
 }
 
-#guzzle_profiler h3 .response {
+#gb_profiler h3 .gb_request__response {
     text-decoration: none;
     color: white;
     display: inline-block;
@@ -78,93 +75,95 @@
     border-radius: 4px;
 }
 
-#guzzle_profiler .request.method_get,
-#guzzle_profiler .request.method_get h3,
-#guzzle_profiler .request.method_get table,
-#guzzle_profiler .request.method_get table tr,
-#guzzle_profiler .request.method_get table th,
-#guzzle_profiler .request.method_get table td {
+#gb_profiler .gb_request.gb_request--get,
+#gb_profiler .gb_request.gb_request--get h3,
+#gb_profiler .gb_request.gb_request--get table,
+#gb_profiler .gb_request.gb_request--get table tr,
+#gb_profiler .gb_request.gb_request--get table th,
+#gb_profiler .gb_request.gb_request--get table td {
     border: 1px solid #c3d9ec;
     background-color: #e7f0f7;
 }
 
-#guzzle_profiler .request.method_get h3 .method,
-#guzzle_profiler .request.method_get h3 .response {
+#gb_profiler .gb_request.gb_request--get h3 .gb_request__method,
+#gb_profiler .gb_request.gb_request--get h3 .gb_request__response {
     background-color: #0f6ab4;
 }
 
-#guzzle_profiler .request.method_put,
-#guzzle_profiler .request.method_put h3,
-#guzzle_profiler .request.method_put table,
-#guzzle_profiler .request.method_put table tr,
-#guzzle_profiler .request.method_put table th,
-#guzzle_profiler .request.method_put table td {
+#gb_profiler .gb_request.gb_request--put,
+#gb_profiler .gb_request.gb_request--put h3,
+#gb_profiler .gb_request.gb_request--put table,
+#gb_profiler .gb_request.gb_request--put table tr,
+#gb_profiler .gb_request.gb_request--put table th,
+#gb_profiler .gb_request.gb_request--put table td {
     background-color: #f9f2e9;
     border: 1px solid #f0e0ca;
 }
 
-#guzzle_profiler .request.method_put h3 .method,
-#guzzle_profiler .request.method_put h3 .response {
+#gb_profiler .gb_request.gb_request--put h3 .gb_request__method,
+#gb_profiler .gb_request.gb_request--put h3 .gb_request__response {
     background-color: #c5862b;
 }
 
-#guzzle_profiler .request.method_post,
-#guzzle_profiler .request.method_post h3,
-#guzzle_profiler .request.method_post table,
-#guzzle_profiler .request.method_post table tr,
-#guzzle_profiler .request.method_post table th,
-#guzzle_profiler .request.method_post table td {
+#gb_profiler .gb_request.gb_request--post,
+#gb_profiler .gb_request.gb_request--post h3,
+#gb_profiler .gb_request.gb_request--post table,
+#gb_profiler .gb_request.gb_request--post table tr,
+#gb_profiler .gb_request.gb_request--post table th,
+#gb_profiler .gb_request.gb_request--post table td {
     background-color: #e7f6ec;
     border: 1px solid #c3e8d1;
 }
 
-#guzzle_profiler .request.method_post h3 .method,
-#guzzle_profiler .request.method_post h3 .response {
+#gb_profiler .gb_request.gb_request--post h3 .gb_request__method,
+#gb_profiler .gb_request.gb_request--post h3 .gb_request__response {
     background-color: #10a54a;
 }
 
-#guzzle_profiler .request.method_delete,
-#guzzle_profiler .request.method_delete h3,
-#guzzle_profiler .request.method_delete table,
-#guzzle_profiler .request.method_delete table tr,
-#guzzle_profiler .request.method_delete table th,
-#guzzle_profiler .request.method_delete table td {
+#gb_profiler .gb_request.gb_request--delete,
+#gb_profiler .gb_request.gb_request--delete h3,
+#gb_profiler .gb_request.gb_request--delete table,
+#gb_profiler .gb_request.gb_request--delete table tr,
+#gb_profiler .gb_request.gb_request--delete table th,
+#gb_profiler .gb_request.gb_request--delete table td {
     background-color: #f5e8e8;
     border: 1px solid #e8c6c7;
 }
 
-#guzzle_profiler .request.method_delete h3 .method,
-#guzzle_profiler .request.method_delete h3 .response {
+#gb_profiler .gb_request.gb_request--delete h3 .gb_request__method,
+#gb_profiler .gb_request.gb_request--delete h3 .gb_request__response {
     background-color: #a41e22;
 }
 
-#guzzle_profiler h2 {
+#gb_profiler h2 {
     font-size: 1.1em;
     margin-top: 25px;
 }
 
-#guzzle_profiler .request h3 {
+#gb_profiler .gb_request h3 {
     font-size: 1em;
-    border-width: 0px 0px 1px 0px !important;
+    border-width: 0 0 1px 0 !important;
     padding: 5px;
-    margin: 0px;
+    margin: 0;
 }
 
-#guzzle_profiler h3 a {
+#gb_profiler h3 a {
     text-decoration: none;
 }
 
-#guzzle_profiler h3 a .url {
+#gb_profiler h3 a .gb_request__url {
     text-decoration: underline;
 }
 
-#guzzle_profiler h4 {
+#gb_profiler h4 {
     font-size: 1em;
     margin: 16px 0 10px 0;
 }
 
-
-
-#guzzle_profiler .content {
+#gb_profiler .gb_content {
     padding: 10px;
+}
+
+#gb_profiler .gb_content.gb_content--hide {
+    display: none;
 }

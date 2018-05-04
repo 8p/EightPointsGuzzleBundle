@@ -1,7 +1,7 @@
 # How to redefine class used for clients
 
 GuzzleBundle is using `GuzzleHttp\Client` class to create clients. In some cases you may need to extend/rewrite it.
-First of all you need to crete your own class, but don't forget to extend `GuzzleHttp\Client`:
+First of all you need to create your own class, but don't forget to extend `GuzzleHttp\Client`:
 
 ```php
 
@@ -27,7 +27,7 @@ parameters:
     eight_points_guzzle.http_client.class: Namespace\Of\Your\Client\AwesomeClient
 ```
 
-Note that this method will redefine class for all clients.
+Note that this method will redefine class for **all** clients.
 
 #### For specific client
 

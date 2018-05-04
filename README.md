@@ -235,6 +235,9 @@ services:
 
 ----
 
+## Learn more
+- [How to redefine class used for clients](src/Resources/doc/redefine-client-class.md)
+
 ## License
 This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
 

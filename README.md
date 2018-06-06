@@ -26,6 +26,20 @@ GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
 ----
 
+## :exclamation: Important :exclamation:
+
+Use v7 of Guzzle Bundle! Just critical issues are fixed in v6.
+
+Compatibility table:
+
+| PHP      | Symfony    | Guzzle Bundle |
+|----------|------------|---------------|
+| 5.x, 7.x | ~          | v7            |
+| 5.x      | 3.2 - 3.4  | v6.2.1        |
+| 5.x      | 2.8 - 3.2  | v6.2.0        |
+
+----
+
 ## Requirements
  - PHP 5.6 or above
  - Symfony 2.7 or above

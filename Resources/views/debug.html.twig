@@ -1,4 +1,4 @@
-{% extends "WebProfilerBundle:Profiler:layout.html.twig" %}
+{% extends "@WebProfiler/Profiler/layout.html.twig" %}
 
 
 {% block toolbar %}
@@ -44,7 +44,7 @@
             </div>
         {% endset %}
 
-        {% include "WebProfilerBundle:Profiler:toolbar_item.html.twig" with { "link": profiler_url, status: status_color } %}
+        {% include "@WebProfiler/Profiler/toolbar_item.html.twig" with { "link": profiler_url, status: status_color } %}
     {% endif %}
 {% endblock %}
 
@@ -75,5 +75,5 @@
 
     <h2>Logs</h2>
 
-    {% include 'GuzzleBundle::profiler.html.twig' with { 'collector': collector } %}
+    {% include '@Guzzle/profiler.html.twig' with { 'collector': collector } %}
 {% endblock %}

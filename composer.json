@@ -29,10 +29,10 @@
     "php":                                ">=5.6",
     "guzzlehttp/guzzle":                  "~6.0",
     "eightpoints/guzzle-wsse-middleware": "~4.0",
-    "symfony/dependency-injection":       "~2.3|~3.0",
-    "symfony/expression-language":        "~2.3|~3.0",
-    "symfony/event-dispatcher":           "~2.3|~3.0",
-    "symfony/http-kernel":                "~2.3|~3.0",
+    "symfony/dependency-injection":       "~3.2",
+    "symfony/expression-language":        "~3.2",
+    "symfony/event-dispatcher":           "~3.2",
+    "symfony/http-kernel":                "~3.2",
     "psr/log":                            "~1.0"
   },
   "require-dev": {

@@ -7,11 +7,9 @@ php:
     - nightly
 
 env:
-    - SYMFONY_VERSION=2.7.*
-    - SYMFONY_VERSION=2.8.*
-    - SYMFONY_VERSION=3.0.*
-    - SYMFONY_VERSION=3.1.*
-    - SYMFONY_VERSION=dev-master
+    - SYMFONY_VERSION=3.2.*
+    - SYMFONY_VERSION=3.3.*
+    - SYMFONY_VERSION=3.4.*
 
 before_script:
     - composer self-update
@@ -28,15 +26,12 @@ matrix:
         - env: SYMFONY_VERSION=dev-master
         - php: nightly
     include:
-        - env: SYMFONY_VERSION=2.7.*
+        - env: SYMFONY_VERSION=3.2.*
           php: hhvm
           dist: trusty
-        - env: SYMFONY_VERSION=2.8.*
+        - env: SYMFONY_VERSION=3.3.*
           php: hhvm
           dist: trusty
-        - env: SYMFONY_VERSION=3.0.*
-          php: hhvm
-          dist: trusty
-        - env: SYMFONY_VERSION=3.1.*
+        - env: SYMFONY_VERSION=3.4.*
           php: hhvm
           dist: trusty

@@ -120,6 +120,21 @@
     background-color: #10a54a;
 }
 
+#gb_profiler .gb_request.gb_request--patch,
+#gb_profiler .gb_request.gb_request--patch h3,
+#gb_profiler .gb_request.gb_request--patch table,
+#gb_profiler .gb_request.gb_request--patch table tr,
+#gb_profiler .gb_request.gb_request--patch table th,
+#gb_profiler .gb_request.gb_request--patch table td {
+    background-color: #fbe8e2;
+    border: 1px solid #fbd4c9;
+}
+
+#gb_profiler .gb_request.gb_request--patch h3 .gb_request__method,
+#gb_profiler .gb_request.gb_request--patch h3 .gb_request__response {
+    background-color: #d07e44;
+}
+
 #gb_profiler .gb_request.gb_request--delete,
 #gb_profiler .gb_request.gb_request--delete h3,
 #gb_profiler .gb_request.gb_request--delete table,

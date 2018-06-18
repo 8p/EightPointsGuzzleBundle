@@ -237,6 +237,7 @@ services:
 
 ## Learn more
 - [How to redefine class used for clients](src/Resources/doc/redefine-client-class.md)
+- [Disable throwing exceptions on HTTP errors (4xx and 5xx responses)](src/Resources/doc/disable-exception-on-http-error.md)
 
 ## License
 This bundle is released under the [MIT license](src/Resources/meta/LICENSE)

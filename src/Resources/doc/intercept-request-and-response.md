@@ -8,7 +8,7 @@ eight_points_guzzle:
         api_payment:
             base_url: "http://api.domain.tld"
         api_partners:
-            base_url: "http://pastners.tld"
+            base_url: "http://partners.tld"
 ```
 
 and `api_partners` requires authorization using some token in header.  
@@ -16,7 +16,7 @@ How we can do that?
 
 ## Interceptor class
 
-First of all we have to crate out interceptor class, where will be all the logic:
+First of all we have to create out interceptor class, where will be all the logic:
 
 ```php
 namespace App\EventListener;
@@ -38,7 +38,7 @@ class PartnersApiGuzzleEventListener implements GuzzleEventListenerInterface
 }
 ```
 
-It's good to start from this initial file. We implemented `GuzzleEventListenerInterface` interface and added `setServiceName` method requested from interface.
+Let's start from this initial file. We implemented `GuzzleEventListenerInterface` interface and added `setServiceName` method requested from interface.
 Later we will use this method and property.
 
 ## Register our interceptor as listener service

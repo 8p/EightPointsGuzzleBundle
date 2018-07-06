@@ -11,7 +11,8 @@ eight_points_guzzle:
             base_url: "http://pastners.tld"
 ```
 
-and `api_partners` requires authorization using some token in header. How we can do that?
+and `api_partners` requires authorization using some token in header.  
+How we can do that?
 
 ## Interceptor class
 
@@ -52,7 +53,7 @@ services:
         class: App\EventListener\PartnersApiGuzzleEventListener
 ```
 
-and subscribe to pre request event:
+and subscribe to the pre transaction event:
 
 ```yaml
 services:
@@ -62,7 +63,7 @@ services:
             - { name: kernel.event_listener, event: eight_points_guzzle.pre_transaction, method: onPreTransaction, service: api_partners }
 ```
 
-We just subscribed to the `eight_points_guzzle.pre_transaction` event and exposed method `onPreTransaction` to be triggered. In next step we will create this method.
+We just subscribed to the `eight_points_guzzle.pre_transaction` event and exposed method `onPreTransaction` to be triggered. In next step we will implement this method.
 
 Also notice that we configured `service: api_partners` parameter. String `api_partners` will be passed to `setServiceName` method and we will use it to track if the client is the right one.
 
@@ -166,6 +167,7 @@ class PartnersApiGuzzleEventListener implements GuzzleEventListenerInterface
 ```
 
 Now remained to call the api of partners:
+
 ```php
 $this->get('eight_points_guzzle.client.api_partners')->get('/some-api-route')
 ```

@@ -4,7 +4,7 @@ Autowiring was introduced in Symfony 3.3 and let's read how [Symfony Documentati
 
 > Autowiring allows you to manage services in the container with minimal configuration. It reads the type-hints on your constructor (or other methods) and automatically passes the correct services to each method. Symfony's autowiring is designed to be predictable: if it is not absolutely clear which dependency should be passed, you'll see an actionable exception.
 
-Getting in consideration, that Guzzle Bundle creates clients of same class, it becomes obvious that Symfony is not be able to guess what to inject.
+Getting in consideration, that Guzzle Bundle creates clients of same class, it becomes obvious that Symfony will not be able to guess what to inject.
 With some small configurations we can help Symfony to do it. 
 
 For example you have configured next client:

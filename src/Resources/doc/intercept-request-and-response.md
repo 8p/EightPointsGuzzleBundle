@@ -12,11 +12,11 @@ eight_points_guzzle:
 ```
 
 and `api_partners` requires authorization using some token in header.  
-How we can do that?
+How can we do that?
 
 ## Interceptor class
 
-First of all we have to create out interceptor class, where will be all the logic:
+First of all we have to create out interceptor class, where all the logic will be:
 
 ```php
 namespace App\EventListener;

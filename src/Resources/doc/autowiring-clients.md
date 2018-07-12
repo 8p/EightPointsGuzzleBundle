@@ -79,6 +79,10 @@ class FooController extends AbstractController
 }
 ```
 
-Note that this flow should be repeated for each client.
-
+Note that:
+ - this flow should be repeated for each client.
+ - don't use the same client class for more than one client
+ 
+That's all.
+ 
 [1]: https://symfony.com/doc/current/service_container/autowiring.html

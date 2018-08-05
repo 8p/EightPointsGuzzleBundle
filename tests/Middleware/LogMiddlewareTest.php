@@ -36,7 +36,10 @@ class LogMiddlewareTest extends TestCase
 
         $messages = $logger->getMessages();
         $this->assertCount(1, $messages);
-        $this->assertEquals(LogLevel::INFO, $messages[0]->getLevel());
+
+        $message = reset($messages);
+
+        $this->assertEquals(LogLevel::INFO, $message->getLevel());
     }
 
     public function testRejectFromLog()
@@ -61,6 +64,9 @@ class LogMiddlewareTest extends TestCase
 
         $messages = $logger->getMessages();
         $this->assertCount(1, $messages);
-        $this->assertEquals(LogLevel::NOTICE, $messages[0]->getLevel());
+
+        $message = reset($messages);
+
+        $this->assertEquals(LogLevel::NOTICE, $message->getLevel());
     }
 }

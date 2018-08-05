@@ -77,7 +77,8 @@ class LoggerTest extends TestCase
 
         $logger->log(LogLevel::INFO, 'info message', ['request' => $requestMock]);
 
-        $message = $logger->getMessages()[2];
+        $messages = array_slice($logger->getMessages(), 2, 1);
+        $message = reset($messages);
         $this->assertSame(LogLevel::INFO, $message->getLevel());
         $this->assertSame('info message', $message->getMessage());
 

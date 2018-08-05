@@ -22,7 +22,14 @@ class Logger implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        $logMessage = new LogMessage($message);
+        $requestId = isset($context['requestId']) ? $context['requestId'] : uniqid('eight_points_guzzle_');
+
+        if (array_key_exists($requestId, $this->messages)) {
+            $logMessage = $this->messages[$requestId];
+        } else {
+            $logMessage = new LogMessage($message);
+        }
+
         $logMessage->setLevel($level);
 
         if (!empty($context)) {
@@ -35,7 +42,7 @@ class Logger implements LoggerInterface
             }
         }
 
-        $this->messages[] = $logMessage;
+        $this->messages[$requestId] = $logMessage;
     }
 
     /**
@@ -66,5 +73,16 @@ class Logger implements LoggerInterface
     public function getMessages() : array
     {
         return $this->messages;
+    }
+
+    /**
+     * @param $requestId
+     * @param $transferTime
+     */
+    public function addTransferTimeByRequestId($requestId, $transferTime)
+    {
+        if (array_key_exists($requestId, $this->messages)) {
+            $this->messages[$requestId]->setTransferTime($transferTime);
+        }
     }
 }

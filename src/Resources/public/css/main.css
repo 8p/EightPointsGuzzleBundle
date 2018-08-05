@@ -73,6 +73,18 @@
     padding: 7px 10px 5px 10px;
     float: right;
     border-radius: 4px;
+    margin-left: 10px;
+}
+
+#gb_profiler h3 .gb_request__request_time {
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    font-size: 0.8em;
+    text-align: center;
+    padding: 7px 10px 5px 10px;
+    float: right;
+    border-radius: 4px;
 }
 
 #gb_profiler .gb_request.gb_request--get,
@@ -86,7 +98,8 @@
 }
 
 #gb_profiler .gb_request.gb_request--get h3 .gb_request__method,
-#gb_profiler .gb_request.gb_request--get h3 .gb_request__response {
+#gb_profiler .gb_request.gb_request--get h3 .gb_request__response,
+#gb_profiler .gb_request.gb_request--get h3 .gb_request__request_time {
     background-color: #0f6ab4;
 }
 
@@ -101,7 +114,8 @@
 }
 
 #gb_profiler .gb_request.gb_request--put h3 .gb_request__method,
-#gb_profiler .gb_request.gb_request--put h3 .gb_request__response {
+#gb_profiler .gb_request.gb_request--put h3 .gb_request__response,
+#gb_profiler .gb_request.gb_request--put h3 .gb_request__request_time {
     background-color: #c5862b;
 }
 
@@ -116,7 +130,8 @@
 }
 
 #gb_profiler .gb_request.gb_request--post h3 .gb_request__method,
-#gb_profiler .gb_request.gb_request--post h3 .gb_request__response {
+#gb_profiler .gb_request.gb_request--post h3 .gb_request__response,
+#gb_profiler .gb_request.gb_request--post h3 .gb_request__request_time {
     background-color: #10a54a;
 }
 
@@ -131,7 +146,8 @@
 }
 
 #gb_profiler .gb_request.gb_request--patch h3 .gb_request__method,
-#gb_profiler .gb_request.gb_request--patch h3 .gb_request__response {
+#gb_profiler .gb_request.gb_request--patch h3 .gb_request__response,
+#gb_profiler .gb_request.gb_request--patch h3 .gb_request__request_time {
     background-color: #d07e44;
 }
 
@@ -146,7 +162,8 @@
 }
 
 #gb_profiler .gb_request.gb_request--delete h3 .gb_request__method,
-#gb_profiler .gb_request.gb_request--delete h3 .gb_request__response {
+#gb_profiler .gb_request.gb_request--delete h3 .gb_request__response,
+#gb_profiler .gb_request.gb_request--delete h3 .gb_request__request_time {
     background-color: #a41e22;
 }
 

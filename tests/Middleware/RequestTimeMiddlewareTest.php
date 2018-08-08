@@ -30,7 +30,7 @@ class RequestTimeMiddlewareTest extends TestCase
         $request = new Request('GET', 'http://test.com');
         $handler = new MockHandler([new Response(200)]);
 
-        $requestTimeMiddleware = new RequestTimeMiddleware($httpDataCollector);
+        $requestTimeMiddleware = new RequestTimeMiddleware($this->logger, $httpDataCollector);
         $invokeResult = $requestTimeMiddleware($handler);
         $invokeResult($request, []);
 
@@ -55,7 +55,7 @@ class RequestTimeMiddlewareTest extends TestCase
         $onStatsCallable->expects(self::once())
             ->method('__invoke');
 
-        $requestTimeMiddleware = new RequestTimeMiddleware($httpDataCollector);
+        $requestTimeMiddleware = new RequestTimeMiddleware($this->logger, $httpDataCollector);
         $invokeResult = $requestTimeMiddleware($handler);
         $invokeResult($request, ['on_stats' => $onStatsCallable]);
 

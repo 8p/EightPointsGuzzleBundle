@@ -16,6 +16,9 @@ class LogMessage
     /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogResponse */
     protected $response;
 
+    /** @var null|float */
+    protected $transferTime;
+
     /**
      * @param string $message
      */
@@ -98,5 +101,21 @@ class LogMessage
     public function getResponse()
     {
         return $this->response;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getTransferTime()
+    {
+        return $this->transferTime;
+    }
+
+    /**
+     * @param float|null $transferTime
+     */
+    public function setTransferTime($transferTime)
+    {
+        $this->transferTime = $transferTime;
     }
 }

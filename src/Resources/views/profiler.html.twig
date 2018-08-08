@@ -13,9 +13,18 @@
                         <a href="javascript: void(0);">
                             <span class="gb_request__method">{{ message.request.method }}</span>
                             <span class="gb_request__url">{{ message.request.url }}</span>
+
                             <span class="gb_request__response">
                                 {% if message.response %}
                                     {{ message.response.statusPhrase }} ({{ message.response.statusCode }})
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </span>
+
+                            <span class="gb_request__request_time">
+                                {% if message.transferTime %}
+                                    {{ message.transferTime * 1000 }} ms
                                 {% else %}
                                     N/A
                                 {% endif %}

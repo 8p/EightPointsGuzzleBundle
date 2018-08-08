@@ -218,12 +218,13 @@ class EightPointsGuzzleExtension extends Extension
     {
         $requestTimeMiddlewareDefinitionName = sprintf('eight_points_guzzle.middleware.request_time.%s', $clientName);
         $requestTimeMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.request_time.class%');
+        $requestTimeMiddlewareDefinition->addArgument(new Reference('eight_points_guzzle.logger'));
         $requestTimeMiddlewareDefinition->addArgument(new Reference('eight_points_guzzle.data_collector'));
         $requestTimeMiddlewareDefinition->setPublic(true);
         $container->setDefinition($requestTimeMiddlewareDefinitionName, $requestTimeMiddlewareDefinition);
 
         $requestTimeExpression = new Expression(sprintf("service('%s')", $requestTimeMiddlewareDefinitionName));
-        $handler->addMethodCall('push', [$requestTimeExpression, 'request_time']);
+        $handler->addMethodCall('after', ['log', $requestTimeExpression, 'request_time']);
     }
 
     /**

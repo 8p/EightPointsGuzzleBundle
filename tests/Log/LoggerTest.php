@@ -156,4 +156,19 @@ class LoggerTest extends TestCase
         );
         $this->assertEquals('body', $logResponse->getBody());
     }
+
+    /**
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::addTransferTimeByRequestId
+     */
+    public function testTransferTimeByRequestId()
+    {
+        $logger = new Logger();
+        $logger->log(LogLevel::INFO, 'message');
+
+        $requestId = array_keys($logger->getMessages())[0];
+        $logger->addTransferTimeByRequestId($requestId, time());
+        $message = $logger->getMessages()[$requestId];
+
+        $this->assertNotNull($message->getTransferTime());
+    }
 }

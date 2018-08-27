@@ -57,6 +57,8 @@ class HttpDataCollectorTest extends TestCase
                      ->method('getMessages')
                      ->willReturn(['test message']);
 
+        $this->logger->expects($this->once())->method('clear');
+
         $collector = new HttpDataCollector($this->logger);
         $response  = $this->getMockBuilder(Response::class)
                           ->getMock();
@@ -209,6 +211,7 @@ class HttpDataCollectorTest extends TestCase
      * Test Error Count
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getErrorCount
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getErrorsByType
      */
     public function testErrorCount()
     {
@@ -241,6 +244,9 @@ class HttpDataCollectorTest extends TestCase
         $collector->collect($request, $response);
 
         $this->assertEquals(1, $collector->getErrorCount());
+
+        $errorLog = $collector->getErrorsByType(LogLevel::ERROR);
+        $this->assertEquals($errorLog[0]->getLevel(), LogLevel::ERROR);
     }
 
     /**

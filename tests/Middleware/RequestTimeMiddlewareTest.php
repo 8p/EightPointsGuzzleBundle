@@ -3,7 +3,7 @@
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Middleware;
 
 use EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
-use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
+use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Middleware\RequestTimeMiddleware;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Request;
@@ -18,7 +18,7 @@ class RequestTimeMiddlewareTest extends TestCase
 
     public function setUp()
     {
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+        $this->logger = $this->getMockBuilder(Logger::class)
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -32,10 +32,11 @@ class RequestTimeMiddlewareTest extends TestCase
 
         $requestTimeMiddleware = new RequestTimeMiddleware($this->logger, $httpDataCollector);
         $invokeResult = $requestTimeMiddleware($handler);
-        $invokeResult($request, []);
+        $invokeResult($request, ['request_id' => uniqid()]);
 
         $lastOptions = $handler->getLastOptions();
         $this->assertArrayHasKey('on_stats', $lastOptions);
+        $this->assertNotNull($lastOptions['request_id']);
         $this->assertInstanceOf(\Closure::class, $lastOptions['on_stats']);
 
         $transferStats = new TransferStats($request, null, 3.14);

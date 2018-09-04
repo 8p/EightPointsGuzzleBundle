@@ -242,6 +242,7 @@ services:
 - [Disable throwing exceptions on HTTP errors (4xx and 5xx responses)](src/Resources/doc/disable-exception-on-http-error.md)
 - [Intercept request and response](src/Resources/doc/intercept-request-and-response.md)
 - [Autowiring Clients](src/Resources/doc/autowiring-clients.md)
+- [How to create a single-file plugin](src/Resources/doc/how-to-create-a-single-file-plugin.md)
 
 ## License
 This bundle is released under the [MIT license](src/Resources/meta/LICENSE)

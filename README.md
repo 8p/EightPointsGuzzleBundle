@@ -245,7 +245,7 @@ services:
 - [How to create a single-file plugin](src/Resources/doc/how-to-create-a-single-file-plugin.md)
 
 ## License
-This bundle is released under the [MIT license](src/Resources/meta/LICENSE)
+This bundle is released under the [MIT license](LICENSE)
 
 [1]: http://guzzlephp.org/
 [2]: http://semver.org/

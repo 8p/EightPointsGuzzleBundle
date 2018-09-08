@@ -48,5 +48,16 @@ public function randomMethod(array $config, LoggerInterface $logger) : bool
 }
 ```
 
+## Testing
+### PHPUnit
+Though we have Travis running tests on every push you do, it would be nice to make sure you run PHPUnit locally before push to upstream.  
+The easiest way to run tests is to execute this in project root directory - `vendor/bin/phpunit`
+### Infection PHP
+For now we can not include Infection PHP in the repo, because some Symfony 2.7 dependencies are not compatible with Infection. 
+But you can always install Infection globally and run it for project with:
+- `composer global require infection/infection`
+- update your $PATH variable in `~/.bash_profile` to contain path to composer binary files `~/.composer/vendor/bin`. Beware for some systems path might be slightly different!
+- `infection --threads=4` in the project root
+
 [1]: https://github.com/8p/EightPointsGuzzleBundle/issues
 [2]: https://symfony.com/doc/current/contributing/code/standards.html

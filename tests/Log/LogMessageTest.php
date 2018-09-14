@@ -11,6 +11,8 @@ class LogMessageTest extends TestCase
     {
         $message = 'message';
         $logMessage = new LogMessage($message);
+        $logMessage->setTransferTime(time());
         $this->assertEquals($logMessage->getMessage(), $message);
+        $this->assertNotNull($logMessage->getTransferTime());
     }
 }

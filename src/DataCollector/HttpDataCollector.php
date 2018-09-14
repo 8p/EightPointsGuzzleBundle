@@ -110,11 +110,24 @@ class HttpDataCollector extends DataCollector
      *
      * @return integer
      */
-    public function getErrorCount() : int
+    public function getErrorCount(): int
     {
-        return count(array_filter($this->getMessages(), function (LogMessage $message) {
-            return $message->getLevel() === LogLevel::ERROR;
-        }));
+        return count($this->getErrorsByType(LogLevel::ERROR));
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return array
+     */
+    public function getErrorsByType(string $type): array
+    {
+        return array_filter(
+            $this->getMessages(),
+            function (LogMessage $message) use ($type) {
+                return $message->getLevel() === $type;
+            }
+        );
     }
 
     /**
@@ -160,10 +173,7 @@ class HttpDataCollector extends DataCollector
      */
     public final function getIconColor() : string
     {
-        if (version_compare(Kernel::VERSION, '2.8.0', '>=')) {
-            return $this->data['iconColor'] = '#AAAAAA';
-        }
-
-        return $this->data['iconColor'] = '#3F3F3F';
+        $iconColor = version_compare(Kernel::VERSION, '2.8.0', '>=') ? '#AAAAAA' : '#3F3F3F';
+        return $this->data['iconColor'] = $iconColor;
     }
 }

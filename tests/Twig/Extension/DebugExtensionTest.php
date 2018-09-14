@@ -41,4 +41,9 @@ class DebugExtensionTest extends TestCase
         $this->assertInternalType('string', $result);
         $this->assertContains('randomTestValue', $result);
     }
+
+    public function testGetName()
+    {
+        $this->assertEquals((new DebugExtension())->getName(), DebugExtension::class);
+    }
 }

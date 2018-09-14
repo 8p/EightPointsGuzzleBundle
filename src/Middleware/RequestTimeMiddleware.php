@@ -33,10 +33,7 @@ class RequestTimeMiddleware
      */
     public function __invoke(callable $handler) : \Closure
     {
-        return function (
-            RequestInterface $request,
-            array $options
-        ) use ($handler) {
+        return function (RequestInterface $request, array $options) use ($handler) {
             $options['on_stats'] = $this->getOnStatsCallback(
                 isset($options['on_stats']) ? $options['on_stats'] : null,
                 isset($options['request_id']) ? $options['request_id'] : null

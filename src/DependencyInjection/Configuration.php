@@ -86,6 +86,15 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                     ->booleanNode('lazy')->defaultValue(false)->end()
+                    ->scalarNode('handler')
+                        ->defaultValue(null)
+                        ->validate()
+                            ->ifTrue(function ($v) {
+                                return $v !== null && (!is_string($v) || !class_exists($v));
+                            })
+                            ->thenInvalid('handler must be a valid FQCN for a loaded class')
+                        ->end()
+                    ->end()
                     ->arrayNode('options')
                         ->validate()
                             ->ifTrue(function ($options) {

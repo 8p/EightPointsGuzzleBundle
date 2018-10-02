@@ -6,6 +6,9 @@ use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -36,6 +39,20 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.client.test_api_with_custom_class'));
         $definition = $container->getDefinition('eight_points_guzzle.client.test_api_with_custom_class');
         $this->assertSame('CustomGuzzleClass', $definition->getClass());
+
+
+        // test Client with custom handler
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.client.test_api_with_custom_handler'));
+        /** @var ClientInterface $client */
+        $client = $container->get('eight_points_guzzle.client.test_api_with_custom_handler');
+        $this->assertInstanceOf(HandlerStack::class, $client->getConfig('handler'));
+
+        // The handler property doesn't have a setter so we have to use reflection to get to its value
+        $handlerStackRefl = new \ReflectionClass($client->getConfig('handler'));
+        $handler = $handlerStackRefl->getProperty('handler');
+        $handler->setAccessible(true);
+
+        $this->assertInstanceOf(MockHandler::class, $handler->getValue($client->getConfig('handler')));
     }
 
     public function testOverwriteHttpClientClass()
@@ -338,6 +355,9 @@ class EightPointsGuzzleExtensionTest extends TestCase
                     ],
                     'test_api_with_custom_class' => [
                         'class' => 'CustomGuzzleClass',
+                    ],
+                    'test_api_with_custom_handler' => [
+                        'handler' => 'GuzzleHttp\Handler\MockHandler',
                     ],
                 ],
             ],

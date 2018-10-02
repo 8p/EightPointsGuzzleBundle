@@ -125,8 +125,19 @@ class EightPointsGuzzleExtension extends Extension
 
         $handler = new Definition(HandlerStack::class);
         $handler->setFactory([HandlerStack::class, 'create']);
+        if (isset($options['handler'])) {
+
+            $handlerServiceName = sprintf('eight_points_guzzle.handler.%s', $clientName);
+            $handlerService = new Definition($options['handler']);
+            $container->setDefinition($handlerServiceName, $handlerService);
+
+            $handler->addArgument($handlerService);
+        }
         $handler->setPublic(true);
         $handler->setLazy($options['lazy']);
+
+        $handlerStackServiceName = sprintf('eight_points_guzzle.handler_stack.%s', $clientName);
+        $container->setDefinition($handlerStackServiceName, $handler);
 
         if ($logging) {
             $this->defineLogMiddleware($container, $handler, $clientName);

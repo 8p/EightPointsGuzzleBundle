@@ -78,6 +78,9 @@ eight_points_guzzle:
     clients:
         api_payment:
             base_url: "http://api.domain.tld"
+            
+            # NOTE: This option makes Guzzle Client as lazy (https://symfony.com/doc/master/service_container/lazy_services.html)
+            lazy: true # Default `false`
 
             # guzzle client options (full description here: https://guzzle.readthedocs.org/en/latest/request-options.html)
             # NOTE: "headers" option is not accepted here as it is provided as described above.

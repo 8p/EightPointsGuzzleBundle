@@ -91,6 +91,7 @@ class EightPointsGuzzleExtension extends Extension
             $client = new Definition($options['class']);
             $client->addArgument($argument);
             $client->setPublic(true);
+            $client->setLazy($options['lazy']);
 
             // set service name based on client name
             $serviceName = sprintf('%s.client.%s', $this->getAlias(), $name);
@@ -122,6 +123,7 @@ class EightPointsGuzzleExtension extends Extension
         $handler = new Definition(HandlerStack::class);
         $handler->setFactory([HandlerStack::class, 'create']);
         $handler->setPublic(true);
+        $handler->setLazy($options['lazy']);
 
         if ($logging) {
             $this->defineLogMiddleware($container, $handler, $clientName);

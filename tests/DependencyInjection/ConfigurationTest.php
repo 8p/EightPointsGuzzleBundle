@@ -16,6 +16,7 @@ class ConfigurationTest extends TestCase
                 'clients' => [
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
+                        'lazy' => false,
                         'options' => [
                             'auth' => [
                                 'user',
@@ -68,6 +69,7 @@ class ConfigurationTest extends TestCase
                 'clients' => [
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
+                        'lazy' => false,
                         'options' => [
                             'auth' => [
                                 'user',
@@ -147,6 +149,7 @@ class ConfigurationTest extends TestCase
                 'clients' => [
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
+                        'lazy' => false,
                         'options' => [
                             'auth' => [
                                 'user',

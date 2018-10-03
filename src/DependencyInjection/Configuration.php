@@ -84,6 +84,7 @@ class Configuration implements ConfigurationInterface
                             ->thenInvalid('base_url can be: string')
                         ->end()
                     ->end()
+                    ->booleanNode('lazy')->defaultValue(false)->end()
                     ->arrayNode('options')
                         ->validate()
                             ->ifTrue(function ($options) {

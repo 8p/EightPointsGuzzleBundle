@@ -50,6 +50,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->append($this->createClientsNode())
                     ->booleanNode('logging')->defaultValue($this->debug)->end()
+                    ->booleanNode('profiling')->defaultValue($this->debug)->end()
                     ->end()
                 ->end();
 

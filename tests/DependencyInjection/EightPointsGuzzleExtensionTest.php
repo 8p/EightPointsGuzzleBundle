@@ -13,6 +13,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Client;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 class EightPointsGuzzleExtensionTest extends TestCase
 {
@@ -318,6 +319,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $container->setParameter('kernel.debug', true);
         $container->set('event_dispatcher', $this->createMock(EventDispatcherInterface::class));
         $container->set('logger', $this->createMock(LoggerInterface::class));
+        $container->set('debug.stopwatch', $this->createMock(Stopwatch::class));
 
         return $container;
     }

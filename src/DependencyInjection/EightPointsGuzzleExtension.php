@@ -3,6 +3,7 @@
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
 use EightPoints\Bundle\GuzzleBundle\Twig\Extension\DebugExtension;
+use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
@@ -56,6 +57,7 @@ class EightPointsGuzzleExtension extends Extension
         $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'), $this->plugins);
         $config        = $this->processConfiguration($configuration, $configs);
         $logging       = $config['logging'] === true;
+        $profiling     = $config['profiling'] === true;
 
         foreach ($this->plugins as $plugin) {
             $container->addObjectResource(new \ReflectionClass(get_class($plugin)));
@@ -74,7 +76,7 @@ class EightPointsGuzzleExtension extends Extension
         foreach ($config['clients'] as $name => $options) {
             $argument = [
                 'base_uri' => $options['base_url'],
-                'handler'  => $this->createHandler($container, $name, $options, $logging)
+                'handler'  => $this->createHandler($container, $name, $options, $logging, $profiling)
             ];
 
             // if present, add default options to the constructor argument for the Guzzle client
@@ -104,13 +106,14 @@ class EightPointsGuzzleExtension extends Extension
      * @param string $clientName
      * @param array $options
      * @param bool $logging
+     * @param bool $profiling
      *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
      *
      * @return \Symfony\Component\DependencyInjection\Definition
      */
-    protected function createHandler(ContainerBuilder $container, string $clientName, array $options, bool $logging) : Definition
+    protected function createHandler(ContainerBuilder $container, string $clientName, array $options, bool $logging, bool $profiling) : Definition
     {
         // Event Dispatching service
         $eventServiceName = sprintf('eight_points_guzzle.middleware.event_dispatch.%s', $clientName);
@@ -129,6 +132,10 @@ class EightPointsGuzzleExtension extends Extension
             $this->defineLogMiddleware($container, $handler, $clientName);
             $this->defineRequestTimeMiddleware($container, $handler, $clientName);
             $this->attachSymfonyLogMiddlewareToHandler($handler);
+        }
+
+        if ($profiling) {
+            $this->defineProfileMiddleware($container, $handler, $clientName);
         }
 
         foreach ($this->plugins as $plugin) {
@@ -249,6 +256,31 @@ class EightPointsGuzzleExtension extends Extension
 
         $logExpression = new Expression(sprintf("service('%s').log()", $logMiddlewareDefinitionName));
         $handler->addMethodCall('push', [$logExpression, 'log']);
+    }
+
+    /**
+     * Define Profile Middleware for client
+     *
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\Definition $handler
+     * @param string $clientName
+     *
+     * @return void
+     */
+    protected function defineProfileMiddleware(ContainerBuilder $container, Definition $handler, string $clientName)
+    {
+        if (!class_exists('Symfony\Component\Stopwatch\Stopwatch')) {
+            throw new RuntimeException('Eightpoint GuzzleBundle profiling requires "symfony/stopwatch" package');
+        }
+
+        $profileMiddlewareDefinitionName = sprintf('eight_points_guzzle.middleware.profile.%s', $clientName);
+        $profileMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.profile.class%');
+        $profileMiddlewareDefinition->addArgument(new Reference('debug.stopwatch'));
+        $profileMiddlewareDefinition->setPublic(false);
+        $container->setDefinition($profileMiddlewareDefinitionName, $profileMiddlewareDefinition);
+
+        $profileExpression = new Expression(sprintf("service('%s').profile()", $profileMiddlewareDefinitionName));
+        $handler->addMethodCall('push', [$profileExpression, 'profile']);
     }
 
     /**

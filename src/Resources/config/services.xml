@@ -13,6 +13,7 @@
 
         <!-- middlewares -->
         <parameter key="eight_points_guzzle.middleware.log.class">EightPoints\Bundle\GuzzleBundle\Middleware\LogMiddleware</parameter>
+        <parameter key="eight_points_guzzle.middleware.profile.class">EightPoints\Bundle\GuzzleBundle\Middleware\ProfileMiddleware</parameter>
         <parameter key="eight_points_guzzle.middleware.event_dispatcher.class">EightPoints\Bundle\GuzzleBundle\Middleware\EventDispatchMiddleware</parameter>
         <parameter key="eight_points_guzzle.middleware.request_time.class">EightPoints\Bundle\GuzzleBundle\Middleware\RequestTimeMiddleware</parameter>
         <parameter key="eight_points_guzzle.middleware.symfony_log.class">EightPoints\Bundle\GuzzleBundle\Middleware\SymfonyLogMiddleware</parameter>

@@ -59,7 +59,7 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
         $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
-        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false]), $processedConfig);
+        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false, 'profiling' => false]), $processedConfig);
     }
 
     public function testSingleClientConfigWithCertAsArray()
@@ -110,7 +110,7 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
         $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
-        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false]), $processedConfig);
+        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false, 'profiling' => false]), $processedConfig);
     }
 
     public function testInvalidCertConfiguration()
@@ -178,6 +178,7 @@ class ConfigurationTest extends TestCase
 
         $this->assertEquals(array_merge_recursive($config['eight_points_guzzle'], [
             'logging' => false,
+            'profiling' => false,
             'clients' => ['test_client' => ['options' => ['proxy' => ['http' => 'http://proxy.org']]]]
         ]), $processedConfig);
     }

@@ -17,6 +17,7 @@ class ConfigurationTest extends TestCase
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
                         'lazy' => false,
+                        'handler' => null,
                         'options' => [
                             'auth' => [
                                 'user',
@@ -70,6 +71,7 @@ class ConfigurationTest extends TestCase
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
                         'lazy' => false,
+                        'handler' => null,
                         'options' => [
                             'auth' => [
                                 'user',
@@ -150,6 +152,7 @@ class ConfigurationTest extends TestCase
                     'test_client' => [
                         'base_url' => 'http://baseurl/path',
                         'lazy' => false,
+                        'handler' => null,
                         'options' => [
                             'auth' => [
                                 'user',
@@ -234,6 +237,44 @@ class ConfigurationTest extends TestCase
         $this->assertCount(1, $curlConfig);
         $this->assertArrayHasKey(CURLOPT_SSLVERSION, $curlConfig);
         $this->assertEquals($curlConfig[CURLOPT_SSLVERSION], CURL_HTTP_VERSION_1_1);
+    }
+
+    public function testInvalidCustomHandlerOption()
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('handler must be a valid FQCN for a loaded class');
+
+        $config = [
+            'eight_points_guzzle' => [
+                'clients' => [
+                    'test_client' => [
+                        'handler' => 'GuzzleHttp\Handler\TestHandler',
+                    ],
+                ],
+            ],
+        ];
+
+        $processor = new Processor();
+        $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
+    }
+
+    public function testCustomHandlerOption()
+    {
+        $config = [
+            'eight_points_guzzle' => [
+                'clients' => [
+                    'test_client' => [
+                        'handler' => 'GuzzleHttp\Handler\MockHandler',
+                    ],
+                ],
+            ],
+        ];
+
+        $processor = new Processor();
+        $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
+
+        $this->assertTrue(isset($processedConfig['clients']['test_client']['handler']));
+        $this->assertEquals('GuzzleHttp\Handler\MockHandler', $processedConfig['clients']['test_client']['handler']);
     }
 
     /**

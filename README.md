@@ -81,6 +81,9 @@ eight_points_guzzle:
             
             # NOTE: This option makes Guzzle Client as lazy (https://symfony.com/doc/master/service_container/lazy_services.html)
             lazy: true # Default `false`
+            
+            # Handler class to be used for the client
+            handler: 'GuzzleHttp\Handler\MockHandler'
 
             # guzzle client options (full description here: https://guzzle.readthedocs.org/en/latest/request-options.html)
             # NOTE: "headers" option is not accepted here as it is provided as described above.
@@ -227,6 +230,16 @@ have any dependency to guzzle in your service name.
 services:
    crm.client:
        alias: eight_points_guzzle.client.api_crm
+```
+
+Use Guzzle MockHandler in tests :
+If you want to mock api calls, you can force the clients to use the Guzzle MockHandler instead of the default one.
+``` yaml
+eight_points_guzzle:
+    clients:
+        api_payment:
+            base_url: "http://api.domain.tld"
+            handler: 'GuzzleHttp\Handler\MockHandler'
 ```
 
 ----

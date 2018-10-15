@@ -60,7 +60,7 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
         $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
-        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false, 'profiling' => false]), $processedConfig);
+        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false, 'profiling' => false, 'slow_response_time' => 0]), $processedConfig);
     }
 
     public function testSingleClientConfigWithCertAsArray()
@@ -112,7 +112,7 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
         $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
-        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false, 'profiling' => false]), $processedConfig);
+        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false, 'profiling' => false, 'slow_response_time' => 0]), $processedConfig);
     }
 
     public function testInvalidCertConfiguration()
@@ -182,6 +182,7 @@ class ConfigurationTest extends TestCase
         $this->assertEquals(array_merge_recursive($config['eight_points_guzzle'], [
             'logging' => false,
             'profiling' => false,
+            'slow_response_time' => 0,
             'clients' => ['test_client' => ['options' => ['proxy' => ['http' => 'http://proxy.org']]]]
         ]), $processedConfig);
     }
@@ -302,6 +303,21 @@ class ConfigurationTest extends TestCase
             $this->assertArrayHasKey($key, $processedConfig['clients']['test_client']['options']);
             $this->assertEquals($expects !== null ? $expects[$key] : $value, $processedConfig['clients']['test_client']['options'][$key]);
         }
+    }
+
+    public function testSlowRequestTimeout()
+    {
+        $config = [
+            'eight_points_guzzle' => [
+                'slow_response_time' => 1000,
+                'clients' => []
+            ]
+        ];
+
+        $processor = new Processor();
+        $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
+
+        $this->assertEquals(1000, $processedConfig['slow_response_time']);
     }
 
     /**

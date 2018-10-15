@@ -51,6 +51,7 @@ class Configuration implements ConfigurationInterface
                     ->append($this->createClientsNode())
                     ->booleanNode('logging')->defaultValue($this->debug)->end()
                     ->booleanNode('profiling')->defaultValue($this->debug)->end()
+                    ->integerNode('slow_response_time')->defaultValue(0)->end()
                     ->end()
                 ->end();
 

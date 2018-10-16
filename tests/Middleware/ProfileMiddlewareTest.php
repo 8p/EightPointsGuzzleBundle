@@ -2,17 +2,13 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Middleware;
 
-use EightPoints\Bundle\GuzzleBundle\Log\Logger;
-use EightPoints\Bundle\GuzzleBundle\Middleware\LogMiddleware;
 use EightPoints\Bundle\GuzzleBundle\Middleware\ProfileMiddleware;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Promise\PromiseInterface;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;
-use Psr\Log\LogLevel;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class ProfileMiddlewareTest extends TestCase

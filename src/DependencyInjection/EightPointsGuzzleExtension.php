@@ -67,7 +67,7 @@ class EightPointsGuzzleExtension extends Extension
         if ($logging) {
             $this->defineTwigDebugExtension($container);
             $this->defineLogger($container);
-            $this->defineDataCollector($container);
+            $this->defineDataCollector($container, $config['slow_response_time'] / 1000);
             $this->defineFormatter($container);
             $this->defineSymfonyLogFormatter($container);
             $this->defineSymfonyLogMiddleware($container);
@@ -192,15 +192,17 @@ class EightPointsGuzzleExtension extends Extension
      * Define Data Collector
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param float $slowResponseTime
      *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      *
      * @return void
      */
-    protected function defineDataCollector(ContainerBuilder $container)
+    protected function defineDataCollector(ContainerBuilder $container, float $slowResponseTime)
     {
         $dataCollectorDefinition = new Definition('%eight_points_guzzle.data_collector.class%');
         $dataCollectorDefinition->addArgument(new Reference('eight_points_guzzle.logger'));
+        $dataCollectorDefinition->addArgument($slowResponseTime);
         $dataCollectorDefinition->setPublic(false);
         $dataCollectorDefinition->addTag('data_collector', [
             'id' => 'eight_points_guzzle',

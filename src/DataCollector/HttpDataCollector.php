@@ -20,11 +20,20 @@ class HttpDataCollector extends DataCollector
     protected $logger;
 
     /**
-     * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
+     * @var float
      */
-    public function __construct(LoggerInterface $logger)
+    private $slowResponseTime;
+
+    /**
+     * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
+     * @param float|int $slowResponseTime
+     *
+     * @TODO: remove in v8, PR #228
+     */
+    public function __construct(LoggerInterface $logger, $slowResponseTime = 0)
     {
         $this->logger = $logger;
+        $this->slowResponseTime = $slowResponseTime;
 
         $this->reset();
     }
@@ -35,6 +44,20 @@ class HttpDataCollector extends DataCollector
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $messages = $this->logger->getMessages();
+
+        if ($this->slowResponseTime > 0) {
+            foreach ($messages as $message) {
+                if (!$message instanceof LogMessage) {
+                    continue;
+                }
+
+                if ($message->getTransferTime() >= $this->slowResponseTime) {
+                    $this->data['hasSlowResponse'] = true;
+                    break;
+                }
+            }
+        }
+
         $requestId = $request->getUri();
 
         // clear log to have only messages related to Symfony request context
@@ -64,6 +87,7 @@ class HttpDataCollector extends DataCollector
             'logs' => [],
             'callCount' => 0,
             'totalTime' => 0,
+            'hasSlowResponse' => false,
         ];
     }
 
@@ -138,6 +162,16 @@ class HttpDataCollector extends DataCollector
     public function getTotalTime() : float
     {
         return $this->data['totalTime'];
+    }
+
+    /**
+     * Check if there were any slow responses
+     *
+     * @return bool
+     */
+    public function hasSlowResponses() : bool
+    {
+        return $this->data['hasSlowResponse'];
     }
 
     /**

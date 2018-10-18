@@ -36,9 +36,10 @@ class HttpDataCollectorTest extends TestCase
         $collector = new HttpDataCollector($this->logger);
         $data      = unserialize($collector->serialize());
         $expected  = [
-            'logs'      => [],
-            'callCount' => 0,
-            'totalTime' => 0,
+            'logs'            => [],
+            'callCount'       => 0,
+            'totalTime'       => 0,
+            'hasSlowResponse' => false,
         ];
 
         $this->assertSame($expected, $data);
@@ -268,6 +269,42 @@ class HttpDataCollectorTest extends TestCase
     }
 
     /**
+     * Test Collecting Data
+     *
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::hasSlowResponses
+     *
+     * @dataProvider responseTimeProvider
+     */
+    public function testSlowResponses(float $responseTime, bool $expectedValue)
+    {
+        $message = new LogMessage('test message');
+        $message->setTransferTime($responseTime);
+
+        $this->logger->expects($this->once())
+            ->method('getMessages')
+            ->willReturn([$message]);
+
+        $collector = new HttpDataCollector($this->logger, 0.2);
+        $response  = $this->getMockBuilder(Response::class)
+            ->getMock();
+
+        $request = $this->getMockBuilder(Request::class)
+            ->getMock();
+
+        $request->expects($this->once())
+            ->method('getUri')
+            ->willReturn('someRandomUrlId');
+
+        $request->expects($this->once())
+            ->method('getPathInfo')
+            ->willReturn('id');
+
+        $collector->collect($request, $response);
+
+        $this->assertEquals($expectedValue, $collector->hasSlowResponses());
+    }
+
+    /**
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getIconColor
      */
     public function testGetIconColor()
@@ -276,5 +313,13 @@ class HttpDataCollectorTest extends TestCase
         $color = $collector->getIconColor();
 
         $this->assertRegExp('/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/', $color);
+    }
+
+    public function responseTimeProvider()
+    {
+        return [
+            'normal response' => [0.1, false],
+            'slow response' => [0.3, true],
+        ];
     }
 }

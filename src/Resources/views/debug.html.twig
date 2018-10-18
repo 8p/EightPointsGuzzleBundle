@@ -9,7 +9,7 @@
         {% else %}
             {% set color = 'green' %}
         {% endif %}
-        {% set status_color = collector.errorCount ? 'red' : 'normal' %}
+        {% set status_color = collector.errorCount ? 'red' : (collector.hasSlowResponses() ? 'yellow' : 'normal') %}
 
         {% set icon %}
             {# Symfony <2.8 toolbar #}
@@ -29,7 +29,7 @@
         {% set text %}
             <div class="sf-toolbar-info-piece">
                 <b>API Calls</b>
-                <span>{{ collector.callCount }}</span>
+                <span class="sf-toolbar-status">{{ collector.callCount }}</span>
             </div>
 
             <div class="sf-toolbar-info-piece">

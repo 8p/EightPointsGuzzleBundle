@@ -75,6 +75,9 @@ eight_points_guzzle:
     # (de)activate logging/profiler; default: %kernel.debug%
     logging: true
 
+    # configure when a response is considered to be slow (in ms); default 0 (disabled)
+    slow_response_time: 1000
+
     clients:
         api_payment:
             base_url: "http://api.domain.tld"

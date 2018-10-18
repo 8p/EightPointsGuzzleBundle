@@ -33,6 +33,7 @@ GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 ----
 
 ## Installation
+
 ##### Command line:
 To install this bundle, run the command below and you will get the latest version by [Packagist][3].
 
@@ -51,20 +52,16 @@ To use the newest (maybe unstable) version please add following into your compos
 }
 ```
 
-##### Using Symfony Flex
-Also it is possible to install bundle through [Symfony Flex][4]. It works for Symfony 3.3 and higher.  
-Bundle will be added to kernel file and default configuration will be created automatically.
-
-```bash
-composer config extra.symfony.allow-contrib true
-composer require eightpoints/guzzle-bundle
-```
-_Note: for symfony 3.3 and 3.4 you should install symfony/flex by yourself. From 4.0 it is included be default._
+_Note: we created [Symfony Flex Recipe][14] to speed up the installation of package._
 
 ----
 
 ## Usage
+
 ##### Load bundle in AppKernel.php:
+
+*Skip it for Symfony >= 4.0*
+
 ``` php
 new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle()
 ```
@@ -116,8 +113,8 @@ eight_points_guzzle:
 
         ...
 ```
-Allowed options: headers, allow_redirects, auth, query, curl, cert, connect_timeout, debug, decode_content, delay, form_params, multipart, sink, http_errors, expect, ssl_key, stream, synchronous, timeout, verify, cookies, proxy, version. All these settings are optional.  
-Description for all options and examples of parameters can be found [here][5].
+
+Open [Configuration Reference](src/Resources/doc/configuration-reference.md) page to see the complete list of allowed options.
 
 ##### Install assets _(if it's not performed automatically)_:
 ``` bash
@@ -129,6 +126,7 @@ app/console assets:install
 ```
 
 Using services in controller (eight_points_guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
+
 ``` php
 /** @var \GuzzleHttp\Client $client */
 $client   = $this->get('eight_points_guzzle.client.api_crm');
@@ -180,11 +178,11 @@ foreach ($contents as $class => $envs) {
 ```
 
 ### Known and Supported Plugins
-- [gregurco/GuzzleBundleWssePlugin][6]
-- [gregurco/GuzzleBundleCachePlugin][7]
-- [gregurco/GuzzleBundleOAuth2Plugin][8]
-- [neirda24/GuzzleBundleHeaderForwardPlugin][13]
-- [neirda24/GuzzleBundleHeaderDisableCachePlugin][14]
+- [gregurco/GuzzleBundleWssePlugin][5]
+- [gregurco/GuzzleBundleCachePlugin][6]
+- [gregurco/GuzzleBundleOAuth2Plugin][7]
+- [neirda24/GuzzleBundleHeaderForwardPlugin][12]
+- [neirda24/GuzzleBundleHeaderDisableCachePlugin][13]
 
 ----
 
@@ -221,7 +219,7 @@ Example:
 [2017-12-01 00:00:00] eight_points_guzzle.INFO: GET http://api.domain.tld 200
 ```
 
-You can change message format by overriding `eight_points_guzzle.symfony_log_formatter.pattern` parameter. See allowed variables [here][9].
+You can change message format by overriding `eight_points_guzzle.symfony_log_formatter.pattern` parameter. See allowed variables [here][8].
 
 ----
 
@@ -250,13 +248,14 @@ eight_points_guzzle:
 ## Contributing
 👍 If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
 
-<img src="/src/Resources/doc/img/icon_slack.png" alt="Slack" title="Slack" style="width: 23px; margin-right: -4px;" /> Join our Slack channel on [Symfony Devs][10] for discussions, questions and more: [#8p-guzzlebundle][11].
+<img src="/src/Resources/doc/img/icon_slack.png" alt="Slack" title="Slack" style="width: 23px; margin-right: -4px;" /> Join our Slack channel on [Symfony Devs][9] for discussions, questions and more: [#8p-guzzlebundle][10].
 
-🎉 Thanks to the [contributors][12] who participated in this project.
+🎉 Thanks to the [contributors][11] who participated in this project.
 
 ----
 
 ## Learn more
+- [Configuration Reference](src/Resources/doc/configuration-reference.md)
 - [How to redefine class used for clients](src/Resources/doc/redefine-client-class.md)
 - [Disable throwing exceptions on HTTP errors (4xx and 5xx responses)](src/Resources/doc/disable-exception-on-http-error.md)
 - [Intercept request and response](src/Resources/doc/intercept-request-and-response.md)
@@ -270,15 +269,13 @@ This bundle is released under the [MIT license](LICENSE)
 [2]: http://semver.org/
 [3]: https://packagist.org/packages/eightpoints/guzzle-bundle
 [4]: https://github.com/symfony/flex
-[5]: http://docs.guzzlephp.org/en/latest/request-options.html
-[6]: https://github.com/gregurco/GuzzleBundleWssePlugin
-[7]: https://github.com/gregurco/GuzzleBundleCachePlugin
-[8]: https://github.com/gregurco/GuzzleBundleOAuth2Plugin
-[9]: https://github.com/guzzle/guzzle/blob/6.3.0/src/MessageFormatter.php#L14
-[10]: https://symfony.com/slack-invite
-[11]: https://symfony-devs.slack.com/messages/C8LUKU6JD
-[12]: https://github.com/8p/EightPointsGuzzleBundle/graphs/contributors
-[13]: https://github.com/Neirda24/GuzzleBundleHeaderForwardPlugin
-[14]: https://github.com/Neirda24/GuzzleBundleHeaderDisableCachePlugin
-
-
+[5]: https://github.com/gregurco/GuzzleBundleWssePlugin
+[6]: https://github.com/gregurco/GuzzleBundleCachePlugin
+[7]: https://github.com/gregurco/GuzzleBundleOAuth2Plugin
+[8]: https://github.com/guzzle/guzzle/blob/6.3.0/src/MessageFormatter.php#L14
+[9]: https://symfony.com/slack-invite
+[10]: https://symfony-devs.slack.com/messages/C8LUKU6JD
+[11]: https://github.com/8p/EightPointsGuzzleBundle/graphs/contributors
+[12]: https://github.com/Neirda24/GuzzleBundleHeaderForwardPlugin
+[13]: https://github.com/Neirda24/GuzzleBundleHeaderDisableCachePlugin
+[14]: https://github.com/symfony/recipes-contrib/tree/master/eightpoints/guzzle-bundle

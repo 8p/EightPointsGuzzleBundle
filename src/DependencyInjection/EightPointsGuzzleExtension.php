@@ -289,7 +289,7 @@ class EightPointsGuzzleExtension extends Extension
         $profileMiddlewareDefinitionName = sprintf('eight_points_guzzle.middleware.profile.%s', $clientName);
         $profileMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.profile.class%');
         $profileMiddlewareDefinition->addArgument(new Reference('debug.stopwatch'));
-        $profileMiddlewareDefinition->setPublic(false);
+        $profileMiddlewareDefinition->setPublic(true);
         $container->setDefinition($profileMiddlewareDefinitionName, $profileMiddlewareDefinition);
 
         $profileExpression = new Expression(sprintf("service('%s').profile()", $profileMiddlewareDefinitionName));

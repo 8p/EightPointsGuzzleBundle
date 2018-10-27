@@ -38,7 +38,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         // test Client with custom class
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.client.test_api_with_custom_class'));
         $definition = $container->getDefinition('eight_points_guzzle.client.test_api_with_custom_class');
-        $this->assertSame('CustomGuzzleClass', $definition->getClass());
+        $this->assertSame(CustomClient::class, $definition->getClass());
 
 
         // test Client with custom handler
@@ -328,6 +328,22 @@ class EightPointsGuzzleExtensionTest extends TestCase
     }
 
     /**
+     * @see https://github.com/8p/EightPointsGuzzleBundle/issues/235
+     */
+    public function testCompilation()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($this->getConfigs(), $container);
+
+        $container->compile();
+
+        $this->assertInstanceOf(Client::class, $container->get('eight_points_guzzle.client.test_api'));
+        $this->assertInstanceOf(CustomClient::class, $container->get('eight_points_guzzle.client.test_api_with_custom_class'));
+        $this->assertInstanceOf(Client::class, $container->get('eight_points_guzzle.client.test_api_with_custom_handler'));
+    }
+
+    /**
      * @return \Symfony\Component\DependencyInjection\ContainerBuilder
      */
     private function createContainer() : ContainerBuilder
@@ -354,7 +370,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
                         'plugin' => [],
                     ],
                     'test_api_with_custom_class' => [
-                        'class' => 'CustomGuzzleClass',
+                        'class' => CustomClient::class,
                     ],
                     'test_api_with_custom_handler' => [
                         'handler' => 'GuzzleHttp\Handler\MockHandler',
@@ -385,3 +401,5 @@ class EightPointsGuzzleExtensionTest extends TestCase
         });
     }
 }
+
+class CustomClient extends Client {}

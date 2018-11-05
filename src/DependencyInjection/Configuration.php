@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
+use function method_exists;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -45,15 +46,23 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder() : TreeBuilder
     {
-        $builder = new TreeBuilder();
-        $builder->root($this->alias)
-                ->children()
-                    ->append($this->createClientsNode())
-                    ->booleanNode('logging')->defaultValue($this->debug)->end()
-                    ->booleanNode('profiling')->defaultValue($this->debug)->end()
-                    ->integerNode('slow_response_time')->defaultValue(0)->end()
-                    ->end()
-                ->end();
+        $builder = new TreeBuilder($this->alias);
+
+        if (method_exists($builder, 'getRootNode')) {
+            $root = $builder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $root = $builder->root($this->alias);
+        }
+
+        $root
+            ->children()
+                ->append($this->createClientsNode())
+                ->booleanNode('logging')->defaultValue($this->debug)->end()
+                ->booleanNode('profiling')->defaultValue($this->debug)->end()
+                ->integerNode('slow_response_time')->defaultValue(0)->end()
+                ->end()
+            ->end();
 
         return $builder;
     }
@@ -67,10 +76,15 @@ class Configuration implements ConfigurationInterface
      */
     private function createClientsNode() : ArrayNodeDefinition
     {
-        $builder = new TreeBuilder();
+        $builder = new TreeBuilder('clients');
 
         /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node */
-        $node = $builder->root('clients');
+        if (method_exists($builder, 'getRootNode')) {
+            $node = $builder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $node = $builder->root('clients');
+        }
 
         $nodeChildren = $node->useAttributeAsKey('name')
             ->prototype('array')

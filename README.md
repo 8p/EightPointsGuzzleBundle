@@ -256,6 +256,7 @@ eight_points_guzzle:
 
 ## Learn more
 - [Configuration Reference](src/Resources/doc/configuration-reference.md)
+- [Environment variables integration](src/Resources/doc/environment-variables-integration.md)
 - [How to redefine class used for clients](src/Resources/doc/redefine-client-class.md)
 - [Disable throwing exceptions on HTTP errors (4xx and 5xx responses)](src/Resources/doc/disable-exception-on-http-error.md)
 - [Intercept request and response](src/Resources/doc/intercept-request-and-response.md)

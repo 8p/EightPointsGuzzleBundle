@@ -282,10 +282,6 @@ class EightPointsGuzzleExtension extends Extension
      */
     protected function defineProfileMiddleware(ContainerBuilder $container, Definition $handler, string $clientName)
     {
-        if (!class_exists('Symfony\Component\Stopwatch\Stopwatch')) {
-            throw new RuntimeException('Eightpoint GuzzleBundle profiling requires "symfony/stopwatch" package');
-        }
-
         $profileMiddlewareDefinitionName = sprintf('eight_points_guzzle.middleware.profile.%s', $clientName);
         $profileMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.profile.class%');
         $profileMiddlewareDefinition->addArgument(new Reference('debug.stopwatch'));

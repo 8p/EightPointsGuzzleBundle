@@ -26,7 +26,7 @@ class HttpDataCollector extends DataCollector
 
     /**
      * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
-     * @param float|int $slowResponseTime
+     * @param float|int $slowResponseTime Time in seconds
      *
      * @TODO: remove in v8, PR #228
      */

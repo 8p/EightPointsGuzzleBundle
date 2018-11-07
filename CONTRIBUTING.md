@@ -20,6 +20,7 @@ If you would like to implement a new feature, please submit an issue with a prop
 
 
 ## Coding Standards
+
 ### General rule
 When contributing code to this bundle, you must follow the [Symfony coding standards][2]. To make a long story short, here is the golden rule: Imitate the existing Symfony code.
 Most open-source Bundles and libraries used by Symfony also follow the same guidelines, and you should too.  
@@ -49,9 +50,11 @@ public function randomMethod(array $config, LoggerInterface $logger) : bool
 ```
 
 ## Testing
+
 ### PHPUnit
 Though we have Travis running tests on every push you do, it would be nice to make sure you run PHPUnit locally before push to upstream.  
-The easiest way to run tests is to execute this in project root directory - `vendor/bin/phpunit`
+The easiest way to run tests is to execute this in project root directory - `vendor/bin/simple-phpunit`
+
 ### Infection PHP
 For now we can not include Infection PHP in the repo, because some Symfony 2.7 dependencies are not compatible with Infection. 
 But you can always install Infection globally and run it for project with:

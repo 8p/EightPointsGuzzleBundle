@@ -89,6 +89,45 @@ class HttpDataCollectorTest extends TestCase
     }
 
     /**
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::collect
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogs
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogGroup
+     */
+    public function testCollectWithSlowRequests()
+    {
+        $slowLogMessage = $this->getMockBuilder(LogMessage::class)
+                               ->disableOriginalConstructor()
+                               ->getMock();
+
+        $slowLogMessage->expects($this->once())
+                       ->method('getTransferTime')
+                       ->willReturn(2);
+
+        $this->logger->expects($this->once())
+                     ->method('getMessages')
+                     ->willReturn([$slowLogMessage]);
+
+        $this->logger->expects($this->once())->method('clear');
+
+        $collector = new HttpDataCollector($this->logger, 1);
+
+        $response  = $this->getMockBuilder(Response::class)->getMock();
+        $request = $this->getMockBuilder(Request::class)->getMock();
+
+        $request->expects($this->once())
+                ->method('getUri')
+                ->willReturn('someRandomUrlId');
+
+        $request->expects($this->once())
+                ->method('getPathInfo')
+                ->willReturn('id');
+
+        $collector->collect($request, $response);
+
+        $this->assertTrue($collector->hasSlowResponses());
+    }
+
+    /**
      * Test Collector Name
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getName

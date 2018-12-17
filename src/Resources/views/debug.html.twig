@@ -46,19 +46,21 @@
     {% endif %}
 {% endblock %}
 
-
 {% block menu %}
-    <span class="label">
+    <span class="label {{ collector.callCount ? '' : 'disabled' }}">
         <span class="icon">
             {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
         </span>
+
         <strong>Guzzle</strong>
-        <span class="count">
-            <span>{{ collector.callCount }}</span>
-        </span>
+
+        {% if collector.callCount > 0 %}
+            <span class="count">
+                <span>{{ collector.callCount }}</span>
+            </span>
+        {% endif %}
     </span>
 {% endblock %}
-
 
 {% block head %}
     {{ parent() }}

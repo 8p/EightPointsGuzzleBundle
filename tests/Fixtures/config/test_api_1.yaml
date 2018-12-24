@@ -1,0 +1,8 @@
+eight_points_guzzle:
+    clients:
+        test_api:
+            options:
+                headers:
+                    foobar: 'test'
+                form_params:
+                    param1: 1

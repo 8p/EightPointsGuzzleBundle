@@ -86,6 +86,7 @@ class Configuration implements ConfigurationInterface
             $node = $builder->root('clients');
         }
 
+        /** @var \Symfony\Component\Config\Definition\Builder\NodeBuilder $nodeChildren */
         $nodeChildren = $node->useAttributeAsKey('name')
             ->prototype('array')
                 ->children();
@@ -119,9 +120,9 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->children()
                             ->arrayNode('headers')
+                                ->useAttributeAsKey('name')
                                 ->normalizeKeys(false)
-                                ->prototype('scalar')
-                                ->end()
+                                ->prototype('scalar')->end()
                             ->end()
                             ->variableNode('allow_redirects')
                                 ->validate()
@@ -206,12 +207,11 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->floatNode('delay')->end()
                             ->arrayNode('form_params')
-                                ->prototype('variable')
-                                ->end()
+                                ->useAttributeAsKey('name')
+                                ->prototype('variable')->end()
                             ->end()
                             ->arrayNode('multipart')
-                                ->prototype('variable')
-                                ->end()
+                                ->prototype('variable')->end()
                             ->end()
                             ->scalarNode('sink')
                                 ->validate()

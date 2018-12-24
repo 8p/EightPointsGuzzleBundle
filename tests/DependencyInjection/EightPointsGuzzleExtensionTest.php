@@ -10,8 +10,10 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Uri;
@@ -341,6 +343,28 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertInstanceOf(Client::class, $container->get('eight_points_guzzle.client.test_api'));
         $this->assertInstanceOf(CustomClient::class, $container->get('eight_points_guzzle.client.test_api_with_custom_class'));
         $this->assertInstanceOf(Client::class, $container->get('eight_points_guzzle.client.test_api_with_custom_handler'));
+    }
+
+    public function testMergingOfConfigurations()
+    {
+        $container = $this->createContainer();
+        $container->registerExtension(new EightPointsGuzzleExtension());
+        $container->setResourceTracking(false);
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Fixtures/config'));
+        $loader->load('test_api_1.yaml');
+        $loader->load('test_api_2.yaml');
+        $container->compile();
+
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.client.test_api'));
+        $this->assertEquals(
+            ['foobar' => 'test', 'foobaz' => 'test'],
+            $container->getDefinition('eight_points_guzzle.client.test_api')->getArgument(0)['headers']
+        );
+
+        $this->assertEquals(
+            ['param1' => 1, 'param2' => 2],
+            $container->getDefinition('eight_points_guzzle.client.test_api')->getArgument(0)['form_params']
+        );
     }
 
     /**

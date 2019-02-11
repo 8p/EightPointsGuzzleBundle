@@ -131,7 +131,7 @@ class EightPointsGuzzleExtension extends Extension
             $handlerService = new Definition($options['handler']);
             $container->setDefinition($handlerServiceName, $handlerService);
 
-            $handler->addArgument($handlerService);
+            $handler->addArgument(new Reference($handlerServiceName));
         }
         $handler->setPublic(true);
         $handler->setLazy($options['lazy']);

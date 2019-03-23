@@ -91,7 +91,7 @@ eight_points_guzzle:
                 
                 stream: false
                 
-                cookies: '/path/to/file'
+                cookies: false
                 
                 proxy: 'tcp://localhost:8125'
                 

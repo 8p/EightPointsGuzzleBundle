@@ -259,8 +259,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
     public function testLoadWithPlugin()
     {
         $plugin = $this->createMock(EightPointsGuzzleBundlePlugin::class);
-        $plugin->expects($this->exactly(2))
-            ->method('getPluginName')
+        $plugin->method('getPluginName')
             ->willReturn('test');
 
         $plugin->expects($this->once())

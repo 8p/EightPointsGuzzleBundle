@@ -150,10 +150,9 @@ class EightPointsGuzzleExtension extends Extension
         }
 
         foreach ($this->plugins as $plugin) {
-            if (!isset($options['plugin'][$plugin->getPluginName()])) {
-                continue;
+            if (isset($options['plugin'][$plugin->getPluginName()])) {
+                $plugin->loadForClient($options['plugin'][$plugin->getPluginName()], $container, $clientName, $handler);
             }
-            $plugin->loadForClient($options['plugin'][$plugin->getPluginName()], $container, $clientName, $handler);
         }
 
         // goes on the end of the stack.

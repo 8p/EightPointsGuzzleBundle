@@ -49,7 +49,7 @@ class EventDispatchMiddleware
                 $preTransactionEvent = new PreTransactionEvent($request, $this->serviceName);
 
                 // Dispatch it through the symfony Dispatcher.
-                $this->eventDispatcher->dispatch(GuzzleEvents::PRE_TRANSACTION, $preTransactionEvent);
+                $this->eventDispatcher->dispatch($preTransactionEvent, GuzzleEvents::PRE_TRANSACTION);
 
                 // Continue the handler chain.
                 $promise = $handler($preTransactionEvent->getTransaction(), $options);
@@ -61,7 +61,7 @@ class EventDispatchMiddleware
                         $postTransactionEvent = new PostTransactionEvent($response, $this->serviceName);
 
                         // Dispatch the event on the symfony event dispatcher.
-                        $this->eventDispatcher->dispatch(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
+                        $this->eventDispatcher->dispatch($postTransactionEvent, GuzzleEvents::POST_TRANSACTION);
 
                         // Continue down the chain.
                         return $postTransactionEvent->getTransaction();
@@ -74,7 +74,7 @@ class EventDispatchMiddleware
                         $postTransactionEvent = new PostTransactionEvent($response, $this->serviceName);
 
                         // Dispatch the event on the symfony event dispatcher.
-                        $this->eventDispatcher->dispatch(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
+                        $this->eventDispatcher->dispatch($postTransactionEvent, GuzzleEvents::POST_TRANSACTION);
 
                         // Continue down the chain.
                         return \GuzzleHttp\Promise\rejection_for($reason);

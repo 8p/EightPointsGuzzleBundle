@@ -182,6 +182,7 @@ foreach ($contents as $class => $envs) {
 - [gregurco/GuzzleBundleOAuth2Plugin][7]
 - [neirda24/GuzzleBundleHeaderForwardPlugin][12]
 - [neirda24/GuzzleBundleHeaderDisableCachePlugin][13]
+- [EugenGanshorn/GuzzleBundleRetryPlugin][15]
 
 ----
 
@@ -279,3 +280,4 @@ This bundle is released under the [MIT license](LICENSE)
 [12]: https://github.com/Neirda24/GuzzleBundleHeaderForwardPlugin
 [13]: https://github.com/Neirda24/GuzzleBundleHeaderDisableCachePlugin
 [14]: https://github.com/symfony/recipes-contrib/tree/master/eightpoints/guzzle-bundle
+[15]: https://github.com/EugenGanshorn/GuzzleBundleRetryPlugin

@@ -16,8 +16,7 @@
 [![Build Status](https://travis-ci.org/8p/EightPointsGuzzleBundle.svg)](https://travis-ci.org/8p/EightPointsGuzzleBundle)
 [![Scrutinizer Score](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/)
 [![License](https://poser.pugx.org/eightpoints/guzzle-bundle/license)](https://packagist.org/packages/eightpoints/guzzle-bundle)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5619922c-2705-40d8-ba68-a8f6ce71b50e/mini.png)](https://insight.sensiolabs.com/projects/5619922c-2705-40d8-ba68-a8f6ce71b50e)
-
+[![SymfonyInsight](https://insight.symfony.com/projects/72b7a8fd-3e23-47e9-8bcf-101da4190e6f/mini.svg)](https://insight.symfony.com/projects/72b7a8fd-3e23-47e9-8bcf-101da4190e6f)
 
 This bundle integrates [Guzzle 6.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
 
@@ -78,10 +77,10 @@ eight_points_guzzle:
     clients:
         api_payment:
             base_url: "http://api.domain.tld"
-            
+
             # NOTE: This option makes Guzzle Client as lazy (https://symfony.com/doc/master/service_container/lazy_services.html)
             lazy: true # Default `false`
-            
+
             # Handler class to be used for the client
             handler: 'GuzzleHttp\Handler\MockHandler'
 
@@ -94,7 +93,7 @@ eight_points_guzzle:
 
                 headers:
                     Accept: "application/json"
-                
+
                 # Find proper php const, for example CURLOPT_SSLVERSION, remove CURLOPT_ and transform to lower case.
                 # List of curl options: http://php.net/manual/en/function.curl-setopt.php
                 curl:
@@ -143,7 +142,7 @@ This bundle allows to register and integrate plugins to extend functionality of 
 #### Symfony 2.x and 3.x
 All plugins will be activated/connected through bundle constructor in AppKernel, like this:
 
-``` php 
+``` php
 new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle([
     new Gregurco\Bundle\GuzzleBundleOAuth2Plugin\GuzzleBundleOAuth2Plugin(),
 ])
@@ -183,6 +182,7 @@ foreach ($contents as $class => $envs) {
 - [gregurco/GuzzleBundleOAuth2Plugin][7]
 - [neirda24/GuzzleBundleHeaderForwardPlugin][12]
 - [neirda24/GuzzleBundleHeaderDisableCachePlugin][13]
+- [EugenGanshorn/GuzzleBundleRetryPlugin][15]
 
 ----
 
@@ -212,7 +212,7 @@ Read more [here](src/Resources/doc/intercept-request-and-response.md).
 ### Symfony logs
 All requests are logged into symfony default logger (`@logger` service) with next format:
 ```
-[{datetime}] eight_points_guzzle.{log_level}: {method} {uri} {code} 
+[{datetime}] eight_points_guzzle.{log_level}: {method} {uri} {code}
 ```
 Example:
 ```
@@ -280,3 +280,4 @@ This bundle is released under the [MIT license](LICENSE)
 [12]: https://github.com/Neirda24/GuzzleBundleHeaderForwardPlugin
 [13]: https://github.com/Neirda24/GuzzleBundleHeaderDisableCachePlugin
 [14]: https://github.com/symfony/recipes-contrib/tree/master/eightpoints/guzzle-bundle
+[15]: https://github.com/EugenGanshorn/GuzzleBundleRetryPlugin

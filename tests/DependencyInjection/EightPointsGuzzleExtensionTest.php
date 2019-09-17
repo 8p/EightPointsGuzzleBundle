@@ -259,8 +259,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
     public function testLoadWithPlugin()
     {
         $plugin = $this->createMock(EightPointsGuzzleBundlePlugin::class);
-        $plugin->expects($this->exactly(2))
-            ->method('getPluginName')
+        $plugin->method('getPluginName')
             ->willReturn('test');
 
         $plugin->expects($this->once())
@@ -284,6 +283,36 @@ class EightPointsGuzzleExtensionTest extends TestCase
                 ],
             ],
         ];
+
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension([$plugin]);
+        $extension->load($config, $container);
+    }
+
+    public function testLoadWithoutPlugin()
+    {
+        $plugin = $this->createMock(EightPointsGuzzleBundlePlugin::class);
+        $plugin->method('getPluginName')
+            ->willReturn('test');
+
+        $config = [
+            [
+                'clients' => [
+                    'client_with_plugin' => [
+                        'base_url' => '//api.domain.tld/path',
+                        'plugin' => [
+                            'test' => [],
+                        ]
+                    ],
+                    'client_without_plugin' => [
+                        'base_url' => '//api.domain.tld/path',
+                    ],
+                ],
+            ],
+        ];
+
+        $plugin->expects($this->once())
+            ->method('loadForClient');
 
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension([$plugin]);

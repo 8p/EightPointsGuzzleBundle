@@ -3,7 +3,6 @@
 namespace EightPoints\Bundle\GuzzleBundle\Events;
 
 use Psr\Http\Message\RequestInterface;
-use Symfony\Component\EventDispatcher\Event;
 
 class PreTransactionEvent extends Event
 {

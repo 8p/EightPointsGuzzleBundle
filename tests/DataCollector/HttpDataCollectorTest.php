@@ -34,15 +34,11 @@ class HttpDataCollectorTest extends TestCase
     public function testConstruct()
     {
         $collector = new HttpDataCollector($this->logger);
-        $data      = unserialize($collector->serialize());
-        $expected  = [
-            'logs'            => [],
-            'callCount'       => 0,
-            'totalTime'       => 0,
-            'hasSlowResponse' => false,
-        ];
 
-        $this->assertSame($expected, $data);
+        $this->assertEquals([], $collector->getLogs());
+        $this->assertEquals(0, $collector->getCallCount());
+        $this->assertEquals(0, $collector->getTotalTime());
+        $this->assertFalse($collector->hasSlowResponses());
     }
 
     /**

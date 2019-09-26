@@ -19,6 +19,9 @@ class LogMessage
     /** @var null|float */
     protected $transferTime;
 
+    /** @var null|string */
+    protected $curlCommand;
+
     /**
      * @param string $message
      */
@@ -117,5 +120,21 @@ class LogMessage
     public function setTransferTime($transferTime)
     {
         $this->transferTime = $transferTime;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCurlCommand()
+    {
+        return $this->curlCommand;
+    }
+
+    /**
+     * @param string $curlCommand
+     */
+    public function setCurlCommand($curlCommand)
+    {
+        $this->curlCommand = $curlCommand;
     }
 }

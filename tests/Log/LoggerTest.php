@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\StreamInterface;
 use Psr\Log\LogLevel;
 
 class LoggerTest extends TestCase
@@ -64,16 +65,21 @@ class LoggerTest extends TestCase
             $this->assertNull($message->getResponse());
         }
 
+        $requestMock = $this->getMockBuilder(Request::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $uriMock = $this->getMockBuilder(Uri::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $requestMock = $this->getMockBuilder(Request::class)
+        $bodyMock = $this->getMockBuilder(StreamInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $requestMock->method('getHeaders')->willReturn([]);
         $requestMock->method('getUri')->willReturn($uriMock);
+        $requestMock->method('getBody')->willReturn($bodyMock);
 
         $logger->log(LogLevel::INFO, 'info message', ['request' => $requestMock]);
 

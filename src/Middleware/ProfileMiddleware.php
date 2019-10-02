@@ -4,6 +4,9 @@ namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
 use Symfony\Component\Stopwatch\Stopwatch;
 
+/**
+ * This Middleware is used to render request time slot on "Performance" tab in "Symfony Profiler".
+ */
 class ProfileMiddleware
 {
     /**

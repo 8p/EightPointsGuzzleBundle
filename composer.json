@@ -37,7 +37,11 @@
     "symfony/phpunit-bridge": "~2.7|~3.0|~4.0",
     "symfony/twig-bundle":    "~2.7|~3.0|~4.0",
     "symfony/var-dumper":     "~2.7|~3.0|~4.0",
-    "symfony/yaml":           "~2.7|~3.0|~4.0"
+    "symfony/yaml":           "~2.7|~3.0|~4.0",
+    "namshi/cuzzle":          "^2.0"
+  },
+  "suggest": {
+    "namshi/cuzzle": "Outputs Curl command on profiler's page for debugging purposes"
   },
   "autoload": {
     "psr-4": {

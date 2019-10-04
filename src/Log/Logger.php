@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Log;
 
+use Namshi\Cuzzle\Formatter\CurlFormatter;
 use Psr\Log\LoggerTrait;
 
 class Logger implements LoggerInterface
@@ -35,6 +36,10 @@ class Logger implements LoggerInterface
         if (!empty($context)) {
             if (!empty($context['request'])) {
                 $logMessage->setRequest(new LogRequest($context['request']));
+
+                if (class_exists(CurlFormatter::class)) {
+                    $logMessage->setCurlCommand((new CurlFormatter())->format($context['request']));
+                }
             }
 
             if (!empty($context['response'])) {

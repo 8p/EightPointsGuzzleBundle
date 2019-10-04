@@ -67,6 +67,15 @@
                                         <textarea readonly class="format-json">{{ message.request.body }}</textarea>
                                     </td>
                                 </tr>
+
+                                {% if message.curlCommand %}
+                                <tr>
+                                    <th>Curl command</th>
+                                    <td>
+                                        <pre>{{ message.curlCommand }}</pre>
+                                    </td>
+                                </tr>
+                                {%  endif %}
                             </table>
                         </div>
 

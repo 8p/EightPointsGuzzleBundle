@@ -62,7 +62,7 @@ class RequestTimeMiddleware
 
             $this->dataCollector->addTotalTime((float)$stats->getTransferTime());
 
-            if ($requestId && $this->logger instanceof Logger) {
+            if (($this->logger instanceof Logger) && $requestId) {
                 $this->logger->addTransferTimeByRequestId($requestId, (float)$stats->getTransferTime());
             }
         };

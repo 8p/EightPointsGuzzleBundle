@@ -5,7 +5,7 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler\EventHandlerCompilerPass;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle;
-use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
+use EightPoints\Bundle\GuzzleBundle\PluginInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -21,7 +21,7 @@ class EightPointsGuzzleBundleTest extends TestCase
 
     public function testInitWithPlugin()
     {
-        $plugin = $this->getMockBuilder(EightPointsGuzzleBundlePlugin::class)->getMock();
+        $plugin = $this->getMockBuilder(PluginInterface::class)->getMock();
 
         new EightPointsGuzzleBundle([$plugin]);
 
@@ -33,12 +33,12 @@ class EightPointsGuzzleBundleTest extends TestCase
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $firstPlugin = $this->getMockBuilder(EightPointsGuzzleBundlePlugin::class)->getMock();
+        $firstPlugin = $this->getMockBuilder(PluginInterface::class)->getMock();
         $firstPlugin->expects($this->once())
             ->method('getPluginName')
             ->willReturn('wsse');
 
-        $secondPlugin = $this->getMockBuilder(EightPointsGuzzleBundlePlugin::class)->getMock();
+        $secondPlugin = $this->getMockBuilder(PluginInterface::class)->getMock();
         $secondPlugin->expects($this->exactly(2))
             ->method('getPluginName')
             ->willReturn('wsse');
@@ -48,7 +48,7 @@ class EightPointsGuzzleBundleTest extends TestCase
 
     public function testBoot()
     {
-        $plugin = $this->getMockBuilder(EightPointsGuzzleBundlePlugin::class)->getMock();
+        $plugin = $this->getMockBuilder(PluginInterface::class)->getMock();
         $plugin->expects($this->once())->method('boot');
 
         $bundle = new EightPointsGuzzleBundle([$plugin]);
@@ -59,7 +59,7 @@ class EightPointsGuzzleBundleTest extends TestCase
     {
         $container = new ContainerBuilder();
 
-        $plugin = $this->getMockBuilder(EightPointsGuzzleBundlePlugin::class)->getMock();
+        $plugin = $this->getMockBuilder(PluginInterface::class)->getMock();
         $plugin->expects($this->once())->method('build');
 
         $bundle = new EightPointsGuzzleBundle([$plugin]);

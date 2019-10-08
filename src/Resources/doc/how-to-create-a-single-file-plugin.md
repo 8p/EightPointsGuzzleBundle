@@ -101,13 +101,13 @@ Create plugin file:
 
 namespace App\GuzzlePlugin;
 
-use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
+use EightPoints\Bundle\GuzzleBundle\PluginInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class MagicHeaderPlugin extends Bundle implements EightPointsGuzzleBundlePlugin
+class MagicHeaderPlugin extends Bundle implements PluginInterface
 {
     /**
      * @return string
@@ -147,7 +147,7 @@ class MagicHeaderPlugin extends Bundle implements EightPointsGuzzleBundlePlugin
 }
 ```
 
-Note that we implemented `EightPointsGuzzleBundlePlugin` interface and defined 4 methods:
+Note that we implemented `PluginInterface` interface and defined 4 methods:
 - `load` - used to load xml/yaml/etc configuration
 - `loadForClient` - called after clients services are defined in container builder
 - `addConfiguration` - called when configuration tree of Guzzle Bundle is being built
@@ -158,7 +158,7 @@ First define plugin name:
 ```php
 // ...
 
-class MagicHeaderPlugin extends Bundle implements EightPointsGuzzleBundlePlugin
+class MagicHeaderPlugin extends Bundle implements PluginInterface
 {    
     /**
      * @return string
@@ -177,7 +177,7 @@ Next add possibility to configure `header_value` value in configuration file:
 ```php
 // ...
 
-class MagicHeaderPlugin extends Bundle implements EightPointsGuzzleBundlePlugin
+class MagicHeaderPlugin extends Bundle implements PluginInterface
 {
     // ...
 
@@ -250,7 +250,7 @@ Having the value of `header_value` option provided from configuration file we ca
 use Symfony\Component\ExpressionLanguage\Expression;
 use App\GuzzleMiddleware\MagicHeaderMiddleware;
 
-class MagicHeaderPlugin extends Bundle implements EightPointsGuzzleBundlePlugin
+class MagicHeaderPlugin extends Bundle implements PluginInterface
 {
     // ...
     

@@ -4,8 +4,8 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection;
 
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
-use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin;
 use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
+use EightPoints\Bundle\GuzzleBundle\PluginInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -258,7 +258,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
 
     public function testLoadWithPlugin()
     {
-        $plugin = $this->createMock(EightPointsGuzzleBundlePlugin::class);
+        $plugin = $this->createMock(PluginInterface::class);
         $plugin->method('getPluginName')
             ->willReturn('test');
 
@@ -291,7 +291,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
 
     public function testLoadWithoutPlugin()
     {
-        $plugin = $this->createMock(EightPointsGuzzleBundlePlugin::class);
+        $plugin = $this->createMock(PluginInterface::class);
         $plugin->method('getPluginName')
             ->willReturn('test');
 

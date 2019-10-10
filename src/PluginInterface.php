@@ -6,7 +6,7 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-interface EightPointsGuzzleBundlePlugin
+interface PluginInterface
 {
     /**
      * The name of this plugin. It will be used as the configuration key.

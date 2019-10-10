@@ -15,11 +15,11 @@ use GuzzleHttp\HandlerStack;
 
 class EightPointsGuzzleExtension extends Extension
 {
-    /** @var \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[] */
+    /** @var \EightPoints\Bundle\GuzzleBundle\PluginInterface[] */
     protected $plugins;
 
     /**
-     * @param \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[] $plugins
+     * @param \EightPoints\Bundle\GuzzleBundle\PluginInterface[] $plugins
      */
     public function __construct(array $plugins = [])
     {

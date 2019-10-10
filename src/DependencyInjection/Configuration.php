@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
     protected $debug;
 
     /**
-     * @var \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[]
+     * @var \EightPoints\Bundle\GuzzleBundle\PluginInterface[]
      */
     protected $plugins;
 

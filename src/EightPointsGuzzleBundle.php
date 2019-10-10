@@ -11,11 +11,11 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class EightPointsGuzzleBundle extends Bundle
 {
-    /** @var \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[] */
+    /** @var \EightPoints\Bundle\GuzzleBundle\PluginInterface[] */
     protected $plugins = [];
 
     /**
-     * @param \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin[] $plugins
+     * @param \EightPoints\Bundle\GuzzleBundle\PluginInterface[] $plugins
      */
     public function __construct(array $plugins = [])
     {
@@ -69,13 +69,13 @@ class EightPointsGuzzleBundle extends Bundle
     }
 
     /**
-     * @param \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundlePlugin $plugin
-     *
-     * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     * @param \EightPoints\Bundle\GuzzleBundle\PluginInterface $plugin
      *
      * @return void
+     *@throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     *
      */
-    protected function registerPlugin(EightPointsGuzzleBundlePlugin $plugin)
+    protected function registerPlugin(PluginInterface $plugin)
     {
         // Check plugins name duplication
         foreach ($this->plugins as $registeredPlugin) {

@@ -47,7 +47,12 @@
 {% endblock %}
 
 {% block menu %}
-    <span class="label {{ collector.callCount ? '' : 'disabled' }}">
+    {% if collector.callCount %}
+        {% set label_class = collector.errorCount ? 'label-status-error' : (collector.hasSlowResponses() ? 'label-status-warning' : '') %}
+    {% else %}
+        {% set label_class = 'disabled' %}
+    {% endif %}
+    <span class="label {{ label_class }}">
         <span class="icon">
             {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
         </span>

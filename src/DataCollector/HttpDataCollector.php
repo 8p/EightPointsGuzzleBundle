@@ -199,15 +199,4 @@ class HttpDataCollector extends DataCollector
 
         return $this->data['logs'][$id];
     }
-
-    /**
-     * Return the color used version
-     *
-     * @return string
-     */
-    public final function getIconColor() : string
-    {
-        $iconColor = version_compare(Kernel::VERSION, '2.8.0', '>=') ? '#AAAAAA' : '#3F3F3F';
-        return $this->data['iconColor'] = $iconColor;
-    }
 }

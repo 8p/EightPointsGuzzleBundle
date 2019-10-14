@@ -81,7 +81,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return void
      */
-    public function reset()
+    public function reset() : void
     {
         $this->data = [
             'logs' => [],
@@ -144,7 +144,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return array
      */
-    public function getErrorsByType(string $type): array
+    public function getErrorsByType(string $type) : array
     {
         return array_filter(
             $this->getMessages(),
@@ -179,7 +179,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return void
      */
-    public function addTotalTime(float $time)
+    public function addTotalTime(float $time) : void
     {
         $this->data['totalTime'] += $time;
     }

@@ -165,7 +165,7 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @return void
      */
-    protected function defineTwigDebugExtension(ContainerBuilder $container)
+    protected function defineTwigDebugExtension(ContainerBuilder $container) : void
     {
         $twigDebugExtensionDefinition = new Definition(DebugExtension::class);
         $twigDebugExtensionDefinition->addTag('twig.extension');
@@ -182,7 +182,7 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @return void
      */
-    protected function defineLogger(ContainerBuilder $container)
+    protected function defineLogger(ContainerBuilder $container) : void
     {
         $loggerDefinition = new Definition('%eight_points_guzzle.logger.class%');
         $loggerDefinition->setPublic(true);
@@ -199,7 +199,7 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @return void
      */
-    protected function defineDataCollector(ContainerBuilder $container, float $slowResponseTime)
+    protected function defineDataCollector(ContainerBuilder $container, float $slowResponseTime) : void
     {
         $dataCollectorDefinition = new Definition('%eight_points_guzzle.data_collector.class%');
         $dataCollectorDefinition->addArgument(new Reference('eight_points_guzzle.logger'));
@@ -221,7 +221,7 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @return void
      */
-    protected function defineFormatter(ContainerBuilder $container)
+    protected function defineFormatter(ContainerBuilder $container) : void
     {
         $formatterDefinition = new Definition('%eight_points_guzzle.formatter.class%');
         $formatterDefinition->setPublic(true);
@@ -237,7 +237,7 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @return void
      */
-    protected function defineRequestTimeMiddleware(ContainerBuilder $container, Definition $handler, string $clientName)
+    protected function defineRequestTimeMiddleware(ContainerBuilder $container, Definition $handler, string $clientName) : void
     {
         $requestTimeMiddlewareDefinitionName = sprintf('eight_points_guzzle.middleware.request_time.%s', $clientName);
         $requestTimeMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.request_time.class%');
@@ -259,7 +259,7 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @return void
      */
-    protected function defineLogMiddleware(ContainerBuilder $container, Definition $handler, string $clientName)
+    protected function defineLogMiddleware(ContainerBuilder $container, Definition $handler, string $clientName) : void
     {
         $logMiddlewareDefinitionName = sprintf('eight_points_guzzle.middleware.log.%s', $clientName);
         $logMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.log.class%');
@@ -281,7 +281,7 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @return void
      */
-    protected function defineProfileMiddleware(ContainerBuilder $container, Definition $handler, string $clientName)
+    protected function defineProfileMiddleware(ContainerBuilder $container, Definition $handler, string $clientName) : void
     {
         $profileMiddlewareDefinitionName = sprintf('eight_points_guzzle.middleware.profile.%s', $clientName);
         $profileMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.profile.class%');
@@ -339,7 +339,7 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @return void
      */
-    protected function defineSymfonyLogMiddleware(ContainerBuilder $container)
+    protected function defineSymfonyLogMiddleware(ContainerBuilder $container) : void
     {
         $logMiddlewareDefinition = new Definition('%eight_points_guzzle.middleware.symfony_log.class%');
         $logMiddlewareDefinition->addArgument(new Reference('logger'));

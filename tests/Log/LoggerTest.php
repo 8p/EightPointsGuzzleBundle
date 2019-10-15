@@ -73,6 +73,10 @@ class LoggerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $uriMock->method('getHost')->willReturn('example.com');
+        $uriMock->method('getPath')->willReturn('/');
+        $uriMock->method('getScheme')->willReturn('https');
+
         $bodyMock = $this->getMockBuilder(StreamInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -80,6 +84,8 @@ class LoggerTest extends TestCase
         $requestMock->method('getHeaders')->willReturn([]);
         $requestMock->method('getUri')->willReturn($uriMock);
         $requestMock->method('getBody')->willReturn($bodyMock);
+        $requestMock->method('getProtocolVersion')->willReturn('1.1');
+        $requestMock->method('getMethod')->willReturn('GET');
 
         $logger->log(LogLevel::INFO, 'info message', ['request' => $requestMock]);
 

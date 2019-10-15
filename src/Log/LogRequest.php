@@ -9,7 +9,7 @@ class LogRequest
     /** @var string */
     protected $host;
 
-    /** @var integer */
+    /** @var integer|null */
     protected $port;
 
     /** @var string */
@@ -21,7 +21,7 @@ class LogRequest
     /** @var string */
     protected $scheme;
 
-    /** @var array */
+    /** @var string[][] */
     protected $headers = [];
 
     /** @var string */
@@ -30,11 +30,8 @@ class LogRequest
     /** @var string */
     protected $method;
 
-    /** @var string */
+    /** @var string|null */
     protected $body;
-
-    /** @var string */
-    protected $resource;
 
     /**
      * @param \Psr\Http\Message\RequestInterface $request
@@ -82,7 +79,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getHost()
+    public function getHost() : string
     {
         return $this->host;
     }
@@ -94,7 +91,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setHost($value)
+    public function setHost(string $value) : void
     {
         $this->host = $value;
     }
@@ -102,9 +99,9 @@ class LogRequest
     /**
      * Return port
      *
-     * @return integer
+     * @return integer|null
      */
-    public function getPort()
+    public function getPort() : ?int
     {
         return $this->port;
     }
@@ -112,11 +109,11 @@ class LogRequest
     /**
      * Set port
      *
-     * @param integer $value
+     * @param integer|null $value
      *
      * @return void
      */
-    public function setPort($value)
+    public function setPort(?int $value): void
     {
         $this->port = $value;
     }
@@ -126,7 +123,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl() : string
     {
         return $this->url;
     }
@@ -138,7 +135,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setUrl($value)
+    public function setUrl(string $value) : void
     {
         $this->url = $value;
     }
@@ -148,7 +145,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getPath()
+    public function getPath() : string
     {
         return $this->path;
     }
@@ -160,7 +157,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setPath($value)
+    public function setPath(string $value) : void
     {
         $this->path = $value;
     }
@@ -170,7 +167,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getScheme()
+    public function getScheme() : string
     {
         return $this->scheme;
     }
@@ -182,7 +179,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setScheme($value)
+    public function setScheme(string $value) : void
     {
         $this->scheme = $value;
     }
@@ -192,7 +189,7 @@ class LogRequest
      *
      * @return array
      */
-    public function getHeaders()
+    public function getHeaders() : array
     {
         return $this->headers;
     }
@@ -204,7 +201,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setHeaders(array $value)
+    public function setHeaders(array $value) : void
     {
         $this->headers = $value;
     }
@@ -214,7 +211,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getProtocolVersion()
+    public function getProtocolVersion() : string
     {
         return $this->protocolVersion;
     }
@@ -226,7 +223,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setProtocolVersion($value)
+    public function setProtocolVersion(string $value) : void
     {
         $this->protocolVersion = $value;
     }
@@ -236,7 +233,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getMethod()
+    public function getMethod() : string
     {
         return $this->method;
     }
@@ -248,7 +245,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setMethod($value)
+    public function setMethod(string $value) : void
     {
         $this->method = $value;
     }
@@ -256,9 +253,9 @@ class LogRequest
     /**
      * Return body
      *
-     * @return string
+     * @return string|null
      */
-    public function getBody()
+    public function getBody() : ?string
     {
         return $this->body;
     }
@@ -266,34 +263,12 @@ class LogRequest
     /**
      * Set body
      *
-     * @param string $value
+     * @param string|null $value
      *
      * @return void
      */
-    public function setBody($value)
+    public function setBody(?string $value) : void
     {
         $this->body = $value;
-    }
-
-    /**
-     * Return resource
-     *
-     * @return string
-     */
-    public function getResource()
-    {
-        return $this->resource;
-    }
-
-    /**
-     * Set resource
-     *
-     * @param string $value
-     *
-     * @return void
-     */
-    public function setResource($value)
-    {
-        $this->resource = $value;
     }
 }

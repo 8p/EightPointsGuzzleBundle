@@ -46,7 +46,7 @@ class PreTransactionEvent extends Event
      *
      * @return void
      */
-    public function setTransaction(RequestInterface $requestTransaction)
+    public function setTransaction(RequestInterface $requestTransaction) : void
     {
         $this->requestTransaction = $requestTransaction;
     }

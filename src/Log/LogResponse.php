@@ -36,7 +36,7 @@ class LogResponse
      *
      * @return void
      */
-    public function save(ResponseInterface $response)
+    public function save(ResponseInterface $response) : void
     {
         $this->setStatusCode($response->getStatusCode());
         $this->setStatusPhrase($response->getReasonPhrase());
@@ -68,7 +68,7 @@ class LogResponse
      *
      * @return void
      */
-    public function setStatusCode($value)
+    public function setStatusCode($value) : void
     {
         $this->statusCode = $value;
     }
@@ -112,7 +112,7 @@ class LogResponse
      *
      * @return void
      */
-    public function setBody($value)
+    public function setBody($value) : void
     {
         $this->body = $value;
     }
@@ -134,7 +134,7 @@ class LogResponse
      *
      * @return void
      */
-    public function setProtocolVersion($value)
+    public function setProtocolVersion($value) : void
     {
         $this->protocolVersion = $value;
     }
@@ -156,7 +156,7 @@ class LogResponse
      *
      * @return void
      */
-    public function setHeaders(array $value)
+    public function setHeaders(array $value) : void
     {
         $this->headers = $value;
     }

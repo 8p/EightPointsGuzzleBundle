@@ -16,7 +16,7 @@ class PostTransactionEvent extends Event
      * @param \Psr\Http\Message\ResponseInterface|null $response
      * @param string $serviceName
      */
-    public function __construct(ResponseInterface $response = null, string $serviceName)
+    public function __construct(?ResponseInterface $response, string $serviceName)
     {
         $this->response = $response;
         $this->serviceName = $serviceName;
@@ -41,7 +41,7 @@ class PostTransactionEvent extends Event
      *
      * @return void
      */
-    public function setTransaction(ResponseInterface $response = null) : void
+    public function setTransaction(?ResponseInterface $response) : void
     {
         $this->response = $response;
     }

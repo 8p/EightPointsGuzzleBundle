@@ -83,8 +83,10 @@ class Logger implements LoggerInterface
     /**
      * @param $requestId
      * @param $transferTime
+     *
+     * @return void
      */
-    public function addTransferTimeByRequestId($requestId, $transferTime)
+    public function addTransferTimeByRequestId($requestId, $transferTime) : void
     {
         if (array_key_exists($requestId, $this->messages)) {
             $this->messages[$requestId]->setTransferTime($transferTime);

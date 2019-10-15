@@ -9,7 +9,6 @@ use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Collecting http data for Symfony profiler
@@ -134,7 +133,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return integer
      */
-    public function getErrorCount(): int
+    public function getErrorCount() : int
     {
         return count($this->getErrorsByType(LogLevel::ERROR));
     }

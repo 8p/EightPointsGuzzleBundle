@@ -298,7 +298,7 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @return void
      */
-    protected function attachSymfonyLogMiddlewareToHandler(Definition $handler)
+    protected function attachSymfonyLogMiddlewareToHandler(Definition $handler) : void
     {
         $logExpression = new Expression(sprintf("service('%s')", 'eight_points_guzzle.middleware.symfony_log'));
         $handler->addMethodCall('push', [$logExpression, 'symfony_log']);
@@ -326,7 +326,7 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @return void
      */
-    protected function defineSymfonyLogFormatter(ContainerBuilder $container)
+    protected function defineSymfonyLogFormatter(ContainerBuilder $container) : void
     {
         $formatterDefinition = new Definition('%eight_points_guzzle.symfony_log_formatter.class%');
         $formatterDefinition->setArguments(['%eight_points_guzzle.symfony_log_formatter.pattern%']);

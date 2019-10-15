@@ -51,7 +51,7 @@ class LogRequest
      *
      * @return void
      */
-    protected function save(RequestInterface $request)
+    protected function save(RequestInterface $request) : void
     {
         $uri = $request->getUri();
 

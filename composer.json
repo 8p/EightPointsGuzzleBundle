@@ -26,18 +26,18 @@
     }
   ],
   "require": {
-    "php":                          ">=7.0",
+    "php":                          ">=7.1",
     "guzzlehttp/guzzle":            "~6.0",
-    "symfony/framework-bundle":     "~2.7|~3.0|~4.0",
-    "symfony/expression-language":  "~2.7|~3.0|~4.0",
-    "symfony/stopwatch":            "~2.7|~3.0|~4.0",
+    "symfony/framework-bundle":     "~4.0",
+    "symfony/expression-language":  "~4.0",
+    "symfony/stopwatch":            "~4.0",
     "psr/log":                      "~1.0"
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "~2.7|~3.0|~4.0",
-    "symfony/twig-bundle":    "~2.7|~3.0|~4.0",
-    "symfony/var-dumper":     "~2.7|~3.0|~4.0",
-    "symfony/yaml":           "~2.7|~3.0|~4.0",
+    "symfony/phpunit-bridge": "~4.0",
+    "symfony/twig-bundle":    "~4.0",
+    "symfony/var-dumper":     "~4.0",
+    "symfony/yaml":           "~4.0",
     "namshi/cuzzle":          "^2.0"
   },
   "suggest": {

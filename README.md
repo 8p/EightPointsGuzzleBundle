@@ -25,8 +25,8 @@ GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 ----
 
 ## Requirements
- - PHP 7.0 or above
- - Symfony 2.7 or above
+ - PHP 7.1 or above
+ - Symfony 4.0 or above
  - [Guzzle PHP Framework][1] (included by composer)
 
 ----
@@ -56,14 +56,6 @@ _Note: we created [Symfony Flex Recipe][14] to speed up the installation of pack
 ----
 
 ## Usage
-
-##### Load bundle in AppKernel.php:
-
-*Skip it for Symfony >= 4.0*
-
-``` php
-new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle()
-```
 
 ##### Configuration in config.yml:
 ``` yaml
@@ -117,11 +109,7 @@ Open [Configuration Reference](src/Resources/doc/configuration-reference.md) pag
 
 ##### Install assets _(if it's not performed automatically)_:
 ``` bash
-# for symfony >= 3.0
 bin/console assets:install
-
-# for symfony < 3.0
-app/console assets:install
 ```
 
 Using services in controller (eight_points_guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
@@ -138,19 +126,8 @@ $response = $client->get('/users');
 This bundle allows to register and integrate plugins to extend functionality of guzzle and this bundle.
 
 ### Usage
-
-#### Symfony 2.x and 3.x
-All plugins will be activated/connected through bundle constructor in AppKernel, like this:
-
-``` php
-new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle([
-    new Gregurco\Bundle\GuzzleBundleOAuth2Plugin\GuzzleBundleOAuth2Plugin(),
-])
-```
-
-#### Symfony 4
-The registration of bundles was changed in Symfony 4 and now you have to change `src/Kernel.php` to achieve the same functionality.  
-Find next lines:
+ 
+Find next lines in `src/Kernel.php`:
 
 ```php
 foreach ($contents as $class => $envs) {
@@ -246,11 +223,11 @@ eight_points_guzzle:
 ----
 
 ## Contributing
-👍 If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
+👍If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
 
 <img src="/src/Resources/doc/img/icon_slack.png" alt="Slack" title="Slack" style="width: 23px; margin-right: -4px;" /> Join our Slack channel on [Symfony Devs][9] for discussions, questions and more: [#8p-guzzlebundle][10].
 
-🎉 Thanks to the [contributors][11] who participated in this project.
+🎉Thanks to the [contributors][11] who participated in this project.
 
 ----
 

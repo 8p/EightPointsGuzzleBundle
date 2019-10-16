@@ -339,17 +339,6 @@ class HttpDataCollectorTest extends TestCase
         $this->assertEquals($expectedValue, $collector->hasSlowResponses());
     }
 
-    /**
-     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getIconColor
-     */
-    public function testGetIconColor()
-    {
-        $collector = new HttpDataCollector($this->logger);
-        $color = $collector->getIconColor();
-
-        $this->assertRegExp('/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/', $color);
-    }
-
     public function responseTimeProvider()
     {
         return [

@@ -24,7 +24,7 @@ class DevNullLogger implements LoggerInterface
      *
      * @return void
      */
-    public function clear()
+    public function clear() : void
     {
         // do nothing!!
     }

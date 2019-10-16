@@ -101,16 +101,4 @@ class LogRequestTest extends TestCase
         $logRequest = new LogRequest($this->request);
         $this->assertEquals('test body', $logRequest->getBody());
     }
-
-    /**
-     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogRequest::setResource
-     * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogRequest::getResource
-     */
-    public function testResource()
-    {
-        $logRequest = new LogRequest($this->request);
-        $logRequest->setResource('test-resource-value');
-
-        $this->assertEquals('test-resource-value', $logRequest->getResource());
-    }
 }

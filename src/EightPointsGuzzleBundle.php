@@ -71,11 +71,11 @@ class EightPointsGuzzleBundle extends Bundle
     /**
      * @param \EightPoints\Bundle\GuzzleBundle\PluginInterface $plugin
      *
-     * @return void
-     *@throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      *
+     * @return void
      */
-    protected function registerPlugin(PluginInterface $plugin)
+    protected function registerPlugin(PluginInterface $plugin) : void
     {
         // Check plugins name duplication
         foreach ($this->plugins as $registeredPlugin) {

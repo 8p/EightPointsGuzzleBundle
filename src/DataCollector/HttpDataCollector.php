@@ -9,7 +9,6 @@ use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Collecting http data for Symfony profiler
@@ -81,7 +80,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return void
      */
-    public function reset()
+    public function reset() : void
     {
         $this->data = [
             'logs' => [],
@@ -134,7 +133,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return integer
      */
-    public function getErrorCount(): int
+    public function getErrorCount() : int
     {
         return count($this->getErrorsByType(LogLevel::ERROR));
     }
@@ -144,7 +143,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return array
      */
-    public function getErrorsByType(string $type): array
+    public function getErrorsByType(string $type) : array
     {
         return array_filter(
             $this->getMessages(),
@@ -179,7 +178,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return void
      */
-    public function addTotalTime(float $time)
+    public function addTotalTime(float $time) : void
     {
         $this->data['totalTime'] += $time;
     }
@@ -198,16 +197,5 @@ class HttpDataCollector extends DataCollector
         }
 
         return $this->data['logs'][$id];
-    }
-
-    /**
-     * Return the color used version
-     *
-     * @return string
-     */
-    public final function getIconColor() : string
-    {
-        $iconColor = version_compare(Kernel::VERSION, '2.8.0', '>=') ? '#AAAAAA' : '#3F3F3F';
-        return $this->data['iconColor'] = $iconColor;
     }
 }

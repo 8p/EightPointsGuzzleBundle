@@ -14,7 +14,7 @@ interface LoggerInterface extends PsrLoggerInterface
      *
      * @return void
      */
-    public function clear();
+    public function clear() : void;
 
     /**
      * Return if messages exist or not

@@ -55,7 +55,7 @@ class Logger implements LoggerInterface
      *
      * @return void
      */
-    public function clear()
+    public function clear() : void
     {
         $this->messages = [];
     }
@@ -81,10 +81,12 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * @param $requestId
-     * @param $transferTime
+     * @param string|null $requestId
+     * @param float $transferTime
+     *
+     * @return void
      */
-    public function addTransferTimeByRequestId($requestId, $transferTime)
+    public function addTransferTimeByRequestId(?string $requestId, float $transferTime) : void
     {
         if (array_key_exists($requestId, $this->messages)) {
             $this->messages[$requestId]->setTransferTime($transferTime);

@@ -37,7 +37,7 @@ class LogMessage
      *
      * @return void
      */
-    public function setLevel($level)
+    public function setLevel($level) : void
     {
         $this->level = $level;
     }
@@ -69,7 +69,7 @@ class LogMessage
      *
      * @return void
      */
-    public function setRequest(LogRequest $value)
+    public function setRequest(LogRequest $value) : void
     {
         $this->request = $value;
     }
@@ -116,8 +116,10 @@ class LogMessage
 
     /**
      * @param float|null $transferTime
+     *
+     * @return void
      */
-    public function setTransferTime($transferTime)
+    public function setTransferTime($transferTime) : void
     {
         $this->transferTime = $transferTime;
     }
@@ -132,8 +134,10 @@ class LogMessage
 
     /**
      * @param string $curlCommand
+     *
+     * @return void
      */
-    public function setCurlCommand($curlCommand)
+    public function setCurlCommand($curlCommand) : void
     {
         $this->curlCommand = $curlCommand;
     }

@@ -20,7 +20,7 @@ interface PluginInterface
      *
      * @return void
      */
-    public function addConfiguration(ArrayNodeDefinition $pluginNode);
+    public function addConfiguration(ArrayNodeDefinition $pluginNode) : void;
 
     /**
      * Load this plugin: define services, load service definition files, etc.
@@ -30,7 +30,7 @@ interface PluginInterface
      *
      * @return void
      */
-    public function load(array $configs, ContainerBuilder $container);
+    public function load(array $configs, ContainerBuilder $container) : void;
 
     /**
      * Add configuration nodes for this plugin to the provided node.
@@ -42,7 +42,7 @@ interface PluginInterface
      *
      * @return void
      */
-    public function loadForClient(array $config, ContainerBuilder $container, string $clientName, Definition $handler);
+    public function loadForClient(array $config, ContainerBuilder $container, string $clientName, Definition $handler) : void;
 
     /**
      * When the container is generated for the first time, you can register compiler passes inside this method.
@@ -51,12 +51,12 @@ interface PluginInterface
      *
      * @return void
      */
-    public function build(ContainerBuilder $container);
+    public function build(ContainerBuilder $container) : void;
 
     /**
      * When the bundles are booted, you can do any runtime initialization required inside this method.
      *
      * @return void
      */
-    public function boot();
+    public function boot() : void;
 }

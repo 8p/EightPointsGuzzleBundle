@@ -17,7 +17,7 @@ class LogGroup
      *
      * @return void
      */
-    public function setRequestName(string $value)
+    public function setRequestName(string $value) : void
     {
         $this->requestName = $value;
     }
@@ -27,7 +27,7 @@ class LogGroup
      *
      * @return string
      */
-    public function getRequestName()
+    public function getRequestName() : ?string
     {
         return $this->requestName;
     }
@@ -39,7 +39,7 @@ class LogGroup
      *
      * @return void
      */
-    public function setMessages(array $value)
+    public function setMessages(array $value) : void
     {
         $this->messages = $value;
     }
@@ -51,7 +51,7 @@ class LogGroup
      *
      * @return void
      */
-    public function addMessages(array $value)
+    public function addMessages(array $value) : void
     {
         $this->messages = array_merge($this->messages, $value);
     }

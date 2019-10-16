@@ -53,7 +53,7 @@ class RequestTimeMiddleware
      *
      * @return \Closure
      */
-    protected function getOnStatsCallback($initialOnStats, $requestId) : \Closure
+    protected function getOnStatsCallback(?callable $initialOnStats, ?string $requestId) : \Closure
     {
         return function (TransferStats $stats) use ($initialOnStats, $requestId) {
             if (is_callable($initialOnStats)) {

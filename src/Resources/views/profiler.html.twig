@@ -47,10 +47,14 @@
                             </tr>
                         </table>
 
-                        <div>
-                            <h4>Request</h4>
+                        <div class="gb_request_request">
+                            <h4>
+                                <a href="javascript: void(0);">
+                                    Request
+                                </a>
+                            </h4>
 
-                            <table>
+                            <table class="gb_content">
                                 <tr>
                                     <th>Protocol Version</th>
                                     <td>{{ message.request.protocolVersion }}</td>
@@ -79,11 +83,15 @@
                             </table>
                         </div>
 
-                        <div>
-                            <h4>Response</h4>
+                        <div class="gb_request_response">
+                            <h4>
+                                <a href="javascript: void(0);">
+                                    Response
+                                </a>
+                            </h4>
 
                             {% if message.response %}
-                                <table>
+                                <table class="gb_content">
                                     <tr>
                                         <th>Protocol Version</th>
                                         <td>{{ message.response.protocolVersion }}</td>
@@ -114,18 +122,32 @@
     </div>
 
     <script>
-        // Do requests block collapsable
-        var requests = document.querySelectorAll('.gb_request h3 a');
-        requests.forEach(function(request) {
-            request.onclick = function(el) {
-                var parent = findParentByClass(el.target, 'gb_request');
-                var content = parent.querySelector('.gb_content');
+        // Function to collapse elements
+        var collapseFn = function(el, parentClass) {
+            var parent = findParentByClass(el.target, parentClass);
+            var content = parent.querySelector('.gb_content');
 
-                if (content) {
-                    content.classList.toggle('gb_content--hide');
-                }
+            if (content) {
+                content.classList.toggle('gb_content--hide');
             }
-        });
+        };
+
+        var collapsibleElements = {
+            'gb_request': '.gb_request h3 a',
+            'gb_request_request': '.gb_request_request h4 a',
+            'gb_request_response': '.gb_request_response h4 a'
+        };
+
+        for (var parentClass in collapsibleElements) {
+            var elements = document.querySelectorAll(collapsibleElements[parentClass]);
+            elements.forEach(function(element) {
+                element.onclick = (function(parent) {
+                    return function(el) {
+                        collapseFn(el, parent);
+                    };
+                }(parentClass))
+            });
+        }
 
         function findParentByClass(el, cls) {
             while ((el = el.parentNode) && el.classList.contains(cls) === false) {}

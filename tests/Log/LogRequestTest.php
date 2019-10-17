@@ -10,7 +10,7 @@ use Psr\Http\Message\UriInterface;
 
 class LogRequestTest extends TestCase
 {
-    /** @var \Psr\Http\Message\RequestInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Psr\Http\Message\RequestInterface|\PHPUnit\Framework\MockObject\MockObject */
     protected $request;
 
     /** @var array */

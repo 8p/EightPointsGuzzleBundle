@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 class HttpDataCollectorTest extends TestCase
 {
     /**
-     * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger|\PHPUnit_Framework_MockObject_MockObject
+     * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $logger;
 

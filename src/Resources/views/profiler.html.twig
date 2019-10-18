@@ -4,13 +4,22 @@
     </p>
 {% else %}
     <div id="gb_profiler">
-        <div class="total_time">
-            <b>Total time</b>
-            {% if collector.totalTime > 1.0 %}
-                <span>{{ '%0.2f'|format(collector.totalTime) }} s</span>
-            {% else %}
-                <span>{{ '%0.0f'|format(collector.totalTime * 1000) }} ms</span>
-            {% endif %}
+        <h2>Overview</h2>
+        <div class="gb_overview">
+            <div class="gb_content">
+                <table>
+                    <tr>
+                        <th>Total time</th>
+                        <td>
+                            {% if collector.totalTime > 1.0 %}
+                                <span>{{ '%0.2f'|format(collector.totalTime) }} s</span>
+                            {% else %}
+                                <span>{{ '%0.0f'|format(collector.totalTime * 1000) }} ms</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
         {% for group in collector.logs %}
             <h2>Group {{ group.requestName }}</h2>

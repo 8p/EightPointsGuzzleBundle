@@ -23,7 +23,7 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testDispatchEvent()
     {
-        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $preTransactionEvent */
+        /** @var Callable|\PHPUnit\Framework\MockObject\MockObject $preTransactionEvent */
         $preTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
         $preTransactionEvent->expects($this->once())
             ->method('__invoke')
@@ -31,7 +31,7 @@ class EventDispatchMiddlewareTest extends TestCase
                 return $event->getServiceName() === 'main';
             }));
 
-        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $postTransactionEvent */
+        /** @var Callable|\PHPUnit\Framework\MockObject\MockObject $postTransactionEvent */
         $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
         $postTransactionEvent->expects($this->once())
             ->method('__invoke')
@@ -136,7 +136,7 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testDispatchEventShouldCallPostTransactionListener()
     {
-        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $postTransactionEvent */
+        /** @var Callable|\PHPUnit\Framework\MockObject\MockObject $postTransactionEvent */
         $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
         $postTransactionEvent->expects($this->once())
             ->method('__invoke')
@@ -169,7 +169,7 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenPostTransactionListenerReceivesNullFromException()
     {
-        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $postTransactionEvent */
+        /** @var Callable|\PHPUnit\Framework\MockObject\MockObject $postTransactionEvent */
         $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
         $postTransactionEvent->expects($this->once())
             ->method('__invoke')
@@ -200,7 +200,7 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenPostTransactionListenerReceivesResponseFromException()
     {
-        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $postTransactionEvent */
+        /** @var Callable|\PHPUnit\Framework\MockObject\MockObject $postTransactionEvent */
         $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
         $postTransactionEvent->expects($this->once())
             ->method('__invoke')

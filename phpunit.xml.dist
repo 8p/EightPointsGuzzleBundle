@@ -3,10 +3,10 @@
 		 bootstrap="vendor/autoload.php"
 		 colors="true"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.1/phpunit.xsd"
+		 xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/7.5/phpunit.xsd"
 >
 	<php>
-		<env name="SYMFONY_PHPUNIT_VERSION" value="6.5" />
+		<env name="SYMFONY_PHPUNIT_VERSION" value="7.5" />
 		<env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0" />
 	</php>
 

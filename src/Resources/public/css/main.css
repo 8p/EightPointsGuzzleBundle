@@ -30,7 +30,7 @@
 
 }
 
-#gb_profiler .gb_request {
+#gb_profiler .gb_request, #gb_profiler .gb_overview {
     width: 100%;
     margin-bottom: 7px;
     border-radius: 6px;
@@ -85,6 +85,16 @@
     padding: 7px 10px 5px 10px;
     float: right;
     border-radius: 4px;
+}
+
+#gb_profiler .gb_overview,
+#gb_profiler .gb_overview h2,
+#gb_profiler .gb_overview table,
+#gb_profiler .gb_overview table tr,
+#gb_profiler .gb_overview table th,
+#gb_profiler .gb_overview table td {
+    border: 1px solid #c3d9ec;
+    background-color: #e7f0f7;
 }
 
 #gb_profiler .gb_request.gb_request--get,

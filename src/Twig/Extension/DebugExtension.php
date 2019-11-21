@@ -46,6 +46,10 @@ class DebugExtension extends AbstractExtension
     }
 
     /**
+     * This method is removed from interface in Twig v2.0
+     *
+     * @TODO Remove this method when drop support of Symfony < 5.0
+     *
      * @return string
      */
     public function getName() : string

@@ -15,21 +15,19 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class HttpDataCollector extends DataCollector
 {
+    use DataCollectorSymfonyCompatibilityTrait;
+
     /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface */
     protected $logger;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     private $slowResponseTime;
 
     /**
      * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
      * @param float|int $slowResponseTime Time in seconds
-     *
-     * @TODO: remove in v8, PR #228
      */
-    public function __construct(LoggerInterface $logger, $slowResponseTime = 0)
+    public function __construct(LoggerInterface $logger, float $slowResponseTime)
     {
         $this->logger = $logger;
         $this->slowResponseTime = $slowResponseTime;
@@ -40,7 +38,7 @@ class HttpDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    protected function doCollect(Request $request, Response $response, \Throwable $exception = null)
     {
         $messages = $this->logger->getMessages();
 

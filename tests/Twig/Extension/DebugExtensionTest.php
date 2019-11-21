@@ -4,13 +4,16 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Twig\Extension;
 
 use EightPoints\Bundle\GuzzleBundle\Twig\Extension\DebugExtension;
 use PHPUnit\Framework\TestCase;
+use Twig\Environment;
+use Twig\Extension\ExtensionInterface;
+use Twig\TwigFunction;
 
 class DebugExtensionTest extends TestCase
 {
     public function testConstructor()
     {
         $extension = new DebugExtension();
-        $this->assertInstanceOf(\Twig_ExtensionInterface::class, $extension);
+        $this->assertInstanceOf(ExtensionInterface::class, $extension);
     }
 
     public function testDumpFunction()
@@ -20,9 +23,9 @@ class DebugExtensionTest extends TestCase
 
         $this->assertCount(1, $functions);
 
-        /** @var \Twig_Function $dumpFunction */
+        /** @var TwigFunction $dumpFunction */
         $dumpFunction = $functions[0];
-        $this->assertInstanceOf(\Twig_Function::class, $dumpFunction);
+        $this->assertInstanceOf(TwigFunction::class, $dumpFunction);
         $this->assertEquals('eight_points_guzzle_dump', $dumpFunction->getName());
         $this->assertTrue($dumpFunction->needsEnvironment());
 
@@ -33,12 +36,13 @@ class DebugExtensionTest extends TestCase
 
     public function testDump()
     {
-        $environment = $this->createMock(\Twig_Environment::class);
+        /** @var Environment $environment */
+        $environment = $this->createMock(Environment::class);
 
         $extension = new DebugExtension();
         $result = $extension->dump($environment, 'randomTestValue');
 
-        $this->assertInternalType('string', $result);
+        $this->assertIsString('string', $result);
         $this->assertContains('randomTestValue', $result);
     }
 

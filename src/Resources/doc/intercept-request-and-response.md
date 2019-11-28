@@ -72,7 +72,7 @@ Also notice that we configured `service: api_partners` parameter. String `api_pa
 As we configured in previous step, we have to implement `onPreTransaction` method in our interceptor class:
 
 ```php
-namespace App\EventSubscriber;
+namespace App\EventListener;
 
 use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEventListenerInterface;
 use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
@@ -134,7 +134,7 @@ services:
 and implement `onPostTransaction` method:
 
 ```php
-namespace App\EventSubscriber;
+namespace App\EventListener;
 
 use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEventListenerInterface;
 use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;

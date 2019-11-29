@@ -1,5 +1,6 @@
 **[Prerequisites](#prerequisites)** |
 **[Installation](#installation)** |
+**[Configuration](#configuration)** |
 **[Usage](#usage)** |
 **[Plugins](#plugins)** |
 **[Events](#events)** |
@@ -64,10 +65,12 @@ bin/console assets:install
 
 ----
 
-## Usage
+## Configuration
 
-##### Configuration in config.yml:
-``` yaml
+Guzzle clients can be configured in `config/packages/eight_points_guzzle.yaml`. For projects that use Symfony Flex this file is created
+automatically upon installation of this bundle. For projects that don't use Symfony Flex this file should be created manually.
+
+```yaml
 eight_points_guzzle:
     # (de)activate logging/profiler; default: %kernel.debug%
     logging: true
@@ -76,10 +79,10 @@ eight_points_guzzle:
     slow_response_time: 1000
 
     clients:
-        api_payment:
-            base_url: "http://api.domain.tld"
+        payment:
+            base_url: 'http://api.payment.example'
 
-            # NOTE: This option makes Guzzle Client as lazy (https://symfony.com/doc/master/service_container/lazy_services.html)
+            # NOTE: This option marks this Guzzle Client as lazy (https://symfony.com/doc/master/service_container/lazy_services.html)
             lazy: true # Default `false`
 
             # Handler class to be used for the client
@@ -93,28 +96,28 @@ eight_points_guzzle:
                     - pa55w0rd # password
 
                 headers:
-                    Accept: "application/json"
+                    Accept: 'application/json'
 
                 # Find proper php const, for example CURLOPT_SSLVERSION, remove CURLOPT_ and transform to lower case.
                 # List of curl options: http://php.net/manual/en/function.curl-setopt.php
                 curl:
-                    sslversion: 1 # or !php/const:CURL_HTTP_VERSION_1_0 for symfony >= 3.2
+                    !php/const:CURL_HTTP_VERSION_1_0: 1
 
                 timeout: 30
 
             # plugin settings
             plugin: ~
 
-        api_crm:
-            base_url: "http://api.crm.tld"
+        crm:
+            base_url: 'http://api.crm.tld'
             options:            
                 headers:
-                    Accept: "application/json"
+                    Accept: 'application/json'
 
-        ...
+        # More clients here
 ```
 
-Open [Configuration Reference](src/Resources/doc/configuration-reference.md) page to see the complete list of allowed options.
+Please refer to the [Configuration Reference](src/Resources/doc/configuration-reference.md) for a complete list of all options.
 
 ##### Install assets _(if it's not performed automatically)_:
 ``` bash

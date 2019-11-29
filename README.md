@@ -248,13 +248,15 @@ For all options please refer to [Guzzle's MessageFormatter][8].
 
 ### Create aliases for clients
 
-It is recommended to create aliases for the clients created with this bundle to get easier service names and also to
-make it easier to switch to other implementations in the future, might the need arise.
+In case your project uses manual wiring it is recommended to create aliases for the clients created with this bundle to
+get easier service names and also to make it easier to switch to other implementations in the future, might the need arise.
 
 ``` yaml
 services:
    crm.client: '@eight_points_guzzle.client.crm'
 ```
+
+In case your project uses autowiring this suggestion does not apply.
 
 ----
 

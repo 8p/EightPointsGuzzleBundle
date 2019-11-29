@@ -149,7 +149,7 @@ services:
         arguments: ['@eight_points_guzzle.client.payment']
 ```
 
-For projects that use autowiring[18], please refer to [our documentation on autowiring](src/Resources/doc/autowiring-clients.md).
+For projects that use [autowiring][18], please refer to [our documentation on autowiring](src/Resources/doc/autowiring-clients.md).
 
 ----
 

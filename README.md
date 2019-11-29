@@ -153,25 +153,26 @@ For projects that use autowiring[18], please refer to [our documentation on auto
 ----
 
 ## Plugins
+
 This bundle allows to register and integrate plugins to extend functionality of guzzle and this bundle.
 
-### Usage
+### Installation
  
-Find next lines in `src/Kernel.php`:
+In order to install a plugin, find the following lines in `src/Kernel.php`:
 
 ```php
 foreach ($contents as $class => $envs) {
-    if (isset($envs['all']) || isset($envs[$this->environment])) {
+    if ($envs[$this->environment] ?? $envs['all'] ?? false) {
         yield new $class();
     }
 }
 ```
 
-and replace them by:
+and replace them with the following:
 
 ```php
 foreach ($contents as $class => $envs) {
-    if (isset($envs['all']) || isset($envs[$this->environment])) {
+    if ($envs[$this->environment] ?? $envs['all'] ?? false) {
         if ($class === \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle::class) {
             yield new $class([
                 new \Gregurco\Bundle\GuzzleBundleOAuth2Plugin\GuzzleBundleOAuth2Plugin(),

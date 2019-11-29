@@ -195,20 +195,29 @@ foreach ($contents as $class => $envs) {
 ----
 
 ## Events
-Handling events. Events are dispatched before and after the request to the remote host.
+
+This bundle dispatches Symfony events right before a client makes a call and right after a client has made a call.
+These events can be used to intercept requests to a remote system as well as responses from a remote system.
 
 ### Listening To Events
-```xml
-    <service id="listenerID" class="Your\ListenerClass\That\Implements\GuzzleEventListenerInterface">  
-        <tag name="kernel.event_listener" event="eight_points_guzzle.pre_transaction" method="onPreTransaction" service="servicename"/>  
-    </service>  
+
+In order to listen to these events you should create a listener that implements the `GuzzleBundle\Events\GuzzleEventListenerInterface` from this bundle
+and then register that listener in the Symfony services configuration as usual:
+
+```yaml
+services:
+    my_guzzle_listener:
+        class: App\Service\MyGuzzleBundleListener
+        tags:
+            - { name: 'kernel.event_listener', event: 'eight_points_guzzle.pre_transaction', method: 'onPreTransaction', service: 'payment' }
 ```
 
-Your event Listener, or Subscriber **MUST** implement GuzzleBundle\Events\GuzzleEventListenerInterface.  
-Events dispatched are eight_points_guzzle.pre_transaction, eight_points_guzzle.post_transaction.  
-The service on the tag, is so that if you have multiple REST endpoints you can define which service a particular listener is interested in.
+Events dispatched are eight_points_guzzle.pre_transaction, eight_points_guzzle.post_transaction.
+The `service` attribute on the tag indicates to which client this listener should apply.
+Note that these listeners will receive all events from all clients; it is up to the listeners themselves to filter all incoming events and
+only process the events of the client they are interested in.
 
-Read more [here](src/Resources/doc/intercept-request-and-response.md).
+For more information, read the docs on [intercepting requests and responses](src/Resources/doc/intercept-request-and-response.md).
 
 ----
 

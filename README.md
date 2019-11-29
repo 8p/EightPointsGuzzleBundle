@@ -7,9 +7,10 @@
 **[Features](#features)** |
 **[Suggestions](#suggestions)** |
 **[Contributing](#contributing)** |
+**[Learn more](#learn-more)** |
 **[License](#license)**
 
-# Symfony GuzzleBundle
+# EightPoints GuzzleBundle for Symfony
 
 [![Total Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/downloads.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Monthly Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/d/monthly.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
@@ -18,7 +19,7 @@
 [![Scrutinizer Score](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/)
 [![License](https://poser.pugx.org/eightpoints/guzzle-bundle/license)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 
-This bundle integrates [Guzzle 6.x][1] into Symfony[16]. Guzzle is a PHP framework for building RESTful web service clients.
+This bundle integrates [Guzzle 6.x][1] into Symfony[16]. Guzzle is a PHP library for building RESTful web service clients.
 
 GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
@@ -226,55 +227,60 @@ For more information, read the docs on [intercepting requests and responses](src
 ### Symfony Debug Toolbar / Profiler
 <img src="/src/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
 
-### Symfony logs
-All requests are logged into symfony default logger (`@logger` service) with next format:
+### Logging
+
+All requests are logged to Symfony's default logger (`@logger` service) with the following (default) format:
 ```
 [{datetime}] eight_points_guzzle.{log_level}: {method} {uri} {code}
 ```
+
 Example:
 ```
 [2017-12-01 00:00:00] eight_points_guzzle.INFO: GET http://api.domain.tld 200
 ```
 
-You can change message format by overriding `eight_points_guzzle.symfony_log_formatter.pattern` parameter. See allowed variables [here][8].
+You can change the message format by overriding the `eight_points_guzzle.symfony_log_formatter.pattern` parameter.
+For all options please refer to [Guzzle's MessageFormatter][8].
 
 ----
 
 ## Suggestions
-Adding aliases:
-If you want to use different names for provided services you can use aliases. This is a good idea if you don't want
-have any dependency to guzzle in your service name.
-``` yaml
-services:
-   crm.client:
-       alias: eight_points_guzzle.client.api_crm
-```
+
+### Create aliases for clients
+
+It is recommended to create aliases for the clients created with this bundle to get easier service names and also to
+make it easier to switch to other implementations in the future, might the need arise.
 
 ``` yaml
+services:
+   crm.client: '@eight_points_guzzle.client.crm'
 ```
 
 ----
 
 ## Contributing
-👍If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
+👍 If you would like to contribute to this bundle, please read [CONTRIBUTING.md](CONTRIBUTING.md).
 
 <img src="/src/Resources/doc/img/icon_slack.png" alt="Slack" title="Slack" style="width: 23px; margin-right: -4px;" /> Join our Slack channel on [Symfony Devs][9] for discussions, questions and more: [#8p-guzzlebundle][10].
 
-🎉Thanks to the [contributors][11] who participated in this project.
+🎉 Thanks to all [contributors][11] who participated in this project.
 
 ----
 
 ## Learn more
-- [Configuration Reference](src/Resources/doc/configuration-reference.md)
-- [Environment variables integration](src/Resources/doc/environment-variables-integration.md)
-- [How to redefine class used for clients](src/Resources/doc/redefine-client-class.md)
-- [Disable throwing exceptions on HTTP errors (4xx and 5xx responses)](src/Resources/doc/disable-exception-on-http-error.md)
-- [Intercept request and response](src/Resources/doc/intercept-request-and-response.md)
 - [Autowiring Clients](src/Resources/doc/autowiring-clients.md)
+- [Configuration Reference](src/Resources/doc/configuration-reference.md)
+- [Disable throwing exceptions on HTTP errors (4xx and 5xx responses)](src/Resources/doc/disable-exception-on-http-error.md)
+- [Environment variables integration](src/Resources/doc/environment-variables-integration.md)
 - [How to create a single-file plugin](src/Resources/doc/how-to-create-a-single-file-plugin.md)
+- [How to redefine class used for clients](src/Resources/doc/redefine-client-class.md)
+- [Intercept request and response](src/Resources/doc/intercept-request-and-response.md)
+
+----
 
 ## License
-This bundle is released under the [MIT license](LICENSE)
+
+This bundle is released under the [MIT license](LICENSE).
 
 [1]: http://guzzlephp.org/
 [2]: http://semver.org/

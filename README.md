@@ -31,25 +31,36 @@ GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
 ## Installation
 
-##### Command line:
-To install this bundle, run the command below and you will get the latest version by [Packagist][3].
+### Installing the bundle
+
+To install this bundle, run the command below on the command line and you will get the latest stable version from [Packagist][3].
 
 ``` bash
 composer require eightpoints/guzzle-bundle
 ```
 
-##### composer.json
-To use the newest (maybe unstable) version please add following into your composer.json:
+_Note: this bundle has a [Symfony Flex Recipe][14] to automatically register and configure this bundle into your symfony application._
 
-``` json
-{
-    "require": {
-        "eightpoints/guzzle-bundle": "dev-master"
-    }
-}
+If your project does *not* use Symfony Flex the following needs to be added to `config/bundles.php` manually:
+
+```php
+<?php
+
+return [
+    // other bundles here
+    EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle::class => ['all' => true],
+];
 ```
 
-_Note: we created [Symfony Flex Recipe][14] to speed up the installation of package._
+### Installing the assets
+
+This bundle comes with several assets required for integration with the Symfony Debug Toolbar.
+For projects based on [symfony/skeleton][17] this is done automatically by a composer script that runs after this bundle was installed.
+If this did not happen automatically (i.e. if the CSS in the Symfony Profiler for this bundle looks off), run the following command on the command line:
+
+``` bash
+bin/console assets:install
+```
 
 ----
 
@@ -257,3 +268,4 @@ This bundle is released under the [MIT license](LICENSE)
 [14]: https://github.com/symfony/recipes-contrib/tree/master/eightpoints/guzzle-bundle
 [15]: https://github.com/EugenGanshorn/GuzzleBundleRetryPlugin
 [16]: https://symfony.com/
+[17]: https://github.com/symfony/skeleton

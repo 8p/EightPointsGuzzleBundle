@@ -115,18 +115,40 @@ eight_points_guzzle:
 
 Please refer to the [Configuration Reference](src/Resources/doc/configuration-reference.md) for a complete list of all options.
 
-##### Install assets _(if it's not performed automatically)_:
-``` bash
-bin/console assets:install
+## Usage
+
+Guzzle clients configured through this bundle are available in the Symfony Dependency Injection container under the name
+`eight_points_guzzle.client.<name of client>`. So for example a client configured in the configuration with name `payment` is available
+as `eight_points_guzzle.client.payment`.
+
+Suppose you have the following controller that requires a Guzzle Client:
+
+```php
+<?php
+
+namespace App\Controller;
+
+use Guzzle\Client;
+
+class ExampleController
+{
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
+}
 ```
 
-Using services in controller (eight_points_guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
+Using manual wiring this controller can be wired as follows:
 
-``` php
-/** @var \GuzzleHttp\Client $client */
-$client   = $this->get('eight_points_guzzle.client.api_crm');
-$response = $client->get('/users');
+```yaml
+services:
+    my.example.controller:
+        class: App\Controller\ExampleController
+        arguments: ['@eight_points_guzzle.client.payment']
 ```
+
+For projects that use autowiring[18], please refer to [our documentation on autowiring](src/Resources/doc/autowiring-clients.md).
 
 ----
 
@@ -261,3 +283,4 @@ This bundle is released under the [MIT license](LICENSE)
 [15]: https://github.com/EugenGanshorn/GuzzleBundleRetryPlugin
 [16]: https://symfony.com/
 [17]: https://github.com/symfony/skeleton
+[18]: https://symfony.com/doc/current/service_container/autowiring.html

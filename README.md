@@ -86,7 +86,6 @@ eight_points_guzzle:
             lazy: true # Default `false`
 
             # guzzle client options (full description here: https://guzzle.readthedocs.org/en/latest/request-options.html)
-            # NOTE: "headers" option is not accepted here as it is provided as described above.
             options:
                 auth:
                     - acme     # login

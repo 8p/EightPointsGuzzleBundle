@@ -1,4 +1,4 @@
-**[Requirements](#requirements)** |
+**[Prerequisites](#prerequisites)** |
 **[Installation](#installation)** |
 **[Usage](#usage)** |
 **[Plugins](#plugins)** |
@@ -23,10 +23,9 @@ GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
 ----
 
-## Requirements
- - PHP 7.1 or above
- - Symfony 4.0 or above
- - [Guzzle PHP Framework][1] (included by composer)
+## Prerequisites
+ - PHP 7.1 or higher
+ - Symfony 4.0 or 5.0
 
 ----
 

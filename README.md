@@ -213,7 +213,7 @@ services:
             - { name: 'kernel.event_listener', event: 'eight_points_guzzle.pre_transaction', method: 'onPreTransaction', service: 'payment' }
 ```
 
-Events dispatched are eight_points_guzzle.pre_transaction, eight_points_guzzle.post_transaction.
+Events dispatched are `eight_points_guzzle.pre_transaction` and `eight_points_guzzle.post_transaction`.
 The `service` attribute on the tag indicates to which client this listener should apply.
 Note that these listeners will receive all events from all clients; it is up to the listeners themselves to filter all incoming events and
 only process the events of the client they are interested in.

@@ -17,7 +17,7 @@
 [![Scrutinizer Score](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/)
 [![License](https://poser.pugx.org/eightpoints/guzzle-bundle/license)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 
-This bundle integrates [Guzzle 6.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
+This bundle integrates [Guzzle 6.x][1] into Symfony[16]. Guzzle is a PHP framework for building RESTful web service clients.
 
 GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
@@ -257,3 +257,4 @@ This bundle is released under the [MIT license](LICENSE)
 [13]: https://github.com/Neirda24/GuzzleBundleHeaderDisableCachePlugin
 [14]: https://github.com/symfony/recipes-contrib/tree/master/eightpoints/guzzle-bundle
 [15]: https://github.com/EugenGanshorn/GuzzleBundleRetryPlugin
+[16]: https://symfony.com/

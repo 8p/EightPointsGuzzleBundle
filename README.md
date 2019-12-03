@@ -1,14 +1,16 @@
-**[Requirements](#requirements)** |
+**[Prerequisites](#prerequisites)** |
 **[Installation](#installation)** |
+**[Configuration](#configuration)** |
 **[Usage](#usage)** |
 **[Plugins](#plugins)** |
 **[Events](#events)** |
 **[Features](#features)** |
 **[Suggestions](#suggestions)** |
 **[Contributing](#contributing)** |
+**[Learn more](#learn-more)** |
 **[License](#license)**
 
-# Symfony GuzzleBundle
+# EightPoints GuzzleBundle for Symfony
 
 [![Total Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/downloads.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Monthly Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/d/monthly.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
@@ -17,47 +19,59 @@
 [![Scrutinizer Score](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/)
 [![License](https://poser.pugx.org/eightpoints/guzzle-bundle/license)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 
-This bundle integrates [Guzzle 6.x][1] into Symfony. Guzzle is a PHP framework for building RESTful web service clients.
+This bundle integrates [Guzzle 6.x][1] into [Symfony][16]. Guzzle is a PHP library for building RESTful web service clients.
 
 GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 
 ----
 
-## Requirements
- - PHP 7.1 or above
- - Symfony 4.0 or above
- - [Guzzle PHP Framework][1] (included by composer)
+## Prerequisites
+ - PHP 7.1 or higher
+ - Symfony 4.x or 5.x
 
 ----
 
 ## Installation
 
-##### Command line:
-To install this bundle, run the command below and you will get the latest version by [Packagist][3].
+### Installing the bundle
+
+To install this bundle, run the command below on the command line and you will get the latest stable version from [Packagist][3].
 
 ``` bash
 composer require eightpoints/guzzle-bundle
 ```
 
-##### composer.json
-To use the newest (maybe unstable) version please add following into your composer.json:
+_Note: this bundle has a [Symfony Flex Recipe][14] to automatically register and configure this bundle into your symfony application._
 
-``` json
-{
-    "require": {
-        "eightpoints/guzzle-bundle": "dev-master"
-    }
-}
+If your project does *not* use Symfony Flex the following needs to be added to `config/bundles.php` manually:
+
+```php
+<?php
+
+return [
+    // other bundles here
+    EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle::class => ['all' => true],
+];
 ```
 
-_Note: we created [Symfony Flex Recipe][14] to speed up the installation of package._
+### Installing the assets
+
+This bundle comes with several assets required for integration with the Symfony Debug Toolbar.
+For projects based on [symfony/skeleton][17] this is done automatically by a composer script that runs after this bundle was installed.
+If this did not happen automatically (i.e. if the CSS in the Symfony Profiler for this bundle looks off), run the following command on the command line:
+
+``` bash
+bin/console assets:install
+```
 
 ----
 
-## Usage
+## Configuration
 
-##### Configuration in config.yml:
-``` yaml
+Guzzle clients can be configured in `config/packages/eight_points_guzzle.yaml`. For projects that use Symfony Flex this file is created
+automatically upon installation of this bundle. For projects that don't use Symfony Flex this file should be created manually.
+
+```yaml
 eight_points_guzzle:
     # (de)activate logging/profiler; default: %kernel.debug%
     logging: true
@@ -66,81 +80,100 @@ eight_points_guzzle:
     slow_response_time: 1000
 
     clients:
-        api_payment:
-            base_url: "http://api.domain.tld"
+        payment:
+            base_url: 'http://api.payment.example'
 
-            # NOTE: This option makes Guzzle Client as lazy (https://symfony.com/doc/master/service_container/lazy_services.html)
+            # NOTE: This option marks this Guzzle Client as lazy (https://symfony.com/doc/master/service_container/lazy_services.html)
             lazy: true # Default `false`
 
-            # Handler class to be used for the client
-            handler: 'GuzzleHttp\Handler\MockHandler'
-
             # guzzle client options (full description here: https://guzzle.readthedocs.org/en/latest/request-options.html)
-            # NOTE: "headers" option is not accepted here as it is provided as described above.
             options:
                 auth:
                     - acme     # login
                     - pa55w0rd # password
 
                 headers:
-                    Accept: "application/json"
+                    Accept: 'application/json'
 
                 # Find proper php const, for example CURLOPT_SSLVERSION, remove CURLOPT_ and transform to lower case.
                 # List of curl options: http://php.net/manual/en/function.curl-setopt.php
                 curl:
-                    sslversion: 1 # or !php/const:CURL_HTTP_VERSION_1_0 for symfony >= 3.2
+                    !php/const:CURL_HTTP_VERSION_1_0: 1
 
                 timeout: 30
 
             # plugin settings
             plugin: ~
 
-        api_crm:
-            base_url: "http://api.crm.tld"
+        crm:
+            base_url: 'http://api.crm.tld'
             options:            
                 headers:
-                    Accept: "application/json"
+                    Accept: 'application/json'
 
-        ...
+        # More clients here
 ```
 
-Open [Configuration Reference](src/Resources/doc/configuration-reference.md) page to see the complete list of allowed options.
+Please refer to the [Configuration Reference](src/Resources/doc/configuration-reference.md) for a complete list of all options.
 
-##### Install assets _(if it's not performed automatically)_:
-``` bash
-bin/console assets:install
+## Usage
+
+Guzzle clients configured through this bundle are available in the Symfony Dependency Injection container under the name
+`eight_points_guzzle.client.<name of client>`. So for example a client configured in the configuration with name `payment` is available
+as `eight_points_guzzle.client.payment`.
+
+Suppose you have the following controller that requires a Guzzle Client:
+
+```php
+<?php
+
+namespace App\Controller;
+
+use Guzzle\Client;
+
+class ExampleController
+{
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
+}
 ```
 
-Using services in controller (eight_points_guzzle.client.**api_crm** represents the client name of the yaml config and is an instance of GuzzleHttp\Client):
+Using manual wiring this controller can be wired as follows:
 
-``` php
-/** @var \GuzzleHttp\Client $client */
-$client   = $this->get('eight_points_guzzle.client.api_crm');
-$response = $client->get('/users');
+```yaml
+services:
+    my.example.controller:
+        class: App\Controller\ExampleController
+        arguments: ['@eight_points_guzzle.client.payment']
 ```
+
+For projects that use [autowiring][18], please refer to [our documentation on autowiring](src/Resources/doc/autowiring-clients.md).
 
 ----
 
 ## Plugins
+
 This bundle allows to register and integrate plugins to extend functionality of guzzle and this bundle.
 
-### Usage
+### Installation
  
-Find next lines in `src/Kernel.php`:
+In order to install a plugin, find the following lines in `src/Kernel.php`:
 
 ```php
 foreach ($contents as $class => $envs) {
-    if (isset($envs['all']) || isset($envs[$this->environment])) {
+    if ($envs[$this->environment] ?? $envs['all'] ?? false) {
         yield new $class();
     }
 }
 ```
 
-and replace them by:
+and replace them with the following:
 
 ```php
 foreach ($contents as $class => $envs) {
-    if (isset($envs['all']) || isset($envs[$this->environment])) {
+    if ($envs[$this->environment] ?? $envs['all'] ?? false) {
         if ($class === \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle::class) {
             yield new $class([
                 new \Gregurco\Bundle\GuzzleBundleOAuth2Plugin\GuzzleBundleOAuth2Plugin(),
@@ -163,20 +196,29 @@ foreach ($contents as $class => $envs) {
 ----
 
 ## Events
-Handling events. Events are dispatched before and after the request to the remote host.
+
+This bundle dispatches Symfony events right before a client makes a call and right after a client has made a call.
+These events can be used to intercept requests to a remote system as well as responses from a remote system.
 
 ### Listening To Events
-```xml
-    <service id="listenerID" class="Your\ListenerClass\That\Implements\GuzzleEventListenerInterface">  
-        <tag name="kernel.event_listener" event="eight_points_guzzle.pre_transaction" method="onPreTransaction" service="servicename"/>  
-    </service>  
+
+In order to listen to these events you should create a listener that implements the `GuzzleBundle\Events\GuzzleEventListenerInterface` from this bundle
+and then register that listener in the Symfony services configuration as usual:
+
+```yaml
+services:
+    my_guzzle_listener:
+        class: App\Service\MyGuzzleBundleListener
+        tags:
+            - { name: 'kernel.event_listener', event: 'eight_points_guzzle.pre_transaction', method: 'onPreTransaction', service: 'payment' }
 ```
 
-Your event Listener, or Subscriber **MUST** implement GuzzleBundle\Events\GuzzleEventListenerInterface.  
-Events dispatched are eight_points_guzzle.pre_transaction, eight_points_guzzle.post_transaction.  
-The service on the tag, is so that if you have multiple REST endpoints you can define which service a particular listener is interested in.
+Events dispatched are `eight_points_guzzle.pre_transaction` and `eight_points_guzzle.post_transaction`.
+The `service` attribute on the tag indicates to which client this listener should apply.
+Note that these listeners will receive all events from all clients; it is up to the listeners themselves to filter all incoming events and
+only process the events of the client they are interested in.
 
-Read more [here](src/Resources/doc/intercept-request-and-response.md).
+For more information, read the docs on [intercepting requests and responses](src/Resources/doc/intercept-request-and-response.md).
 
 ----
 
@@ -185,62 +227,62 @@ Read more [here](src/Resources/doc/intercept-request-and-response.md).
 ### Symfony Debug Toolbar / Profiler
 <img src="/src/Resources/doc/img/debug_logs.png" alt="Debug Logs" title="Symfony Debug Toolbar - Guzzle Logs" style="width: 360px" />
 
-### Symfony logs
-All requests are logged into symfony default logger (`@logger` service) with next format:
+### Logging
+
+All requests are logged to Symfony's default logger (`@logger` service) with the following (default) format:
 ```
 [{datetime}] eight_points_guzzle.{log_level}: {method} {uri} {code}
 ```
+
 Example:
 ```
 [2017-12-01 00:00:00] eight_points_guzzle.INFO: GET http://api.domain.tld 200
 ```
 
-You can change message format by overriding `eight_points_guzzle.symfony_log_formatter.pattern` parameter. See allowed variables [here][8].
+You can change the message format by overriding the `eight_points_guzzle.symfony_log_formatter.pattern` parameter.
+For all options please refer to [Guzzle's MessageFormatter][8].
 
 ----
 
 ## Suggestions
-Adding aliases:
-If you want to use different names for provided services you can use aliases. This is a good idea if you don't want
-have any dependency to guzzle in your service name.
+
+### Create aliases for clients
+
+In case your project uses manual wiring it is recommended to create aliases for the clients created with this bundle to
+get easier service names and also to make it easier to switch to other implementations in the future, might the need arise.
+
 ``` yaml
 services:
-   crm.client:
-       alias: eight_points_guzzle.client.api_crm
+   crm.client: '@eight_points_guzzle.client.crm'
 ```
 
-Use Guzzle MockHandler in tests :
-If you want to mock api calls, you can force the clients to use the Guzzle MockHandler instead of the default one.
-``` yaml
-eight_points_guzzle:
-    clients:
-        api_payment:
-            base_url: "http://api.domain.tld"
-            handler: 'GuzzleHttp\Handler\MockHandler'
-```
+In case your project uses autowiring this suggestion does not apply.
 
 ----
 
 ## Contributing
-👍If you would like to contribute to the project, please read the [CONTRIBUTING.md](CONTRIBUTING.md).
+👍 If you would like to contribute to this bundle, please read [CONTRIBUTING.md](CONTRIBUTING.md).
 
 <img src="/src/Resources/doc/img/icon_slack.png" alt="Slack" title="Slack" style="width: 23px; margin-right: -4px;" /> Join our Slack channel on [Symfony Devs][9] for discussions, questions and more: [#8p-guzzlebundle][10].
 
-🎉Thanks to the [contributors][11] who participated in this project.
+🎉 Thanks to all [contributors][11] who participated in this project.
 
 ----
 
 ## Learn more
-- [Configuration Reference](src/Resources/doc/configuration-reference.md)
-- [Environment variables integration](src/Resources/doc/environment-variables-integration.md)
-- [How to redefine class used for clients](src/Resources/doc/redefine-client-class.md)
-- [Disable throwing exceptions on HTTP errors (4xx and 5xx responses)](src/Resources/doc/disable-exception-on-http-error.md)
-- [Intercept request and response](src/Resources/doc/intercept-request-and-response.md)
 - [Autowiring Clients](src/Resources/doc/autowiring-clients.md)
+- [Configuration Reference](src/Resources/doc/configuration-reference.md)
+- [Disable throwing exceptions on HTTP errors (4xx and 5xx responses)](src/Resources/doc/disable-exception-on-http-error.md)
+- [Environment variables integration](src/Resources/doc/environment-variables-integration.md)
 - [How to create a single-file plugin](src/Resources/doc/how-to-create-a-single-file-plugin.md)
+- [How to redefine class used for clients](src/Resources/doc/redefine-client-class.md)
+- [Intercept request and response](src/Resources/doc/intercept-request-and-response.md)
+
+----
 
 ## License
-This bundle is released under the [MIT license](LICENSE)
+
+This bundle is released under the [MIT license](LICENSE).
 
 [1]: http://guzzlephp.org/
 [2]: http://semver.org/
@@ -257,3 +299,6 @@ This bundle is released under the [MIT license](LICENSE)
 [13]: https://github.com/Neirda24/GuzzleBundleHeaderDisableCachePlugin
 [14]: https://github.com/symfony/recipes-contrib/tree/master/eightpoints/guzzle-bundle
 [15]: https://github.com/EugenGanshorn/GuzzleBundleRetryPlugin
+[16]: https://symfony.com/
+[17]: https://github.com/symfony/skeleton
+[18]: https://symfony.com/doc/current/service_container/autowiring.html

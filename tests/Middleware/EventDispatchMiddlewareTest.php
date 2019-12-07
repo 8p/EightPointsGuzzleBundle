@@ -8,9 +8,11 @@ use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
 use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -23,34 +25,14 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testDispatchEvent()
     {
-        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $preTransactionEvent */
-        $preTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
-        $preTransactionEvent->expects($this->once())
-            ->method('__invoke')
-            ->with($this->callback(function(PreTransactionEvent $event){
-                return $event->getServiceName() === 'main';
-            }));
-
-        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $postTransactionEvent */
-        $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
-        $postTransactionEvent->expects($this->once())
-            ->method('__invoke')
-            ->with($this->callback(function(PostTransactionEvent $event){
-                return $event->getServiceName() === 'main';
-            }));
-
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(GuzzleEvents::PRE_TRANSACTION, $preTransactionEvent);
-        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
+        $eventDispatcher->addListener(GuzzleEvents::PRE_TRANSACTION, $this->createPreTransactionEventListener());
+        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $this->createPostTransactionEventListener());
 
         $request = new Request('POST', 'http://api.domain.tld');
         $handler = new MockHandler([new Response(200)]);
 
-        $eventDispatchMiddleware = new EventDispatchMiddleware($eventDispatcher, 'main');
-        $eventDispatcherResult = $eventDispatchMiddleware->dispatchEvent();
-        $result = $eventDispatcherResult($handler);
-        /** @var \GuzzleHttp\Promise\Promise $promise */
-        $promise = $result($request, []);
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
 
@@ -64,25 +46,19 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenPreTransactionListenerChangesRequest()
     {
-        $preTransactionEvent = function(PreTransactionEvent $event) {
+        $preTransactionListener = static function(PreTransactionEvent $event) {
             $request = $event->getTransaction();
 
-            $request = $request->withHeader('some-test-header', 'some-test-value');
-
-            $event->setTransaction($request);
+            $event->setTransaction($request->withHeader('some-test-header', 'some-test-value'));
         };
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(GuzzleEvents::PRE_TRANSACTION, $preTransactionEvent);
+        $eventDispatcher->addListener(GuzzleEvents::PRE_TRANSACTION, $preTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $handler = new MockHandler([new Response(200)]);
 
-        $eventDispatchMiddleware = new EventDispatchMiddleware($eventDispatcher, 'main');
-        $eventDispatcherResult = $eventDispatchMiddleware->dispatchEvent();
-        $result = $eventDispatcherResult($handler);
-        /** @var \GuzzleHttp\Promise\Promise $promise */
-        $promise = $result($request, []);
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
 
@@ -101,25 +77,19 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenPostTransactionListenerChangesResponse()
     {
-        $postTransactionEvent = function(PostTransactionEvent $event) {
+        $postTransactionListener = static function(PostTransactionEvent $event) {
             $response = $event->getTransaction();
 
-            $response = $response->withHeader('some-test-header', 'some-test-value');
-
-            $event->setTransaction($response);
+            $event->setTransaction($response->withHeader('some-test-header', 'some-test-value'));
         };
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
+        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $handler = new MockHandler([new Response(200)]);
 
-        $eventDispatchMiddleware = new EventDispatchMiddleware($eventDispatcher, 'main');
-        $eventDispatcherResult = $eventDispatchMiddleware->dispatchEvent();
-        $result = $eventDispatcherResult($handler);
-        /** @var \GuzzleHttp\Promise\Promise $promise */
-        $promise = $result($request, []);
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
 
@@ -136,26 +106,16 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testDispatchEventShouldCallPostTransactionListener()
     {
-        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $postTransactionEvent */
-        $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
-        $postTransactionEvent->expects($this->once())
-            ->method('__invoke')
-            ->with($this->callback(function(PostTransactionEvent $event){
-                return $event->getServiceName() === 'main';
-            }));
+        $postTransactionListener = $this->createPostTransactionEventListener();
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
+        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $exception = new RequestException('message', $request);
         $handler = new MockHandler([$exception]);
 
-        $eventDispatchMiddleware = new EventDispatchMiddleware($eventDispatcher, 'main');
-        $eventDispatcherResult = $eventDispatchMiddleware->dispatchEvent();
-        $result = $eventDispatcherResult($handler);
-        /** @var \GuzzleHttp\Promise\Promise $promise */
-        $promise = $result($request, []);
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
 
@@ -169,26 +129,16 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenPostTransactionListenerReceivesNullFromException()
     {
-        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $postTransactionEvent */
-        $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
-        $postTransactionEvent->expects($this->once())
-            ->method('__invoke')
-            ->with($this->callback(function(PostTransactionEvent $event){
-                return $event->getTransaction() === null;
-            }));
+        $postTransactionListener = $this->createPostTransactionEventListener();
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
+        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $exception = new RequestException('message', $request);
         $handler = new MockHandler([$exception]);
 
-        $eventDispatchMiddleware = new EventDispatchMiddleware($eventDispatcher, 'main');
-        $eventDispatcherResult = $eventDispatchMiddleware->dispatchEvent();
-        $result = $eventDispatcherResult($handler);
-        /** @var \GuzzleHttp\Promise\Promise $promise */
-        $promise = $result($request, []);
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
 
@@ -200,14 +150,15 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenPostTransactionListenerReceivesResponseFromException()
     {
-        /** @var Callable|\PHPUnit_Framework_MockObject_MockObject $postTransactionEvent */
+        /** @var Callable|MockObject $postTransactionEvent */
         $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
         $postTransactionEvent->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(PostTransactionEvent $event){
+            ->with($this->callback(static function(PostTransactionEvent $event){
                 $response = $event->getTransaction();
 
-                return is_object($response) &&
+                return $event->getServiceName() === 'main' &&
+                    is_object($response) &&
                     get_class($response) === Response::class &&
                     $response->getHeaderLine('some-test-header') === 'some-test-value';
             }));
@@ -220,14 +171,47 @@ class EventDispatchMiddlewareTest extends TestCase
         $exception = new RequestException('message', $request, $response);
         $handler = new MockHandler([$exception]);
 
-        $eventDispatchMiddleware = new EventDispatchMiddleware($eventDispatcher, 'main');
-        $eventDispatcherResult = $eventDispatchMiddleware->dispatchEvent();
-        $result = $eventDispatcherResult($handler);
-        /** @var \GuzzleHttp\Promise\Promise $promise */
-        $promise = $result($request, []);
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
 
         $promise->wait(false);
+    }
+
+    private function createPreTransactionEventListener(): callable
+    {
+        /** @var callable|MockObject $listener */
+        $listener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $listener->expects($this->once())
+            ->method('__invoke')
+            ->with($this->callback(static function(PreTransactionEvent $event) {
+                return $event->getServiceName() === 'main';
+            }));
+
+        return $listener;
+    }
+
+    private function createPostTransactionEventListener(): callable
+    {
+        /** @var callable|MockObject $listener */
+        $listener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $listener->expects($this->once())
+            ->method('__invoke')
+            ->with($this->callback(static function(PostTransactionEvent $event) {
+                return $event->getServiceName() === 'main';
+            }));
+
+        return $listener;
+    }
+
+    public function dispatchEvents(EventDispatcher $eventDispatcher, MockHandler $handler, Request $request): Promise
+    {
+        $eventDispatchMiddleware = new EventDispatchMiddleware($eventDispatcher, 'main');
+        $eventDispatcherResult = $eventDispatchMiddleware->dispatchEvent();
+        $result = $eventDispatcherResult($handler);
+        /** @var Promise $promise */
+        $promise = $result($request, []);
+
+        return $promise;
     }
 }

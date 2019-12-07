@@ -6,7 +6,6 @@ use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEventListenerInterface;
 use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use function error_log;
 use function sprintf;
 use function trigger_error;
 

@@ -198,25 +198,31 @@ foreach ($contents as $class => $envs) {
 ## Events
 
 This bundle dispatches Symfony events right before a client makes a call and right after a client has made a call.
+There are two types of events dispatched every time; a _generic_ event, that is dispatched regardless of which client is doing the request,
+and a _client specific_ event, that is dispatched only to listeners specifically subscribed to events from a specific client. 
 These events can be used to intercept requests to a remote system as well as responses from a remote system.
+In case a generic event listener and a client specific event listener both change a request/response, the changes from the client
+specific listener override those of the generic listener in case of a collision (both setting the same header for example).
 
 ### Listening To Events
 
-In order to listen to these events you should create a listener that implements the `GuzzleBundle\Events\GuzzleEventListenerInterface` from this bundle
-and then register that listener in the Symfony services configuration as usual:
+In order to listen to these events you should create a listener and register that listener in the Symfony services configuration as usual:
 
 ```yaml
 services:
     my_guzzle_listener:
         class: App\Service\MyGuzzleBundleListener
         tags:
-            - { name: 'kernel.event_listener', event: 'eight_points_guzzle.pre_transaction', method: 'onPreTransaction', service: 'payment' }
+            # Listen for generic pre transaction event (will receive events for all clients)
+            - { name: 'kernel.event_listener', event: 'eight_points_guzzle.pre_transaction', method: 'onPreTransaction' }
+            # Listen for client specific pre transaction events (will only receive events for the "payment" client)
+            - { name: 'kernel.event_listener', event: 'eight_points_guzzle.pre_transaction.payment', method: 'onPrePaymentTransaction' }
+            
+            - # Listen for generic post transaction event (will receive events for all clients)
+            - { name: 'kernel.event_listener', event: 'eight_points_guzzle.post_transaction', method: 'onPostTransaction' }
+            # Listen for client specific post transaction events (will only receive events for the "payment" client)
+            - { name: 'kernel.event_listener', event: 'eight_points_guzzle.post_transaction.payment', method: 'onPostPaymentTransaction' } 
 ```
-
-Events dispatched are `eight_points_guzzle.pre_transaction` and `eight_points_guzzle.post_transaction`.
-The `service` attribute on the tag indicates to which client this listener should apply.
-Note that these listeners will receive all events from all clients; it is up to the listeners themselves to filter all incoming events and
-only process the events of the client they are interested in.
 
 For more information, read the docs on [intercepting requests and responses](src/Resources/doc/intercept-request-and-response.md).
 

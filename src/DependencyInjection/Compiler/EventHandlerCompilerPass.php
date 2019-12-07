@@ -2,9 +2,13 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler;
 
+use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEventListenerInterface;
 use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use function error_log;
+use function sprintf;
+use function trigger_error;
 
 class EventHandlerCompilerPass implements CompilerPassInterface
 {
@@ -29,6 +33,14 @@ class EventHandlerCompilerPass implements CompilerPassInterface
         foreach ($taggedServices as $id => $tags) {
             foreach ($tags as $attributes) {
                 if (isset($attributes['service']) && in_array($attributes['event'], GuzzleEvents::EVENTS, true)) {
+                    @trigger_error(
+                        sprintf(
+                            'Using interface "%s" is deprecated and will be removed in EightPointsGuzzleBundle version 8',
+                            GuzzleEventListenerInterface::class
+                        ),
+                        E_USER_DEPRECATED
+                    );
+
                     $container->getDefinition($id)->addMethodCall(
                         'setServiceName',
                         [$attributes['service']]

@@ -16,9 +16,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use function sprintf;
 
 class EventDispatchMiddlewareTest extends TestCase
 {
+    const SERVICE_NAME = 'main';
+
     /**
      * Test that listeners for 'eight_points_guzzle.pre_transaction' and
      * 'eight_points_guzzle.post_transaction' are called.
@@ -27,6 +30,7 @@ class EventDispatchMiddlewareTest extends TestCase
     {
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addListener(GuzzleEvents::PRE_TRANSACTION, $this->createPreTransactionEventListener());
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::PRE_TRANSACTION, self::SERVICE_NAME), $this->createPreTransactionEventListener());
         $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $this->createPostTransactionEventListener());
 
         $request = new Request('POST', 'http://api.domain.tld');
@@ -40,11 +44,34 @@ class EventDispatchMiddlewareTest extends TestCase
     }
 
     /**
-     * Test the case when Pre Transaction listener modify request (add header)
+     * Test the case where a client specific listener is configured and an event is dispatched for another client
+     */
+    public function testCaseWhenClientSpecificPreTransactionListenerIsNotPassedEventsForOtherClients()
+    {
+        /** @var callable|MockObject $nonCalledListener */
+        $nonCalledListener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $nonCalledListener->expects($this->never())->method('__invoke');
+
+        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::PRE_TRANSACTION, self::SERVICE_NAME), $this->createPreTransactionEventListener());
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::PRE_TRANSACTION, 'other-service-name'), $nonCalledListener);
+
+        $request = new Request('POST', 'http://api.domain.tld');
+        $handler = new MockHandler([new Response(200)]);
+
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
+
+        $this->assertInstanceOf(PromiseInterface::class, $promise);
+
+        $promise->wait();
+    }
+
+    /**
+     * Test the case when generic Pre Transaction listener modify request (add header)
      *
      * @see https://github.com/8p/EightPointsGuzzleBundle/pull/119
      */
-    public function testCaseWhenPreTransactionListenerChangesRequest()
+    public function testCaseWhenGenericPreTransactionListenerChangesRequest()
     {
         $preTransactionListener = static function(PreTransactionEvent $event) {
             $request = $event->getTransaction();
@@ -68,6 +95,85 @@ class EventDispatchMiddlewareTest extends TestCase
         $this->assertInstanceOf(Request::class, $lastRequest);
         $this->assertTrue($lastRequest->hasHeader('some-test-header'));
         $this->assertEquals('some-test-value', $lastRequest->getHeaderLine('some-test-header'));
+    }
+
+    /**
+     * Test the case when client specific Pre Transaction listener modify request (add header)
+     *
+     * @see https://github.com/8p/EightPointsGuzzleBundle/pull/119
+     */
+    public function testCaseWhenClientSpecificPreTransactionListenerChangesRequest()
+    {
+        $preTransactionListener = static function(PreTransactionEvent $event) {
+            $request = $event->getTransaction();
+
+            $event->setTransaction($request->withHeader('some-test-header', 'some-test-value'));
+        };
+
+        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::PRE_TRANSACTION, self::SERVICE_NAME), $preTransactionListener);
+
+        $request = new Request('POST', 'http://api.domain.tld');
+        $handler = new MockHandler([new Response(200)]);
+
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
+
+        $this->assertInstanceOf(PromiseInterface::class, $promise);
+
+        $promise->wait();
+
+        $lastRequest = $handler->getLastRequest();
+        $this->assertInstanceOf(Request::class, $lastRequest);
+        $this->assertTrue($lastRequest->hasHeader('some-test-header'));
+        $this->assertEquals('some-test-value', $lastRequest->getHeaderLine('some-test-header'));
+    }
+
+    /**
+     * Test the case when both client specific and generic Pre Transaction listener modify request (add header)
+     *
+     * @see https://github.com/8p/EightPointsGuzzleBundle/pull/119
+     */
+    public function testCaseWhenBothGenericAndClientSpecificPreTransactionListenerChangesRequest()
+    {
+        $genericPreTransactionListener = static function(PreTransactionEvent $event) {
+            $request = $event->getTransaction();
+
+            $event->setTransaction($request->withHeader('some-test-header', 'some-generic-value')->withHeader('some-generic-header', 'some-generic-value'));
+        };
+
+        $clientSpecificPreTransactionListener = static function(PreTransactionEvent $event) {
+            $request = $event->getTransaction();
+
+            $event->setTransaction($request->withHeader('some-test-header', 'some-client-specific-value')->withHeader('some-client-specific-header', 'some-client-specific-value'));
+        };
+
+        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher->addListener(GuzzleEvents::PRE_TRANSACTION, $genericPreTransactionListener);
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::PRE_TRANSACTION, self::SERVICE_NAME), $clientSpecificPreTransactionListener);
+
+        $request = new Request('POST', 'http://api.domain.tld');
+        $handler = new MockHandler([new Response(200)]);
+
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
+
+        $this->assertInstanceOf(PromiseInterface::class, $promise);
+
+        $promise->wait();
+
+        $lastRequest = $handler->getLastRequest();
+        $this->assertInstanceOf(Request::class, $lastRequest);
+
+        // generic headers are added to the request
+        $this->assertTrue($lastRequest->hasHeader('some-generic-header'));
+        $this->assertEquals('some-generic-value', $lastRequest->getHeaderLine('some-generic-header'));
+
+        // client specific headers are added to the request
+        $this->assertTrue($lastRequest->hasHeader('some-client-specific-header'));
+        $this->assertEquals('some-client-specific-value', $lastRequest->getHeaderLine('some-client-specific-header'));
+
+        // client specific headers override generic headers
+        $this->assertTrue($lastRequest->hasHeader('some-test-header'));
+        $this->assertEquals('some-client-specific-value', $lastRequest->getHeaderLine('some-test-header'));
     }
 
     /**
@@ -185,7 +291,7 @@ class EventDispatchMiddlewareTest extends TestCase
         $listener->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function(PreTransactionEvent $event) {
-                return $event->getServiceName() === 'main';
+                return $event->getServiceName() === self::SERVICE_NAME;
             }));
 
         return $listener;
@@ -198,7 +304,7 @@ class EventDispatchMiddlewareTest extends TestCase
         $listener->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function(PostTransactionEvent $event) {
-                return $event->getServiceName() === 'main';
+                return $event->getServiceName() === self::SERVICE_NAME;
             }));
 
         return $listener;
@@ -206,7 +312,7 @@ class EventDispatchMiddlewareTest extends TestCase
 
     public function dispatchEvents(EventDispatcher $eventDispatcher, MockHandler $handler, Request $request): Promise
     {
-        $eventDispatchMiddleware = new EventDispatchMiddleware($eventDispatcher, 'main');
+        $eventDispatchMiddleware = new EventDispatchMiddleware($eventDispatcher, self::SERVICE_NAME);
         $eventDispatcherResult = $eventDispatchMiddleware->dispatchEvent();
         $result = $eventDispatcherResult($handler);
         /** @var Promise $promise */

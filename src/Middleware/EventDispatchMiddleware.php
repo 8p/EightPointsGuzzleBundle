@@ -52,6 +52,10 @@ class EventDispatchMiddleware
 
                 // Dispatch it through the symfony Dispatcher.
                 $this->doDispatch($preTransactionEvent, GuzzleEvents::PRE_TRANSACTION);
+                $this->doDispatch(
+                    $preTransactionEvent,
+                    sprintf('%s.%s', GuzzleEvents::PRE_TRANSACTION, $this->serviceName)
+                );
 
                 // Continue the handler chain.
                 $promise = $handler($preTransactionEvent->getTransaction(), $options);

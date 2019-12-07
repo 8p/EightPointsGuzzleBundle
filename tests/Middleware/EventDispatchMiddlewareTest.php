@@ -16,7 +16,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use function sprintf;
 
 class EventDispatchMiddlewareTest extends TestCase
 {
@@ -30,7 +29,7 @@ class EventDispatchMiddlewareTest extends TestCase
     {
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addListener(GuzzleEvents::PRE_TRANSACTION, $this->createPreTransactionEventListener());
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::PRE_TRANSACTION, self::SERVICE_NAME), $this->createPreTransactionEventListener());
+        $eventDispatcher->addListener(GuzzleEvents::preTransactionFor(self::SERVICE_NAME), $this->createPreTransactionEventListener());
         $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $this->createPostTransactionEventListener());
 
         $request = new Request('POST', 'http://api.domain.tld');
@@ -53,8 +52,8 @@ class EventDispatchMiddlewareTest extends TestCase
         $nonCalledListener->expects($this->never())->method('__invoke');
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::PRE_TRANSACTION, self::SERVICE_NAME), $this->createPreTransactionEventListener());
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::PRE_TRANSACTION, 'other-service-name'), $nonCalledListener);
+        $eventDispatcher->addListener(GuzzleEvents::preTransactionFor(self::SERVICE_NAME), $this->createPreTransactionEventListener());
+        $eventDispatcher->addListener(GuzzleEvents::preTransactionFor('other-service-name'), $nonCalledListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $handler = new MockHandler([new Response(200)]);
@@ -76,8 +75,8 @@ class EventDispatchMiddlewareTest extends TestCase
         $nonCalledListener->expects($this->never())->method('__invoke');
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $this->createPostTransactionEventListener());
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, 'other-service-name'), $nonCalledListener);
+        $eventDispatcher->addListener(GuzzleEvents::postTransactionFor(self::SERVICE_NAME), $this->createPostTransactionEventListener());
+        $eventDispatcher->addListener(GuzzleEvents::postTransactionFor('other-service-name'), $nonCalledListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $handler = new MockHandler([new Response(200)]);
@@ -134,7 +133,7 @@ class EventDispatchMiddlewareTest extends TestCase
         };
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::PRE_TRANSACTION, self::SERVICE_NAME), $preTransactionListener);
+        $eventDispatcher->addListener(GuzzleEvents::preTransactionFor(self::SERVICE_NAME), $preTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $handler = new MockHandler([new Response(200)]);
@@ -172,7 +171,7 @@ class EventDispatchMiddlewareTest extends TestCase
 
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addListener(GuzzleEvents::PRE_TRANSACTION, $genericPreTransactionListener);
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::PRE_TRANSACTION, self::SERVICE_NAME), $clientSpecificPreTransactionListener);
+        $eventDispatcher->addListener(GuzzleEvents::preTransactionFor(self::SERVICE_NAME), $clientSpecificPreTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $handler = new MockHandler([new Response(200)]);
@@ -244,7 +243,7 @@ class EventDispatchMiddlewareTest extends TestCase
         };
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $postTransactionListener);
+        $eventDispatcher->addListener(GuzzleEvents::postTransactionFor(self::SERVICE_NAME), $postTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $handler = new MockHandler([new Response(200)]);
@@ -282,7 +281,7 @@ class EventDispatchMiddlewareTest extends TestCase
 
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $genericPostTransactionListener);
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $clientSpecificPostTransactionListener);
+        $eventDispatcher->addListener(GuzzleEvents::postTransactionFor(self::SERVICE_NAME), $clientSpecificPostTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $handler = new MockHandler([new Response(200)]);
@@ -319,7 +318,7 @@ class EventDispatchMiddlewareTest extends TestCase
 
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $genericPostTransactionListener);
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $clientSpecificPostTransactionListener);
+        $eventDispatcher->addListener(GuzzleEvents::postTransactionFor(self::SERVICE_NAME), $clientSpecificPostTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $exception = new RequestException('message', $request);
@@ -344,7 +343,7 @@ class EventDispatchMiddlewareTest extends TestCase
 
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $genericPostTransactionListener);
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $clientSpecificTransactionListener);
+        $eventDispatcher->addListener(GuzzleEvents::postTransactionFor(self::SERVICE_NAME), $clientSpecificTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $exception = new RequestException('message', $request);
@@ -385,7 +384,7 @@ class EventDispatchMiddlewareTest extends TestCase
 
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $genericPostTransactionListener);
-        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $clientSpecificPostTransactionListener);
+        $eventDispatcher->addListener(GuzzleEvents::postTransactionFor(self::SERVICE_NAME), $clientSpecificPostTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $response = new Response(200, ['some-test-header' => 'some-test-value']);

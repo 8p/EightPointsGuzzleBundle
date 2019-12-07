@@ -14,7 +14,8 @@ class EventHandlerCompilerPassTest extends TestCase
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler\EventHandlerCompilerPass::process
      *
-     * @group legacy This functionality will be removed in EightPointGuzzleBundle version 8
+     * This functionality will be removed in EightPointGuzzleBundle version 8
+     * @group legacy
      */
     public function testProcessAddedMethodCall()
     {

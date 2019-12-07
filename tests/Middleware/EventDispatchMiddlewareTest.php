@@ -67,6 +67,29 @@ class EventDispatchMiddlewareTest extends TestCase
     }
 
     /**
+     * Test the case where a client specific listener is configured and an event is dispatched for another client
+     */
+    public function testCaseWhenClientSpecificPostTransactionListenerIsNotPassedEventsForOtherClients()
+    {
+        /** @var callable|MockObject $nonCalledListener */
+        $nonCalledListener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $nonCalledListener->expects($this->never())->method('__invoke');
+
+        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $this->createPostTransactionEventListener());
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, 'other-service-name'), $nonCalledListener);
+
+        $request = new Request('POST', 'http://api.domain.tld');
+        $handler = new MockHandler([new Response(200)]);
+
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
+
+        $this->assertInstanceOf(PromiseInterface::class, $promise);
+
+        $promise->wait();
+    }
+
+    /**
      * Test the case when generic Pre Transaction listener modify request (add header)
      *
      * @see https://github.com/8p/EightPointsGuzzleBundle/pull/119
@@ -177,11 +200,11 @@ class EventDispatchMiddlewareTest extends TestCase
     }
 
     /**
-     * Test the case when Post Transaction listener modify response (add header)
+     * Test the case when generic Post Transaction listener modify response (add header)
      *
      * @see https://github.com/8p/EightPointsGuzzleBundle/pull/132
      */
-    public function testCaseWhenPostTransactionListenerChangesResponse()
+    public function testCaseWhenGenericPostTransactionListenerChangesResponse()
     {
         $postTransactionListener = static function(PostTransactionEvent $event) {
             $response = $event->getTransaction();
@@ -208,14 +231,95 @@ class EventDispatchMiddlewareTest extends TestCase
     }
 
     /**
-     * Post Transaction listener should be called even is request failed
+     * Test the case when client specific Post Transaction listener modify response (add header)
+     *
+     * @see https://github.com/8p/EightPointsGuzzleBundle/pull/132
      */
-    public function testDispatchEventShouldCallPostTransactionListener()
+    public function testCaseWhenClientSpecificPostTransactionListenerChangesResponse()
     {
-        $postTransactionListener = $this->createPostTransactionEventListener();
+        $postTransactionListener = static function(PostTransactionEvent $event) {
+            $response = $event->getTransaction();
+
+            $event->setTransaction($response->withHeader('some-test-header', 'some-test-value'));
+        };
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionListener);
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $postTransactionListener);
+
+        $request = new Request('POST', 'http://api.domain.tld');
+        $handler = new MockHandler([new Response(200)]);
+
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
+
+        $this->assertInstanceOf(PromiseInterface::class, $promise);
+
+        /** @var ResponseInterface $response */
+        $response = $promise->wait();
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertTrue($response->hasHeader('some-test-header'));
+        $this->assertEquals('some-test-value', $response->getHeaderLine('some-test-header'));
+    }
+
+    /**
+     * Test the case when both generic and client specific Post Transaction listener modify response (add header)
+     *
+     * @see https://github.com/8p/EightPointsGuzzleBundle/pull/132
+     */
+    public function testCaseWhenBothGenericAndClientSpecificPostTransactionListenerChangeResponse()
+    {
+        $genericPostTransactionListener = static function(PostTransactionEvent $event) {
+            $response = $event->getTransaction();
+
+            $event->setTransaction($response->withHeader('some-test-header', 'some-generic-value')->withHeader('some-generic-header', 'some-generic-value'));
+        };
+
+        $clientSpecificPostTransactionListener = static function(PostTransactionEvent $event) {
+            $response = $event->getTransaction();
+
+            $event->setTransaction($response->withHeader('some-test-header', 'some-client-specific-value')->withHeader('some-client-specific-header', 'some-client-specific-value'));
+        };
+
+        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $genericPostTransactionListener);
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $clientSpecificPostTransactionListener);
+
+        $request = new Request('POST', 'http://api.domain.tld');
+        $handler = new MockHandler([new Response(200)]);
+
+        $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);
+
+        $this->assertInstanceOf(PromiseInterface::class, $promise);
+
+        /** @var ResponseInterface $response */
+        $response = $promise->wait();
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+
+        // generic headers are added to the response
+        $this->assertTrue($response->hasHeader('some-generic-header'));
+        $this->assertEquals('some-generic-value', $response->getHeaderLine('some-generic-header'));
+
+        // client specific headers are added to the response
+        $this->assertTrue($response->hasHeader('some-client-specific-header'));
+        $this->assertEquals('some-client-specific-value', $response->getHeaderLine('some-client-specific-header'));
+
+        // client specific headers override generic headers
+        $this->assertTrue($response->hasHeader('some-test-header'));
+        $this->assertEquals('some-client-specific-value', $response->getHeaderLine('some-test-header'));
+    }
+
+    /**
+     * Post Transaction listener should be called even is request failed
+     */
+    public function testDispatchEventsShouldCallPostTransactionListener()
+    {
+        $genericPostTransactionListener = $this->createPostTransactionEventListener();
+        $clientSpecificPostTransactionListener = $this->createPostTransactionEventListener();
+
+        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $genericPostTransactionListener);
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $clientSpecificPostTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $exception = new RequestException('message', $request);
@@ -235,10 +339,12 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenPostTransactionListenerReceivesNullFromException()
     {
-        $postTransactionListener = $this->createPostTransactionEventListener();
+        $genericPostTransactionListener = $this->createPostTransactionEventListener();
+        $clientSpecificTransactionListener = $this->createPostTransactionEventListener();
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionListener);
+        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $genericPostTransactionListener);
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $clientSpecificTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $exception = new RequestException('message', $request);
@@ -256,21 +362,30 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenPostTransactionListenerReceivesResponseFromException()
     {
-        /** @var Callable|MockObject $postTransactionEvent */
-        $postTransactionEvent = $this->createPartialMock(\stdClass::class, ['__invoke']);
-        $postTransactionEvent->expects($this->once())
-            ->method('__invoke')
-            ->with($this->callback(static function(PostTransactionEvent $event){
-                $response = $event->getTransaction();
+        $callback = $this->callback(static function (PostTransactionEvent $event) {
+            $response = $event->getTransaction();
 
-                return $event->getServiceName() === 'main' &&
-                    is_object($response) &&
-                    get_class($response) === Response::class &&
-                    $response->getHeaderLine('some-test-header') === 'some-test-value';
-            }));
+            return $event->getServiceName() === 'main' &&
+                is_object($response) &&
+                get_class($response) === Response::class &&
+                $response->getHeaderLine('some-test-header') === 'some-test-value';
+        });
+
+        /** @var Callable|MockObject $genericPostTransactionListener */
+        $genericPostTransactionListener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $genericPostTransactionListener->expects($this->once())
+            ->method('__invoke')
+            ->with($callback);
+
+        /** @var Callable|MockObject $genericPostTransactionListener */
+        $clientSpecificPostTransactionListener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $clientSpecificPostTransactionListener->expects($this->once())
+            ->method('__invoke')
+            ->with($callback);
 
         $eventDispatcher = new EventDispatcher();
-        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $postTransactionEvent);
+        $eventDispatcher->addListener(GuzzleEvents::POST_TRANSACTION, $genericPostTransactionListener);
+        $eventDispatcher->addListener(sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, self::SERVICE_NAME), $clientSpecificPostTransactionListener);
 
         $request = new Request('POST', 'http://api.domain.tld');
         $response = new Response(200, ['some-test-header' => 'some-test-value']);

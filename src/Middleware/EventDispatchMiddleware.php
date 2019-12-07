@@ -68,6 +68,10 @@ class EventDispatchMiddleware
 
                         // Dispatch the event on the symfony event dispatcher.
                         $this->doDispatch($postTransactionEvent, GuzzleEvents::POST_TRANSACTION);
+                        $this->doDispatch(
+                            $postTransactionEvent,
+                            sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, $this->serviceName)
+                        );
 
                         // Continue down the chain.
                         return $postTransactionEvent->getTransaction();
@@ -81,6 +85,10 @@ class EventDispatchMiddleware
 
                         // Dispatch the event on the symfony event dispatcher.
                         $this->doDispatch($postTransactionEvent, GuzzleEvents::POST_TRANSACTION);
+                        $this->doDispatch(
+                            $postTransactionEvent,
+                            sprintf('%s.%s', GuzzleEvents::POST_TRANSACTION, $this->serviceName)
+                        );
 
                         // Continue down the chain.
                         return \GuzzleHttp\Promise\rejection_for($reason);

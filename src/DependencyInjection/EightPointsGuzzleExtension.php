@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\ExpressionLanguage\Expression;
 use GuzzleHttp\HandlerStack;
 
 class EightPointsGuzzleExtension extends Extension
@@ -119,9 +118,6 @@ class EightPointsGuzzleExtension extends Extension
         $eventService = $this->createEventMiddleware($clientName);
         $container->setDefinition($eventServiceName, $eventService);
 
-        // Create the event Dispatch Middleware
-        $eventExpression  = new Expression(sprintf("service('%s').dispatchEvent()", $eventServiceName));
-
         $handler = new Definition(HandlerStack::class);
         $handler->setFactory([HandlerStack::class, 'create']);
         if (isset($options['handler'])) {
@@ -155,7 +151,7 @@ class EightPointsGuzzleExtension extends Extension
         }
 
         // goes on the end of the stack.
-        $handler->addMethodCall('unshift', [$eventExpression, 'events']);
+        $handler->addMethodCall('unshift', [[new Reference($eventServiceName), 'dispatchEvent'], 'events']);
 
         return $handler;
     }
@@ -246,8 +242,7 @@ class EightPointsGuzzleExtension extends Extension
         $requestTimeMiddlewareDefinition->setPublic(true);
         $container->setDefinition($requestTimeMiddlewareDefinitionName, $requestTimeMiddlewareDefinition);
 
-        $requestTimeExpression = new Expression(sprintf("service('%s')", $requestTimeMiddlewareDefinitionName));
-        $handler->addMethodCall('after', ['log', $requestTimeExpression, 'request_time']);
+        $handler->addMethodCall('after', ['log', new Reference($requestTimeMiddlewareDefinitionName), 'request_time']);
     }
 
     /**
@@ -268,8 +263,7 @@ class EightPointsGuzzleExtension extends Extension
         $logMiddlewareDefinition->setPublic(true);
         $container->setDefinition($logMiddlewareDefinitionName, $logMiddlewareDefinition);
 
-        $logExpression = new Expression(sprintf("service('%s').log()", $logMiddlewareDefinitionName));
-        $handler->addMethodCall('push', [$logExpression, 'log']);
+        $handler->addMethodCall('push', [[new Reference($logMiddlewareDefinitionName), 'log'], 'log']);
     }
 
     /**
@@ -289,8 +283,7 @@ class EightPointsGuzzleExtension extends Extension
         $profileMiddlewareDefinition->setPublic(true);
         $container->setDefinition($profileMiddlewareDefinitionName, $profileMiddlewareDefinition);
 
-        $profileExpression = new Expression(sprintf("service('%s').profile()", $profileMiddlewareDefinitionName));
-        $handler->addMethodCall('push', [$profileExpression, 'profile']);
+        $handler->addMethodCall('push', [[new Reference($profileMiddlewareDefinitionName), 'profile'], 'profile']);
     }
 
     /**
@@ -300,8 +293,7 @@ class EightPointsGuzzleExtension extends Extension
      */
     protected function attachSymfonyLogMiddlewareToHandler(Definition $handler) : void
     {
-        $logExpression = new Expression(sprintf("service('%s')", 'eight_points_guzzle.middleware.symfony_log'));
-        $handler->addMethodCall('push', [$logExpression, 'symfony_log']);
+        $handler->addMethodCall('push', [new Reference('eight_points_guzzle.middleware.symfony_log'), 'symfony_log']);
     }
 
     /**

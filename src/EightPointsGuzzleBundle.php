@@ -38,8 +38,6 @@ class EightPointsGuzzleBundle extends Bundle
         foreach ($this->plugins as $plugin) {
             $plugin->build($container);
         }
-
-        $container->addCompilerPass(new EventHandlerCompilerPass());
     }
 
     /**

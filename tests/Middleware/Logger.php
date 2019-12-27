@@ -14,7 +14,7 @@ class Logger extends AbstractLogger
      * @param string $message
      * @param array $context
      */
-    public function log($level, $message, array $context = []): void
+    public function log($level, $message, array $context = [])
     {
         $this->logs[$level][] = $message;
     }

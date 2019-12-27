@@ -89,7 +89,7 @@ class EventDispatchMiddleware
         };
     }
 
-    private function doDispatch(Event $event, string $name): void
+    private function doDispatch(Event $event, string $name)
     {
         if ($this->eventDispatcher instanceof ContractsEventDispatcherInterface) {
             $this->eventDispatcher->dispatch($event, $name);

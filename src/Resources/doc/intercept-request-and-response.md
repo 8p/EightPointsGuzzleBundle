@@ -16,12 +16,12 @@ eight_points_guzzle:
             base_url: 'http://api.crm.tld'
 ```
 
-And suppose that `api_partners` requires authorization using some token in the request header.
+And suppose that `payment` requires authorization using some token in the request header.
 How can we do that?
 
 ## Event listener for intercepting requests
 
-First of all we have to write an event listener, that will see al requests from our `payment`
+First of all we have to write an event listener, that will see all requests from our `payment`
 client, and can modify them.
 
 ```php
@@ -73,7 +73,7 @@ from the generic listener.
 ## Event listener for intercepting responses
 
 In previous step we intercepted the request and changed it, but we want to track the response too.
-For example we can invalidate token if api of partners rejected it.
+For example we can invalidate token if the `payment` API rejected it.
 
 Let's subscribe our service to one more event:
 

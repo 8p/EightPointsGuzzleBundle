@@ -64,14 +64,6 @@ class EightPointsGuzzleBundleTest extends TestCase
 
         $bundle = new EightPointsGuzzleBundle([$plugin]);
         $bundle->build($container);
-
-        // assert that compiler pass was registered
-        $this->assertCount(1, array_filter(
-            $container->getCompiler()->getPassConfig()->getPasses(),
-            function (CompilerPassInterface $pass) {
-                return $pass instanceof EventHandlerCompilerPass;
-            }
-        ));
     }
 
     public function testGetContainerExtension()

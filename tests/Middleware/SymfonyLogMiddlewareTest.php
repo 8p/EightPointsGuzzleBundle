@@ -11,7 +11,6 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;
 use Psr\Log\LogLevel;
-use Symfony\Component\HttpKernel\Tests\Logger;
 
 class SymfonyLogMiddlewareTest extends TestCase
 {

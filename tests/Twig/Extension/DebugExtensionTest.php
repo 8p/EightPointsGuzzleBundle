@@ -4,17 +4,25 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Twig\Extension;
 
 use EightPoints\Bundle\GuzzleBundle\Twig\Extension\DebugExtension;
 use PHPUnit\Framework\TestCase;
+use Twig\Environment;
+use Twig\Extension\ExtensionInterface;
+use Twig\TwigFunction;
+use function class_exists;
+use function interface_exists;
 
 class DebugExtensionTest extends TestCase
 {
     public function testConstructor()
     {
+        $extensionClass = interface_exists(ExtensionInterface::class) ? ExtensionInterface::class : \Twig_ExtensionInterface::class;
+
         $extension = new DebugExtension();
-        $this->assertInstanceOf(\Twig_ExtensionInterface::class, $extension);
+        $this->assertInstanceOf($extensionClass, $extension);
     }
 
     public function testDumpFunction()
     {
+        $functionClass = class_exists(TwigFunction::class) ? TwigFunction::class : \Twig_Function::class;
         $extension = new DebugExtension();
         $functions = $extension->getFunctions();
 
@@ -22,7 +30,7 @@ class DebugExtensionTest extends TestCase
 
         /** @var \Twig_Function $dumpFunction */
         $dumpFunction = $functions[0];
-        $this->assertInstanceOf(\Twig_Function::class, $dumpFunction);
+        $this->assertInstanceOf($functionClass, $dumpFunction);
         $this->assertEquals('eight_points_guzzle_dump', $dumpFunction->getName());
         $this->assertTrue($dumpFunction->needsEnvironment());
 
@@ -33,7 +41,8 @@ class DebugExtensionTest extends TestCase
 
     public function testDump()
     {
-        $environment = $this->createMock(\Twig_Environment::class);
+        $environmentClass = class_exists(Environment::class) ? Environment::class : \Twig_Environment::class;
+        $environment = $this->createMock($environmentClass);
 
         $extension = new DebugExtension();
         $result = $extension->dump($environment, 'randomTestValue');

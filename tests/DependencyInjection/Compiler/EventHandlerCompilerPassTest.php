@@ -13,6 +13,9 @@ class EventHandlerCompilerPassTest extends TestCase
      * Test the case when compiler pass added method call to proper service.
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler\EventHandlerCompilerPass::process
+     *
+     * This functionality will be removed in EightPointGuzzleBundle version 8
+     * @group legacy
      */
     public function testProcessAddedMethodCall()
     {

@@ -107,7 +107,7 @@ eight_points_guzzle:
 
         crm:
             base_url: 'http://api.crm.tld'
-            options:            
+            options:
                 headers:
                     Accept: 'application/json'
 
@@ -158,7 +158,7 @@ For projects that use [autowiring][18], please refer to [our documentation on au
 This bundle allows to register and integrate plugins to extend functionality of guzzle and this bundle.
 
 ### Installation
- 
+
 In order to install a plugin, find the following lines in `src/Kernel.php`:
 
 ```php
@@ -199,7 +199,7 @@ foreach ($contents as $class => $envs) {
 
 This bundle dispatches Symfony events right before a client makes a call and right after a client has made a call.
 There are two types of events dispatched every time; a _generic_ event, that is dispatched regardless of which client is doing the request,
-and a _client specific_ event, that is dispatched only to listeners specifically subscribed to events from a specific client. 
+and a _client specific_ event, that is dispatched only to listeners specifically subscribed to events from a specific client.
 These events can be used to intercept requests to a remote system as well as responses from a remote system.
 In case a generic event listener and a client specific event listener both change a request/response, the changes from the client
 specific listener override those of the generic listener in case of a collision (both setting the same header for example).
@@ -217,11 +217,11 @@ services:
             - { name: 'kernel.event_listener', event: 'eight_points_guzzle.pre_transaction', method: 'onPreTransaction' }
             # Listen for client specific pre transaction events (will only receive events for the "payment" client)
             - { name: 'kernel.event_listener', event: 'eight_points_guzzle.pre_transaction.payment', method: 'onPrePaymentTransaction' }
-            
+
             - # Listen for generic post transaction event (will receive events for all clients)
             - { name: 'kernel.event_listener', event: 'eight_points_guzzle.post_transaction', method: 'onPostTransaction' }
             # Listen for client specific post transaction events (will only receive events for the "payment" client)
-            - { name: 'kernel.event_listener', event: 'eight_points_guzzle.post_transaction.payment', method: 'onPostPaymentTransaction' } 
+            - { name: 'kernel.event_listener', event: 'eight_points_guzzle.post_transaction.payment', method: 'onPostPaymentTransaction' }
 ```
 
 For more information, read the docs on [intercepting requests and responses](src/Resources/doc/intercept-request-and-response.md).

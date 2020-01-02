@@ -33,8 +33,7 @@ class HttpDataCollectorTest extends TestCase
      */
     public function testConstruct()
     {
-        $collector = new HttpDataCollector($this->logger, 0);
-
+        $collector = new HttpDataCollector([$this->logger], 0);
         $this->assertEquals([], $collector->getLogs());
         $this->assertEquals(0, $collector->getCallCount());
         $this->assertEquals(0, $collector->getTotalTime());
@@ -56,7 +55,7 @@ class HttpDataCollectorTest extends TestCase
 
         $this->logger->expects($this->once())->method('clear');
 
-        $collector = new HttpDataCollector($this->logger, 0);
+        $collector = new HttpDataCollector([$this->logger], 0);
         $response  = $this->getMockBuilder(Response::class)
                           ->getMock();
 
@@ -84,6 +83,49 @@ class HttpDataCollectorTest extends TestCase
         }
     }
 
+    public function testCollectWithMultipleLoggers()
+    {
+        $secondLogger = $this->getMockBuilder(Logger::class)->getMock();
+        $secondLogger->expects($this->once())
+            ->method('getMessages')
+            ->willReturn(['test second message']);
+
+        $this->logger->expects($this->once())
+            ->method('getMessages')
+            ->willReturn(['test message']);
+
+        $this->logger->expects($this->once())->method('clear');
+        $secondLogger->expects($this->once())->method('clear');
+
+        $collector = new HttpDataCollector([$this->logger, $secondLogger], 0);
+        $response  = $this->getMockBuilder(Response::class)
+            ->getMock();
+
+        $request = $this->getMockBuilder(Request::class)
+            ->getMock();
+
+        $request->expects($this->once())
+            ->method('getUri')
+            ->willReturn('someRandomUrlId');
+
+        $request->expects($this->once())
+            ->method('getPathInfo')
+            ->willReturn('id');
+
+        $collector->collect($request, $response);
+
+        $logs = $collector->getLogs();
+
+        /** @var LogGroup $log */
+        foreach ($logs as $log) {
+            $this->assertInstanceOf(LogGroup::class, $log);
+
+            self::assertCount(2, $log->getMessages());
+            $this->assertSame(['test message', 'test second message'], $log->getMessages());
+            $this->assertSame('id', $log->getRequestName());
+        }
+    }
+
     /**
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::collect
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogs
@@ -105,7 +147,7 @@ class HttpDataCollectorTest extends TestCase
 
         $this->logger->expects($this->once())->method('clear');
 
-        $collector = new HttpDataCollector($this->logger, 1);
+        $collector = new HttpDataCollector([$this->logger], 1);
 
         $response  = $this->getMockBuilder(Response::class)->getMock();
         $request = $this->getMockBuilder(Request::class)->getMock();
@@ -130,7 +172,7 @@ class HttpDataCollectorTest extends TestCase
      */
     public function testName()
     {
-        $collector = new HttpDataCollector($this->logger, 0);
+        $collector = new HttpDataCollector([$this->logger], 0);
 
         $this->assertSame('eight_points_guzzle', $collector->getName());
     }
@@ -146,7 +188,7 @@ class HttpDataCollectorTest extends TestCase
                      ->method('getMessages')
                      ->willReturn(['test message #1', 'test message #2']);
 
-        $collector = new HttpDataCollector($this->logger, 0);
+        $collector = new HttpDataCollector([$this->logger], 0);
         $response  = $this->getMockBuilder(Response::class)
                           ->getMock();
         $request   = $this->getMockBuilder(Request::class)
@@ -183,7 +225,7 @@ class HttpDataCollectorTest extends TestCase
                      ->method('getMessages')
                      ->willReturn(['test message #1', 'test message #2']);
 
-        $collector = new HttpDataCollector($this->logger, 0);
+        $collector = new HttpDataCollector([$this->logger], 0);
         $response  = $this->getMockBuilder(Response::class)
                           ->getMock();
         $request   = $this->getMockBuilder(Request::class)
@@ -213,7 +255,7 @@ class HttpDataCollectorTest extends TestCase
             ->method('getMessages')
             ->willReturn(['test message #1', 'test message #2']);
 
-        $collector = new HttpDataCollector($this->logger, 0);
+        $collector = new HttpDataCollector([$this->logger], 0);
 
         $response = $this->getMockBuilder(Response::class)
             ->getMock();
@@ -261,7 +303,7 @@ class HttpDataCollectorTest extends TestCase
             ->method('getMessages')
             ->willReturn([$errorMessage, $infoMessage]);
 
-        $collector = new HttpDataCollector($this->logger, 0);
+        $collector = new HttpDataCollector([$this->logger], 0);
 
         $response = $this->getMockBuilder(Response::class)
             ->getMock();
@@ -293,7 +335,7 @@ class HttpDataCollectorTest extends TestCase
      */
     public function testTotalTime()
     {
-        $collector = new HttpDataCollector($this->logger, 0);
+        $collector = new HttpDataCollector([$this->logger], 0);
         $this->assertEquals(0, $collector->getTotalTime());
 
         $collector->addTotalTime(3.14);
@@ -319,7 +361,7 @@ class HttpDataCollectorTest extends TestCase
             ->method('getMessages')
             ->willReturn([$message]);
 
-        $collector = new HttpDataCollector($this->logger, 0.2);
+        $collector = new HttpDataCollector([$this->logger], 0.2);
         $response  = $this->getMockBuilder(Response::class)
             ->getMock();
 

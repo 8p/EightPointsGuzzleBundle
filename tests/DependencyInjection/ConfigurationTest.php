@@ -60,7 +60,19 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
         $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
-        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false, 'profiling' => false, 'slow_response_time' => 0]), $processedConfig);
+        $this->assertEquals(array_merge_recursive(
+            $config['eight_points_guzzle'],
+            [
+                'logging' => false,
+                'profiling' => false,
+                'slow_response_time' => 0,
+                'clients' => [
+                    'test_client' => [
+                        'logging' => null,
+                    ]
+                ],
+            ]
+        ), $processedConfig);
     }
 
     public function testSingleClientConfigWithCertAsArray()
@@ -112,7 +124,19 @@ class ConfigurationTest extends TestCase
         $processor = new Processor();
         $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
 
-        $this->assertEquals(array_merge($config['eight_points_guzzle'], ['logging' => false, 'profiling' => false, 'slow_response_time' => 0]), $processedConfig);
+        $this->assertEquals(array_merge_recursive(
+            $config['eight_points_guzzle'],
+            [
+                'logging' => false,
+                'profiling' => false,
+                'slow_response_time' => 0,
+                'clients' => [
+                    'test_client' => [
+                        'logging' => null,
+                    ]
+                ],
+            ]
+        ), $processedConfig);
     }
 
     public function testInvalidCertConfiguration()
@@ -183,7 +207,7 @@ class ConfigurationTest extends TestCase
             'logging' => false,
             'profiling' => false,
             'slow_response_time' => 0,
-            'clients' => ['test_client' => ['options' => ['proxy' => ['http' => 'http://proxy.org']]]]
+            'clients' => ['test_client' => ['logging' => null, 'options' => ['proxy' => ['http' => 'http://proxy.org']]]]
         ]), $processedConfig);
     }
 

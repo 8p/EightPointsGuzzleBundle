@@ -51,7 +51,7 @@ interface PluginInterface
      *
      * @return void
      */
-    public function build(ContainerBuilder $container) : void;
+    public function build(ContainerBuilder $container);
 
     /**
      * When the bundles are booted, you can do any runtime initialization required inside this method.

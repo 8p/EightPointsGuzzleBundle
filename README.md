@@ -54,16 +54,6 @@ return [
 ];
 ```
 
-### Installing the assets
-
-This bundle comes with several assets required for integration with the Symfony Debug Toolbar.
-For projects based on [symfony/skeleton][17] this is done automatically by a composer script that runs after this bundle was installed.
-If this did not happen automatically (i.e. if the CSS in the Symfony Profiler for this bundle looks off), run the following command on the command line:
-
-``` bash
-bin/console assets:install
-```
-
 ----
 
 ## Configuration

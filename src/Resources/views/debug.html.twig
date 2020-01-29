@@ -70,7 +70,9 @@
 {% block head %}
     {{ parent() }}
 
-    <link rel="stylesheet" href="{{ asset('bundles/eightpointsguzzle/css/main.css') }}" />
+    <style type="text/css">
+        {% include '@EightPointsGuzzleBundle/main.css.twig' %}
+    </style>
 {% endblock %}
 
 {% block panel %}

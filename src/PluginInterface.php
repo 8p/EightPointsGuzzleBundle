@@ -48,15 +48,11 @@ interface PluginInterface
      * When the container is generated for the first time, you can register compiler passes inside this method.
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     *
-     * @return void
      */
-    public function build(ContainerBuilder $container) : void;
+    public function build(ContainerBuilder $container);
 
     /**
      * When the bundles are booted, you can do any runtime initialization required inside this method.
-     *
-     * @return void
      */
-    public function boot() : void;
+    public function boot();
 }

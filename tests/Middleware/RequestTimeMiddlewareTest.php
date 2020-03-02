@@ -19,13 +19,12 @@ class RequestTimeMiddlewareTest extends TestCase
     public function setUp()
     {
         $this->logger = $this->getMockBuilder(Logger::class)
-            ->disableOriginalConstructor()
             ->getMock();
     }
 
     public function testInvoke()
     {
-        $httpDataCollector = new HttpDataCollector($this->logger, 0);
+        $httpDataCollector = new HttpDataCollector([$this->logger], 0);
 
         $request = new Request('GET', 'http://test.com');
         $handler = new MockHandler([new Response(200)]);
@@ -47,7 +46,7 @@ class RequestTimeMiddlewareTest extends TestCase
 
     public function testInvokeWithInitialOnStats()
     {
-        $httpDataCollector = new HttpDataCollector($this->logger, 0);
+        $httpDataCollector = new HttpDataCollector([$this->logger], 0);
 
         $request = new Request('GET', 'http://test.com');
         $handler = new MockHandler([new Response(200)]);

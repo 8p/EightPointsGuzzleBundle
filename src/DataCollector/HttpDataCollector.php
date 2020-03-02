@@ -17,19 +17,19 @@ class HttpDataCollector extends DataCollector
 {
     use DataCollectorSymfonyCompatibilityTrait;
 
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface */
-    protected $logger;
+    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface[] */
+    protected $loggers;
 
     /** @var float */
     private $slowResponseTime;
 
     /**
-     * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
+     * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface[] $loggers
      * @param float|int $slowResponseTime Time in seconds
      */
-    public function __construct(LoggerInterface $logger, float $slowResponseTime)
+    public function __construct(array $loggers, float $slowResponseTime)
     {
-        $this->logger = $logger;
+        $this->loggers = $loggers;
         $this->slowResponseTime = $slowResponseTime;
 
         $this->reset();
@@ -40,7 +40,10 @@ class HttpDataCollector extends DataCollector
      */
     protected function doCollect(Request $request, Response $response, \Throwable $exception = null)
     {
-        $messages = $this->logger->getMessages();
+        $messages = [];
+        foreach ($this->loggers as $logger) {
+            $messages = array_merge($messages, $logger->getMessages());
+        }
 
         if ($this->slowResponseTime > 0) {
             foreach ($messages as $message) {
@@ -58,7 +61,9 @@ class HttpDataCollector extends DataCollector
         $requestId = $request->getUri();
 
         // clear log to have only messages related to Symfony request context
-        $this->logger->clear();
+        foreach ($this->loggers as $logger) {
+            $logger->clear();
+        }
 
         $logGroup = $this->getLogGroup($requestId);
         $logGroup->setRequestName($request->getPathInfo());

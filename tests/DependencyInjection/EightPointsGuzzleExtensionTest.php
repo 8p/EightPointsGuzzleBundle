@@ -133,7 +133,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
 
         $this->assertInstanceOf(
             DevNullLogger::class,
-            $container->get('eight_points_guzzle.logger')
+            $container->get('eight_points_guzzle.test_api_logger')
         );
     }
 
@@ -207,7 +207,9 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.event_dispatch.test_api'));
 
         // test logging services (logger, data collector and log middleware for each client)
-        $this->assertTrue($container->hasDefinition('eight_points_guzzle.logger'));
+        foreach (['test_api', 'test_api_with_custom_class','test_api_with_custom_handler'] as $clientName) {
+            $this->assertTrue($container->hasDefinition(sprintf('eight_points_guzzle.%s_logger', $clientName)));
+        }
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.data_collector'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.formatter'));
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.symfony_log_formatter'));
@@ -223,6 +225,41 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertCount(1, $this->getClientLogMiddleware($container, 'eight_points_guzzle.client.test_api_with_custom_class'));
     }
 
+    public function testLoadWithLoggingSpecificClient()
+    {
+        $config = $this->getConfigs();
+        $config[0]['clients']['test_api_with_custom_class']['logging'] = false;
+
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $extension->load($config, $container);
+
+        // test Client
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.client.test_api'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.client.test_api_with_custom_class'));
+
+        // test logging services (logger, data collector and log middleware for each client)
+        $clientLoggingStatuses = [
+            'test_api' => true,
+            'test_api_with_custom_class' => false,
+            'test_api_with_custom_handler' => true
+        ];
+        foreach ($clientLoggingStatuses as $clientName => $expectedStatus) {
+            $this->assertSame($expectedStatus, $container->hasDefinition(sprintf('eight_points_guzzle.%s_logger', $clientName)));
+            $this->assertSame($expectedStatus, $container->hasDefinition(sprintf('eight_points_guzzle.middleware.log.%s', $clientName)));
+            $this->assertSame($expectedStatus, $container->hasDefinition(sprintf('eight_points_guzzle.middleware.request_time.%s', $clientName)));
+
+            // test log middleware in handler of the client
+            $this->assertCount($expectedStatus ? 1 : 0, $this->getClientLogMiddleware($container, sprintf('eight_points_guzzle.client.%s', $clientName)));
+        }
+
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.data_collector'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.formatter'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.symfony_log_formatter'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.twig_extension.debug'));
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.symfony_log'));
+    }
+
     public function testLoadWithoutLogging()
     {
         $config = $this->getConfigs();
@@ -232,20 +269,27 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $extension = new EightPointsGuzzleExtension();
         $extension->load($config, $container);
 
-        $this->assertFalse($container->hasDefinition('eight_points_guzzle.logger'));
+
+        // test logging services (logger, data collector and log middleware for each client)
+        $clientLoggingStatuses = [
+            'test_api' => false,
+            'test_api_with_custom_class' => false,
+            'test_api_with_custom_handler' => false
+        ];
+        foreach ($clientLoggingStatuses as $clientName => $expectedStatus) {
+            $this->assertSame($expectedStatus, $container->hasDefinition(sprintf('eight_points_guzzle.%s_logger', $clientName)));
+            $this->assertSame($expectedStatus, $container->hasDefinition(sprintf('eight_points_guzzle.middleware.log.%s', $clientName)));
+            $this->assertSame($expectedStatus, $container->hasDefinition(sprintf('eight_points_guzzle.middleware.request_time.%s', $clientName)));
+
+            // test log middleware in handler of the client
+            $this->assertCount($expectedStatus ? 1 : 0, $this->getClientLogMiddleware($container, sprintf('eight_points_guzzle.client.%s', $clientName)));
+        }
+
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.data_collector'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.formatter'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.symfony_log_formatter'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.twig_extension.debug'));
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.symfony_log'));
-        $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api'));
-        $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.log.test_api_with_custom_class'));
-        $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.request_time.test_api'));
-        $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.request_time.test_api_with_custom_class'));
-
-        // test log middleware in handler of the client
-        $this->assertCount(0, $this->getClientLogMiddleware($container, 'eight_points_guzzle.client.test_api'));
-        $this->assertCount(0, $this->getClientLogMiddleware($container, 'eight_points_guzzle.client.test_api_with_custom_class'));
     }
 
     public function testGetConfiguration()

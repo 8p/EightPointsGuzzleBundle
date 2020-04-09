@@ -4,6 +4,7 @@ namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Twig\Extension\DebugExtension;
+use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
@@ -91,13 +92,21 @@ class EightPointsGuzzleExtension extends Extension
             // set service name based on client name
             $serviceName = sprintf('%s.client.%s', $this->getAlias(), $name);
             $container->setDefinition($serviceName, $client);
+
+            // Allowed only for Symfony 4.2+
+            if (\method_exists($container, 'registerAliasForArgument')) {
+                if ('%eight_points_guzzle_bundle.http_client.class%' !== $options['class']) {
+                    $container->registerAliasForArgument($serviceName, $options['class'], $name.'Client');
+                }
+                $container->registerAliasForArgument($serviceName, ClientInterface::class, $name.'Client');
+            }
         }
 
-        $clientsWithLogging = array_filter($config['clients'], function ($options) use ($logging) {
+        $clientsWithLogging = array_filter($config['clients'], function($options) use ($logging) {
             return $options['logging'] !== false && $logging !== false;
         });
 
-        if (count($clientsWithLogging)>0) {
+        if (count($clientsWithLogging) > 0) {
             $this->defineTwigDebugExtension($container);
             $this->defineDataCollector($container, $config['slow_response_time'] / 1000);
             $this->defineFormatter($container);
@@ -125,7 +134,7 @@ class EightPointsGuzzleExtension extends Extension
         $container->setDefinition($eventServiceName, $eventService);
 
         // Create the event Dispatch Middleware
-        $eventExpression  = new Expression(sprintf("service('%s').dispatchEvent()", $eventServiceName));
+        $eventExpression = new Expression(sprintf("service('%s').dispatchEvent()", $eventServiceName));
 
         $handler = new Definition(HandlerStack::class);
         $handler->setFactory([HandlerStack::class, 'create']);
@@ -173,7 +182,7 @@ class EightPointsGuzzleExtension extends Extension
      */
     private function convertLogMode($logMode) : int
     {
-        if ($logMode === true){
+        if ($logMode === true) {
             return Logger::LOG_MODE_REQUEST_AND_RESPONSE;
         } elseif ($logMode === false) {
             return Logger::LOG_MODE_NONE;
@@ -230,7 +239,7 @@ class EightPointsGuzzleExtension extends Extension
     protected function defineDataCollector(ContainerBuilder $container, float $slowResponseTime) : void
     {
         $dataCollectorDefinition = new Definition('%eight_points_guzzle.data_collector.class%');
-        $dataCollectorDefinition->addArgument(array_map(function ($loggerId) : Reference {
+        $dataCollectorDefinition->addArgument(array_map(function($loggerId) : Reference {
             return new Reference($loggerId);
         }, array_keys($container->findTaggedServiceIds('eight_points_guzzle.logger'))));
 

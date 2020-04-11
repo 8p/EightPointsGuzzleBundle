@@ -34,8 +34,10 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertInstanceOf(Client::class, $testApi);
         $this->assertEquals(new Uri('//api.domain.tld/path'), $testApi->getConfig('base_uri'));
 
-        $this->assertTrue($container->hasAlias(ClientInterface::class.' $testApiClient'));
-        $this->assertSame($testApi, $container->get(ClientInterface::class.' $testApiClient'));
+        if (method_exists($container, 'hasAlias')) {
+            $this->assertTrue($container->hasAlias(ClientInterface::class . ' $testApiClient'));
+            $this->assertSame($testApi, $container->get(ClientInterface::class . ' $testApiClient'));
+        }
 
         // test Services
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.event_dispatch.test_api'));
@@ -45,9 +47,11 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $definition = $container->getDefinition('eight_points_guzzle.client.test_api_with_custom_class');
         $this->assertSame(CustomClient::class, $definition->getClass());
 
-        $testApi = $container->get('eight_points_guzzle.client.test_api_with_custom_class');
-        $this->assertTrue($container->hasAlias(CustomClient::class.' $testApiWithCustomClassClient'));
-        $this->assertSame($testApi, $container->get(ClientInterface::class.' $testApiWithCustomClassClient'));
+        if (method_exists($container, 'hasAlias')) {
+            $testApi = $container->get('eight_points_guzzle.client.test_api_with_custom_class');
+            $this->assertTrue($container->hasAlias(CustomClient::class . ' $testApiWithCustomClassClient'));
+            $this->assertSame($testApi, $container->get(ClientInterface::class . ' $testApiWithCustomClassClient'));
+        }
 
         // test Client with custom handler
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.client.test_api_with_custom_handler'));

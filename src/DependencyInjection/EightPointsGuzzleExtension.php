@@ -94,11 +94,11 @@ class EightPointsGuzzleExtension extends Extension
             $container->setDefinition($serviceName, $client);
 
             // Allowed only for Symfony 4.2+
-            if (\method_exists($container, 'registerAliasForArgument')) {
-                if ('%eight_points_guzzle_bundle.http_client.class%' !== $options['class']) {
-                    $container->registerAliasForArgument($serviceName, $options['class'], $name.'Client');
+            if (method_exists($container, 'registerAliasForArgument')) {
+                if ('%eight_points_guzzle.http_client.class%' !== $options['class']) {
+                    $container->registerAliasForArgument($serviceName, $options['class'], $name . 'Client');
                 }
-                $container->registerAliasForArgument($serviceName, ClientInterface::class, $name.'Client');
+                $container->registerAliasForArgument($serviceName, ClientInterface::class, $name . 'Client');
             }
         }
 

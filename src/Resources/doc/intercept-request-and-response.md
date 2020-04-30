@@ -56,7 +56,7 @@ For that we need to register it in the Symfony configuration as an event listene
 
 ```yaml
 services:
-    App\EventListener\PartnersApiGuzzleEventListener:
+    App\EventListener\PaymentApiGuzzleEventListener:
         class: App\EventListener\PaymentApiGuzzleEventListener
         tags:       
             - { name: kernel.event_listener, event: eight_points_guzzle.pre_transaction.payment, method: onPreTransaction }

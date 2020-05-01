@@ -79,7 +79,7 @@ Let's subscribe our service to one more event:
 
 ```yaml
 services:
-    App\EventListener\PartnersApiGuzzleEventListener:
+    App\EventListener\PaymentApiGuzzleEventListener:
         class: App\EventListener\PaymentApiGuzzleEventListener
         tags:
             - { name: kernel.event_listener, event: eight_points_guzzle.pre_transaction.payment, method: onPreTransaction }
@@ -179,8 +179,8 @@ And configure the Symfony service as usual for event subscribers:
 
 ```yaml
 services:
-    App\EventSubscriber\PartnersApiGuzzleEventSubscriber:
-        class: App\EventSubscriber\PartnersApiGuzzleEventSubscriber
+    App\EventSubscriber\PaymentApiGuzzleEventSubscriber:
+        class: App\EventSubscriber\PaymentApiGuzzleEventSubscriber
         tags:
             - { name: kernel.event_subscriber }
 ```

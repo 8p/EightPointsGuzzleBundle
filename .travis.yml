@@ -9,11 +9,9 @@ php:
     - nightly
 
 env:
-    - SYMFONY_VERSION=4.1.* # (until 07/2019)
-    - SYMFONY_VERSION=4.2.* # (until 01/2020)
-    - SYMFONY_VERSION=4.3.* # (until 07/2020)
-    - SYMFONY_VERSION=4.4.* # LTS (11/2019, until 11/2023)
+    - SYMFONY_VERSION=4.4.* # LTS (until 11/2023)
     - SYMFONY_VERSION=5.0.* # (until 07/2020)
+    - SYMFONY_VERSION=5.1.* # (until 01/2021)
     - DEPENDENCIES=dev
 
 before_install:
@@ -37,6 +35,8 @@ matrix:
     exclude:
         - php: 7.1
           env: SYMFONY_VERSION=5.0.* # requires PHP ^7.2.5
+        - php: 7.1
+          env: SYMFONY_VERSION=5.1.* # requires PHP ^7.2.5
     allow_failures:
         - env: DEPENDENCIES=dev
         - php: nightly

@@ -40,4 +40,3 @@ matrix:
     allow_failures:
         - env: DEPENDENCIES=dev
         - php: nightly
-

@@ -19,7 +19,7 @@
 [![Scrutinizer Score](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/)
 [![License](https://poser.pugx.org/eightpoints/guzzle-bundle/license)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 
-This bundle integrates [Guzzle 6.x][1] into [Symfony][16]. Guzzle is a PHP library for building RESTful web service clients.
+This bundle integrates [Guzzle 6.x|7.x][1] into [Symfony][16]. Guzzle is a PHP library for building RESTful web service clients.
 
 GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 

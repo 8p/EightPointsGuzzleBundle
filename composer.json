@@ -37,8 +37,7 @@
     "symfony/phpunit-bridge": "~4.0|~5.0",
     "symfony/twig-bundle":    "~4.0|~5.0",
     "symfony/var-dumper":     "~4.0|~5.0",
-    "symfony/yaml":           "~4.0|~5.0",
-    "namshi/cuzzle":          "^2.0"
+    "symfony/yaml":           "~4.0|~5.0"
   },
   "suggest": {
     "namshi/cuzzle": "Outputs Curl command on profiler's page for debugging purposes"

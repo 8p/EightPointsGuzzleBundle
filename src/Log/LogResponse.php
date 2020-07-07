@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Log;
 
+use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle;
 use Psr\Http\Message\ResponseInterface;
 
 class LogResponse
@@ -21,11 +22,16 @@ class LogResponse
     /** @var string */
     protected $protocolVersion;
 
+    /** @var bool */
+    private $logBody;
+
     /**
      * @param \Psr\Http\Message\ResponseInterface $response
+     * @param bool $logBody
      */
-    public function __construct(ResponseInterface $response)
+    public function __construct(ResponseInterface $response, bool $logBody = true)
     {
+        $this->logBody = $logBody;
         $this->save($response);
     }
 
@@ -40,15 +46,20 @@ class LogResponse
     {
         $this->setStatusCode($response->getStatusCode());
         $this->setStatusPhrase($response->getReasonPhrase());
-        $this->setBody($response->getBody()->getContents());
-
-        // rewind to previous position after reading response body
-        if ($response->getBody()->isSeekable()) {
-            $response->getBody()->rewind();
-        }
 
         $this->setHeaders($response->getHeaders());
         $this->setProtocolVersion($response->getProtocolVersion());
+
+        if ($this->logBody) {
+            $this->setBody($response->getBody()->getContents());
+
+            // rewind to previous position after reading response body
+            if ($response->getBody()->isSeekable()) {
+                $response->getBody()->rewind();
+            }
+        } else {
+            $this->setBody(EightPointsGuzzleBundle::class . ': [response body log disabled]');
+        }
     }
 
     /**

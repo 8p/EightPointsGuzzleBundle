@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
+use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle;
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
 use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
@@ -117,34 +118,59 @@ class LoggerTest extends TestCase
         $this->assertFalse($logger->hasMessages());
     }
 
+    public function getLoggerRequestModes()
+    {
+        return [
+            [Logger::LOG_MODE_NONE, false],
+            [Logger::LOG_MODE_REQUEST, true],
+            [Logger::LOG_MODE_REQUEST_AND_RESPONSE, true],
+            [Logger::LOG_MODE_REQUEST_AND_RESPONSE_HEADERS, true],
+        ];
+    }
     /**
+     * @dataProvider getLoggerRequestModes
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::log
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::setRequest
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::getRequest
      */
-    public function testLogWithRequest()
+    public function testLogWithRequest(int $logMode, bool $hasRequest)
     {
         $request = new Request('GET', 'http://api.domain.tld');
 
-        $logger = new Logger();
+        $logger = new Logger($logMode);
         $logger->log(LogLevel::INFO, 'message', ['request' => $request]);
 
         $this->assertCount(1, $logger->getMessages());
 
+
         /** @var LogMessage $message */
         $message = array_values($logger->getMessages())[0];
         $logRequest = $message->getRequest();
-        $this->assertInstanceOf(LogRequest::class, $logRequest);
-        $this->assertEquals('GET', $logRequest->getMethod());
-        $this->assertEquals('http://api.domain.tld', $logRequest->getUrl());
+        if ($hasRequest) {
+            $this->assertInstanceOf(LogRequest::class, $logRequest);
+            $this->assertEquals('GET', $logRequest->getMethod());
+            $this->assertEquals('http://api.domain.tld', $logRequest->getUrl());
+        } else {
+            $this->assertNull($logRequest);
+        }
     }
 
+    public function getLoggerResponseModes()
+    {
+        return [
+            [Logger::LOG_MODE_NONE, false, false],
+            [Logger::LOG_MODE_REQUEST, false, false],
+            [Logger::LOG_MODE_REQUEST_AND_RESPONSE, true, true],
+            [Logger::LOG_MODE_REQUEST_AND_RESPONSE_HEADERS, true, false],
+        ];
+    }
     /**
+     * @dataProvider getLoggerResponseModes
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::log
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::setResponse
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::getResponse
      */
-    public function testLogWithResponse()
+    public function testLogWithResponse(int $logMode, bool $hasResponseHeaders, bool $hasResponseBody)
     {
         $response = new Response(
             201,
@@ -152,7 +178,7 @@ class LoggerTest extends TestCase
             'body'
         );
 
-        $logger = new Logger();
+        $logger = new Logger($logMode);
         $logger->log(LogLevel::INFO, 'message', ['response' => $response]);
 
         $this->assertCount(1, $logger->getMessages());
@@ -160,13 +186,27 @@ class LoggerTest extends TestCase
         /** @var LogMessage $message */
         $message = array_values($logger->getMessages())[0];
         $logResponse = $message->getResponse();
+
+        if (!$hasResponseHeaders && !$hasResponseBody) {
+            $this->assertNull($logResponse);
+            return;
+        }
+
         $this->assertInstanceOf(LogResponse::class, $logResponse);
-        $this->assertEquals(201, $logResponse->getStatusCode());
-        $this->assertEquals(
-            ['some-test-header' => ['some-test-value']],
-            $logResponse->getHeaders()
-        );
-        $this->assertEquals('body', $logResponse->getBody());
+
+        if ($hasResponseHeaders) {
+            $this->assertEquals(201, $logResponse->getStatusCode());
+            $this->assertEquals(
+                ['some-test-header' => ['some-test-value']],
+                $logResponse->getHeaders()
+            );
+        }
+
+        if ($hasResponseBody) {
+            $this->assertEquals('body', $logResponse->getBody());
+        } else {
+            $this->assertEquals(EightPointsGuzzleBundle::class . ': [response body log disabled]', $logResponse->getBody());
+        }
     }
 
     /**

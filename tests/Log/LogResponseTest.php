@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
+use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle;
 use EightPoints\Bundle\GuzzleBundle\Log\LogResponse;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Response;
@@ -55,6 +56,13 @@ class LogResponseTest extends TestCase
         $response = new LogResponse($this->response);
 
         $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testBodyLoggingDisabled()
+    {
+        $response = new LogResponse($this->response, false);
+
+        $this->assertSame(EightPointsGuzzleBundle::class . ': [response body log disabled]', $response->getBody());
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
 use function method_exists;
+use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -102,6 +103,20 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                     ->booleanNode('lazy')->defaultValue(false)->end()
+                    ->integerNode('logging')
+                        ->defaultValue(null)
+                        ->beforeNormalization()
+                            ->always(function ($value): int {
+                                if ($value === 1 || $value === true) {
+                                    return Logger::LOG_MODE_REQUEST_AND_RESPONSE;
+                                } elseif ($value === 0 || $value === false) {
+                                    return Logger::LOG_MODE_NONE;
+                                } else {
+                                    return constant(Logger::class .'::LOG_MODE_' . strtoupper($value));
+                                }
+                            })
+                        ->end()
+                    ->end()
                     ->scalarNode('handler')
                         ->defaultValue(null)
                         ->validate()

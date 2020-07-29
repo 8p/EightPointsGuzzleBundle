@@ -6,7 +6,7 @@ use EightPoints\Bundle\GuzzleBundle\Events\Event;
 use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
 use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
 use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
-use Exception;
+use Throwable;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -70,7 +70,7 @@ class EventDispatchMiddleware
                         // Continue down the chain.
                         return $postTransactionEvent->getTransaction();
                     },
-                    function (Exception $reason) {
+                    function (Throwable $reason) {
                         // Get the response. The response in a RequestException can be null too.
                         $response = $reason instanceof RequestException ? $reason->getResponse() : null;
 

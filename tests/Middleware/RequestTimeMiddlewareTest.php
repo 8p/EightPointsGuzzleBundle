@@ -16,7 +16,7 @@ class RequestTimeMiddlewareTest extends TestCase
     /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject */
     protected $logger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->logger = $this->getMockBuilder(Logger::class)
             ->getMock();

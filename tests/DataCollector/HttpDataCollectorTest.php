@@ -21,7 +21,7 @@ class HttpDataCollectorTest extends TestCase
     /**
      * SetUp: before executing each test function
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->logger = $this->getMockBuilder(Logger::class)->getMock();
     }

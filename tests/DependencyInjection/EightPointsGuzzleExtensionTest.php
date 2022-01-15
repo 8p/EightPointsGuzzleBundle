@@ -401,17 +401,22 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.client.test_api'));
         $definition = $container->getDefinition('eight_points_guzzle.client.test_api');
         $this->assertCount(1, $definition->getArguments());
-        $this->assertArraySubset(
-            [
-                'base_uri' => '//api.domain.tld/path',
-                'auth' => ['acme', 'pa55w0rd'],
-                'headers' => [
-                    'Accept' => 'application/json',
-                ],
-                'timeout' => 30,
+
+        $expectedDefinitionFirstArgumentSubset = [
+            'base_uri' => '//api.domain.tld/path',
+            'auth' => ['acme', 'pa55w0rd'],
+            'headers' => [
+                'Accept' => 'application/json',
             ],
-            $definition->getArgument(0)
-        );
+            'timeout' => 30.0,
+        ];
+
+        $actualDefinitionFirstArgumentSubset = $definition->getArgument(0);
+
+        foreach ($expectedDefinitionFirstArgumentSubset as $expectedKey => $expectedValue) {
+            $this->assertArrayHasKey($expectedKey, $actualDefinitionFirstArgumentSubset);
+            $this->assertSame($expectedValue, $actualDefinitionFirstArgumentSubset[$expectedKey]);
+        }
     }
 
     /**

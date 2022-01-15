@@ -12,6 +12,7 @@ use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -47,8 +48,7 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenClientSpecificPreTransactionListenerIsNotPassedEventsForOtherClients()
     {
-        /** @var callable|MockObject $nonCalledListener */
-        $nonCalledListener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $nonCalledListener = $this->createCallableMock();
         $nonCalledListener->expects($this->never())->method('__invoke');
 
         $eventDispatcher = new EventDispatcher();
@@ -70,8 +70,7 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenClientSpecificPostTransactionListenerIsNotPassedEventsForOtherClients()
     {
-        /** @var callable|MockObject $nonCalledListener */
-        $nonCalledListener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $nonCalledListener = $this->createCallableMock();
         $nonCalledListener->expects($this->never())->method('__invoke');
 
         $eventDispatcher = new EventDispatcher();
@@ -370,14 +369,12 @@ class EventDispatchMiddlewareTest extends TestCase
                 $response->getHeaderLine('some-test-header') === 'some-test-value';
         });
 
-        /** @var Callable|MockObject $genericPostTransactionListener */
-        $genericPostTransactionListener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $genericPostTransactionListener = $this->createCallableMock();
         $genericPostTransactionListener->expects($this->once())
             ->method('__invoke')
             ->with($callback);
 
-        /** @var Callable|MockObject $genericPostTransactionListener */
-        $clientSpecificPostTransactionListener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $clientSpecificPostTransactionListener = $this->createCallableMock();
         $clientSpecificPostTransactionListener->expects($this->once())
             ->method('__invoke')
             ->with($callback);
@@ -400,8 +397,7 @@ class EventDispatchMiddlewareTest extends TestCase
 
     private function createPreTransactionEventListener(): callable
     {
-        /** @var callable|MockObject $listener */
-        $listener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $listener = $this->createCallableMock();
         $listener->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function(PreTransactionEvent $event) {
@@ -413,8 +409,7 @@ class EventDispatchMiddlewareTest extends TestCase
 
     private function createPostTransactionEventListener(): callable
     {
-        /** @var callable|MockObject $listener */
-        $listener = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $listener = $this->createCallableMock();
         $listener->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function(PostTransactionEvent $event) {
@@ -434,4 +429,21 @@ class EventDispatchMiddlewareTest extends TestCase
 
         return $promise;
     }
+
+    /**
+     * @return callable|MockObject
+     */
+    private function createCallableMock()
+    {
+        if (method_exists(MockBuilder::class, 'addMethods')) {
+            return $this
+                ->getMockBuilder(\stdClass::class)
+                ->addMethods(['__invoke'])
+                ->getMock()
+            ;
+        }
+
+        return $this->createPartialMock(\stdClass::class, ['__invoke']);;
+    }
 }
+

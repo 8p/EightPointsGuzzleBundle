@@ -17,7 +17,7 @@ env:
     - SYMFONY_VERSION=5.2.* # (until 01/2022)
     - SYMFONY_VERSION=5.3.* # (until 01/2022)
     - SYMFONY_VERSION=5.4.* # (until 01/2022)
-    - SYMFONY_VERSION=8.0.* # (until 01/2022)
+    - SYMFONY_VERSION=6.0.* # (until 01/2022)
     - DEPENDENCIES=dev
 
 before_install:

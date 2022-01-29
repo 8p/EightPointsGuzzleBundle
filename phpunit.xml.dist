@@ -6,7 +6,6 @@
 		 xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/7.5/phpunit.xsd"
 >
 	<php>
-		<env name="SYMFONY_PHPUNIT_VERSION" value="7.5" />
 		<env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0" />
 	</php>
 

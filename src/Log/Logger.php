@@ -34,7 +34,7 @@ class Logger implements LoggerInterface
      *
      * @return void
      */
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
         $requestId = isset($context['requestId']) ? $context['requestId'] : uniqid('eight_points_guzzle_');
 

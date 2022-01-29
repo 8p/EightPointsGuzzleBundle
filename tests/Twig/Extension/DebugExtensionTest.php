@@ -43,7 +43,7 @@ class DebugExtensionTest extends TestCase
         $result = $extension->dump($environment, 'randomTestValue');
 
         $this->assertIsString('string', $result);
-        $this->assertContains('randomTestValue', $result);
+        $this->assertStringContainsString('randomTestValue', $result);
     }
 
     public function testGetName()

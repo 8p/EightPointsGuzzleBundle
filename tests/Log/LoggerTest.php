@@ -61,7 +61,7 @@ class LoggerTest extends TestCase
         foreach ($messages as $message) {
             $this->assertInstanceOf(LogMessage::class, $message);
             $this->assertSame(LogLevel::ERROR, $message->getLevel());
-            $this->assertContains('test message', $message->getMessage());
+            $this->assertStringContainsString('test message', $message->getMessage());
             $this->assertNull($message->getRequest());
             $this->assertNull($message->getResponse());
         }

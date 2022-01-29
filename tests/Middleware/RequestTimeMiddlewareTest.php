@@ -9,6 +9,8 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\TransferStats;
+use PHPUnit\Framework\MockObject\MockBuilder;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class RequestTimeMiddlewareTest extends TestCase
@@ -16,7 +18,7 @@ class RequestTimeMiddlewareTest extends TestCase
     /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject */
     protected $logger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->logger = $this->getMockBuilder(Logger::class)
             ->getMock();
@@ -51,7 +53,7 @@ class RequestTimeMiddlewareTest extends TestCase
         $request = new Request('GET', 'http://test.com');
         $handler = new MockHandler([new Response(200)]);
 
-        $onStatsCallable = $this->createPartialMock(\stdClass::class, ['__invoke']);
+        $onStatsCallable = $this->createCallableMock();
         $onStatsCallable->expects(self::once())
             ->method('__invoke');
 
@@ -67,5 +69,21 @@ class RequestTimeMiddlewareTest extends TestCase
         call_user_func($lastOptions['on_stats'], $transferStats);
 
         $this->assertEquals(3.14, $httpDataCollector->getTotalTime());
+    }
+
+    /**
+     * @return callable|MockObject
+     */
+    private function createCallableMock()
+    {
+        if (method_exists(MockBuilder::class, 'addMethods')) {
+            return $this
+                ->getMockBuilder(\stdClass::class)
+                ->addMethods(['__invoke'])
+                ->getMock()
+            ;
+        }
+
+        return $this->createPartialMock(\stdClass::class, ['__invoke']);;
     }
 }

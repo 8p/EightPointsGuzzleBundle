@@ -24,7 +24,7 @@ class LogRequestTest extends TestCase
     /**
      * SetUp: before executing each test function
      */
-    public function setUp()
+    public function setUp(): void
     {
         $body = $this->getMockBuilder(Stream::class)
             ->disableOriginalConstructor()

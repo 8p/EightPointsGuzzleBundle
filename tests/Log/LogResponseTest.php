@@ -24,7 +24,7 @@ class LogResponseTest extends TestCase
     /**
      * SetUp: before executing each test function
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->response = $this->getMockBuilder(Response::class)
                                ->disableOriginalConstructor()

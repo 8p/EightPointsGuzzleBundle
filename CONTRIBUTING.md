@@ -52,7 +52,7 @@ public function randomMethod(array $config, LoggerInterface $logger) : bool
 ## Testing
 
 ### PHPUnit
-Though we have Travis running tests on every push you do, it would be nice to make sure you run PHPUnit locally before push to upstream.  
+Though we have GitHub Actions running tests on every push you do, it would be nice to make sure you run PHPUnit locally before push to upstream.  
 The easiest way to run tests is to execute this in project root directory - `vendor/bin/simple-phpunit`
 
 ### Infection PHP

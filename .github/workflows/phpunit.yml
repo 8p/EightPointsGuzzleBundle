@@ -1,0 +1,60 @@
+name: PHPUnit
+
+on:
+  pull_request:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        php:
+          - '7.1'
+          - '7.4'
+          - '8.0'
+          - '8.1'
+        symfony:
+          - '4.4.*'
+          - '5.0.*'
+          - '5.4.*'
+          - '6.0.*'
+        exclude:
+          - php: '7.1'
+            symfony: '5.0.*' # requires PHP ^7.2.5
+          - php: '7.1'
+            symfony: '5.4.*' # requires PHP ^7.2.5
+          - php: '7.1'
+            symfony: '6.0.*' # requires PHP ^7.2.5
+          - php: '7.4'
+            symfony: '6.0.*' # requires PHP ^8.0.2
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      SYMFONY: ${{ matrix.symfony }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          ini-values: date.timezone='UTC'
+          tools: composer:v2
+
+      - name: Require symfony
+        run: composer --no-update require symfony/symfony:"${SYMFONY}"
+
+      - name: Install dependencies
+        run: |
+          composer update
+          vendor/bin/simple-phpunit install
+
+      - name: Test
+        run: |
+          composer validate --strict --no-check-lock
+          vendor/bin/simple-phpunit --coverage-text --verbose

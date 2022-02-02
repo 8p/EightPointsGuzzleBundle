@@ -15,7 +15,7 @@
 [![Total Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/downloads.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Monthly Downloads](https://poser.pugx.org/eightpoints/guzzle-bundle/d/monthly.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 [![Latest Stable Version](https://poser.pugx.org/eightpoints/guzzle-bundle/v/stable.png)](https://packagist.org/packages/eightpoints/guzzle-bundle)
-[![Build Status](https://github.com/8p/EightPointsGuzzleBundle/workflows/PHPUnit/badge.svg)](https://github.com/b-vadym/EightPointsGuzzleBundle/actions?query=branch%3Amaster+workflow%3APHPUnit)
+[![Build Status](https://github.com/8p/EightPointsGuzzleBundle/workflows/PHPUnit/badge.svg)](https://github.com/8p/EightPointsGuzzleBundle/actions?query=branch%3Amaster+workflow%3APHPUnit)
 [![Scrutinizer Score](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/8p/EightPointsGuzzleBundle/)
 [![License](https://poser.pugx.org/eightpoints/guzzle-bundle/license)](https://packagist.org/packages/eightpoints/guzzle-bundle)
 

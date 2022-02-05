@@ -6,20 +6,21 @@
     margin-right: auto;
 }
 
+#collector-content #gb_profiler pre,
 #gb_profiler pre {
-    background-color: #404040;
-    border: 1px solid #636363;
+    background: var(--metric-value-background);
+    border: 1px solid var(--table-border);
     border-radius: 6px;
 }
 
 #gb_profiler textarea {
-    background-color: #222;
-    border: 1px solid #636363;
+    background: var(--metric-value-background);
+    border: 1px solid var(--table-border);
     border-radius: 6px;
     min-height: 100px;
 
     overflow: auto;
-    color: #EBEBEB;
+    color: var(--base-6);
     line-height: 1.2em;
     font: 12px Menlo, Monaco, Consolas, monospace;
     white-space: pre-wrap;
@@ -27,7 +28,6 @@
     width:100%;
     max-height:90%;
     resize: vertical;
-
 }
 
 #gb_profiler .gb_request, #gb_profiler .gb_overview {
@@ -59,7 +59,7 @@
 
 #gb_profiler h3 .gb_request__url {
     padding-left: 10px;
-    color: black;
+    color: var(--base-6);
     text-decoration: none;
     font-weight: normal;
 }
@@ -93,8 +93,8 @@
 #gb_profiler .gb_overview table tr,
 #gb_profiler .gb_overview table th,
 #gb_profiler .gb_overview table td {
-    border: 1px solid #c3d9ec;
-    background-color: #e7f0f7;
+    background: var(--metric-value-background);
+    border: 1px solid var(--table-border);
 }
 
 #gb_profiler .gb_request.gb_request--get,
@@ -103,8 +103,8 @@
 #gb_profiler .gb_request.gb_request--get table tr,
 #gb_profiler .gb_request.gb_request--get table th,
 #gb_profiler .gb_request.gb_request--get table td {
-    border: 1px solid #c3d9ec;
-    background-color: #e7f0f7;
+    background: var(--metric-value-background);
+    border: 1px solid var(--table-border);
 }
 
 #gb_profiler .gb_request.gb_request--get h3 .gb_request__method,
@@ -119,8 +119,8 @@
 #gb_profiler .gb_request.gb_request--put table tr,
 #gb_profiler .gb_request.gb_request--put table th,
 #gb_profiler .gb_request.gb_request--put table td {
-    background-color: #f9f2e9;
-    border: 1px solid #f0e0ca;
+    background: var(--metric-value-background);
+    border: 1px solid var(--table-border);
 }
 
 #gb_profiler .gb_request.gb_request--put h3 .gb_request__method,
@@ -135,8 +135,8 @@
 #gb_profiler .gb_request.gb_request--post table tr,
 #gb_profiler .gb_request.gb_request--post table th,
 #gb_profiler .gb_request.gb_request--post table td {
-    background-color: #e7f6ec;
-    border: 1px solid #c3e8d1;
+    background: var(--metric-value-background);
+    border: 1px solid var(--table-border);
 }
 
 #gb_profiler .gb_request.gb_request--post h3 .gb_request__method,
@@ -151,8 +151,8 @@
 #gb_profiler .gb_request.gb_request--patch table tr,
 #gb_profiler .gb_request.gb_request--patch table th,
 #gb_profiler .gb_request.gb_request--patch table td {
-    background-color: #fbe8e2;
-    border: 1px solid #fbd4c9;
+    background: var(--metric-value-background);
+    border: 1px solid var(--table-border);
 }
 
 #gb_profiler .gb_request.gb_request--patch h3 .gb_request__method,
@@ -167,8 +167,8 @@
 #gb_profiler .gb_request.gb_request--delete table tr,
 #gb_profiler .gb_request.gb_request--delete table th,
 #gb_profiler .gb_request.gb_request--delete table td {
-    background-color: #f5e8e8;
-    border: 1px solid #e8c6c7;
+    background: var(--metric-value-background);
+    border: 1px solid var(--table-border);
 }
 
 #gb_profiler .gb_request.gb_request--delete h3 .gb_request__method,

@@ -39,11 +39,31 @@ class EightPointsGuzzleBundleTest extends TestCase
             ->willReturn('wsse');
 
         $secondPlugin = $this->getMockBuilder(PluginInterface::class)->getMock();
-        $secondPlugin->expects($this->exactly(2))
+        $secondPlugin->expects($this->once())
             ->method('getPluginName')
             ->willReturn('wsse');
 
         new EightPointsGuzzleBundle([$firstPlugin, $secondPlugin]);
+    }
+
+    public function testPluginNameAskedOnceOnInit()
+    {
+        $firstPlugin = $this->getMockBuilder(PluginInterface::class)->getMock();
+        $firstPlugin->expects($this->once())
+            ->method('getPluginName')
+            ->willReturn('a');
+
+        $secondPlugin = $this->getMockBuilder(PluginInterface::class)->getMock();
+        $secondPlugin->expects($this->once())
+            ->method('getPluginName')
+            ->willReturn('b');
+
+        $thirdPlugin = $this->getMockBuilder(PluginInterface::class)->getMock();
+        $thirdPlugin->expects($this->once())
+            ->method('getPluginName')
+            ->willReturn('c');
+
+        new EightPointsGuzzleBundle([$firstPlugin, $secondPlugin, $thirdPlugin]);
     }
 
     public function testBoot()

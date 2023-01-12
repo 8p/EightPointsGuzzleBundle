@@ -1,5 +1,10 @@
+# Ignore files of IDE
+.idea
+
 # Ignore potentially sensitive phpunit file
 phpunit.xml
+# Ignore PHPUnit cache file
+.phpunit.result.cache
 
 # Ignore composer generated files
 composer.lock

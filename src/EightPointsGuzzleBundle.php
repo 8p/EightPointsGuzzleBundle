@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class EightPointsGuzzleBundle extends Bundle
 {
-    /** @var \EightPoints\Bundle\GuzzleBundle\PluginInterface[] */
+    /** @var array<string,\EightPoints\Bundle\GuzzleBundle\PluginInterface> */
     protected $plugins = [];
 
     /**
@@ -50,7 +50,7 @@ class EightPointsGuzzleBundle extends Bundle
     public function getContainerExtension() : ExtensionInterface
     {
         if ($this->extension === null) {
-            $this->extension = new EightPointsGuzzleExtension($this->plugins);
+            $this->extension = new EightPointsGuzzleExtension(array_values($this->plugins));
         }
 
         return $this->extension;
@@ -75,16 +75,15 @@ class EightPointsGuzzleBundle extends Bundle
      */
     protected function registerPlugin(PluginInterface $plugin) : void
     {
+        $pluginName = $plugin->getPluginName();
         // Check plugins name duplication
-        foreach ($this->plugins as $registeredPlugin) {
-            if ($registeredPlugin->getPluginName() === $plugin->getPluginName()) {
-                throw new InvalidConfigurationException(sprintf(
-                    'Trying to connect two plugins with same name: %s',
-                    $plugin->getPluginName()
-                ));
-            }
+        if (array_key_exists($pluginName, $this->plugins)) {
+            throw new InvalidConfigurationException(sprintf(
+                'Trying to connect two plugins with same name: %s',
+                $pluginName
+            ));
         }
 
-        $this->plugins[] = $plugin;
+        $this->plugins[$pluginName] = $plugin;
     }
 }

@@ -341,8 +341,8 @@ class HttpDataCollectorTest extends TestCase
         $collector->addTotalTime(3.14);
         $this->assertEquals(3.14, $collector->getTotalTime());
 
-        $collector->addTotalTime(2.17);
-        $this->assertEquals(5.31, $collector->getTotalTime());
+        $collector->addTotalTime(2.18);
+        $this->assertEquals(5.32, $collector->getTotalTime());
     }
 
     /**

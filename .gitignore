@@ -1,3 +1,6 @@
+# Ignore files of IDE
+.idea
+
 # Ignore potentially sensitive phpunit file
 phpunit.xml
 

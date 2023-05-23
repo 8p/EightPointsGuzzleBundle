@@ -82,7 +82,7 @@ class EventDispatchMiddleware
                         $this->doDispatch($postTransactionEvent, GuzzleEvents::postTransactionFor($this->serviceName));
 
                         // Continue down the chain.
-                        return \GuzzleHttp\Promise\rejection_for($reason);
+                        return \GuzzleHttp\Promise\Create::rejectionFor($reason);
                     }
                 );
             };

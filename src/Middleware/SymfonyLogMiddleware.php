@@ -52,7 +52,7 @@ class SymfonyLogMiddleware
 
                     $logger->notice($message);
 
-                    return \GuzzleHttp\Promise\rejection_for($reason);
+                    return \GuzzleHttp\Promise\Create::rejectionFor($reason);
                 }
             );
         };

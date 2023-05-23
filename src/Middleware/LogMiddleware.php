@@ -66,7 +66,7 @@ class LogMiddleware
 
                         $logger->notice($message, $context);
 
-                        return \GuzzleHttp\Promise\rejection_for($reason);
+                        return \GuzzleHttp\Promise\Create::rejectionFor($reason);
                     }
                 );
             };

@@ -336,13 +336,13 @@ class HttpDataCollectorTest extends TestCase
     public function testTotalTime()
     {
         $collector = new HttpDataCollector([$this->logger], 0);
-        $this->assertEquals(0, $collector->getTotalTime());
+        $this->assertEqualsWithDelta(0, $collector->getTotalTime(), 0.000001);
 
         $collector->addTotalTime(3.14);
-        $this->assertEquals(3.14, $collector->getTotalTime());
+        $this->assertEqualsWithDelta(3.14, $collector->getTotalTime(), 0.000001);
 
         $collector->addTotalTime(2.17);
-        $this->assertEquals(5.31, $collector->getTotalTime());
+        $this->assertEqualsWithDelta(5.31, $collector->getTotalTime(), 0.000001);
     }
 
     /**

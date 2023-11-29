@@ -58,6 +58,8 @@ class EightPointsGuzzleBundle extends Bundle
 
     /**
      * @inheritdoc
+     *
+     * @return void
      */
     public function boot()
     {

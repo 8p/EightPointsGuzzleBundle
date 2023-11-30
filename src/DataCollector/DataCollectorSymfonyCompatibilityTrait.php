@@ -35,7 +35,7 @@ if (Kernel::VERSION_ID >= 40308) {
          * @param Response $response
          * @param \Exception|null $exception
          */
-        public function collect(Request $request, Response $response, \Exception $exception = null)
+        public function collect(Request $request, Response $response, \Exception $exception = null): void
         {
             $this->doCollect($request, $response, $exception);
         }

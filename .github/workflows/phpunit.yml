@@ -12,24 +12,18 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         php:
-          - '7.1'
-          - '7.4'
-          - '8.0'
-          - '8.1'
+          - '7.2'
+          - '8.3'
         symfony:
-          - '4.4.*'
           - '5.0.*'
-          - '5.4.*'
+          - '5.4.*' # LTS
           - '6.0.*'
+          - '7.0.*'
         exclude:
-          - php: '7.1'
-            symfony: '5.0.*' # requires PHP ^7.2.5
-          - php: '7.1'
-            symfony: '5.4.*' # requires PHP ^7.2.5
-          - php: '7.1'
-            symfony: '6.0.*' # requires PHP ^7.2.5
-          - php: '7.4'
-            symfony: '6.0.*' # requires PHP ^8.0.2
+          - php: '7.2'
+            symfony: '6.0.*' # requires PHP >=8.1
+          - php: '7.2'
+            symfony: '7.0.*' # requires PHP  >=8.2
 
     runs-on: ${{ matrix.os }}
 

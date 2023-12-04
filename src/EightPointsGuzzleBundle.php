@@ -3,7 +3,6 @@
 namespace EightPoints\Bundle\GuzzleBundle;
 
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
-use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Compiler\EventHandlerCompilerPass;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -57,7 +56,9 @@ class EightPointsGuzzleBundle extends Bundle
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
+     *
+     * @return void
      */
     public function boot()
     {

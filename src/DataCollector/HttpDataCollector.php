@@ -3,7 +3,6 @@
 namespace EightPoints\Bundle\GuzzleBundle\DataCollector;
 
 use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
-use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
 use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;

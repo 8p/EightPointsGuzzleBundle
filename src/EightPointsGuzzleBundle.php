@@ -60,7 +60,7 @@ class EightPointsGuzzleBundle extends Bundle
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         foreach ($this->plugins as $plugin) {
             $plugin->boot();

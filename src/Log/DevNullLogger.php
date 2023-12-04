@@ -12,7 +12,7 @@ class DevNullLogger implements LoggerInterface
     use LoggerTrait;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function log($level, $message, array $context = []): void
     {

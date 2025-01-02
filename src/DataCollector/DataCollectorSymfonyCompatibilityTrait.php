@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait DataCollectorSymfonyCompatibilityTrait
 {
-    abstract protected function doCollect(Request $request, Response $response, \Throwable $exception = null);
+    abstract protected function doCollect(Request $request, Response $response, ?\Throwable $exception = null);
 
     /**
      * @param Request $request
@@ -16,7 +16,7 @@ trait DataCollectorSymfonyCompatibilityTrait
      *
      * @return void
      */
-    public function collect(Request $request, Response $response, \Throwable $exception = null): void
+    public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
     {
         $this->doCollect($request, $response, $exception);
     }

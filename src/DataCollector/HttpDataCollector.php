@@ -37,7 +37,7 @@ class HttpDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    protected function doCollect(Request $request, Response $response, \Throwable $exception = null)
+    protected function doCollect(Request $request, Response $response, ?\Throwable $exception = null)
     {
         $messages = [];
         foreach ($this->loggers as $logger) {

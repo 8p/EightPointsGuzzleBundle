@@ -26,7 +26,7 @@ GuzzleBundle follows semantic versioning. Read more on [semver.org][2].
 ----
 
 ## Prerequisites
- - PHP 7.1 or higher
+ - PHP 7.2 or higher
  - Symfony 5.x or 6.x or 7.x
 
 ----

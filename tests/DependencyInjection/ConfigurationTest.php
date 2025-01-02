@@ -308,7 +308,7 @@ class ConfigurationTest extends TestCase
      * @param array $options
      * @param null|array $expects
      */
-    public function testValidOptions(array $options, array $expects = null)
+    public function testValidOptions(array $options, ?array $expects = null)
     {
         $config = [
             'eight_points_guzzle' => [

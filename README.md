@@ -88,7 +88,7 @@ eight_points_guzzle:
                 # Find proper php const, for example CURLOPT_SSLVERSION, remove CURLOPT_ and transform to lower case.
                 # List of curl options: http://php.net/manual/en/function.curl-setopt.php
                 curl:
-                    !php/const:CURL_HTTP_VERSION_1_0: 1
+                    sslversion: 1
 
                 timeout: 30
 

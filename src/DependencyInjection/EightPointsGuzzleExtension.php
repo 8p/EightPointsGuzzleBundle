@@ -7,7 +7,7 @@ use EightPoints\Bundle\GuzzleBundle\Twig\Extension\DebugExtension;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Config\FileLocator;
@@ -48,12 +48,12 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @return void
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container) : void
     {
         $configPath = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'Resources', 'config']);
-        $loader     = new XmlFileLoader($container, new FileLocator($configPath));
+        $loader     = new PhpFileLoader($container, new FileLocator($configPath));
 
-        $loader->load('services.xml');
+        $loader->load('services.php');
 
         $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'), $this->plugins);
         $config        = $this->processConfiguration($configuration, $configs);
@@ -211,7 +211,7 @@ class EightPointsGuzzleExtension extends Extension
      *
      * @throws \Symfony\Component\DependencyInjection\Exception\BadMethodCallException
      *
-     * @return void
+     * @return string
      */
     protected function defineLogger(ContainerBuilder $container, int $logMode, string $clientName) : string
     {

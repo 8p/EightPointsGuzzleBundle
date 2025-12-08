@@ -19,11 +19,14 @@ jobs:
           - '5.4.*' # LTS
           - '6.0.*'
           - '7.2.*'
+          - '8.0.*'
         exclude:
           - php: '7.2'
             symfony: '6.0.*' # requires PHP >=8.1
           - php: '7.2'
             symfony: '7.2.*' # requires PHP >=8.2
+          - php: '7.2'
+            symfony: '8.0.*' # requires PHP >=8.4
 
     runs-on: ${{ matrix.os }}
 

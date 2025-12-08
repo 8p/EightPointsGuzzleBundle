@@ -64,7 +64,6 @@ class EightPointsGuzzleExtensionTest extends TestCase
         // The handler property doesn't have a setter so we have to use reflection to get to its value
         $handlerStackRefl = new \ReflectionClass($client->getConfig('handler'));
         $handler = $handlerStackRefl->getProperty('handler');
-        $handler->setAccessible(true);
 
         $this->assertInstanceOf(MockHandler::class, $handler->getValue($client->getConfig('handler')));
     }

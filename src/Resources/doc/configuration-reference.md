@@ -92,6 +92,8 @@ eight_points_guzzle:
 
                 ssl_key: '/path/to/file'
 
+                force_ip_resolve: 'v4'
+
                 stream: false
 
                 cookies: false

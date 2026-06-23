@@ -257,7 +257,7 @@ class Configuration implements ConfigurationInterface
                                 ->defaultValue(null)
                                 ->validate()
                                     ->ifTrue(function ($v) {
-                                        return !in_array($v, ['v4', 'v6']);
+                                        return !in_array($v, ['v4', 'v6', null], true);
                                     })
                                     ->thenInvalid('force_ip_resolve can be: v4 or v6')
                                 ->end()

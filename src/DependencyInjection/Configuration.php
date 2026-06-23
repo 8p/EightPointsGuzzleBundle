@@ -254,6 +254,7 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                             ->variableNode('force_ip_resolve')
+                                ->defaultValue(null)
                                 ->validate()
                                     ->ifTrue(function ($v) {
                                         return !in_array($v, ['v4', 'v6']);

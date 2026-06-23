@@ -38,6 +38,7 @@ class ConfigurationTest extends TestCase
                             'http_errors' => false,
                             'expect' => true,
                             'ssl_key' => 'key',
+                            'force_ip_resolve' => 'v4',
                             'stream' => true,
                             'synchronous' => true,
                             'timeout' => 30,
@@ -113,6 +114,7 @@ class ConfigurationTest extends TestCase
                             'read_timeout' => 30,
                             'verify' => true,
                             'version' => '1.1',
+                            'force_ip_resolve' => null,
                         ],
                         'plugin' => [],
 						'class' => '%eight_points_guzzle_bundle.http_client.class%',
@@ -190,6 +192,7 @@ class ConfigurationTest extends TestCase
                             'proxy' => 'http://proxy.org',
                             'form_params' => [],
                             'multipart' => [],
+                            'force_ip_resolve' => null,
                         ],
                         'plugin' => [],
 						'class' => '%eight_points_guzzle_bundle.http_client.class%',
@@ -422,6 +425,12 @@ class ConfigurationTest extends TestCase
             'ssl_key is array' => [[
                 'cert' => ['/path/server.pem', 'password'],
             ]],
+            'force_ip_resolve is string' => [[
+                'force_ip_resolve' => 'v4',
+            ]],
+            'force_ip_resolve is null' => [[
+                'force_ip_resolve' => null,
+            ]],
             'stream is bool' => [[
                 'stream' => true,
             ]],
@@ -537,6 +546,12 @@ class ConfigurationTest extends TestCase
                     'ssl_key' => ['/path/to/cert.pem'],
                 ],
                 'exception message' => 'ssl_key can be: string or array with two entries',
+            ],
+            'force_ip_resolve as int' => [
+                'options' => [
+                    'force_ip_resolve' => 'v8',
+                ],
+                'exception message' => 'force_ip_resolve can be: v4 or v6',
             ],
         ];
     }

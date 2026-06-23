@@ -253,6 +253,15 @@ class Configuration implements ConfigurationInterface
                                     ->thenInvalid('ssl_key can be: string or array with two entries (path and password)')
                                 ->end()
                             ->end()
+                            ->variableNode('force_ip_resolve')
+                                ->defaultValue(null)
+                                ->validate()
+                                    ->ifTrue(function ($v) {
+                                        return !in_array($v, ['v4', 'v6', null], true);
+                                    })
+                                    ->thenInvalid('force_ip_resolve can be: v4 or v6')
+                                ->end()
+                            ->end()
                             ->booleanNode('stream')->end()
                             ->booleanNode('synchronous')->end()
                             ->scalarNode('read_timeout')

@@ -2,6 +2,14 @@
 
 This document describes the changes needed when upgrading from one version to another.
 
+## FrankenPHP / worker mode (no BC break)
+
+Logger services are tagged with `kernel.reset` and implement `Symfony\Contracts\Service\ResetInterface`.
+When `options.cookies: true` is set, a `GuzzleHttp\Cookie\CookieJar` service is injected and cleared between requests.
+No application code changes are required for this compatibility work.
+
+See [frankenphp-worker-mode.md](src/Resources/doc/frankenphp-worker-mode.md).
+
 ## Upgrading From 7.x to 8.0
 
 ### Step 1: upgrade PHP and Symfony

@@ -5,6 +5,7 @@ namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Twig\Extension\DebugExtension;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Cookie\CookieJar;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
@@ -77,6 +78,13 @@ class EightPointsGuzzleExtension extends Extension
             if (isset($options['options']) && is_array($options['options'])) {
                 foreach ($options['options'] as $key => $value) {
                     if ($value === null || (is_array($value) && count($value) === 0)) {
+                        continue;
+                    }
+
+                    // When cookies=true, Guzzle would keep a CookieJar on the singleton client.
+                    // Inject a resettable jar so long-running workers (FrankenPHP) do not leak cookies.
+                    if ($key === 'cookies' && $value === true) {
+                        $argument[$key] = new Reference($this->defineCookieJar($container, $name));
                         continue;
                     }
 
@@ -219,6 +227,7 @@ class EightPointsGuzzleExtension extends Extension
         $loggerDefinition->setPublic(false);
         $loggerDefinition->setArgument(0, $logMode);
         $loggerDefinition->addTag('eight_points_guzzle.logger');
+        $loggerDefinition->addTag('kernel.reset', ['method' => 'reset']);
 
         $loggerName = sprintf('eight_points_guzzle.%s_logger', $clientName);
         $container->setDefinition($loggerName, $loggerDefinition);
@@ -387,6 +396,29 @@ class EightPointsGuzzleExtension extends Extension
         $logMiddlewareDefinition->setPublic(true);
         $logMiddlewareDefinition->addTag('monolog.logger', ['channel' => 'eight_points_guzzle']);
         $container->setDefinition('eight_points_guzzle.middleware.symfony_log', $logMiddlewareDefinition);
+    }
+
+
+    /**
+     * Define a CookieJar that is cleared between requests (worker / FrankenPHP safe).
+     *
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param string $clientName
+     *
+     * @return string service id
+     */
+    protected function defineCookieJar(ContainerBuilder $container, string $clientName) : string
+    {
+        $cookieJarServiceName = sprintf('eight_points_guzzle.cookie_jar.%s', $clientName);
+
+        if (!$container->hasDefinition($cookieJarServiceName)) {
+            $cookieJarDefinition = new Definition(CookieJar::class);
+            $cookieJarDefinition->setPublic(false);
+            $cookieJarDefinition->addTag('kernel.reset', ['method' => 'clear']);
+            $container->setDefinition($cookieJarServiceName, $cookieJarDefinition);
+        }
+
+        return $cookieJarServiceName;
     }
 
     /**

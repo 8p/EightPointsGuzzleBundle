@@ -5,6 +5,7 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle;
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
+use Symfony\Contracts\Service\ResetInterface;
 use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 use EightPoints\Bundle\GuzzleBundle\Log\LogRequest;
 use EightPoints\Bundle\GuzzleBundle\Log\LogResponse;
@@ -22,7 +23,9 @@ class LoggerTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf(LoggerInterface::class, new Logger());
+        $logger = new Logger();
+        $this->assertInstanceOf(LoggerInterface::class, $logger);
+        $this->assertInstanceOf(ResetInterface::class, $logger);
     }
 
     /**
@@ -117,6 +120,23 @@ class LoggerTest extends TestCase
         $this->assertCount(0, $logger->getMessages());
         $this->assertFalse($logger->hasMessages());
     }
+
+
+    /**
+     * Test Reset (Symfony ResetInterface / FrankenPHP worker)
+     *
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::reset
+     */
+    public function testReset()
+    {
+        $logger = new Logger();
+        $logger->log(LogLevel::ERROR, 'test message');
+        $this->assertTrue($logger->hasMessages());
+
+        $logger->reset();
+        $this->assertFalse($logger->hasMessages());
+    }
+
 
     public function getLoggerRequestModes()
     {

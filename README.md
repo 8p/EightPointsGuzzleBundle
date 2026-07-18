@@ -7,6 +7,7 @@
 **[Features](#features)** |
 **[Suggestions](#suggestions)** |
 **[Contributing](#contributing)** |
+**[FrankenPHP / worker mode](#frankenphp--worker-mode)** |
 **[Learn more](#learn-more)** |
 **[License](#license)**
 
@@ -264,6 +265,11 @@ In case your project uses autowiring this suggestion does not apply.
 🎉 Thanks to all [contributors][11] who participated in this project.
 
 ----
+
+## FrankenPHP / worker mode
+
+This bundle resets in-memory log buffers and cookie jars between requests via Symfony `kernel.reset`,
+so it is safe to use with [FrankenPHP worker mode](src/Resources/doc/frankenphp-worker-mode.md) and similar long-running runtimes.
 
 ## Learn more
 - [Autowiring Clients](src/Resources/doc/autowiring-clients.md)

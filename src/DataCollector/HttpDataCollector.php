@@ -90,6 +90,12 @@ class HttpDataCollector extends DataCollector
             'totalTime' => 0,
             'hasSlowResponse' => false,
         ];
+
+        // Also clear in-memory loggers: between requests in worker mode,
+        // kernel.reset may run without collect() having been called.
+        foreach ($this->loggers as $logger) {
+            $logger->clear();
+        }
     }
 
     /**

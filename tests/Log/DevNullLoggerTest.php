@@ -3,6 +3,7 @@
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
 use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
+use Symfony\Contracts\Service\ResetInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 
@@ -33,4 +34,18 @@ class DevNullLoggerTest extends TestCase
         $this->assertFalse($logger->hasMessages());
         $this->assertCount(0, $logger->getMessages());
     }
+
+    /**
+     * @covers \EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger::reset
+     */
+    public function testReset()
+    {
+        $logger = new DevNullLogger();
+        $logger->log('error', 'test message');
+        $logger->reset();
+        $this->assertFalse($logger->hasMessages());
+        $this->assertInstanceOf(ResetInterface::class, $logger);
+    }
+
+
 }

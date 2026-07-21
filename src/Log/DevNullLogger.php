@@ -3,11 +3,12 @@
 namespace EightPoints\Bundle\GuzzleBundle\Log;
 
 use Psr\Log\LoggerTrait;
+use Symfony\Contracts\Service\ResetInterface;
 
 /**
  * @author SuRiKmAn <surikman@surikman.sk>
  */
-class DevNullLogger implements LoggerInterface
+class DevNullLogger implements LoggerInterface, ResetInterface
 {
     use LoggerTrait;
 
@@ -27,6 +28,14 @@ class DevNullLogger implements LoggerInterface
     public function clear() : void
     {
         // do nothing!!
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reset() : void
+    {
+        $this->clear();
     }
 
     /**

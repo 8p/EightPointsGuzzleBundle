@@ -4,8 +4,9 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
 
 use Namshi\Cuzzle\Formatter\CurlFormatter;
 use Psr\Log\LoggerTrait;
+use Symfony\Contracts\Service\ResetInterface;
 
-class Logger implements LoggerInterface
+class Logger implements LoggerInterface, ResetInterface
 {
     const LOG_MODE_NONE = 0;
     const LOG_MODE_REQUEST = 1;
@@ -74,6 +75,17 @@ class Logger implements LoggerInterface
     public function clear() : void
     {
         $this->messages = [];
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * Clears buffered messages so state does not leak between requests
+     * in long-running workers (e.g. FrankenPHP worker mode).
+     */
+    public function reset() : void
+    {
+        $this->clear();
     }
 
     /**

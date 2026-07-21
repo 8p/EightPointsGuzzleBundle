@@ -53,7 +53,7 @@ class HttpDataCollectorTest extends TestCase
                      ->method('getMessages')
                      ->willReturn(['test message']);
 
-        $this->logger->expects($this->once())->method('clear');
+        $this->logger->expects($this->atLeastOnce())->method('clear');
 
         $collector = new HttpDataCollector([$this->logger], 0);
         $response  = $this->getMockBuilder(Response::class)
@@ -94,8 +94,8 @@ class HttpDataCollectorTest extends TestCase
             ->method('getMessages')
             ->willReturn(['test message']);
 
-        $this->logger->expects($this->once())->method('clear');
-        $secondLogger->expects($this->once())->method('clear');
+        $this->logger->expects($this->atLeastOnce())->method('clear');
+        $secondLogger->expects($this->atLeastOnce())->method('clear');
 
         $collector = new HttpDataCollector([$this->logger, $secondLogger], 0);
         $response  = $this->getMockBuilder(Response::class)
@@ -145,7 +145,7 @@ class HttpDataCollectorTest extends TestCase
                      ->method('getMessages')
                      ->willReturn([$slowLogMessage]);
 
-        $this->logger->expects($this->once())->method('clear');
+        $this->logger->expects($this->atLeastOnce())->method('clear');
 
         $collector = new HttpDataCollector([$this->logger], 1);
 
@@ -379,6 +379,25 @@ class HttpDataCollectorTest extends TestCase
         $collector->collect($request, $response);
 
         $this->assertEquals($expectedValue, $collector->hasSlowResponses());
+    }
+
+
+    /**
+     * In worker mode, kernel.reset may run without collect().
+     *
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::reset
+     */
+    public function testResetClearsLoggersWithoutCollect()
+    {
+        $this->logger->expects($this->atLeastOnce())->method('clear');
+
+        $collector = new HttpDataCollector([$this->logger], 0);
+        $collector->addTotalTime(1.5);
+        $collector->reset();
+
+        $this->assertSame(0, $collector->getCallCount());
+        $this->assertCount(0, $collector->getLogs());
+        $this->assertEquals(0, $collector->getTotalTime());
     }
 
     public function responseTimeProvider()

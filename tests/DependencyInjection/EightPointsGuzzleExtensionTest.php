@@ -7,12 +7,14 @@ use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtensi
 use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
 use EightPoints\Bundle\GuzzleBundle\PluginInterface;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use PHPUnit\Framework\TestCase;
@@ -421,6 +423,43 @@ class EightPointsGuzzleExtensionTest extends TestCase
     /**
      * @see https://github.com/8p/EightPointsGuzzleBundle/issues/235
      */
+
+    public function testLoggerHasKernelResetTag()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $config = $this->getConfigs();
+        $config[0]['logging'] = true;
+        $extension->load($config, $container);
+
+        $loggerDefinition = $container->getDefinition('eight_points_guzzle.test_api_logger');
+        $this->assertTrue($loggerDefinition->hasTag('kernel.reset'));
+        $this->assertSame([['method' => 'reset']], $loggerDefinition->getTag('kernel.reset'));
+    }
+
+    public function testCookiesTrueInjectsResettableCookieJar()
+    {
+        $container = $this->createContainer();
+        $extension = new EightPointsGuzzleExtension();
+        $config = $this->getConfigs();
+        $config[0]['clients']['test_api']['options']['cookies'] = true;
+        $extension->load($config, $container);
+
+        $this->assertTrue($container->hasDefinition('eight_points_guzzle.cookie_jar.test_api'));
+        $cookieJarDefinition = $container->getDefinition('eight_points_guzzle.cookie_jar.test_api');
+        $this->assertSame(CookieJar::class, $cookieJarDefinition->getClass());
+        $this->assertTrue($cookieJarDefinition->hasTag('kernel.reset'));
+        $this->assertSame([['method' => 'clear']], $cookieJarDefinition->getTag('kernel.reset'));
+
+        $clientArgument = $container->getDefinition('eight_points_guzzle.client.test_api')->getArgument(0);
+        $this->assertArrayHasKey('cookies', $clientArgument);
+        $this->assertInstanceOf(Reference::class, $clientArgument['cookies']);
+        $this->assertSame('eight_points_guzzle.cookie_jar.test_api', (string) $clientArgument['cookies']);
+
+        $client = $container->get('eight_points_guzzle.client.test_api');
+        $this->assertInstanceOf(CookieJar::class, $client->getConfig('cookies'));
+    }
+
     public function testCompilation()
     {
         $container = $this->createContainer();

@@ -7,6 +7,7 @@ use EightPoints\Bundle\GuzzleBundle\Middleware\EventDispatchMiddleware;
 use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
 use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ResponseException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -385,7 +386,13 @@ class EventDispatchMiddlewareTest extends TestCase
 
         $request = new Request('POST', 'http://api.domain.tld');
         $response = new Response(200, ['some-test-header' => 'some-test-value']);
-        $exception = new RequestException('message', $request, $response);
+        // Guzzle 7: RequestException carries the response.
+        // Guzzle 8: response-bearing failures use ResponseException (RequestException no longer accepts a response).
+        if (class_exists(ResponseException::class)) {
+            $exception = new ResponseException('message', $request, $response);
+        } else {
+            $exception = new RequestException('message', $request, $response);
+        }
         $handler = new MockHandler([$exception]);
 
         $promise = $this->dispatchEvents($eventDispatcher, $handler, $request);

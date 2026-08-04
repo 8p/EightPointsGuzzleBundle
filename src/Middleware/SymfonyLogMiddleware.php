@@ -47,9 +47,9 @@ class SymfonyLogMiddleware
 
                 function ($reason) use ($logger, $request, $formatter) {
                     $response = null;
-                        if (\is_object($reason) && \method_exists($reason, 'getResponse')) {
-                            $response = $reason->getResponse();
-                        }
+                    if (\is_object($reason) && \method_exists($reason, 'getResponse')) {
+                        $response = $reason->getResponse();
+                    }
                     $message  = $formatter->format($request, $response, $reason);
 
                     $logger->notice($message);

@@ -2,7 +2,6 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\MessageFormatter;
 use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
 
@@ -60,7 +59,10 @@ class LogMiddleware
 
                     function ($reason) use ($logger, $request, $formatter, $requestId) {
 
-                        $response = $reason instanceof RequestException ? $reason->getResponse() : null;
+                        $response = null;
+                        if (\is_object($reason) && \method_exists($reason, 'getResponse')) {
+                            $response = $reason->getResponse();
+                        }
                         $message  = $formatter->format($request, $response, $reason);
                         $context  = compact('request', 'response', 'requestId');
 

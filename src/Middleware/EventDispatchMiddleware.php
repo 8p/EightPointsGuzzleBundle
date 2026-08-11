@@ -4,7 +4,6 @@ namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
 use EightPoints\Bundle\GuzzleBundle\Events\Event;
 use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
-use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -71,8 +70,11 @@ class EventDispatchMiddleware
                         return $postTransactionEvent->getTransaction();
                     },
                     function (Throwable $reason) {
-                        // Get the response. The response in a RequestException can be null too.
-                        $response = $reason instanceof RequestException ? $reason->getResponse() : null;
+                        // Get the response when available (Guzzle 7 RequestException / Guzzle 8 ResponseException).
+                        $response = null;
+                        if (\is_object($reason) && \method_exists($reason, 'getResponse')) {
+                            $response = $reason->getResponse();
+                        }
 
                         // Create the Post Transaction event.
                         $postTransactionEvent = new PostTransactionEvent($response, $this->serviceName);

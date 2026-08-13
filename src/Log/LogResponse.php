@@ -42,7 +42,7 @@ class LogResponse
      *
      * @return void
      */
-    public function save(ResponseInterface $response) : void
+    public function save(ResponseInterface $response): void
     {
         $this->setStatusCode($response->getStatusCode());
         $this->setStatusPhrase($response->getReasonPhrase());
@@ -67,7 +67,7 @@ class LogResponse
      *
      * @return integer
      */
-    public function getStatusCode() : int
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
@@ -79,7 +79,7 @@ class LogResponse
      *
      * @return void
      */
-    public function setStatusCode(int $value) : void
+    public function setStatusCode(int $value): void
     {
         $this->statusCode = $value;
     }
@@ -89,7 +89,7 @@ class LogResponse
      *
      * @return string
      */
-    public function getStatusPhrase() : string
+    public function getStatusPhrase(): string
     {
         return $this->statusPhrase;
     }
@@ -101,7 +101,7 @@ class LogResponse
      *
      * @return void
      */
-    public function setStatusPhrase(string $value) : void
+    public function setStatusPhrase(string $value): void
     {
         $this->statusPhrase = $value;
     }
@@ -123,7 +123,7 @@ class LogResponse
      *
      * @return void
      */
-    public function setBody(string $value) : void
+    public function setBody(string $value): void
     {
         $this->body = $value;
     }
@@ -133,7 +133,7 @@ class LogResponse
      *
      * @return string
      */
-    public function getProtocolVersion() : string
+    public function getProtocolVersion(): string
     {
         return $this->protocolVersion;
     }
@@ -145,7 +145,7 @@ class LogResponse
      *
      * @return void
      */
-    public function setProtocolVersion(string $value) : void
+    public function setProtocolVersion(string $value): void
     {
         $this->protocolVersion = $value;
     }
@@ -155,7 +155,7 @@ class LogResponse
      *
      * @return array
      */
-    public function getHeaders() : array
+    public function getHeaders(): array
     {
         return $this->headers;
     }
@@ -167,7 +167,7 @@ class LogResponse
      *
      * @return void
      */
-    public function setHeaders(array $value) : void
+    public function setHeaders(array $value): void
     {
         $this->headers = $value;
     }

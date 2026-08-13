@@ -72,7 +72,7 @@ class HttpDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function getName() : string
+    public function getName(): string
     {
         return 'eight_points_guzzle';
     }
@@ -82,7 +82,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return void
      */
-    public function reset() : void
+    public function reset(): void
     {
         $this->data = [
             'logs' => [],
@@ -103,7 +103,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return array
      */
-    public function getLogs() : array
+    public function getLogs(): array
     {
         return array_key_exists('logs', $this->data) ? $this->data['logs'] : [];
     }
@@ -113,7 +113,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return array
      */
-    public function getMessages() : array
+    public function getMessages(): array
     {
         $messages = [];
 
@@ -131,7 +131,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return integer
      */
-    public function getCallCount() : int
+    public function getCallCount(): int
     {
         return count($this->getMessages());
     }
@@ -141,7 +141,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return integer
      */
-    public function getErrorCount() : int
+    public function getErrorCount(): int
     {
         return count($this->getErrorsByType(LogLevel::ERROR));
     }
@@ -151,7 +151,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return array
      */
-    public function getErrorsByType(string $type) : array
+    public function getErrorsByType(string $type): array
     {
         return array_filter(
             $this->getMessages(),
@@ -166,7 +166,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return float
      */
-    public function getTotalTime() : float
+    public function getTotalTime(): float
     {
         return $this->data['totalTime'];
     }
@@ -176,7 +176,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return bool
      */
-    public function hasSlowResponses() : bool
+    public function hasSlowResponses(): bool
     {
         return $this->data['hasSlowResponse'];
     }
@@ -186,7 +186,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return void
      */
-    public function addTotalTime(float $time) : void
+    public function addTotalTime(float $time): void
     {
         $this->data['totalTime'] += $time;
     }
@@ -198,7 +198,7 @@ class HttpDataCollector extends DataCollector
      *
      * @return \EightPoints\Bundle\GuzzleBundle\Log\LogGroup
      */
-    protected function getLogGroup(string $id) : LogGroup
+    protected function getLogGroup(string $id): LogGroup
     {
         if (!isset($this->data['logs'][$id])) {
             $this->data['logs'][$id] = new LogGroup();

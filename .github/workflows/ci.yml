@@ -41,6 +41,25 @@ jobs:
       - name: PHPStan
         run: vendor/bin/phpstan analyse --no-progress --memory-limit=512M
 
+  coding-standards:
+    name: PHP-CS-Fixer
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer update --no-interaction --no-progress
+
+      - name: PHP-CS-Fixer
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff
+
   tests:
     name: PHPUnit (PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }})
     strategy:

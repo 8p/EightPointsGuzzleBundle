@@ -29,7 +29,7 @@ class PostTransactionEvent extends Event
      *
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function getTransaction() : ?ResponseInterface
+    public function getTransaction(): ?ResponseInterface
     {
         return $this->response;
     }
@@ -41,7 +41,7 @@ class PostTransactionEvent extends Event
      *
      * @return void
      */
-    public function setTransaction(?ResponseInterface $response) : void
+    public function setTransaction(?ResponseInterface $response): void
     {
         $this->response = $response;
     }
@@ -49,7 +49,7 @@ class PostTransactionEvent extends Event
     /**
      * @return string
      */
-    public function getServiceName() : string
+    public function getServiceName(): string
     {
         return $this->serviceName;
     }

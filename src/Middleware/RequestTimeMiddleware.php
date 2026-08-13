@@ -31,7 +31,7 @@ class RequestTimeMiddleware
      *
      * @return \Closure
      */
-    public function __invoke(callable $handler) : \Closure
+    public function __invoke(callable $handler): \Closure
     {
         return function (RequestInterface $request, array $options) use ($handler) {
             $options['on_stats'] = $this->getOnStatsCallback(
@@ -53,7 +53,7 @@ class RequestTimeMiddleware
      *
      * @return \Closure
      */
-    protected function getOnStatsCallback(?callable $initialOnStats, ?string $requestId) : \Closure
+    protected function getOnStatsCallback(?callable $initialOnStats, ?string $requestId): \Closure
     {
         return function (TransferStats $stats) use ($initialOnStats, $requestId) {
             if (is_callable($initialOnStats)) {

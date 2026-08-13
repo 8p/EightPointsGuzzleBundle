@@ -498,7 +498,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
     /**
      * @return \Symfony\Component\DependencyInjection\ContainerBuilder
      */
-    private function createContainer() : ContainerBuilder
+    private function createContainer(): ContainerBuilder
     {
         $container = new ContainerBuilder();
         $container->setParameter('kernel.debug', true);
@@ -512,7 +512,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
     /**
      * @return array
      */
-    private function getConfigs() : array
+    private function getConfigs(): array
     {
         return [
             [
@@ -538,7 +538,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
      *
      * @return array
      */
-    protected function getClientLogMiddleware(ContainerBuilder $container, string $clientName) : array
+    protected function getClientLogMiddleware(ContainerBuilder $container, string $clientName): array
     {
         $this->assertCount(1, $container->getDefinition($clientName)->getArguments());
         $clientOptions = $container->getDefinition($clientName)->getArgument(0);
@@ -548,10 +548,12 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $handler = $clientOptions['handler'];
         $this->assertInstanceOf(Definition::class, $handler);
 
-        return array_filter($handler->getMethodCalls(), function(array $a) {
+        return array_filter($handler->getMethodCalls(), function (array $a) {
             return isset($a[1][1]) && $a[1][1] === 'log';
         });
     }
 }
 
-class CustomClient extends Client {}
+class CustomClient extends Client
+{
+}

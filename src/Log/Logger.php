@@ -8,12 +8,11 @@ use Symfony\Contracts\Service\ResetInterface;
 
 class Logger implements LoggerInterface, ResetInterface
 {
-    const LOG_MODE_NONE = 0;
-    const LOG_MODE_REQUEST = 1;
-    const LOG_MODE_REQUEST_AND_RESPONSE_HEADERS = 2;
-    const LOG_MODE_REQUEST_AND_RESPONSE = 3;
-
     use LoggerTrait;
+    public const LOG_MODE_NONE = 0;
+    public const LOG_MODE_REQUEST = 1;
+    public const LOG_MODE_REQUEST_AND_RESPONSE_HEADERS = 2;
+    public const LOG_MODE_REQUEST_AND_RESPONSE = 3;
 
     /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogMessage[] */
     private $messages = [];
@@ -72,7 +71,7 @@ class Logger implements LoggerInterface, ResetInterface
      *
      * @return void
      */
-    public function clear() : void
+    public function clear(): void
     {
         $this->messages = [];
     }
@@ -83,7 +82,7 @@ class Logger implements LoggerInterface, ResetInterface
      * Clears buffered messages so state does not leak between requests
      * in long-running workers (e.g. FrankenPHP worker mode).
      */
-    public function reset() : void
+    public function reset(): void
     {
         $this->clear();
     }
@@ -93,7 +92,7 @@ class Logger implements LoggerInterface, ResetInterface
      *
      * @return boolean
      */
-    public function hasMessages() : bool
+    public function hasMessages(): bool
     {
         return $this->getMessages() ? true : false;
     }
@@ -103,7 +102,7 @@ class Logger implements LoggerInterface, ResetInterface
      *
      * @return \EightPoints\Bundle\GuzzleBundle\Log\LogMessage[]
      */
-    public function getMessages() : array
+    public function getMessages(): array
     {
         return $this->messages;
     }
@@ -114,7 +113,7 @@ class Logger implements LoggerInterface, ResetInterface
      *
      * @return void
      */
-    public function addTransferTimeByRequestId(?string $requestId, float $transferTime) : void
+    public function addTransferTimeByRequestId(?string $requestId, float $transferTime): void
     {
         if (array_key_exists($requestId, $this->messages)) {
             $this->messages[$requestId]->setTransferTime($transferTime);

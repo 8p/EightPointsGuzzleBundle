@@ -52,7 +52,7 @@ class ConfigurationTest extends TestCase
                             'version' => '1.1',
                         ],
                         'plugin' => [],
-						'class' => '%eight_points_guzzle_bundle.http_client.class%',
+                        'class' => '%eight_points_guzzle_bundle.http_client.class%',
                     ]
                 ]
             ]
@@ -117,7 +117,7 @@ class ConfigurationTest extends TestCase
                             'force_ip_resolve' => null,
                         ],
                         'plugin' => [],
-						'class' => '%eight_points_guzzle_bundle.http_client.class%',
+                        'class' => '%eight_points_guzzle_bundle.http_client.class%',
                     ]
                 ]
             ]
@@ -195,7 +195,7 @@ class ConfigurationTest extends TestCase
                             'force_ip_resolve' => null,
                         ],
                         'plugin' => [],
-						'class' => '%eight_points_guzzle_bundle.http_client.class%',
+                        'class' => '%eight_points_guzzle_bundle.http_client.class%',
                     ]
                 ]
             ]
@@ -350,7 +350,7 @@ class ConfigurationTest extends TestCase
     /**
      * @return array
      */
-    public function provideValidOptionValues() : array
+    public function provideValidOptionValues(): array
     {
         return [
             'allow_redirects is bool' => [[
@@ -517,7 +517,7 @@ class ConfigurationTest extends TestCase
     /**
      * @return array
      */
-    public function provideInvalidOptionValues() : array
+    public function provideInvalidOptionValues(): array
     {
         return [
             'form_params and multipart at the same time' => [

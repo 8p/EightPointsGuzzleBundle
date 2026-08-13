@@ -25,7 +25,7 @@ class DevNullLogger implements LoggerInterface, ResetInterface
      *
      * @return void
      */
-    public function clear() : void
+    public function clear(): void
     {
         // do nothing!!
     }
@@ -33,7 +33,7 @@ class DevNullLogger implements LoggerInterface, ResetInterface
     /**
      * {@inheritdoc}
      */
-    public function reset() : void
+    public function reset(): void
     {
         $this->clear();
     }
@@ -43,7 +43,7 @@ class DevNullLogger implements LoggerInterface, ResetInterface
      *
      * @return boolean
      */
-    public function hasMessages() : bool
+    public function hasMessages(): bool
     {
         return false;
     }
@@ -53,7 +53,7 @@ class DevNullLogger implements LoggerInterface, ResetInterface
      *
      * @return array
      */
-    public function getMessages() : array
+    public function getMessages(): array
     {
         return [];
     }

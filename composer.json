@@ -42,7 +42,8 @@
     "symfony/yaml":           "~5.0|~6.0|~7.0|~8.0",
     "phpstan/phpstan": "^2.2",
     "phpstan/phpstan-symfony": "^2.0",
-    "phpstan/phpstan-phpunit": "^2.0"
+    "phpstan/phpstan-phpunit": "^2.0",
+    "friendsofphp/php-cs-fixer": "^3.95"
   },
   "suggest": {
     "namshi/cuzzle": "Outputs Curl command on profiler's page for debugging purposes"
@@ -58,6 +59,8 @@
     }
   },
   "scripts": {
-    "phpstan": "phpstan analyse --memory-limit=512M"
+    "phpstan": "phpstan analyse --memory-limit=512M",
+    "cs-check": "php-cs-fixer fix --dry-run --diff",
+    "cs-fix": "php-cs-fixer fix"
   }
 }

@@ -14,19 +14,19 @@ interface LoggerInterface extends PsrLoggerInterface
      *
      * @return void
      */
-    public function clear() : void;
+    public function clear(): void;
 
     /**
      * Return if messages exist or not
      *
      * @return boolean
      */
-    public function hasMessages() : bool;
+    public function hasMessages(): bool;
 
     /**
      * Return log messages
      *
      * @return array
      */
-    public function getMessages() : array;
+    public function getMessages(): array;
 }

@@ -28,7 +28,7 @@ class SymfonyLogMiddleware
      *
      * @return \Closure
      */
-    public function __invoke(callable $handler) : \Closure
+    public function __invoke(callable $handler): \Closure
     {
         $logger    = $this->logger;
         $formatter = $this->formatter;
@@ -36,7 +36,6 @@ class SymfonyLogMiddleware
         return function ($request, array $options) use ($handler, $logger, $formatter) {
 
             return $handler($request, $options)->then(
-
                 function ($response) use ($logger, $request, $formatter) {
                     $message = $formatter->format($request, $response);
 
@@ -44,7 +43,6 @@ class SymfonyLogMiddleware
 
                     return $response;
                 },
-
                 function ($reason) use ($logger, $request, $formatter) {
                     $response = null;
                     if (\is_object($reason) && \method_exists($reason, 'getResponse')) {

@@ -40,7 +40,7 @@ jobs:
       SYMFONY: ${{ matrix.symfony }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2

@@ -1,4 +1,4 @@
-name: PHPUnit
+name: CI
 
 on:
   pull_request:
@@ -6,7 +6,43 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  composer-validate:
+    name: Composer validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+
+      - name: Validate composer.json
+        run: composer validate --strict --no-check-lock
+
+  static-analysis:
+    name: PHPStan
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer update --no-interaction --no-progress
+
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --no-progress --memory-limit=512M
+
+  tests:
+    name: PHPUnit (PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }})
     strategy:
       fail-fast: false
       matrix:
@@ -58,6 +94,4 @@ jobs:
           vendor/bin/simple-phpunit install
 
       - name: Test
-        run: |
-          composer validate --strict --no-check-lock
-          vendor/bin/simple-phpunit --coverage-text --verbose
+        run: vendor/bin/simple-phpunit --coverage-text --verbose

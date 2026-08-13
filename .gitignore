@@ -1,3 +1,6 @@
+# General
+.idea
+
 # Ignore potentially sensitive phpunit file
 phpunit.xml
 

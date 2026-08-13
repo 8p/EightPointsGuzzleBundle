@@ -39,7 +39,10 @@
     "symfony/phpunit-bridge": "~5.0|~6.0|~7.0|~8.0",
     "symfony/twig-bundle":    "~5.0|~6.0|~7.0|~8.0",
     "symfony/var-dumper":     "~5.0|~6.0|~7.0|~8.0",
-    "symfony/yaml":           "~5.0|~6.0|~7.0|~8.0"
+    "symfony/yaml":           "~5.0|~6.0|~7.0|~8.0",
+    "phpstan/phpstan": "^2.2",
+    "phpstan/phpstan-symfony": "^2.0",
+    "phpstan/phpstan-phpunit": "^2.0"
   },
   "suggest": {
     "namshi/cuzzle": "Outputs Curl command on profiler's page for debugging purposes"
@@ -53,5 +56,8 @@
     "psr-4": {
       "EightPoints\\Bundle\\GuzzleBundle\\Tests\\": "tests"
     }
+  },
+  "scripts": {
+    "phpstan": "phpstan analyse --memory-limit=512M"
   }
 }

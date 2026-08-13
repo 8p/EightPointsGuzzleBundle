@@ -48,7 +48,7 @@ class LogRequest
      *
      * @return void
      */
-    protected function save(RequestInterface $request) : void
+    protected function save(RequestInterface $request): void
     {
         $uri = $request->getUri();
 
@@ -79,7 +79,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getHost() : string
+    public function getHost(): string
     {
         return $this->host;
     }
@@ -91,7 +91,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setHost(string $value) : void
+    public function setHost(string $value): void
     {
         $this->host = $value;
     }
@@ -101,7 +101,7 @@ class LogRequest
      *
      * @return integer|null
      */
-    public function getPort() : ?int
+    public function getPort(): ?int
     {
         return $this->port;
     }
@@ -123,7 +123,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getUrl() : string
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -135,7 +135,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setUrl(string $value) : void
+    public function setUrl(string $value): void
     {
         $this->url = $value;
     }
@@ -145,7 +145,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getPath() : string
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -157,7 +157,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setPath(string $value) : void
+    public function setPath(string $value): void
     {
         $this->path = $value;
     }
@@ -167,7 +167,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getScheme() : string
+    public function getScheme(): string
     {
         return $this->scheme;
     }
@@ -179,7 +179,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setScheme(string $value) : void
+    public function setScheme(string $value): void
     {
         $this->scheme = $value;
     }
@@ -189,7 +189,7 @@ class LogRequest
      *
      * @return array
      */
-    public function getHeaders() : array
+    public function getHeaders(): array
     {
         return $this->headers;
     }
@@ -201,7 +201,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setHeaders(array $value) : void
+    public function setHeaders(array $value): void
     {
         $this->headers = $value;
     }
@@ -211,7 +211,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getProtocolVersion() : string
+    public function getProtocolVersion(): string
     {
         return $this->protocolVersion;
     }
@@ -223,7 +223,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setProtocolVersion(string $value) : void
+    public function setProtocolVersion(string $value): void
     {
         $this->protocolVersion = $value;
     }
@@ -233,7 +233,7 @@ class LogRequest
      *
      * @return string
      */
-    public function getMethod() : string
+    public function getMethod(): string
     {
         return $this->method;
     }
@@ -245,7 +245,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setMethod(string $value) : void
+    public function setMethod(string $value): void
     {
         $this->method = $value;
     }
@@ -255,7 +255,7 @@ class LogRequest
      *
      * @return string|null
      */
-    public function getBody() : ?string
+    public function getBody(): ?string
     {
         return $this->body;
     }
@@ -267,7 +267,7 @@ class LogRequest
      *
      * @return void
      */
-    public function setBody(?string $value) : void
+    public function setBody(?string $value): void
     {
         $this->body = $value;
     }

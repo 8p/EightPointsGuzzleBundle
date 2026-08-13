@@ -38,7 +38,7 @@ class EventDispatchMiddleware
     /**
      * @return \Closure
      */
-    public function dispatchEvent() : \Closure
+    public function dispatchEvent(): \Closure
     {
         return function (callable $handler) {
 

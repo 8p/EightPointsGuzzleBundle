@@ -27,7 +27,7 @@ class ProfileMiddleware
      *
      * @return \Closure
      */
-    public function profile() : \Closure
+    public function profile(): \Closure
     {
         $stopwatch = $this->stopwatch;
 
@@ -40,13 +40,11 @@ class ProfileMiddleware
                 );
 
                 return $handler($request, $options)->then(
-
                     function ($response) use ($event) {
                         $event->stop();
 
                         return $response;
                     },
-
                     function ($reason) use ($event) {
                         $event->stop();
 

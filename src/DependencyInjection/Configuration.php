@@ -2,12 +2,13 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
-use function method_exists;
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+
+use function method_exists;
 
 class Configuration implements ConfigurationInterface
 {
@@ -45,7 +46,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
-    public function getConfigTreeBuilder() : TreeBuilder
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $builder = new TreeBuilder($this->alias);
 
@@ -75,7 +76,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
      */
-    private function createClientsNode() : ArrayNodeDefinition
+    private function createClientsNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('clients');
 
@@ -302,10 +303,12 @@ class Configuration implements ConfigurationInterface
                             ->arrayNode('proxy')
                                 ->beforeNormalization()
                                 ->ifString()
-                                    ->then(function($v) { return ['http'=> $v]; })
+                                    ->then(function ($v) {
+                                        return ['http' => $v];
+                                    })
                                 ->end()
                                 ->validate()
-                                    ->always(function($v) {
+                                    ->always(function ($v) {
                                         if (empty($v['no'])) {
                                             unset($v['no']);
                                         }

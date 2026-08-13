@@ -6,11 +6,11 @@ use function sprintf;
 
 final class GuzzleEvents
 {
-    const PRE_TRANSACTION = 'eight_points_guzzle.pre_transaction';
+    public const PRE_TRANSACTION = 'eight_points_guzzle.pre_transaction';
 
-    const POST_TRANSACTION = 'eight_points_guzzle.post_transaction';
+    public const POST_TRANSACTION = 'eight_points_guzzle.post_transaction';
 
-    const EVENTS = [
+    public const EVENTS = [
         self::PRE_TRANSACTION,
         self::POST_TRANSACTION,
     ];

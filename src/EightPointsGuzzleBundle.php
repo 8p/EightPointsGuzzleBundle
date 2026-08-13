@@ -30,7 +30,7 @@ class EightPointsGuzzleBundle extends Bundle
      *
      * @return void
      */
-    public function build(ContainerBuilder $container) : void
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
@@ -46,7 +46,7 @@ class EightPointsGuzzleBundle extends Bundle
      *
      * @return \Symfony\Component\DependencyInjection\Extension\ExtensionInterface The container extension
      */
-    public function getContainerExtension() : ExtensionInterface
+    public function getContainerExtension(): ExtensionInterface
     {
         if ($this->extension === null) {
             $this->extension = new EightPointsGuzzleExtension($this->plugins);
@@ -74,7 +74,7 @@ class EightPointsGuzzleBundle extends Bundle
      *
      * @return void
      */
-    protected function registerPlugin(PluginInterface $plugin) : void
+    protected function registerPlugin(PluginInterface $plugin): void
     {
         // Check plugins name duplication
         foreach ($this->plugins as $registeredPlugin) {

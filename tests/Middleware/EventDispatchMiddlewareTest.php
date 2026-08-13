@@ -21,7 +21,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class EventDispatchMiddlewareTest extends TestCase
 {
-    const SERVICE_NAME = 'main';
+    private const SERVICE_NAME = 'main';
 
     /**
      * Test that listeners for 'eight_points_guzzle.pre_transaction' and
@@ -95,7 +95,7 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenGenericPreTransactionListenerChangesRequest()
     {
-        $preTransactionListener = static function(PreTransactionEvent $event) {
+        $preTransactionListener = static function (PreTransactionEvent $event) {
             $request = $event->getTransaction();
 
             $event->setTransaction($request->withHeader('some-test-header', 'some-test-value'));
@@ -126,7 +126,7 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenClientSpecificPreTransactionListenerChangesRequest()
     {
-        $preTransactionListener = static function(PreTransactionEvent $event) {
+        $preTransactionListener = static function (PreTransactionEvent $event) {
             $request = $event->getTransaction();
 
             $event->setTransaction($request->withHeader('some-test-header', 'some-test-value'));
@@ -157,13 +157,13 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenBothGenericAndClientSpecificPreTransactionListenerChangesRequest()
     {
-        $genericPreTransactionListener = static function(PreTransactionEvent $event) {
+        $genericPreTransactionListener = static function (PreTransactionEvent $event) {
             $request = $event->getTransaction();
 
             $event->setTransaction($request->withHeader('some-test-header', 'some-generic-value')->withHeader('some-generic-header', 'some-generic-value'));
         };
 
-        $clientSpecificPreTransactionListener = static function(PreTransactionEvent $event) {
+        $clientSpecificPreTransactionListener = static function (PreTransactionEvent $event) {
             $request = $event->getTransaction();
 
             $event->setTransaction($request->withHeader('some-test-header', 'some-client-specific-value')->withHeader('some-client-specific-header', 'some-client-specific-value'));
@@ -205,7 +205,7 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenGenericPostTransactionListenerChangesResponse()
     {
-        $postTransactionListener = static function(PostTransactionEvent $event) {
+        $postTransactionListener = static function (PostTransactionEvent $event) {
             $response = $event->getTransaction();
 
             $event->setTransaction($response->withHeader('some-test-header', 'some-test-value'));
@@ -236,7 +236,7 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenClientSpecificPostTransactionListenerChangesResponse()
     {
-        $postTransactionListener = static function(PostTransactionEvent $event) {
+        $postTransactionListener = static function (PostTransactionEvent $event) {
             $response = $event->getTransaction();
 
             $event->setTransaction($response->withHeader('some-test-header', 'some-test-value'));
@@ -267,13 +267,13 @@ class EventDispatchMiddlewareTest extends TestCase
      */
     public function testCaseWhenBothGenericAndClientSpecificPostTransactionListenerChangeResponse()
     {
-        $genericPostTransactionListener = static function(PostTransactionEvent $event) {
+        $genericPostTransactionListener = static function (PostTransactionEvent $event) {
             $response = $event->getTransaction();
 
             $event->setTransaction($response->withHeader('some-test-header', 'some-generic-value')->withHeader('some-generic-header', 'some-generic-value'));
         };
 
-        $clientSpecificPostTransactionListener = static function(PostTransactionEvent $event) {
+        $clientSpecificPostTransactionListener = static function (PostTransactionEvent $event) {
             $response = $event->getTransaction();
 
             $event->setTransaction($response->withHeader('some-test-header', 'some-client-specific-value')->withHeader('some-client-specific-header', 'some-client-specific-value'));
@@ -407,7 +407,7 @@ class EventDispatchMiddlewareTest extends TestCase
         $listener = $this->createCallableMock();
         $listener->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(static function(PreTransactionEvent $event) {
+            ->with($this->callback(static function (PreTransactionEvent $event) {
                 return $event->getServiceName() === self::SERVICE_NAME;
             }));
 
@@ -419,7 +419,7 @@ class EventDispatchMiddlewareTest extends TestCase
         $listener = $this->createCallableMock();
         $listener->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(static function(PostTransactionEvent $event) {
+            ->with($this->callback(static function (PostTransactionEvent $event) {
                 return $event->getServiceName() === self::SERVICE_NAME;
             }));
 
@@ -450,7 +450,6 @@ class EventDispatchMiddlewareTest extends TestCase
             ;
         }
 
-        return $this->createPartialMock(\stdClass::class, ['__invoke']);;
+        return $this->createPartialMock(\stdClass::class, ['__invoke']);
     }
 }
-

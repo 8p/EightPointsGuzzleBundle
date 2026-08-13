@@ -61,7 +61,7 @@ class LogGroupTest extends TestCase
 
         $this->assertCount(3, $group->getMessages());
 
-        foreach($group->getMessages() as $message) {
+        foreach ($group->getMessages() as $message) {
             $this->assertInstanceOf(LogMessage::class, $message);
         }
 

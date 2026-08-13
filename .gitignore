@@ -1,10 +1,14 @@
 # General
 .idea
 
-# Ignore potentially sensitive phpunit file
+# Ignore PHPUnit cache and config override
 phpunit.xml
+.phpunit.result.cache
 
 # Ignore composer generated files
 composer.lock
 vendor/
 infection-log.txt
+
+# Ignore php-cs-fixer cache
+.php-cs-fixer.cache

@@ -28,7 +28,7 @@ class LogMiddleware
      *
      * @return \Closure
      */
-    public function log() : \Closure
+    public function log(): \Closure
     {
         $logger    = $this->logger;
         $formatter = $this->formatter;
@@ -46,7 +46,6 @@ class LogMiddleware
                 $options['request_id'] = $requestId;
 
                 return $handler($request, $options)->then(
-
                     function ($response) use ($logger, $request, $formatter, $requestId) {
 
                         $message = $formatter->format($request, $response);
@@ -56,7 +55,6 @@ class LogMiddleware
 
                         return $response;
                     },
-
                     function ($reason) use ($logger, $request, $formatter, $requestId) {
 
                         $response = null;

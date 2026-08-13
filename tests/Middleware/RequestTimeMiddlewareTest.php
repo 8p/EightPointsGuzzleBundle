@@ -84,6 +84,6 @@ class RequestTimeMiddlewareTest extends TestCase
             ;
         }
 
-        return $this->createPartialMock(\stdClass::class, ['__invoke']);;
+        return $this->createPartialMock(\stdClass::class, ['__invoke']);
     }
 }

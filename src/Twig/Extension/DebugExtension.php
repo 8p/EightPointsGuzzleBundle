@@ -13,7 +13,7 @@ class DebugExtension extends AbstractExtension
     /**
      * @return array
      */
-    public function getFunctions() : array
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -52,7 +52,7 @@ class DebugExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return get_class($this);
     }

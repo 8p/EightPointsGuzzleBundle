@@ -10,13 +10,13 @@ use Twig\TwigFunction;
 
 class DebugExtensionTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $extension = new DebugExtension();
         $this->assertInstanceOf(ExtensionInterface::class, $extension);
     }
 
-    public function testDumpFunction()
+    public function testDumpFunction(): void
     {
         $extension = new DebugExtension();
         $functions = $extension->getFunctions();
@@ -34,7 +34,7 @@ class DebugExtensionTest extends TestCase
         $this->assertEquals('dump', $callable[1]);
     }
 
-    public function testDump()
+    public function testDump(): void
     {
         /** @var Environment $environment */
         $environment = $this->createMock(Environment::class);
@@ -46,7 +46,7 @@ class DebugExtensionTest extends TestCase
         $this->assertStringContainsString('randomTestValue', $result);
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertEquals((new DebugExtension())->getName(), DebugExtension::class);
     }

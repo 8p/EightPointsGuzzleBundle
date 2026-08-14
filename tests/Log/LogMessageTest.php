@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class LogMessageTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $message = 'message';
         $logMessage = new LogMessage($message);

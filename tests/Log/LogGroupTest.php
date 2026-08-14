@@ -14,7 +14,7 @@ class LogGroupTest extends TestCase
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::setRequestName
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getRequestName
      */
-    public function testRequestName()
+    public function testRequestName(): void
     {
         $group = new LogGroup();
 
@@ -32,7 +32,7 @@ class LogGroupTest extends TestCase
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::getMessages
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogGroup::addMessages
      */
-    public function testMessages()
+    public function testMessages(): void
     {
         $group = new LogGroup();
 
@@ -40,16 +40,16 @@ class LogGroupTest extends TestCase
         $this->assertEmpty($group->getMessages());
 
         $message1 = $this->getMockBuilder(LogMessage::class)
-                         ->disableOriginalConstructor()
-                         ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $message2 = $this->getMockBuilder(LogMessage::class)
-                         ->disableOriginalConstructor()
-                         ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $message3 = $this->getMockBuilder(LogMessage::class)
-                         ->disableOriginalConstructor()
-                         ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $messages = [$message1, $message2];
 

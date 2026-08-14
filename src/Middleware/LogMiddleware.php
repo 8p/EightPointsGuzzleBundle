@@ -4,6 +4,7 @@ namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
 use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
 use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Promise\Create;
 
 class LogMiddleware
 {
@@ -57,7 +58,7 @@ class LogMiddleware
 
                         $logger->notice($message, $context);
 
-                        return \GuzzleHttp\Promise\Create::rejectionFor($reason);
+                        return Create::rejectionFor($reason);
                     }
                 );
             };

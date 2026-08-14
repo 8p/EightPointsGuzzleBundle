@@ -21,18 +21,15 @@ class LogResponseTest extends TestCase
         'Content-Type' => ['text/html; charset=ISO-8859-1'],
     ];
 
-    /**
-     * SetUp: before executing each test function
-     */
     public function setUp(): void
     {
         $this->response = $this->getMockBuilder(Response::class)
-                               ->disableOriginalConstructor()
-                               ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $bodyMock = $this->getMockBuilder(Stream::class)
-                         ->disableOriginalConstructor()
-                         ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $bodyMock->method('getContents')->willReturn('test body');
 
@@ -44,21 +41,19 @@ class LogResponseTest extends TestCase
     }
 
     /**
-     * Test Status Code
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getStatusCode
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setStatusCode
      */
-    public function testStatusCode()
+    public function testStatusCode(): void
     {
         $response = new LogResponse($this->response);
 
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testBodyLoggingDisabled()
+    public function testBodyLoggingDisabled(): void
     {
         $response = new LogResponse($this->response, false);
 
@@ -66,14 +61,12 @@ class LogResponseTest extends TestCase
     }
 
     /**
-     * Test Body
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getBody
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setBody
      */
-    public function testBody()
+    public function testBody(): void
     {
         $response = new LogResponse($this->response);
 
@@ -81,14 +74,12 @@ class LogResponseTest extends TestCase
     }
 
     /**
-     * Test Protocol Version
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getProtocolVersion
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setProtocolVersion
      */
-    public function testProtocolVersion()
+    public function testProtocolVersion(): void
     {
         $response = new LogResponse($this->response);
 
@@ -96,14 +87,12 @@ class LogResponseTest extends TestCase
     }
 
     /**
-     * Test Headers
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::__construct
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::save
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getHeaders
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setHeaders
      */
-    public function testHeaders()
+    public function testHeaders(): void
     {
         $response = new LogResponse($this->response);
 
@@ -115,7 +104,7 @@ class LogResponseTest extends TestCase
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::setStatusPhrase
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogResponse::getStatusPhrase
      */
-    public function testGetStatusPhrase()
+    public function testGetStatusPhrase(): void
     {
         $logResponse = new LogResponse($this->response);
 

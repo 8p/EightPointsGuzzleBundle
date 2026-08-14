@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\DataCollector;
 
+use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
 use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
 use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 use Psr\Log\LogLevel;
@@ -16,15 +17,15 @@ class HttpDataCollector extends DataCollector
 {
     use DataCollectorSymfonyCompatibilityTrait;
 
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface[] */
+    /** @var LoggerInterface[] */
     protected $loggers;
 
     /** @var float */
     private $slowResponseTime;
 
     /**
-     * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface[] $loggers
-     * @param float|int $slowResponseTime Time in seconds
+     * @param LoggerInterface[] $loggers
+     * @param float $slowResponseTime Time in seconds
      */
     public function __construct(array $loggers, float $slowResponseTime)
     {

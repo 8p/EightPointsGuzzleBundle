@@ -7,6 +7,7 @@ use EightPoints\Bundle\GuzzleBundle\Middleware\LogMiddleware;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -15,7 +16,7 @@ use Psr\Log\LogLevel;
 
 class LogMiddlewareTest extends TestCase
 {
-    public function testLog()
+    public function testLog(): void
     {
         $logger = new Logger();
         $request = new Request('POST', 'http://api.domain.tld');
@@ -27,7 +28,7 @@ class LogMiddlewareTest extends TestCase
         $this->assertTrue(is_callable($logCallback));
 
         $result = $logCallback($handler);
-        /** @var \GuzzleHttp\Promise\Promise $promise */
+        /** @var Promise $promise */
         $promise = $result($request, []);
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
@@ -42,7 +43,7 @@ class LogMiddlewareTest extends TestCase
         $this->assertEquals(LogLevel::INFO, $message->getLevel());
     }
 
-    public function testRejectFromLog()
+    public function testRejectFromLog(): void
     {
         $logger = new Logger();
         $request = new Request('POST', 'http://api.domain.tld');
@@ -55,7 +56,7 @@ class LogMiddlewareTest extends TestCase
         $this->assertTrue(is_callable($logCallback));
 
         $result = $logCallback($handler);
-        /** @var \GuzzleHttp\Promise\Promise $promise */
+        /** @var Promise $promise */
         $promise = $result($request, []);
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);

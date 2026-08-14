@@ -3,12 +3,11 @@
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
+use EightPoints\Bundle\GuzzleBundle\PluginInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
-
-use function method_exists;
 
 class Configuration implements ConfigurationInterface
 {
@@ -23,7 +22,7 @@ class Configuration implements ConfigurationInterface
     protected $debug;
 
     /**
-     * @var \EightPoints\Bundle\GuzzleBundle\PluginInterface[]
+     * @var PluginInterface[]
      */
     protected $plugins;
 
@@ -42,15 +41,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $builder = new TreeBuilder($this->alias);
-
-        if (method_exists($builder, 'getRootNode')) {
-            $root = $builder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $root = $builder->root($this->alias);
-        }
-
-        $root
+        $builder->getRootNode()
             ->children()
                 ->append($this->createClientsNode())
                 ->booleanNode('logging')->defaultValue($this->debug)->end()
@@ -71,16 +62,9 @@ class Configuration implements ConfigurationInterface
     {
         $builder = new TreeBuilder('clients');
 
-        if (method_exists($builder, 'getRootNode')) {
-            /** @var ArrayNodeDefinition $node */
-            $node = $builder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            /** @var ArrayNodeDefinition $node */
-            $node = $builder->root('clients');
-        }
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
 
-        /** @var \Symfony\Component\Config\Definition\Builder\NodeBuilder $nodeChildren */
         $nodeChildren = $node->useAttributeAsKey('name')
             ->prototype('array')
                 ->children();

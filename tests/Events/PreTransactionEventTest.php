@@ -9,11 +9,9 @@ use PHPUnit\Framework\TestCase;
 class PreTransactionEventTest extends TestCase
 {
     /**
-     * Test Instance
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $serviceName = 'service name';
         $request = $this->getMockBuilder(Request::class)
@@ -26,12 +24,10 @@ class PreTransactionEventTest extends TestCase
     }
 
     /**
-     * Test Transaction
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::setTransaction
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent::getTransaction
      */
-    public function testTransaction()
+    public function testTransaction(): void
     {
         $method = 'POST';
         $request = $this->getMockBuilder(Request::class)
@@ -41,8 +37,8 @@ class PreTransactionEventTest extends TestCase
         $preEvent = new PreTransactionEvent($request, 'main');
 
         $transMock = $this->getMockBuilder(Request::class)
-                          ->setConstructorArgs([$method, '/'])
-                          ->getMock();
+            ->setConstructorArgs([$method, '/'])
+            ->getMock();
 
         $transMock->method('getMethod')->willReturn($method);
 

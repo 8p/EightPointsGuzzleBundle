@@ -4,13 +4,14 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
 use EightPoints\Bundle\GuzzleBundle\Log\LogRequest;
 use GuzzleHttp\Psr7\Stream;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
 class LogRequestTest extends TestCase
 {
-    /** @var RequestInterface|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var RequestInterface|MockObject */
     protected $request;
 
     /** @var array */
@@ -48,55 +49,55 @@ class LogRequestTest extends TestCase
         $this->request->method('getBody')->willReturn($body);
     }
 
-    public function testGetHost()
+    public function testGetHost(): void
     {
         $logRequest = new LogRequest($this->request);
         $this->assertEquals('localhost', $logRequest->getHost());
     }
 
-    public function testGetUri()
+    public function testGetUri(): void
     {
         $logRequest = new LogRequest($this->request);
         $this->assertEquals('localhost', $logRequest->getUrl());
     }
 
-    public function testGetPort()
+    public function testGetPort(): void
     {
         $logRequest = new LogRequest($this->request);
         $this->assertEquals(80, $logRequest->getPort());
     }
 
-    public function testGetPath()
+    public function testGetPath(): void
     {
         $logRequest = new LogRequest($this->request);
         $this->assertEquals('/', $logRequest->getPath());
     }
 
-    public function testGetScheme()
+    public function testGetScheme(): void
     {
         $logRequest = new LogRequest($this->request);
         $this->assertEquals('http', $logRequest->getScheme());
     }
 
-    public function testGetHeaders()
+    public function testGetHeaders(): void
     {
         $logRequest = new LogRequest($this->request);
         $this->assertSame($this->headers, $logRequest->getHeaders());
     }
 
-    public function testGetProtocolVersion()
+    public function testGetProtocolVersion(): void
     {
         $logRequest = new LogRequest($this->request);
         $this->assertEquals('1.1', $logRequest->getProtocolVersion());
     }
 
-    public function testGetMethod()
+    public function testGetMethod(): void
     {
         $logRequest = new LogRequest($this->request);
         $this->assertEquals('GET', $logRequest->getMethod());
     }
 
-    public function testGetBody()
+    public function testGetBody(): void
     {
         $logRequest = new LogRequest($this->request);
         $this->assertEquals('test body', $logRequest->getBody());

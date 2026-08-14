@@ -6,6 +6,7 @@ use EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
 use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class HttpDataCollectorTest extends TestCase
 {
     /**
-     * @var Logger|\PHPUnit\Framework\MockObject\MockObject
+     * @var Logger|MockObject
      */
     protected $logger;
 
@@ -31,7 +32,7 @@ class HttpDataCollectorTest extends TestCase
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $collector = new HttpDataCollector([$this->logger], 0);
         $this->assertEquals([], $collector->getLogs());
@@ -47,28 +48,26 @@ class HttpDataCollectorTest extends TestCase
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogs
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogGroup
      */
-    public function testCollect()
+    public function testCollect(): void
     {
         $this->logger->expects($this->once())
-                     ->method('getMessages')
-                     ->willReturn(['test message']);
+            ->method('getMessages')
+            ->willReturn(['test message']);
 
         $this->logger->expects($this->atLeastOnce())->method('clear');
 
         $collector = new HttpDataCollector([$this->logger], 0);
-        $response = $this->getMockBuilder(Response::class)
-                          ->getMock();
+        $response = $this->getMockBuilder(Response::class)->getMock();
 
-        $request = $this->getMockBuilder(Request::class)
-                          ->getMock();
+        $request = $this->getMockBuilder(Request::class)->getMock();
 
         $request->expects($this->once())
-                ->method('getUri')
-                ->willReturn('someRandomUrlId');
+            ->method('getUri')
+            ->willReturn('someRandomUrlId');
 
         $request->expects($this->once())
-                ->method('getPathInfo')
-                ->willReturn('id');
+            ->method('getPathInfo')
+            ->willReturn('id');
 
         $collector->collect($request, $response);
 
@@ -83,7 +82,7 @@ class HttpDataCollectorTest extends TestCase
         }
     }
 
-    public function testCollectWithMultipleLoggers()
+    public function testCollectWithMultipleLoggers(): void
     {
         $secondLogger = $this->getMockBuilder(Logger::class)->getMock();
         $secondLogger->expects($this->once())
@@ -98,11 +97,8 @@ class HttpDataCollectorTest extends TestCase
         $secondLogger->expects($this->atLeastOnce())->method('clear');
 
         $collector = new HttpDataCollector([$this->logger, $secondLogger], 0);
-        $response = $this->getMockBuilder(Response::class)
-            ->getMock();
-
-        $request = $this->getMockBuilder(Request::class)
-            ->getMock();
+        $response = $this->getMockBuilder(Response::class)->getMock();
+        $request = $this->getMockBuilder(Request::class)->getMock();
 
         $request->expects($this->once())
             ->method('getUri')
@@ -131,19 +127,19 @@ class HttpDataCollectorTest extends TestCase
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogs
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogGroup
      */
-    public function testCollectWithSlowRequests()
+    public function testCollectWithSlowRequests(): void
     {
         $slowLogMessage = $this->getMockBuilder(LogMessage::class)
-                               ->disableOriginalConstructor()
-                               ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $slowLogMessage->expects($this->once())
-                       ->method('getTransferTime')
-                       ->willReturn(2);
+            ->method('getTransferTime')
+            ->willReturn(2);
 
         $this->logger->expects($this->once())
-                     ->method('getMessages')
-                     ->willReturn([$slowLogMessage]);
+            ->method('getMessages')
+            ->willReturn([$slowLogMessage]);
 
         $this->logger->expects($this->atLeastOnce())->method('clear');
 
@@ -153,12 +149,12 @@ class HttpDataCollectorTest extends TestCase
         $request = $this->getMockBuilder(Request::class)->getMock();
 
         $request->expects($this->once())
-                ->method('getUri')
-                ->willReturn('someRandomUrlId');
+            ->method('getUri')
+            ->willReturn('someRandomUrlId');
 
         $request->expects($this->once())
-                ->method('getPathInfo')
-                ->willReturn('id');
+            ->method('getPathInfo')
+            ->willReturn('id');
 
         $collector->collect($request, $response);
 
@@ -170,7 +166,7 @@ class HttpDataCollectorTest extends TestCase
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getName
      */
-    public function testName()
+    public function testName(): void
     {
         $collector = new HttpDataCollector([$this->logger], 0);
 
@@ -182,25 +178,23 @@ class HttpDataCollectorTest extends TestCase
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getMessages
      */
-    public function testMessages()
+    public function testMessages(): void
     {
         $this->logger->expects($this->once())
-                     ->method('getMessages')
-                     ->willReturn(['test message #1', 'test message #2']);
+            ->method('getMessages')
+            ->willReturn(['test message #1', 'test message #2']);
 
         $collector = new HttpDataCollector([$this->logger], 0);
-        $response = $this->getMockBuilder(Response::class)
-                          ->getMock();
-        $request = $this->getMockBuilder(Request::class)
-                          ->getMock();
+        $response = $this->getMockBuilder(Response::class)->getMock();
+        $request = $this->getMockBuilder(Request::class)->getMock();
 
         $request->expects($this->once())
-                ->method('getUri')
-                ->willReturn('someRandomUrlId');
+            ->method('getUri')
+            ->willReturn('someRandomUrlId');
 
         $request->expects($this->once())
-                ->method('getPathInfo')
-                ->willReturn('id');
+            ->method('getPathInfo')
+            ->willReturn('id');
 
         $collector->collect($request, $response);
 
@@ -218,25 +212,23 @@ class HttpDataCollectorTest extends TestCase
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getCallCount
      */
-    public function testCallCount()
+    public function testCallCount(): void
     {
         $this->logger->expects($this->once())
-                     ->method('getMessages')
-                     ->willReturn(['test message #1', 'test message #2']);
+            ->method('getMessages')
+            ->willReturn(['test message #1', 'test message #2']);
 
         $collector = new HttpDataCollector([$this->logger], 0);
-        $response = $this->getMockBuilder(Response::class)
-                          ->getMock();
-        $request = $this->getMockBuilder(Request::class)
-                          ->getMock();
+        $response = $this->getMockBuilder(Response::class)->getMock();
+        $request = $this->getMockBuilder(Request::class)->getMock();
 
         $request->expects($this->once())
-                ->method('getUri')
-                ->willReturn('someRandomUrlId');
+            ->method('getUri')
+            ->willReturn('someRandomUrlId');
 
         $request->expects($this->once())
-                ->method('getPathInfo')
-                ->willReturn('id');
+            ->method('getPathInfo')
+            ->willReturn('id');
 
         $collector->collect($request, $response);
 
@@ -248,7 +240,7 @@ class HttpDataCollectorTest extends TestCase
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::reset
      */
-    public function testReset()
+    public function testReset(): void
     {
         $this->logger->expects($this->once())
             ->method('getMessages')
@@ -256,11 +248,8 @@ class HttpDataCollectorTest extends TestCase
 
         $collector = new HttpDataCollector([$this->logger], 0);
 
-        $response = $this->getMockBuilder(Response::class)
-            ->getMock();
-
-        $request = $this->getMockBuilder(Request::class)
-            ->getMock();
+        $response = $this->getMockBuilder(Response::class)->getMock();
+        $request = $this->getMockBuilder(Request::class)->getMock();
 
         $request->expects($this->once())
             ->method('getUri')
@@ -290,7 +279,7 @@ class HttpDataCollectorTest extends TestCase
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getErrorCount
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getErrorsByType
      */
-    public function testErrorCount()
+    public function testErrorCount(): void
     {
         $errorMessage = new LogMessage('error log message');
         $errorMessage->setLevel(LogLevel::ERROR);
@@ -304,11 +293,8 @@ class HttpDataCollectorTest extends TestCase
 
         $collector = new HttpDataCollector([$this->logger], 0);
 
-        $response = $this->getMockBuilder(Response::class)
-            ->getMock();
-
-        $request = $this->getMockBuilder(Request::class)
-            ->getMock();
+        $response = $this->getMockBuilder(Response::class)->getMock();
+        $request = $this->getMockBuilder(Request::class)->getMock();
 
         $request->expects($this->once())
             ->method('getUri')
@@ -332,7 +318,7 @@ class HttpDataCollectorTest extends TestCase
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getTotalTime
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::addTotalTime
      */
-    public function testTotalTime()
+    public function testTotalTime(): void
     {
         $collector = new HttpDataCollector([$this->logger], 0);
         $this->assertEqualsWithDelta(0, $collector->getTotalTime(), 0.000001);
@@ -351,7 +337,7 @@ class HttpDataCollectorTest extends TestCase
      *
      * @dataProvider responseTimeProvider
      */
-    public function testSlowResponses(float $responseTime, bool $expectedValue)
+    public function testSlowResponses(float $responseTime, bool $expectedValue): void
     {
         $message = new LogMessage('test message');
         $message->setTransferTime($responseTime);
@@ -361,11 +347,8 @@ class HttpDataCollectorTest extends TestCase
             ->willReturn([$message]);
 
         $collector = new HttpDataCollector([$this->logger], 0.2);
-        $response = $this->getMockBuilder(Response::class)
-            ->getMock();
-
-        $request = $this->getMockBuilder(Request::class)
-            ->getMock();
+        $response = $this->getMockBuilder(Response::class)->getMock();
+        $request = $this->getMockBuilder(Request::class)->getMock();
 
         $request->expects($this->once())
             ->method('getUri')
@@ -385,7 +368,7 @@ class HttpDataCollectorTest extends TestCase
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::reset
      */
-    public function testResetClearsLoggersWithoutCollect()
+    public function testResetClearsLoggersWithoutCollect(): void
     {
         $this->logger->expects($this->atLeastOnce())->method('clear');
 
@@ -398,7 +381,7 @@ class HttpDataCollectorTest extends TestCase
         $this->assertEquals(0, $collector->getTotalTime());
     }
 
-    public function responseTimeProvider()
+    public function responseTimeProvider(): array
     {
         return [
             'normal response' => [0.1, false],

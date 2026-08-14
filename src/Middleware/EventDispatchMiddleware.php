@@ -6,6 +6,7 @@ use EightPoints\Bundle\GuzzleBundle\Events\Event;
 use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
 use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
 use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
+use GuzzleHttp\Promise\Create;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -75,7 +76,7 @@ class EventDispatchMiddleware
                         $this->doDispatch($postTransactionEvent, GuzzleEvents::postTransactionFor($this->serviceName));
 
                         // Continue down the chain.
-                        return \GuzzleHttp\Promise\Create::rejectionFor($reason);
+                        return Create::rejectionFor($reason);
                     }
                 );
             };

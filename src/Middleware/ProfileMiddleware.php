@@ -2,6 +2,7 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
+use GuzzleHttp\Promise\Create;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
@@ -42,7 +43,7 @@ class ProfileMiddleware
                     function ($reason) use ($event) {
                         $event->stop();
 
-                        return \GuzzleHttp\Promise\Create::rejectionFor($reason);
+                        return Create::rejectionFor($reason);
                     }
                 );
             };

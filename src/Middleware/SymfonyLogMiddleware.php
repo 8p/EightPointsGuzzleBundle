@@ -3,6 +3,7 @@
 namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
 use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Promise\Create;
 use Psr\Log\LoggerInterface;
 
 class SymfonyLogMiddleware
@@ -42,7 +43,7 @@ class SymfonyLogMiddleware
 
                     $logger->notice($message);
 
-                    return \GuzzleHttp\Promise\Create::rejectionFor($reason);
+                    return Create::rejectionFor($reason);
                 }
             );
         };

@@ -9,11 +9,9 @@ use PHPUnit\Framework\TestCase;
 class PostTransactionEventTest extends TestCase
 {
     /**
-     * Test Instance
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $serviceName = 'service name';
         $response = $this->createMock(Response::class);
@@ -23,20 +21,16 @@ class PostTransactionEventTest extends TestCase
     }
 
     /**
-     * Test Transaction
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::setTransaction
      * @covers \EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent::getTransaction
      */
-    public function testTransaction()
+    public function testTransaction(): void
     {
         $statusCode = 204;
         $response = $this->createMock(Response::class);
         $postEvent = new PostTransactionEvent($response, 'main');
 
-        $transMock = $this->getMockBuilder(Response::class)
-                          ->getMock();
-
+        $transMock = $this->getMockBuilder(Response::class)->getMock();
         $transMock->method('getStatusCode')->willReturn($statusCode);
 
         $postEvent->setTransaction($transMock);

@@ -5,6 +5,7 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Middleware;
 use EightPoints\Bundle\GuzzleBundle\Middleware\ProfileMiddleware;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class ProfileMiddlewareTest extends TestCase
 {
-    public function testLog()
+    public function testLog(): void
     {
         $stopwatch = new Stopwatch();
         $request = new Request('POST', 'http://api.domain.tld');
@@ -25,7 +26,7 @@ class ProfileMiddlewareTest extends TestCase
         $this->assertTrue(is_callable($profileCallback));
 
         $result = $profileCallback($handler);
-        /** @var \GuzzleHttp\Promise\Promise $promise */
+        /** @var Promise $promise */
         $promise = $result($request, []);
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);
@@ -36,7 +37,7 @@ class ProfileMiddlewareTest extends TestCase
         $this->assertNotNull($event);
     }
 
-    public function testRejectFromLog()
+    public function testRejectFromLog(): void
     {
         $stopwatch = new Stopwatch();
         $request = new Request('POST', 'http://api.domain.tld');
@@ -49,7 +50,7 @@ class ProfileMiddlewareTest extends TestCase
         $this->assertTrue(is_callable($profileCallback));
 
         $result = $profileCallback($handler);
-        /** @var \GuzzleHttp\Promise\Promise $promise */
+        /** @var Promise $promise */
         $promise = $result($request, []);
 
         $this->assertInstanceOf(PromiseInterface::class, $promise);

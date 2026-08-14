@@ -6,6 +6,7 @@ use Symfony\Contracts\EventDispatcher\Event as BaseEvent;
 
 /**
  * @see: https://github.com/8p/EightPointsGuzzleBundle/pull/261
+ *
  * @see: https://github.com/8p/EightPointsGuzzleBundle/pull/265
  *
  * SF 4.3 introduced Contracts and deprecated interfaces used before.

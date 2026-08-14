@@ -3,14 +3,13 @@
 namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
 use EightPoints\Bundle\GuzzleBundle\Events\Event;
+use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
 use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
+use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as ContractsEventDispatcherInterface;
-use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
-use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
-use Throwable;
 
 /**
  * Dispatches an Event using the Symfony Event Dispatcher.
@@ -19,29 +18,21 @@ use Throwable;
  */
 class EventDispatchMiddleware
 {
-    /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
     /** @var string */
     private $serviceName;
 
-    /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param string $serviceName
-     */
     public function __construct(EventDispatcherInterface $eventDispatcher, string $serviceName)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->serviceName = $serviceName;
     }
 
-    /**
-     * @return \Closure
-     */
     public function dispatchEvent(): \Closure
     {
         return function (callable $handler) {
-
             return function (
                 RequestInterface $request,
                 array $options
@@ -69,7 +60,7 @@ class EventDispatchMiddleware
                         // Continue down the chain.
                         return $postTransactionEvent->getTransaction();
                     },
-                    function (Throwable $reason) {
+                    function (\Throwable $reason) {
                         // Get the response when available (Guzzle 7 RequestException / Guzzle 8 ResponseException).
                         $response = null;
                         if (\is_object($reason) && \method_exists($reason, 'getResponse')) {

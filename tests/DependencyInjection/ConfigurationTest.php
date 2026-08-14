@@ -4,8 +4,8 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection;
 
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Config\Definition\Processor;
 
 class ConfigurationTest extends TestCase
 {
@@ -21,10 +21,10 @@ class ConfigurationTest extends TestCase
                         'options' => [
                             'auth' => [
                                 'user',
-                                'pass'
+                                'pass',
                             ],
                             'headers' => [
-                                'Accept' => 'application/json'
+                                'Accept' => 'application/json',
                             ],
                             'query' => [],
                             'curl' => [],
@@ -47,15 +47,15 @@ class ConfigurationTest extends TestCase
                             'proxy' => [
                                 'http' => 'http://proxy.org',
                                 'https' => 'https://proxy.org',
-                                'no' => ['host.com', 'host.org']
+                                'no' => ['host.com', 'host.org'],
                             ],
                             'version' => '1.1',
                         ],
                         'plugin' => [],
                         'class' => '%eight_points_guzzle_bundle.http_client.class%',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         $processor = new Processor();
@@ -70,7 +70,7 @@ class ConfigurationTest extends TestCase
                 'clients' => [
                     'test_client' => [
                         'logging' => null,
-                    ]
+                    ],
                 ],
             ]
         ), $processedConfig);
@@ -88,16 +88,16 @@ class ConfigurationTest extends TestCase
                         'options' => [
                             'auth' => [
                                 'user',
-                                'pass'
+                                'pass',
                             ],
                             'headers' => [
-                                'Accept' => 'application/json'
+                                'Accept' => 'application/json',
                             ],
                             'query' => [],
                             'curl' => [],
                             'cert' => [
                                 'path/to/cert',
-                                'password'
+                                'password',
                             ],
                             'form_params' => [],
                             'multipart' => [],
@@ -118,9 +118,9 @@ class ConfigurationTest extends TestCase
                         ],
                         'plugin' => [],
                         'class' => '%eight_points_guzzle_bundle.http_client.class%',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         $processor = new Processor();
@@ -135,7 +135,7 @@ class ConfigurationTest extends TestCase
                 'clients' => [
                     'test_client' => [
                         'logging' => null,
-                    ]
+                    ],
                 ],
             ]
         ), $processedConfig);
@@ -150,18 +150,18 @@ class ConfigurationTest extends TestCase
                         'base_url' => 'http://baseurl/path',
                         'options' => [
                             'headers' => [
-                                'Accept' => 'application/json'
+                                'Accept' => 'application/json',
                             ],
                             'cert' => [
                                 'path/to/cert',
                                 'password',
-                                'Invalid'
+                                'Invalid',
                             ],
                             'curl' => [],
                         ],
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         $this->expectException(InvalidConfigurationException::class);
@@ -182,10 +182,10 @@ class ConfigurationTest extends TestCase
                         'options' => [
                             'auth' => [
                                 'user',
-                                'pass'
+                                'pass',
                             ],
                             'headers' => [
-                                'Accept' => 'application/json'
+                                'Accept' => 'application/json',
                             ],
                             'query' => [],
                             'curl' => [],
@@ -196,9 +196,9 @@ class ConfigurationTest extends TestCase
                         ],
                         'plugin' => [],
                         'class' => '%eight_points_guzzle_bundle.http_client.class%',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         $processor = new Processor();
@@ -210,7 +210,7 @@ class ConfigurationTest extends TestCase
             'logging' => false,
             'profiling' => false,
             'slow_response_time' => 0,
-            'clients' => ['test_client' => ['logging' => null, 'options' => ['proxy' => ['http' => 'http://proxy.org']]]]
+            'clients' => ['test_client' => ['logging' => null, 'options' => ['proxy' => ['http' => 'http://proxy.org']]]],
         ]), $processedConfig);
     }
 
@@ -223,12 +223,12 @@ class ConfigurationTest extends TestCase
                         'options' => [
                             'headers' => [
                                 'Header_underscored' => 'some-random-hash',
-                                'Header-hyphened' => 'another-random-hash'
+                                'Header-hyphened' => 'another-random-hash',
                             ],
-                        ]
-                    ]
-                ]
-            ]
+                        ],
+                    ],
+                ],
+            ],
         ];
 
         $processor = new Processor();
@@ -249,11 +249,11 @@ class ConfigurationTest extends TestCase
                         'options' => [
                             'curl' => [
                                 'sslversion' => CURL_HTTP_VERSION_1_1,
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ];
 
         $processor = new Processor();
@@ -307,9 +307,6 @@ class ConfigurationTest extends TestCase
 
     /**
      * @dataProvider provideValidOptionValues
-     *
-     * @param array $options
-     * @param null|array $expects
      */
     public function testValidOptions(array $options, ?array $expects = null)
     {
@@ -317,10 +314,10 @@ class ConfigurationTest extends TestCase
             'eight_points_guzzle' => [
                 'clients' => [
                     'test_client' => [
-                        'options' => $options
-                    ]
-                ]
-            ]
+                        'options' => $options,
+                    ],
+                ],
+            ],
         ];
 
         $processor = new Processor();
@@ -337,8 +334,8 @@ class ConfigurationTest extends TestCase
         $config = [
             'eight_points_guzzle' => [
                 'slow_response_time' => 1000,
-                'clients' => []
-            ]
+                'clients' => [],
+            ],
         ];
 
         $processor = new Processor();
@@ -347,9 +344,6 @@ class ConfigurationTest extends TestCase
         $this->assertEquals(1000, $processedConfig['slow_response_time']);
     }
 
-    /**
-     * @return array
-     */
     public function provideValidOptionValues(): array
     {
         return [
@@ -358,7 +352,7 @@ class ConfigurationTest extends TestCase
             ]],
             'allow_redirects is array' => [[
                 'allow_redirects' => [
-                    'max'  => 5,
+                    'max' => 5,
                 ],
             ]],
             'auth is string' => [[
@@ -403,14 +397,14 @@ class ConfigurationTest extends TestCase
             'form_params is array' => [[
                 'form_params' => [
                     'foo' => 'bar',
-                    'baz' => ['hi', 'there!']
+                    'baz' => ['hi', 'there!'],
                 ],
             ]],
             'multipart is array' => [[
                 'multipart' => [[
-                    'name'     => 'foo',
+                    'name' => 'foo',
                     'contents' => 'data',
-                    'headers'  => ['X-Baz' => 'bar']
+                    'headers' => ['X-Baz' => 'bar'],
                 ]],
             ]],
             'sink is string' => [[
@@ -476,7 +470,7 @@ class ConfigurationTest extends TestCase
             ],
             'proxy is array' => [[
                 'proxy' => [
-                    'http'  => 'tcp://localhost:8125',
+                    'http' => 'tcp://localhost:8125',
                     'no' => ['.mit.edu', 'foo.com'],
                 ],
             ]],
@@ -491,9 +485,6 @@ class ConfigurationTest extends TestCase
 
     /**
      * @dataProvider provideInvalidOptionValues
-     *
-     * @param array $options
-     * @param string $exceptionMessage
      */
     public function testInvalidOptions(array $options, string $exceptionMessage)
     {
@@ -504,19 +495,16 @@ class ConfigurationTest extends TestCase
             'eight_points_guzzle' => [
                 'clients' => [
                     'test_client' => [
-                        'options' => $options
-                    ]
-                ]
-            ]
+                        'options' => $options,
+                    ],
+                ],
+            ],
         ];
 
         $processor = new Processor();
         $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
     }
 
-    /**
-     * @return array
-     */
     public function provideInvalidOptionValues(): array
     {
         return [

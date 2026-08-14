@@ -4,11 +4,11 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Middleware;
 
 use EightPoints\Bundle\GuzzleBundle\Middleware\ProfileMiddleware;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise\PromiseInterface;
-use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class ProfileMiddlewareTest extends TestCase

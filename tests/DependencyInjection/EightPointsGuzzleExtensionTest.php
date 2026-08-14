@@ -6,20 +6,20 @@ use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
 use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
 use EightPoints\Bundle\GuzzleBundle\PluginInterface;
+use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Uri;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use PHPUnit\Framework\TestCase;
-use GuzzleHttp\Psr7\Uri;
-use GuzzleHttp\Client;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class EightPointsGuzzleExtensionTest extends TestCase
@@ -220,7 +220,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.event_dispatch.test_api'));
 
         // test logging services (logger, data collector and log middleware for each client)
-        foreach (['test_api', 'test_api_with_custom_class','test_api_with_custom_handler'] as $clientName) {
+        foreach (['test_api', 'test_api_with_custom_class', 'test_api_with_custom_handler'] as $clientName) {
             $this->assertTrue($container->hasDefinition(sprintf('eight_points_guzzle.%s_logger', $clientName)));
         }
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.data_collector'));
@@ -255,7 +255,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $clientLoggingStatuses = [
             'test_api' => true,
             'test_api_with_custom_class' => false,
-            'test_api_with_custom_handler' => true
+            'test_api_with_custom_handler' => true,
         ];
         foreach ($clientLoggingStatuses as $clientName => $expectedStatus) {
             $this->assertSame($expectedStatus, $container->hasDefinition(sprintf('eight_points_guzzle.%s_logger', $clientName)));
@@ -282,12 +282,11 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $extension = new EightPointsGuzzleExtension();
         $extension->load($config, $container);
 
-
         // test logging services (logger, data collector and log middleware for each client)
         $clientLoggingStatuses = [
             'test_api' => false,
             'test_api_with_custom_class' => false,
-            'test_api_with_custom_handler' => false
+            'test_api_with_custom_handler' => false,
         ];
         foreach ($clientLoggingStatuses as $clientName => $expectedStatus) {
             $this->assertSame($expectedStatus, $container->hasDefinition(sprintf('eight_points_guzzle.%s_logger', $clientName)));
@@ -359,7 +358,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
                         'base_url' => '//api.domain.tld/path',
                         'plugin' => [
                             'test' => [],
-                        ]
+                        ],
                     ],
                     'client_without_plugin' => [
                         'base_url' => '//api.domain.tld/path',
@@ -423,7 +422,6 @@ class EightPointsGuzzleExtensionTest extends TestCase
     /**
      * @see https://github.com/8p/EightPointsGuzzleBundle/issues/235
      */
-
     public function testLoggerHasKernelResetTag()
     {
         $container = $this->createContainer();
@@ -495,9 +493,6 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
-    /**
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder
-     */
     private function createContainer(): ContainerBuilder
     {
         $container = new ContainerBuilder();
@@ -509,9 +504,6 @@ class EightPointsGuzzleExtensionTest extends TestCase
         return $container;
     }
 
-    /**
-     * @return array
-     */
     private function getConfigs(): array
     {
         return [
@@ -532,12 +524,6 @@ class EightPointsGuzzleExtensionTest extends TestCase
         ];
     }
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param string $clientName
-     *
-     * @return array
-     */
     protected function getClientLogMiddleware(ContainerBuilder $container, string $clientName): array
     {
         $this->assertCount(1, $container->getDefinition($clientName)->getArguments());

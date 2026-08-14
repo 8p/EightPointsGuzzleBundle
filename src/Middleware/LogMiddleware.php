@@ -2,39 +2,32 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
-use GuzzleHttp\MessageFormatter;
 use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
+use GuzzleHttp\MessageFormatter;
 
 class LogMiddleware
 {
-    /** @var \GuzzleHttp\MessageFormatter */
+    /** @var MessageFormatter */
     protected $formatter;
 
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface */
+    /** @var LoggerInterface */
     protected $logger;
 
-    /**
-     * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
-     * @param \GuzzleHttp\MessageFormatter $formatter
-     */
     public function __construct(LoggerInterface $logger, MessageFormatter $formatter)
     {
-        $this->logger    = $logger;
+        $this->logger = $logger;
         $this->formatter = $formatter;
     }
 
     /**
      * Logging each Request
-     *
-     * @return \Closure
      */
     public function log(): \Closure
     {
-        $logger    = $this->logger;
+        $logger = $this->logger;
         $formatter = $this->formatter;
 
         return function (callable $handler) use ($logger, $formatter) {
-
             return function ($request, array $options) use ($handler, $logger, $formatter) {
                 // generate id that will be used to supplement the log with information
                 $requestId = uniqid('eight_points_guzzle_');
@@ -47,7 +40,6 @@ class LogMiddleware
 
                 return $handler($request, $options)->then(
                     function ($response) use ($logger, $request, $formatter, $requestId) {
-
                         $message = $formatter->format($request, $response);
                         $context = compact('request', 'response', 'requestId');
 
@@ -56,13 +48,12 @@ class LogMiddleware
                         return $response;
                     },
                     function ($reason) use ($logger, $request, $formatter, $requestId) {
-
                         $response = null;
                         if (\is_object($reason) && \method_exists($reason, 'getResponse')) {
                             $response = $reason->getResponse();
                         }
-                        $message  = $formatter->format($request, $response, $reason);
-                        $context  = compact('request', 'response', 'requestId');
+                        $message = $formatter->format($request, $response, $reason);
+                        $context = compact('request', 'response', 'requestId');
 
                         $logger->notice($message, $context);
 

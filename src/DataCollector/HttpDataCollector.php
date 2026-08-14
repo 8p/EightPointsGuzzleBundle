@@ -5,9 +5,9 @@ namespace EightPoints\Bundle\GuzzleBundle\DataCollector;
 use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
 use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 use Psr\Log\LogLevel;
-use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 /**
  * Collecting http data for Symfony profiler
@@ -34,9 +34,6 @@ class HttpDataCollector extends DataCollector
         $this->reset();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doCollect(Request $request, Response $response, ?\Throwable $exception = null)
     {
         $messages = [];
@@ -69,9 +66,6 @@ class HttpDataCollector extends DataCollector
         $logGroup->addMessages($messages);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'eight_points_guzzle';
@@ -79,8 +73,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Resets this data collector to its initial state.
-     *
-     * @return void
      */
     public function reset(): void
     {
@@ -100,8 +92,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Returning log entries
-     *
-     * @return array
      */
     public function getLogs(): array
     {
@@ -110,8 +100,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Get all messages
-     *
-     * @return array
      */
     public function getMessages(): array
     {
@@ -128,8 +116,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Return amount of http calls
-     *
-     * @return integer
      */
     public function getCallCount(): int
     {
@@ -138,19 +124,12 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Get Error Count
-     *
-     * @return integer
      */
     public function getErrorCount(): int
     {
         return count($this->getErrorsByType(LogLevel::ERROR));
     }
 
-    /**
-     * @param string $type
-     *
-     * @return array
-     */
     public function getErrorsByType(string $type): array
     {
         return array_filter(
@@ -163,8 +142,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Get total time of all requests
-     *
-     * @return float
      */
     public function getTotalTime(): float
     {
@@ -173,19 +150,12 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Check if there were any slow responses
-     *
-     * @return bool
      */
     public function hasSlowResponses(): bool
     {
         return $this->data['hasSlowResponse'];
     }
 
-    /**
-     * @param float $time
-     *
-     * @return void
-     */
     public function addTotalTime(float $time): void
     {
         $this->data['totalTime'] += $time;
@@ -193,10 +163,6 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Returns (new) LogGroup based on given id
-     *
-     * @param string $id
-     *
-     * @return \EightPoints\Bundle\GuzzleBundle\Log\LogGroup
      */
     protected function getLogGroup(string $id): LogGroup
     {

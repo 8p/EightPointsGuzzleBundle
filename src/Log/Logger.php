@@ -14,7 +14,7 @@ class Logger implements LoggerInterface, ResetInterface
     public const LOG_MODE_REQUEST_AND_RESPONSE_HEADERS = 2;
     public const LOG_MODE_REQUEST_AND_RESPONSE = 3;
 
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogMessage[] */
+    /** @var LogMessage[] */
     private $messages = [];
 
     /** @var int */
@@ -30,9 +30,6 @@ class Logger implements LoggerInterface, ResetInterface
      *
      * @param string $level
      * @param string $message
-     * @param array  $context
-     *
-     * @return void
      */
     public function log($level, $message, array $context = []): void
     {
@@ -68,8 +65,6 @@ class Logger implements LoggerInterface, ResetInterface
 
     /**
      * Clear messages list
-     *
-     * @return void
      */
     public function clear(): void
     {
@@ -89,8 +84,6 @@ class Logger implements LoggerInterface, ResetInterface
 
     /**
      * Return if messages exist or not
-     *
-     * @return boolean
      */
     public function hasMessages(): bool
     {
@@ -100,19 +93,13 @@ class Logger implements LoggerInterface, ResetInterface
     /**
      * Return log messages
      *
-     * @return \EightPoints\Bundle\GuzzleBundle\Log\LogMessage[]
+     * @return LogMessage[]
      */
     public function getMessages(): array
     {
         return $this->messages;
     }
 
-    /**
-     * @param string|null $requestId
-     * @param float $transferTime
-     *
-     * @return void
-     */
     public function addTransferTimeByRequestId(?string $requestId, float $transferTime): void
     {
         if (array_key_exists($requestId, $this->messages)) {

@@ -3,9 +3,9 @@
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
 use EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger;
-use Symfony\Contracts\Service\ResetInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
+use Symfony\Contracts\Service\ResetInterface;
 
 class DevNullLoggerTest extends TestCase
 {
@@ -46,6 +46,4 @@ class DevNullLoggerTest extends TestCase
         $this->assertFalse($logger->hasMessages());
         $this->assertInstanceOf(ResetInterface::class, $logger);
     }
-
-
 }

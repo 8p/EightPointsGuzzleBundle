@@ -2,10 +2,10 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Middleware;
 
-use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
-use EightPoints\Bundle\GuzzleBundle\Middleware\EventDispatchMiddleware;
-use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
 use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
+use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
+use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
+use EightPoints\Bundle\GuzzleBundle\Middleware\EventDispatchMiddleware;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ResponseException;
 use GuzzleHttp\Handler\MockHandler;
@@ -364,10 +364,10 @@ class EventDispatchMiddlewareTest extends TestCase
         $callback = $this->callback(static function (PostTransactionEvent $event) {
             $response = $event->getTransaction();
 
-            return $event->getServiceName() === 'main' &&
-                is_object($response) &&
-                get_class($response) === Response::class &&
-                $response->getHeaderLine('some-test-header') === 'some-test-value';
+            return $event->getServiceName() === 'main'
+                && is_object($response)
+                && get_class($response) === Response::class
+                && $response->getHeaderLine('some-test-header') === 'some-test-value';
         });
 
         $genericPostTransactionListener = $this->createCallableMock();

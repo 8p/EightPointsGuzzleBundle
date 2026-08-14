@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     protected $alias;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $debug;
 
@@ -27,11 +27,6 @@ class Configuration implements ConfigurationInterface
      */
     protected $plugins;
 
-    /**
-     * @param string $alias
-     * @param boolean $debug
-     * @param array $plugins
-     */
     public function __construct(string $alias, bool $debug = false, array $plugins = [])
     {
         $this->alias = $alias;
@@ -43,8 +38,6 @@ class Configuration implements ConfigurationInterface
      * Generates the configuration tree builder
      *
      * @throws \RuntimeException
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
@@ -73,18 +66,17 @@ class Configuration implements ConfigurationInterface
      * Create Clients Configuration
      *
      * @throws \RuntimeException
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
      */
     private function createClientsNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('clients');
 
-        /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node */
         if (method_exists($builder, 'getRootNode')) {
+            /** @var ArrayNodeDefinition $node */
             $node = $builder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older
+            /** @var ArrayNodeDefinition $node */
             $node = $builder->root('clients');
         }
 
@@ -112,9 +104,9 @@ class Configuration implements ConfigurationInterface
                                     return Logger::LOG_MODE_REQUEST_AND_RESPONSE;
                                 } elseif ($value === 0 || $value === false) {
                                     return Logger::LOG_MODE_NONE;
-                                } else {
-                                    return constant(Logger::class .'::LOG_MODE_' . strtoupper($value));
                                 }
+
+                                return constant(Logger::class . '::LOG_MODE_' . strtoupper($value));
                             })
                         ->end()
                     ->end()
@@ -312,6 +304,7 @@ class Configuration implements ConfigurationInterface
                                         if (empty($v['no'])) {
                                             unset($v['no']);
                                         }
+
                                         return $v;
                                     })
                                 ->end()

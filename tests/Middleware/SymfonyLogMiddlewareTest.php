@@ -2,14 +2,14 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Middleware;
 
-use PHPUnit\Framework\TestCase;
 use EightPoints\Bundle\GuzzleBundle\Middleware\SymfonyLogMiddleware;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 
 class SymfonyLogMiddlewareTest extends TestCase

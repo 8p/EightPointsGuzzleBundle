@@ -5,7 +5,6 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle;
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
-use Symfony\Contracts\Service\ResetInterface;
 use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 use EightPoints\Bundle\GuzzleBundle\Log\LogRequest;
 use EightPoints\Bundle\GuzzleBundle\Log\LogResponse;
@@ -15,6 +14,7 @@ use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
 use Psr\Log\LogLevel;
+use Symfony\Contracts\Service\ResetInterface;
 
 class LoggerTest extends TestCase
 {
@@ -121,7 +121,6 @@ class LoggerTest extends TestCase
         $this->assertFalse($logger->hasMessages());
     }
 
-
     /**
      * Test Reset (Symfony ResetInterface / FrankenPHP worker)
      *
@@ -137,7 +136,6 @@ class LoggerTest extends TestCase
         $this->assertFalse($logger->hasMessages());
     }
 
-
     public function getLoggerRequestModes()
     {
         return [
@@ -147,8 +145,10 @@ class LoggerTest extends TestCase
             [Logger::LOG_MODE_REQUEST_AND_RESPONSE_HEADERS, true],
         ];
     }
+
     /**
      * @dataProvider getLoggerRequestModes
+     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::log
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::setRequest
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::getRequest
@@ -161,7 +161,6 @@ class LoggerTest extends TestCase
         $logger->log(LogLevel::INFO, 'message', ['request' => $request]);
 
         $this->assertCount(1, $logger->getMessages());
-
 
         /** @var LogMessage $message */
         $message = array_values($logger->getMessages())[0];
@@ -184,8 +183,10 @@ class LoggerTest extends TestCase
             [Logger::LOG_MODE_REQUEST_AND_RESPONSE_HEADERS, true, false],
         ];
     }
+
     /**
      * @dataProvider getLoggerResponseModes
+     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::log
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::setResponse
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::getResponse
@@ -209,6 +210,7 @@ class LoggerTest extends TestCase
 
         if (!$hasResponseHeaders && !$hasResponseBody) {
             $this->assertNull($logResponse);
+
             return;
         }
 

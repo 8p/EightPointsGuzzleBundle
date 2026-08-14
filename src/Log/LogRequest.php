@@ -9,7 +9,7 @@ class LogRequest
     /** @var string */
     protected $host;
 
-    /** @var integer|null */
+    /** @var int|null */
     protected $port;
 
     /** @var string */
@@ -33,9 +33,6 @@ class LogRequest
     /** @var string|null */
     protected $body;
 
-    /**
-     * @param \Psr\Http\Message\RequestInterface $request
-     */
     public function __construct(RequestInterface $request)
     {
         $this->save($request);
@@ -43,10 +40,6 @@ class LogRequest
 
     /**
      * Save data
-     *
-     * @param \Psr\Http\Message\RequestInterface $request
-     *
-     * @return void
      */
     protected function save(RequestInterface $request): void
     {
@@ -76,8 +69,6 @@ class LogRequest
 
     /**
      * Return host
-     *
-     * @return string
      */
     public function getHost(): string
     {
@@ -86,10 +77,6 @@ class LogRequest
 
     /**
      * Set request host
-     *
-     * @param string $value
-     *
-     * @return void
      */
     public function setHost(string $value): void
     {
@@ -98,8 +85,6 @@ class LogRequest
 
     /**
      * Return port
-     *
-     * @return integer|null
      */
     public function getPort(): ?int
     {
@@ -108,10 +93,6 @@ class LogRequest
 
     /**
      * Set port
-     *
-     * @param integer|null $value
-     *
-     * @return void
      */
     public function setPort(?int $value): void
     {
@@ -120,8 +101,6 @@ class LogRequest
 
     /**
      * Return url
-     *
-     * @return string
      */
     public function getUrl(): string
     {
@@ -130,10 +109,6 @@ class LogRequest
 
     /**
      * Set url
-     *
-     * @param string $value
-     *
-     * @return void
      */
     public function setUrl(string $value): void
     {
@@ -142,8 +117,6 @@ class LogRequest
 
     /**
      * Return path
-     *
-     * @return string
      */
     public function getPath(): string
     {
@@ -152,10 +125,6 @@ class LogRequest
 
     /**
      * Set path
-     *
-     * @param string $value
-     *
-     * @return void
      */
     public function setPath(string $value): void
     {
@@ -164,8 +133,6 @@ class LogRequest
 
     /**
      * Return scheme
-     *
-     * @return string
      */
     public function getScheme(): string
     {
@@ -174,10 +141,6 @@ class LogRequest
 
     /**
      * Set scheme
-     *
-     * @param string $value
-     *
-     * @return void
      */
     public function setScheme(string $value): void
     {
@@ -186,8 +149,6 @@ class LogRequest
 
     /**
      * Return headers
-     *
-     * @return array
      */
     public function getHeaders(): array
     {
@@ -196,10 +157,6 @@ class LogRequest
 
     /**
      * Set headers
-     *
-     * @param array $value
-     *
-     * @return void
      */
     public function setHeaders(array $value): void
     {
@@ -208,8 +165,6 @@ class LogRequest
 
     /**
      * Return protocol version
-     *
-     * @return string
      */
     public function getProtocolVersion(): string
     {
@@ -218,10 +173,6 @@ class LogRequest
 
     /**
      * Set protocol version
-     *
-     * @param string $value
-     *
-     * @return void
      */
     public function setProtocolVersion(string $value): void
     {
@@ -230,8 +181,6 @@ class LogRequest
 
     /**
      * Return method
-     *
-     * @return string
      */
     public function getMethod(): string
     {
@@ -240,10 +189,6 @@ class LogRequest
 
     /**
      * Set method
-     *
-     * @param string $value
-     *
-     * @return void
      */
     public function setMethod(string $value): void
     {
@@ -252,8 +197,6 @@ class LogRequest
 
     /**
      * Return body
-     *
-     * @return string|null
      */
     public function getBody(): ?string
     {
@@ -262,10 +205,6 @@ class LogRequest
 
     /**
      * Set body
-     *
-     * @param string|null $value
-     *
-     * @return void
      */
     public function setBody(?string $value): void
     {

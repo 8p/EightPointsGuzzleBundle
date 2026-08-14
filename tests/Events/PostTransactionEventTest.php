@@ -3,8 +3,8 @@
 namespace EightPoints\Bundle\GuzzleBundle\Tests\Events;
 
 use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
-use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 
 class PostTransactionEventTest extends TestCase
 {
@@ -16,8 +16,8 @@ class PostTransactionEventTest extends TestCase
     public function testConstruct()
     {
         $serviceName = 'service name';
-        $response    = $this->createMock(Response::class);
-        $postEvent   = new PostTransactionEvent($response, $serviceName);
+        $response = $this->createMock(Response::class);
+        $postEvent = new PostTransactionEvent($response, $serviceName);
 
         $this->assertSame($serviceName, $postEvent->getServiceName());
     }
@@ -31,8 +31,8 @@ class PostTransactionEventTest extends TestCase
     public function testTransaction()
     {
         $statusCode = 204;
-        $response   = $this->createMock(Response::class);
-        $postEvent  = new PostTransactionEvent($response, 'main');
+        $response = $this->createMock(Response::class);
+        $postEvent = new PostTransactionEvent($response, 'main');
 
         $transMock = $this->getMockBuilder(Response::class)
                           ->getMock();

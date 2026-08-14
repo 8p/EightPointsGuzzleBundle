@@ -10,9 +10,7 @@ class Logger extends AbstractLogger
     protected $logs = [];
 
     /**
-     * @param mixed $level
      * @param string $message
-     * @param array $context
      */
     public function log($level, $message, array $context = []): void
     {
@@ -21,8 +19,6 @@ class Logger extends AbstractLogger
 
     /**
      * @param bool $level
-     *
-     * @return array
      */
     public function getLogs($level = false): array
     {

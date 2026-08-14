@@ -12,10 +12,6 @@ class LogGroup
 
     /**
      * Set Request Name
-     *
-     * @param string $value
-     *
-     * @return void
      */
     public function setRequestName(string $value): void
     {
@@ -24,8 +20,6 @@ class LogGroup
 
     /**
      * Get Request Name
-     *
-     * @return string
      */
     public function getRequestName(): ?string
     {
@@ -34,10 +28,6 @@ class LogGroup
 
     /**
      * Set Log Messages
-     *
-     * @param array $value
-     *
-     * @return void
      */
     public function setMessages(array $value): void
     {
@@ -46,10 +36,6 @@ class LogGroup
 
     /**
      * Add Log Messages
-     *
-     * @param array $value
-     *
-     * @return void
      */
     public function addMessages(array $value): void
     {
@@ -58,8 +44,6 @@ class LogGroup
 
     /**
      * Return Log Messages
-     *
-     * @return array
      */
     public function getMessages(): array
     {

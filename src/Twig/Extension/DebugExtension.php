@@ -10,9 +10,6 @@ use Twig\TwigFunction;
 
 class DebugExtension extends AbstractExtension
 {
-    /**
-     * @return array
-     */
     public function getFunctions(): array
     {
         return [
@@ -25,12 +22,9 @@ class DebugExtension extends AbstractExtension
     }
 
     /**
-     * @param Environment $env
-     * @param $value
+     * @return bool|string
      *
      * @throws \Exception
-     *
-     * @return bool|string
      */
     public function dump(Environment $env, $value)
     {
@@ -49,8 +43,6 @@ class DebugExtension extends AbstractExtension
      * This method is removed from interface in Twig v2.0
      *
      * @TODO Remove this method when drop support of Symfony < 5.0
-     *
-     * @return string
      */
     public function getName(): string
     {

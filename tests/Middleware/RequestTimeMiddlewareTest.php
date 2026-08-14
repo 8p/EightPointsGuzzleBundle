@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class RequestTimeMiddlewareTest extends TestCase
 {
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface|MockObject */
     protected $logger;
 
     public function setUp(): void

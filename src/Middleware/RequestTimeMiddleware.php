@@ -2,35 +2,26 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
+use EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
-use EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
-use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\TransferStats;
+use Psr\Http\Message\RequestInterface;
 
 class RequestTimeMiddleware
 {
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface */
+    /** @var LoggerInterface */
     protected $logger;
 
-    /** @var \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector */
+    /** @var HttpDataCollector */
     private $dataCollector;
 
-    /**
-     * @param \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface $logger
-     * @param \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector $dataCollector
-     */
     public function __construct(LoggerInterface $logger, HttpDataCollector $dataCollector)
     {
         $this->logger = $logger;
         $this->dataCollector = $dataCollector;
     }
 
-    /**
-     * @param callable $handler
-     *
-     * @return \Closure
-     */
     public function __invoke(callable $handler): \Closure
     {
         return function (RequestInterface $request, array $options) use ($handler) {
@@ -47,11 +38,6 @@ class RequestTimeMiddleware
     /**
      * Create callback for on_stats options.
      * If request has on_stats option, it will be called inside of this callback.
-     *
-     * @param null|callable $initialOnStats
-     * @param null|string $requestId
-     *
-     * @return \Closure
      */
     protected function getOnStatsCallback(?callable $initialOnStats, ?string $requestId): \Closure
     {
@@ -60,10 +46,10 @@ class RequestTimeMiddleware
                 call_user_func($initialOnStats, $stats);
             }
 
-            $this->dataCollector->addTotalTime((float)$stats->getTransferTime());
+            $this->dataCollector->addTotalTime((float) $stats->getTransferTime());
 
             if (($this->logger instanceof Logger) && $requestId) {
-                $this->logger->addTransferTimeByRequestId($requestId, (float)$stats->getTransferTime());
+                $this->logger->addTransferTimeByRequestId($requestId, (float) $stats->getTransferTime());
             }
         };
     }

@@ -10,16 +10,16 @@ class LogMessage
     /** @var string */
     protected $level;
 
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogRequest */
+    /** @var LogRequest */
     protected $request;
 
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogResponse */
+    /** @var LogResponse */
     protected $response;
 
-    /** @var null|float */
+    /** @var float|null */
     protected $transferTime;
 
-    /** @var null|string */
+    /** @var string|null */
     protected $curlCommand;
 
     /**
@@ -34,8 +34,6 @@ class LogMessage
      * Set log level
      *
      * @param string $level
-     *
-     * @return void
      */
     public function setLevel($level): void
     {
@@ -64,10 +62,6 @@ class LogMessage
 
     /**
      * Set Log Request
-     *
-     * @param \EightPoints\Bundle\GuzzleBundle\Log\LogRequest $value
-     *
-     * @return void
      */
     public function setRequest(LogRequest $value): void
     {
@@ -77,7 +71,7 @@ class LogMessage
     /**
      * Get Log Request
      *
-     * @return \EightPoints\Bundle\GuzzleBundle\Log\LogRequest
+     * @return LogRequest
      */
     public function getRequest()
     {
@@ -86,8 +80,6 @@ class LogMessage
 
     /**
      * Set Log Response
-     *
-     * @param \EightPoints\Bundle\GuzzleBundle\Log\LogResponse $value
      *
      * @return void
      */
@@ -99,7 +91,7 @@ class LogMessage
     /**
      * Get Log Response
      *
-     * @return \EightPoints\Bundle\GuzzleBundle\Log\LogResponse
+     * @return LogResponse
      */
     public function getResponse()
     {
@@ -116,8 +108,6 @@ class LogMessage
 
     /**
      * @param float|null $transferTime
-     *
-     * @return void
      */
     public function setTransferTime($transferTime): void
     {
@@ -125,7 +115,7 @@ class LogMessage
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCurlCommand()
     {
@@ -134,8 +124,6 @@ class LogMessage
 
     /**
      * @param string $curlCommand
-     *
-     * @return void
      */
     public function setCurlCommand($curlCommand): void
     {

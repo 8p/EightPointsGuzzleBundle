@@ -10,15 +10,15 @@ use Psr\Http\Message\UriInterface;
 
 class LogRequestTest extends TestCase
 {
-    /** @var \Psr\Http\Message\RequestInterface|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var RequestInterface|\PHPUnit\Framework\MockObject\MockObject */
     protected $request;
 
     /** @var array */
     protected $headers = [
-        'Date'          => ['Sun, 07 Jun 2015 16:32:50 GMT'],
-        'Expires'       => ['-1'],
+        'Date' => ['Sun, 07 Jun 2015 16:32:50 GMT'],
+        'Expires' => ['-1'],
         'Cache-Control' => ['private, max-age=0'],
-        'Content-Type'  => ['text/html; charset=ISO-8859-1']
+        'Content-Type' => ['text/html; charset=ISO-8859-1'],
     ];
 
     /**

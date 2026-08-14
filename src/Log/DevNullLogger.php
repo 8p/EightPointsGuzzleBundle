@@ -12,9 +12,6 @@ class DevNullLogger implements LoggerInterface, ResetInterface
 {
     use LoggerTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function log($level, $message, array $context = []): void
     {
         // do nothing!!
@@ -22,17 +19,12 @@ class DevNullLogger implements LoggerInterface, ResetInterface
 
     /**
      * Clear messages list
-     *
-     * @return void
      */
     public function clear(): void
     {
         // do nothing!!
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reset(): void
     {
         $this->clear();
@@ -40,8 +32,6 @@ class DevNullLogger implements LoggerInterface, ResetInterface
 
     /**
      * Return if messages exist or not
-     *
-     * @return boolean
      */
     public function hasMessages(): bool
     {
@@ -50,8 +40,6 @@ class DevNullLogger implements LoggerInterface, ResetInterface
 
     /**
      * Return log messages
-     *
-     * @return array
      */
     public function getMessages(): array
     {

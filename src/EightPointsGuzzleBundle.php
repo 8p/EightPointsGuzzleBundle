@@ -4,17 +4,17 @@ namespace EightPoints\Bundle\GuzzleBundle;
 
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\EightPointsGuzzleExtension;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EightPointsGuzzleBundle extends Bundle
 {
-    /** @var \EightPoints\Bundle\GuzzleBundle\PluginInterface[] */
+    /** @var PluginInterface[] */
     protected $plugins = [];
 
     /**
-     * @param \EightPoints\Bundle\GuzzleBundle\PluginInterface[] $plugins
+     * @param PluginInterface[] $plugins
      */
     public function __construct(array $plugins = [])
     {
@@ -25,10 +25,6 @@ class EightPointsGuzzleBundle extends Bundle
 
     /**
      * Build EightPointsGuzzleBundle
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     *
-     * @return void
      */
     public function build(ContainerBuilder $container): void
     {
@@ -44,7 +40,7 @@ class EightPointsGuzzleBundle extends Bundle
      *  - no naming convention of alias needed
      *  - extension class can be moved easily now
      *
-     * @return \Symfony\Component\DependencyInjection\Extension\ExtensionInterface The container extension
+     * @return ExtensionInterface The container extension
      */
     public function getContainerExtension(): ExtensionInterface
     {
@@ -55,11 +51,6 @@ class EightPointsGuzzleBundle extends Bundle
         return $this->extension;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @return void
-     */
     public function boot(): void
     {
         foreach ($this->plugins as $plugin) {
@@ -68,11 +59,7 @@ class EightPointsGuzzleBundle extends Bundle
     }
 
     /**
-     * @param \EightPoints\Bundle\GuzzleBundle\PluginInterface $plugin
-     *
-     * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     *
-     * @return void
+     * @throws InvalidConfigurationException
      */
     protected function registerPlugin(PluginInterface $plugin): void
     {

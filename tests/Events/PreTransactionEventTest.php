@@ -16,9 +16,9 @@ class PreTransactionEventTest extends TestCase
     public function testConstruct()
     {
         $serviceName = 'service name';
-        $request     = $this->getMockBuilder(Request::class)
-                            ->setConstructorArgs(['GET', '/'])
-                            ->getMock();
+        $request = $this->getMockBuilder(Request::class)
+            ->setConstructorArgs(['GET', '/'])
+            ->getMock();
 
         $preEvent = new PreTransactionEvent($request, $serviceName);
 
@@ -33,10 +33,10 @@ class PreTransactionEventTest extends TestCase
      */
     public function testTransaction()
     {
-        $method   = 'POST';
-        $request  = $this->getMockBuilder(Request::class)
-                         ->setConstructorArgs(['GET', '/'])
-                         ->getMock();
+        $method = 'POST';
+        $request = $this->getMockBuilder(Request::class)
+            ->setConstructorArgs(['GET', '/'])
+            ->getMock();
 
         $preEvent = new PreTransactionEvent($request, 'main');
 

@@ -8,13 +8,13 @@ use EightPoints\Bundle\GuzzleBundle\Log\LogGroup;
 use EightPoints\Bundle\GuzzleBundle\Log\LogMessage;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class HttpDataCollectorTest extends TestCase
 {
     /**
-     * @var \EightPoints\Bundle\GuzzleBundle\Log\Logger|\PHPUnit\Framework\MockObject\MockObject
+     * @var Logger|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $logger;
 
@@ -56,7 +56,7 @@ class HttpDataCollectorTest extends TestCase
         $this->logger->expects($this->atLeastOnce())->method('clear');
 
         $collector = new HttpDataCollector([$this->logger], 0);
-        $response  = $this->getMockBuilder(Response::class)
+        $response = $this->getMockBuilder(Response::class)
                           ->getMock();
 
         $request = $this->getMockBuilder(Request::class)
@@ -98,7 +98,7 @@ class HttpDataCollectorTest extends TestCase
         $secondLogger->expects($this->atLeastOnce())->method('clear');
 
         $collector = new HttpDataCollector([$this->logger, $secondLogger], 0);
-        $response  = $this->getMockBuilder(Response::class)
+        $response = $this->getMockBuilder(Response::class)
             ->getMock();
 
         $request = $this->getMockBuilder(Request::class)
@@ -149,7 +149,7 @@ class HttpDataCollectorTest extends TestCase
 
         $collector = new HttpDataCollector([$this->logger], 1);
 
-        $response  = $this->getMockBuilder(Response::class)->getMock();
+        $response = $this->getMockBuilder(Response::class)->getMock();
         $request = $this->getMockBuilder(Request::class)->getMock();
 
         $request->expects($this->once())
@@ -189,9 +189,9 @@ class HttpDataCollectorTest extends TestCase
                      ->willReturn(['test message #1', 'test message #2']);
 
         $collector = new HttpDataCollector([$this->logger], 0);
-        $response  = $this->getMockBuilder(Response::class)
+        $response = $this->getMockBuilder(Response::class)
                           ->getMock();
-        $request   = $this->getMockBuilder(Request::class)
+        $request = $this->getMockBuilder(Request::class)
                           ->getMock();
 
         $request->expects($this->once())
@@ -206,10 +206,9 @@ class HttpDataCollectorTest extends TestCase
 
         $messages = $collector->getMessages();
 
-        /** @var \EightPoints\Bundle\GuzzleBundle\Log\LogMessage $message */
+        /** @var LogMessage $message */
         foreach ($messages as $i => $message) {
-
-            $text = sprintf('test message #%d', ($i + 1));
+            $text = sprintf('test message #%d', $i + 1);
             $this->assertSame($text, $message);
         }
     }
@@ -226,9 +225,9 @@ class HttpDataCollectorTest extends TestCase
                      ->willReturn(['test message #1', 'test message #2']);
 
         $collector = new HttpDataCollector([$this->logger], 0);
-        $response  = $this->getMockBuilder(Response::class)
+        $response = $this->getMockBuilder(Response::class)
                           ->getMock();
-        $request   = $this->getMockBuilder(Request::class)
+        $request = $this->getMockBuilder(Request::class)
                           ->getMock();
 
         $request->expects($this->once())
@@ -362,7 +361,7 @@ class HttpDataCollectorTest extends TestCase
             ->willReturn([$message]);
 
         $collector = new HttpDataCollector([$this->logger], 0.2);
-        $response  = $this->getMockBuilder(Response::class)
+        $response = $this->getMockBuilder(Response::class)
             ->getMock();
 
         $request = $this->getMockBuilder(Request::class)
@@ -380,7 +379,6 @@ class HttpDataCollectorTest extends TestCase
 
         $this->assertEquals($expectedValue, $collector->hasSlowResponses());
     }
-
 
     /**
      * In worker mode, kernel.reset may run without collect().

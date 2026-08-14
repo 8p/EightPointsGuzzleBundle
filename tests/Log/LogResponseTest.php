@@ -4,21 +4,21 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Log;
 
 use EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle;
 use EightPoints\Bundle\GuzzleBundle\Log\LogResponse;
-use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Stream;
+use PHPUnit\Framework\TestCase;
 
 class LogResponseTest extends TestCase
 {
-    /** @var \GuzzleHttp\Psr7\Response */
+    /** @var Response */
     protected $response;
 
     /** @var array */
     protected $headers = [
-        'Date'          => ['Sun, 07 Jun 2015 16:32:50 GMT'],
-        'Expires'       => ['-1'],
+        'Date' => ['Sun, 07 Jun 2015 16:32:50 GMT'],
+        'Expires' => ['-1'],
         'Cache-Control' => ['private, max-age=0'],
-        'Content-Type'  => ['text/html; charset=ISO-8859-1']
+        'Content-Type' => ['text/html; charset=ISO-8859-1'],
     ];
 
     /**

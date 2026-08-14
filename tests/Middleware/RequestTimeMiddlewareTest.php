@@ -4,6 +4,7 @@ namespace EightPoints\Bundle\GuzzleBundle\Tests\Middleware;
 
 use EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector;
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
+use EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface;
 use EightPoints\Bundle\GuzzleBundle\Middleware\RequestTimeMiddleware;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Request;
@@ -15,16 +16,15 @@ use PHPUnit\Framework\TestCase;
 
 class RequestTimeMiddlewareTest extends TestCase
 {
-    /** @var \EightPoints\Bundle\GuzzleBundle\Log\LoggerInterface|MockObject */
+    /** @var LoggerInterface|MockObject */
     protected $logger;
 
     public function setUp(): void
     {
-        $this->logger = $this->getMockBuilder(Logger::class)
-            ->getMock();
+        $this->logger = $this->getMockBuilder(Logger::class)->getMock();
     }
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $httpDataCollector = new HttpDataCollector([$this->logger], 0);
 
@@ -46,7 +46,7 @@ class RequestTimeMiddlewareTest extends TestCase
         $this->assertEquals(3.14, $httpDataCollector->getTotalTime());
     }
 
-    public function testInvokeWithInitialOnStats()
+    public function testInvokeWithInitialOnStats(): void
     {
         $httpDataCollector = new HttpDataCollector([$this->logger], 0);
 
@@ -80,8 +80,7 @@ class RequestTimeMiddlewareTest extends TestCase
             return $this
                 ->getMockBuilder(\stdClass::class)
                 ->addMethods(['__invoke'])
-                ->getMock()
-            ;
+                ->getMock();
         }
 
         return $this->createPartialMock(\stdClass::class, ['__invoke']);

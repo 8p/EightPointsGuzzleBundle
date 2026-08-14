@@ -5,9 +5,6 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
 use Psr\Log\LoggerTrait;
 use Symfony\Contracts\Service\ResetInterface;
 
-/**
- * @author SuRiKmAn <surikman@surikman.sk>
- */
 class DevNullLogger implements LoggerInterface, ResetInterface
 {
     use LoggerTrait;

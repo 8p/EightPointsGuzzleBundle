@@ -4,9 +4,6 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
 
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
 
-/**
- * @author  SuRiKmAn <surikman@surikman.sk>
- */
 interface LoggerInterface extends PsrLoggerInterface
 {
     /**

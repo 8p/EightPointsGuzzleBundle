@@ -18,10 +18,7 @@ use Symfony\Contracts\Service\ResetInterface;
 
 class LoggerTest extends TestCase
 {
-    /**
-     * Test Instance
-     */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $logger = new Logger();
         $this->assertInstanceOf(LoggerInterface::class, $logger);
@@ -29,11 +26,9 @@ class LoggerTest extends TestCase
     }
 
     /**
-     * Test Messages
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::hasMessages
      */
-    public function testHasMessages()
+    public function testHasMessages(): void
     {
         $logger = new Logger();
         $this->assertFalse($logger->hasMessages());
@@ -43,11 +38,9 @@ class LoggerTest extends TestCase
     }
 
     /**
-     * Test Returning Messages
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::getMessages
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $logger = new Logger();
         $this->assertCount(0, $logger->getMessages());
@@ -60,7 +53,6 @@ class LoggerTest extends TestCase
 
         $messages = $logger->getMessages();
 
-        /** @var LogMessage $message */
         foreach ($messages as $message) {
             $this->assertInstanceOf(LogMessage::class, $message);
             $this->assertSame(LogLevel::ERROR, $message->getLevel());
@@ -102,11 +94,9 @@ class LoggerTest extends TestCase
     }
 
     /**
-     * Test Clearing Messages
-     *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::clear
      */
-    public function testClear()
+    public function testClear(): void
     {
         $logger = new Logger();
         $logger->log(LogLevel::ERROR, 'test message');
@@ -126,7 +116,7 @@ class LoggerTest extends TestCase
      *
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::reset
      */
-    public function testReset()
+    public function testReset(): void
     {
         $logger = new Logger();
         $logger->log(LogLevel::ERROR, 'test message');
@@ -136,7 +126,7 @@ class LoggerTest extends TestCase
         $this->assertFalse($logger->hasMessages());
     }
 
-    public function getLoggerRequestModes()
+    public function getLoggerRequestModes(): array
     {
         return [
             [Logger::LOG_MODE_NONE, false],
@@ -153,7 +143,7 @@ class LoggerTest extends TestCase
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::setRequest
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::getRequest
      */
-    public function testLogWithRequest(int $logMode, bool $hasRequest)
+    public function testLogWithRequest(int $logMode, bool $hasRequest): void
     {
         $request = new Request('GET', 'http://api.domain.tld');
 
@@ -174,7 +164,7 @@ class LoggerTest extends TestCase
         }
     }
 
-    public function getLoggerResponseModes()
+    public function getLoggerResponseModes(): array
     {
         return [
             [Logger::LOG_MODE_NONE, false, false],
@@ -191,7 +181,7 @@ class LoggerTest extends TestCase
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::setResponse
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\LogMessage::getResponse
      */
-    public function testLogWithResponse(int $logMode, bool $hasResponseHeaders, bool $hasResponseBody)
+    public function testLogWithResponse(int $logMode, bool $hasResponseHeaders, bool $hasResponseBody): void
     {
         $response = new Response(
             201,
@@ -234,7 +224,7 @@ class LoggerTest extends TestCase
     /**
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\Logger::addTransferTimeByRequestId
      */
-    public function testTransferTimeByRequestId()
+    public function testTransferTimeByRequestId(): void
     {
         $logger = new Logger();
         $logger->log(LogLevel::INFO, 'message');

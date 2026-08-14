@@ -12,12 +12,12 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EightPointsGuzzleBundleTest extends TestCase
 {
-    public function testInstance()
+    public function testInstance(): void
     {
         $this->assertInstanceOf(Bundle::class, new EightPointsGuzzleBundle());
     }
 
-    public function testInitWithPlugin()
+    public function testInitWithPlugin(): void
     {
         $plugin = $this->getMockBuilder(PluginInterface::class)->getMock();
 
@@ -27,7 +27,7 @@ class EightPointsGuzzleBundleTest extends TestCase
         $this->addToAssertionCount(1);
     }
 
-    public function testInitWithPluginsNameDuplication()
+    public function testInitWithPluginsNameDuplication(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -44,7 +44,7 @@ class EightPointsGuzzleBundleTest extends TestCase
         new EightPointsGuzzleBundle([$firstPlugin, $secondPlugin]);
     }
 
-    public function testBoot()
+    public function testBoot(): void
     {
         $plugin = $this->getMockBuilder(PluginInterface::class)->getMock();
         $plugin->expects($this->once())->method('boot');
@@ -53,7 +53,7 @@ class EightPointsGuzzleBundleTest extends TestCase
         $bundle->boot();
     }
 
-    public function testBuild()
+    public function testBuild(): void
     {
         $container = new ContainerBuilder();
 
@@ -64,7 +64,7 @@ class EightPointsGuzzleBundleTest extends TestCase
         $bundle->build($container);
     }
 
-    public function testGetContainerExtension()
+    public function testGetContainerExtension(): void
     {
         $bundle = new EightPointsGuzzleBundle();
 

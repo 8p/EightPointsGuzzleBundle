@@ -27,7 +27,7 @@ class EventDispatchMiddlewareTest extends TestCase
      * Test that listeners for 'eight_points_guzzle.pre_transaction' and
      * 'eight_points_guzzle.post_transaction' are called.
      */
-    public function testDispatchEvent()
+    public function testDispatchEvent(): void
     {
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addListener(GuzzleEvents::PRE_TRANSACTION, $this->createPreTransactionEventListener());
@@ -47,7 +47,7 @@ class EventDispatchMiddlewareTest extends TestCase
     /**
      * Test the case where a client specific listener is configured and an event is dispatched for another client
      */
-    public function testCaseWhenClientSpecificPreTransactionListenerIsNotPassedEventsForOtherClients()
+    public function testCaseWhenClientSpecificPreTransactionListenerIsNotPassedEventsForOtherClients(): void
     {
         $nonCalledListener = $this->createCallableMock();
         $nonCalledListener->expects($this->never())->method('__invoke');
@@ -69,7 +69,7 @@ class EventDispatchMiddlewareTest extends TestCase
     /**
      * Test the case where a client specific listener is configured and an event is dispatched for another client
      */
-    public function testCaseWhenClientSpecificPostTransactionListenerIsNotPassedEventsForOtherClients()
+    public function testCaseWhenClientSpecificPostTransactionListenerIsNotPassedEventsForOtherClients(): void
     {
         $nonCalledListener = $this->createCallableMock();
         $nonCalledListener->expects($this->never())->method('__invoke');
@@ -93,7 +93,7 @@ class EventDispatchMiddlewareTest extends TestCase
      *
      * @see https://github.com/8p/EightPointsGuzzleBundle/pull/119
      */
-    public function testCaseWhenGenericPreTransactionListenerChangesRequest()
+    public function testCaseWhenGenericPreTransactionListenerChangesRequest(): void
     {
         $preTransactionListener = static function (PreTransactionEvent $event) {
             $request = $event->getTransaction();
@@ -124,7 +124,7 @@ class EventDispatchMiddlewareTest extends TestCase
      *
      * @see https://github.com/8p/EightPointsGuzzleBundle/pull/119
      */
-    public function testCaseWhenClientSpecificPreTransactionListenerChangesRequest()
+    public function testCaseWhenClientSpecificPreTransactionListenerChangesRequest(): void
     {
         $preTransactionListener = static function (PreTransactionEvent $event) {
             $request = $event->getTransaction();
@@ -155,18 +155,24 @@ class EventDispatchMiddlewareTest extends TestCase
      *
      * @see https://github.com/8p/EightPointsGuzzleBundle/pull/119
      */
-    public function testCaseWhenBothGenericAndClientSpecificPreTransactionListenerChangesRequest()
+    public function testCaseWhenBothGenericAndClientSpecificPreTransactionListenerChangesRequest(): void
     {
         $genericPreTransactionListener = static function (PreTransactionEvent $event) {
             $request = $event->getTransaction();
 
-            $event->setTransaction($request->withHeader('some-test-header', 'some-generic-value')->withHeader('some-generic-header', 'some-generic-value'));
+            $event->setTransaction(
+                $request->withHeader('some-test-header', 'some-generic-value')
+                    ->withHeader('some-generic-header', 'some-generic-value')
+            );
         };
 
         $clientSpecificPreTransactionListener = static function (PreTransactionEvent $event) {
             $request = $event->getTransaction();
 
-            $event->setTransaction($request->withHeader('some-test-header', 'some-client-specific-value')->withHeader('some-client-specific-header', 'some-client-specific-value'));
+            $event->setTransaction(
+                $request->withHeader('some-test-header', 'some-client-specific-value')
+                    ->withHeader('some-client-specific-header', 'some-client-specific-value')
+            );
         };
 
         $eventDispatcher = new EventDispatcher();
@@ -203,7 +209,7 @@ class EventDispatchMiddlewareTest extends TestCase
      *
      * @see https://github.com/8p/EightPointsGuzzleBundle/pull/132
      */
-    public function testCaseWhenGenericPostTransactionListenerChangesResponse()
+    public function testCaseWhenGenericPostTransactionListenerChangesResponse(): void
     {
         $postTransactionListener = static function (PostTransactionEvent $event) {
             $response = $event->getTransaction();
@@ -234,7 +240,7 @@ class EventDispatchMiddlewareTest extends TestCase
      *
      * @see https://github.com/8p/EightPointsGuzzleBundle/pull/132
      */
-    public function testCaseWhenClientSpecificPostTransactionListenerChangesResponse()
+    public function testCaseWhenClientSpecificPostTransactionListenerChangesResponse(): void
     {
         $postTransactionListener = static function (PostTransactionEvent $event) {
             $response = $event->getTransaction();
@@ -265,7 +271,7 @@ class EventDispatchMiddlewareTest extends TestCase
      *
      * @see https://github.com/8p/EightPointsGuzzleBundle/pull/132
      */
-    public function testCaseWhenBothGenericAndClientSpecificPostTransactionListenerChangeResponse()
+    public function testCaseWhenBothGenericAndClientSpecificPostTransactionListenerChangeResponse(): void
     {
         $genericPostTransactionListener = static function (PostTransactionEvent $event) {
             $response = $event->getTransaction();
@@ -311,7 +317,7 @@ class EventDispatchMiddlewareTest extends TestCase
     /**
      * Post Transaction listener should be called even is request failed
      */
-    public function testDispatchEventsShouldCallPostTransactionListener()
+    public function testDispatchEventsShouldCallPostTransactionListener(): void
     {
         $genericPostTransactionListener = $this->createPostTransactionEventListener();
         $clientSpecificPostTransactionListener = $this->createPostTransactionEventListener();
@@ -336,7 +342,7 @@ class EventDispatchMiddlewareTest extends TestCase
      *
      * @see https://github.com/8p/EightPointsGuzzleBundle/pull/154
      */
-    public function testCaseWhenPostTransactionListenerReceivesNullFromException()
+    public function testCaseWhenPostTransactionListenerReceivesNullFromException(): void
     {
         $genericPostTransactionListener = $this->createPostTransactionEventListener();
         $clientSpecificTransactionListener = $this->createPostTransactionEventListener();
@@ -359,7 +365,7 @@ class EventDispatchMiddlewareTest extends TestCase
     /**
      * Test the case when request failed and exception has response object
      */
-    public function testCaseWhenPostTransactionListenerReceivesResponseFromException()
+    public function testCaseWhenPostTransactionListenerReceivesResponseFromException(): void
     {
         $callback = $this->callback(static function (PostTransactionEvent $event) {
             $response = $event->getTransaction();

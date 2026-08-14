@@ -14,7 +14,7 @@ class DevNullLoggerTest extends TestCase
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger::hasMessages
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger::getMessages
      */
-    public function testLog()
+    public function testLog(): void
     {
         $logger = new DevNullLogger();
         $logger->log(LogLevel::INFO, 'message');
@@ -26,7 +26,7 @@ class DevNullLoggerTest extends TestCase
     /**
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger::clear
      */
-    public function testClear()
+    public function testClear(): void
     {
         $logger = new DevNullLogger();
         $logger->clear();
@@ -38,7 +38,7 @@ class DevNullLoggerTest extends TestCase
     /**
      * @covers \EightPoints\Bundle\GuzzleBundle\Log\DevNullLogger::reset
      */
-    public function testReset()
+    public function testReset(): void
     {
         $logger = new DevNullLogger();
         $logger->log('error', 'test message');

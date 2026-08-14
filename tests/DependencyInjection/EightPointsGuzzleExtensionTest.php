@@ -24,7 +24,7 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class EightPointsGuzzleExtensionTest extends TestCase
 {
-    public function testGuzzleExtension()
+    public function testGuzzleExtension(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -70,7 +70,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertInstanceOf(MockHandler::class, $handler->getValue($client->getConfig('handler')));
     }
 
-    public function testOverwriteHttpClientClass()
+    public function testOverwriteHttpClientClass(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -83,7 +83,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
-    public function testOverrideFormatterClass()
+    public function testOverrideFormatterClass(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -96,7 +96,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
-    public function testOverrideSymfonyLogFormatterClass()
+    public function testOverrideSymfonyLogFormatterClass(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -109,7 +109,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
-    public function testOverrideSymfonyLogFormatterPatternClass()
+    public function testOverrideSymfonyLogFormatterPatternClass(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -124,7 +124,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
-    public function testOverrideDataCollectorClass()
+    public function testOverrideDataCollectorClass(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -137,7 +137,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
-    public function testOverrideLoggerClass()
+    public function testOverrideLoggerClass(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -150,7 +150,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
-    public function testOverrideLogMiddlewareClass()
+    public function testOverrideLogMiddlewareClass(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -163,7 +163,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
-    public function testOverrideSymfonyLogMiddlewareClass()
+    public function testOverrideSymfonyLogMiddlewareClass(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -176,7 +176,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
-    public function testOverrideEventDispatchMiddlewareClass()
+    public function testOverrideEventDispatchMiddlewareClass(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -189,7 +189,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
-    public function testOverrideRequestTimeMiddlewareClass()
+    public function testOverrideRequestTimeMiddlewareClass(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -202,7 +202,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         );
     }
 
-    public function testLoadWithLogging()
+    public function testLoadWithLogging(): void
     {
         $config = $this->getConfigs();
         $config[0]['logging'] = true;
@@ -238,7 +238,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertCount(1, $this->getClientLogMiddleware($container, 'eight_points_guzzle.client.test_api_with_custom_class'));
     }
 
-    public function testLoadWithLoggingSpecificClient()
+    public function testLoadWithLoggingSpecificClient(): void
     {
         $config = $this->getConfigs();
         $config[0]['clients']['test_api_with_custom_class']['logging'] = false;
@@ -273,7 +273,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertTrue($container->hasDefinition('eight_points_guzzle.middleware.symfony_log'));
     }
 
-    public function testLoadWithoutLogging()
+    public function testLoadWithoutLogging(): void
     {
         $config = $this->getConfigs();
         $config[0]['logging'] = false;
@@ -304,7 +304,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertFalse($container->hasDefinition('eight_points_guzzle.middleware.symfony_log'));
     }
 
-    public function testGetConfiguration()
+    public function testGetConfiguration(): void
     {
         $extension = new EightPointsGuzzleExtension();
         $configuration = $extension->getConfiguration([], $this->createContainer());
@@ -312,7 +312,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertInstanceOf(Configuration::class, $configuration);
     }
 
-    public function testLoadWithPlugin()
+    public function testLoadWithPlugin(): void
     {
         $plugin = $this->createMock(PluginInterface::class);
         $plugin->method('getPluginName')
@@ -345,7 +345,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $extension->load($config, $container);
     }
 
-    public function testLoadWithoutPlugin()
+    public function testLoadWithoutPlugin(): void
     {
         $plugin = $this->createMock(PluginInterface::class);
         $plugin->method('getPluginName')
@@ -375,7 +375,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $extension->load($config, $container);
     }
 
-    public function testLoadWithOptions()
+    public function testLoadWithOptions(): void
     {
         $config = [
             [
@@ -422,7 +422,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
     /**
      * @see https://github.com/8p/EightPointsGuzzleBundle/issues/235
      */
-    public function testLoggerHasKernelResetTag()
+    public function testLoggerHasKernelResetTag(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -435,7 +435,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertSame([['method' => 'reset']], $loggerDefinition->getTag('kernel.reset'));
     }
 
-    public function testCookiesTrueInjectsResettableCookieJar()
+    public function testCookiesTrueInjectsResettableCookieJar(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -458,7 +458,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertInstanceOf(CookieJar::class, $client->getConfig('cookies'));
     }
 
-    public function testCompilation()
+    public function testCompilation(): void
     {
         $container = $this->createContainer();
         $extension = new EightPointsGuzzleExtension();
@@ -471,7 +471,7 @@ class EightPointsGuzzleExtensionTest extends TestCase
         $this->assertInstanceOf(Client::class, $container->get('eight_points_guzzle.client.test_api_with_custom_handler'));
     }
 
-    public function testMergingOfConfigurations()
+    public function testMergingOfConfigurations(): void
     {
         $container = $this->createContainer();
         $container->registerExtension(new EightPointsGuzzleExtension());

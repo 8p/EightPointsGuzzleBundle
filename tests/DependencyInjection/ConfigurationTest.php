@@ -9,7 +9,7 @@ use Symfony\Component\Config\Definition\Processor;
 
 class ConfigurationTest extends TestCase
 {
-    public function testSingleClientConfigWithOptions()
+    public function testSingleClientConfigWithOptions(): void
     {
         $config = [
             'eight_points_guzzle' => [
@@ -76,7 +76,7 @@ class ConfigurationTest extends TestCase
         ), $processedConfig);
     }
 
-    public function testSingleClientConfigWithCertAsArray()
+    public function testSingleClientConfigWithCertAsArray(): void
     {
         $config = [
             'eight_points_guzzle' => [
@@ -141,7 +141,7 @@ class ConfigurationTest extends TestCase
         ), $processedConfig);
     }
 
-    public function testInvalidCertConfiguration()
+    public function testInvalidCertConfiguration(): void
     {
         $config = [
             'eight_points_guzzle' => [
@@ -170,7 +170,7 @@ class ConfigurationTest extends TestCase
         $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
     }
 
-    public function testSingleClientConfigWithProxyAsString()
+    public function testSingleClientConfigWithProxyAsString(): void
     {
         $config = [
             'eight_points_guzzle' => [
@@ -214,7 +214,7 @@ class ConfigurationTest extends TestCase
         ]), $processedConfig);
     }
 
-    public function testHeaderWithUnderscore()
+    public function testHeaderWithUnderscore(): void
     {
         $config = [
             'eight_points_guzzle' => [
@@ -240,7 +240,7 @@ class ConfigurationTest extends TestCase
         $this->assertArrayHasKey('Header-hyphened', $headers);
     }
 
-    public function testCurlOption()
+    public function testCurlOption(): void
     {
         $config = [
             'eight_points_guzzle' => [
@@ -267,7 +267,7 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($curlConfig[CURLOPT_SSLVERSION], CURL_HTTP_VERSION_1_1);
     }
 
-    public function testInvalidCustomHandlerOption()
+    public function testInvalidCustomHandlerOption(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('handler must be a valid FQCN for a loaded class');
@@ -286,7 +286,7 @@ class ConfigurationTest extends TestCase
         $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
     }
 
-    public function testCustomHandlerOption()
+    public function testCustomHandlerOption(): void
     {
         $config = [
             'eight_points_guzzle' => [
@@ -308,7 +308,7 @@ class ConfigurationTest extends TestCase
     /**
      * @dataProvider provideValidOptionValues
      */
-    public function testValidOptions(array $options, ?array $expects = null)
+    public function testValidOptions(array $options, ?array $expects = null): void
     {
         $config = [
             'eight_points_guzzle' => [
@@ -329,7 +329,7 @@ class ConfigurationTest extends TestCase
         }
     }
 
-    public function testSlowRequestTimeout()
+    public function testSlowRequestTimeout(): void
     {
         $config = [
             'eight_points_guzzle' => [
@@ -486,7 +486,7 @@ class ConfigurationTest extends TestCase
     /**
      * @dataProvider provideInvalidOptionValues
      */
-    public function testInvalidOptions(array $options, string $exceptionMessage)
+    public function testInvalidOptions(array $options, string $exceptionMessage): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage($exceptionMessage);

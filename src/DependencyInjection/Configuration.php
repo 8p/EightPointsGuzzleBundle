@@ -3,7 +3,9 @@
 namespace EightPoints\Bundle\GuzzleBundle\DependencyInjection;
 
 use EightPoints\Bundle\GuzzleBundle\Log\Logger;
+use EightPoints\Bundle\GuzzleBundle\PluginInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -23,7 +25,7 @@ class Configuration implements ConfigurationInterface
     protected $debug;
 
     /**
-     * @var \EightPoints\Bundle\GuzzleBundle\PluginInterface[]
+     * @var PluginInterface[]
      */
     protected $plugins;
 
@@ -80,7 +82,7 @@ class Configuration implements ConfigurationInterface
             $node = $builder->root('clients');
         }
 
-        /** @var \Symfony\Component\Config\Definition\Builder\NodeBuilder $nodeChildren */
+        /** @var NodeBuilder $nodeChildren */
         $nodeChildren = $node->useAttributeAsKey('name')
             ->prototype('array')
                 ->children();

@@ -25,7 +25,7 @@ class HttpDataCollector extends DataCollector
 
     /**
      * @param LoggerInterface[] $loggers
-     * @param float|int $slowResponseTime Time in seconds
+     * @param float $slowResponseTime Time in seconds
      */
     public function __construct(array $loggers, float $slowResponseTime)
     {

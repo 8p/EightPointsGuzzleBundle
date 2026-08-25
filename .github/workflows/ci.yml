@@ -61,7 +61,7 @@ jobs:
         run: vendor/bin/php-cs-fixer fix --dry-run --diff
 
   tests:
-    name: PHPUnit (PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }})
+    name: PHPUnit (PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, ${{ matrix.dependency-versions }})
     strategy:
       fail-fast: false
       matrix:
@@ -77,6 +77,8 @@ jobs:
           - '6.4.*'
           - '7.4.*'
           - '8.0.*'
+        dependency-versions:
+          - highest
         exclude:
           # requires PHP >=8.2
           - php: '8.1'
@@ -88,11 +90,17 @@ jobs:
             symfony: '8.0.*'
           - php: '8.3'
             symfony: '8.0.*'
+        include:
+          # single extra run pinned to the lowest PHP/Symfony we can still resolve with Composer's security-advisory policy
+          - os: ubuntu-latest
+            php: '8.1'
+            symfony: '5.4.*'
+            dependency-versions: lowest
 
     runs-on: ${{ matrix.os }}
 
     env:
-      SYMFONY: ${{ matrix.symfony }}
+      SYMFONY_REQUIRE: ${{ matrix.symfony }}
 
     steps:
       - uses: actions/checkout@v7
@@ -102,15 +110,15 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           ini-values: date.timezone='UTC'
-          tools: composer:v2
-
-      - name: Require symfony
-        run: composer --no-update require symfony/symfony:"${SYMFONY}"
+          tools: composer:v2,flex
 
       - name: Install dependencies
-        run: |
-          composer update
-          vendor/bin/simple-phpunit install
+        uses: ramsey/composer-install@v3
+        with:
+          dependency-versions: ${{ matrix.dependency-versions }}
+
+      - name: Install PHPUnit
+        run: vendor/bin/simple-phpunit install
 
       - name: Test
         run: vendor/bin/simple-phpunit --coverage-text --verbose

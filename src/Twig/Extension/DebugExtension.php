@@ -38,14 +38,4 @@ class DebugExtension extends AbstractExtension
 
         return stream_get_contents($dump);
     }
-
-    /**
-     * This method is removed from interface in Twig v2.0
-     *
-     * @TODO Remove this method when drop support of Symfony < 5.0
-     */
-    public function getName(): string
-    {
-        return get_class($this);
-    }
 }

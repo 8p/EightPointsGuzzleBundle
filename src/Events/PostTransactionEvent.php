@@ -3,6 +3,7 @@
 namespace EightPoints\Bundle\GuzzleBundle\Events;
 
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class PostTransactionEvent extends Event
 {

@@ -1,8 +1,6 @@
 {% extends '@WebProfiler/Profiler/layout.html.twig' %}
 
 {% block toolbar %}
-    {% set profiler_markup_version = profiler_markup_version|default(1) %}
-
     {% if collector.callCount %}
         {% if collector.errorCount %}
             {% set color = 'red' %}
@@ -12,18 +10,10 @@
         {% set status_color = collector.errorCount ? 'red' : (collector.hasSlowResponses() ? 'yellow' : 'normal') %}
 
         {% set icon %}
-            {# Symfony <2.8 toolbar #}
-            {% if profiler_markup_version == 1 %}
-                {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
-                <span class="sf-toolbar-status sf-toolbar-status-{{ color }}">
-                    {{ collector.callCount }}
-                </span>
-            {% else %}
-                {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
-                <span class="sf-toolbar-value">
-                   {{ collector.callCount }}
-                </span>
-            {% endif %}
+            {{ include("@EightPointsGuzzle/Icons/logo.svg.twig") }}
+            <span class="sf-toolbar-value">
+                {{ collector.callCount }}
+            </span>
         {% endset %}
 
         {% set text %}

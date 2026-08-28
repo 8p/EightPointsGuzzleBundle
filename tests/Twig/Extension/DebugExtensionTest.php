@@ -45,9 +45,4 @@ class DebugExtensionTest extends TestCase
         $this->assertIsString('string', $result);
         $this->assertStringContainsString('randomTestValue', $result);
     }
-
-    public function testGetName(): void
-    {
-        $this->assertEquals((new DebugExtension())->getName(), DebugExtension::class);
-    }
 }

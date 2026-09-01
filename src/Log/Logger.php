@@ -15,10 +15,9 @@ class Logger implements LoggerInterface, ResetInterface
     public const LOG_MODE_REQUEST_AND_RESPONSE = 3;
 
     /** @var LogMessage[] */
-    private $messages = [];
+    private array $messages = [];
 
-    /** @var int */
-    private $logMode;
+    private int $logMode;
 
     public function __construct(int $logMode = self::LOG_MODE_REQUEST_AND_RESPONSE)
     {
@@ -33,7 +32,7 @@ class Logger implements LoggerInterface, ResetInterface
      */
     public function log($level, $message, array $context = []): void
     {
-        $requestId = isset($context['requestId']) ? $context['requestId'] : uniqid('eight_points_guzzle_');
+        $requestId = $context['requestId'] ?? uniqid('eight_points_guzzle_');
 
         if (array_key_exists($requestId, $this->messages)) {
             $logMessage = $this->messages[$requestId];
@@ -87,7 +86,7 @@ class Logger implements LoggerInterface, ResetInterface
      */
     public function hasMessages(): bool
     {
-        return $this->getMessages() ? true : false;
+        return (bool) $this->getMessages();
     }
 
     /**

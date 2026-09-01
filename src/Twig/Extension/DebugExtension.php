@@ -10,6 +10,9 @@ use Twig\TwigFunction;
 
 class DebugExtension extends AbstractExtension
 {
+    /**
+     * @return TwigFunction[]
+     */
     public function getFunctions(): array
     {
         return [
@@ -22,11 +25,9 @@ class DebugExtension extends AbstractExtension
     }
 
     /**
-     * @return bool|string
-     *
      * @throws \Exception
      */
-    public function dump(Environment $env, $value)
+    public function dump(Environment $env, $value): bool|string
     {
         $cloner = new VarCloner();
 

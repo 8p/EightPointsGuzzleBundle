@@ -8,11 +8,9 @@ use GuzzleHttp\Promise\Create;
 
 class LogMiddleware
 {
-    /** @var MessageFormatter */
-    protected $formatter;
+    protected MessageFormatter $formatter;
 
-    /** @var LoggerInterface */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger, MessageFormatter $formatter)
     {

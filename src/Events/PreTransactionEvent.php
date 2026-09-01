@@ -7,11 +7,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class PreTransactionEvent extends Event
 {
-    /** @var RequestInterface */
-    protected $requestTransaction;
+    protected RequestInterface $requestTransaction;
 
-    /** @var string */
-    protected $serviceName;
+    protected string $serviceName;
 
     public function __construct(RequestInterface $requestTransaction, string $serviceName)
     {

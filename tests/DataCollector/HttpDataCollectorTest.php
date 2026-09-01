@@ -135,7 +135,7 @@ class HttpDataCollectorTest extends TestCase
 
         $slowLogMessage->expects($this->once())
             ->method('getTransferTime')
-            ->willReturn(2);
+            ->willReturn(2.0);
 
         $this->logger->expects($this->once())
             ->method('getMessages')

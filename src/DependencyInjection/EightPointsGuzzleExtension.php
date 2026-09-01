@@ -21,7 +21,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 class EightPointsGuzzleExtension extends Extension
 {
     /** @var PluginInterface[] */
-    protected $plugins;
+    protected array $plugins;
 
     /**
      * @param PluginInterface[] $plugins
@@ -171,10 +171,7 @@ class EightPointsGuzzleExtension extends Extension
         return $handler;
     }
 
-    /**
-     * @param  int|bool $logMode
-     */
-    private function convertLogMode($logMode): int
+    private function convertLogMode(bool|int $logMode): int
     {
         if ($logMode === true) {
             return Logger::LOG_MODE_REQUEST_AND_RESPONSE;

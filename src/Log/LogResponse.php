@@ -7,23 +7,18 @@ use Psr\Http\Message\ResponseInterface;
 
 class LogResponse
 {
-    /** @var int */
-    protected $statusCode;
+    protected int $statusCode;
 
-    /** @var string */
-    protected $statusPhrase;
+    protected string $statusPhrase;
 
-    /** @var string */
-    protected $body;
+    protected string $body;
 
     /** @var string[][] */
-    protected $headers = [];
+    protected array $headers = [];
 
-    /** @var string */
-    protected $protocolVersion;
+    protected string $protocolVersion;
 
-    /** @var bool */
-    private $logBody;
+    private bool $logBody;
 
     public function __construct(ResponseInterface $response, bool $logBody = true)
     {
@@ -88,10 +83,8 @@ class LogResponse
 
     /**
      * Return response body
-     *
-     * @return string
      */
-    public function getBody()
+    public function getBody(): string
     {
         return $this->body;
     }

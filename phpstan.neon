@@ -3,6 +3,6 @@ includes:
     - vendor/phpstan/phpstan-symfony/rules.neon
 
 parameters:
-    level: 3
+    level: 5
     paths:
         - src

@@ -113,7 +113,7 @@ jobs:
           tools: composer:v2,flex
 
       - name: Install dependencies
-        uses: ramsey/composer-install@v3
+        uses: ramsey/composer-install@v4
         with:
           dependency-versions: ${{ matrix.dependency-versions }}
 

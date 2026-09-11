@@ -1,7 +1,7 @@
 {
   "name":        "eightpoints/guzzle-bundle",
   "type":        "symfony-bundle",
-  "description": "Integrates Guzzle 6.x/7.x/8.x, a PHP HTTP Client, into Symfony. Comes with easy and powerful configuration options and optional plugins.",
+  "description": "Integrates Guzzle 7.x/8.x, a PHP HTTP Client, into Symfony. Comes with easy and powerful configuration options and optional plugins.",
   "keywords": [
     "bundle",
     "guzzle",
@@ -26,24 +26,23 @@
     }
   ],
   "require": {
-    "php":                          ">=7.2",
-    "guzzlehttp/guzzle":            "^6.5.8|^7.4.5|^8.0",
-    "guzzlehttp/promises":          "^1.5.3|^2.0|^3.0",
-    "guzzlehttp/psr7":              "^1.9.1|^2.5|^3.0",
-    "symfony/framework-bundle":     "~5.0|~6.0|~7.0|~8.0",
-    "symfony/expression-language":  "~5.0|~6.0|~7.0|~8.0",
-    "symfony/stopwatch":            "~5.0|~6.0|~7.0|~8.0",
-    "psr/log":                      "~1.0|~2.0|~3.0"
+    "php": "^8.1",
+    "guzzlehttp/guzzle": "^7.4.5|^8.0",
+    "guzzlehttp/promises": "^1.5.3|^2.0|^3.0",
+    "guzzlehttp/psr7": "^1.9.1|^2.5|^3.0",
+    "symfony/framework-bundle": "^6.0|^7.0|^8.0",
+    "symfony/expression-language": "^6.0|^7.0|^8.0",
+    "symfony/stopwatch": "^6.0|^7.0|^8.0",
+    "psr/log": "^1.0|^2.0|^3.0"
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "~7.4|~8.0",
-    "symfony/twig-bundle":    "~5.0|~6.0|~7.0|~8.0",
-    "symfony/var-dumper":     "~5.0|~6.0|~7.0|~8.0",
-    "symfony/yaml":           "~5.0|~6.0|~7.0|~8.0",
+    "symfony/phpunit-bridge": "^7.4|^8.0",
+    "symfony/twig-bundle": "^6.0|^7.0|^8.0",
+    "symfony/var-dumper": "^6.0|^7.0|^8.0",
+    "symfony/yaml": "^6.0|^7.0|^8.0",
     "phpstan/phpstan": "^2.2",
     "phpstan/phpstan-symfony": "^2.0",
-    "phpstan/phpstan-phpunit": "^2.0",
-    "friendsofphp/php-cs-fixer": "^3.95"
+    "phpstan/phpstan-phpunit": "^2.0"
   },
   "suggest": {
     "namshi/cuzzle": "Outputs Curl command on profiler's page for debugging purposes"

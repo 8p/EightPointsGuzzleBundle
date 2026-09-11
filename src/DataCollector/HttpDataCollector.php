@@ -18,10 +18,9 @@ class HttpDataCollector extends DataCollector
     use DataCollectorSymfonyCompatibilityTrait;
 
     /** @var LoggerInterface[] */
-    protected $loggers;
+    protected array $loggers;
 
-    /** @var float */
-    private $slowResponseTime;
+    private float $slowResponseTime;
 
     /**
      * @param LoggerInterface[] $loggers
@@ -35,7 +34,7 @@ class HttpDataCollector extends DataCollector
         $this->reset();
     }
 
-    protected function doCollect(Request $request, Response $response, ?\Throwable $exception = null)
+    protected function doCollect(Request $request, Response $response, ?\Throwable $exception = null): void
     {
         $messages = [];
         foreach ($this->loggers as $logger) {

@@ -10,17 +10,13 @@ class LogMessage
     /** @var string */
     protected $level;
 
-    /** @var LogRequest */
-    protected $request;
+    protected ?LogRequest $request = null;
 
-    /** @var LogResponse */
-    protected $response;
+    protected ?LogResponse $response = null;
 
-    /** @var float|null */
-    protected $transferTime;
+    protected ?float $transferTime = null;
 
-    /** @var string|null */
-    protected $curlCommand;
+    protected ?string $curlCommand;
 
     /**
      * @param string $message
@@ -60,72 +56,42 @@ class LogMessage
         return $this->message;
     }
 
-    /**
-     * Set Log Request
-     */
     public function setRequest(LogRequest $value): void
     {
         $this->request = $value;
     }
 
-    /**
-     * Get Log Request
-     *
-     * @return LogRequest
-     */
-    public function getRequest()
+    public function getRequest(): ?LogRequest
     {
         return $this->request;
     }
 
-    /**
-     * Set Log Response
-     *
-     * @return void
-     */
-    public function setResponse(LogResponse $value)
+    public function setResponse(LogResponse $value): void
     {
         $this->response = $value;
     }
 
-    /**
-     * Get Log Response
-     *
-     * @return LogResponse
-     */
-    public function getResponse()
+    public function getResponse(): ?LogResponse
     {
         return $this->response;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getTransferTime()
+    public function getTransferTime(): ?float
     {
         return $this->transferTime;
     }
 
-    /**
-     * @param float|null $transferTime
-     */
-    public function setTransferTime($transferTime): void
+    public function setTransferTime(?float $transferTime): void
     {
         $this->transferTime = $transferTime;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCurlCommand()
+    public function getCurlCommand(): ?string
     {
         return $this->curlCommand;
     }
 
-    /**
-     * @param string $curlCommand
-     */
-    public function setCurlCommand($curlCommand): void
+    public function setCurlCommand(string $curlCommand): void
     {
         $this->curlCommand = $curlCommand;
     }

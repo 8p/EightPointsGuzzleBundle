@@ -6,41 +6,30 @@ use Psr\Http\Message\RequestInterface;
 
 class LogRequest
 {
-    /** @var string */
-    protected $host;
+    protected string $host;
 
-    /** @var int|null */
-    protected $port;
+    protected ?int $port;
 
-    /** @var string */
-    protected $url;
+    protected string $url;
 
-    /** @var string */
-    protected $path;
+    protected string $path;
 
-    /** @var string */
-    protected $scheme;
+    protected string $scheme;
 
     /** @var string[][] */
-    protected $headers = [];
+    protected array $headers = [];
 
-    /** @var string */
-    protected $protocolVersion;
+    protected string $protocolVersion;
 
-    /** @var string */
-    protected $method;
+    protected string $method;
 
-    /** @var string|null */
-    protected $body;
+    protected ?string $body;
 
     public function __construct(RequestInterface $request)
     {
         $this->save($request);
     }
 
-    /**
-     * Save data
-     */
     protected function save(RequestInterface $request): void
     {
         $uri = $request->getUri();
@@ -56,11 +45,11 @@ class LogRequest
 
         // rewind to previous position after logging request
         $readPosition = null;
-        if ($request->getBody() && $request->getBody()->isSeekable()) {
+        if ($request->getBody()->isSeekable()) {
             $readPosition = $request->getBody()->tell();
         }
 
-        $this->setBody($request->getBody() ? $request->getBody()->__toString() : null);
+        $this->setBody($request->getBody()->__toString());
 
         if ($readPosition !== null) {
             $request->getBody()->seek($readPosition);

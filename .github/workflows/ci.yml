@@ -52,13 +52,10 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
-          tools: composer:v2
-
-      - name: Install dependencies
-        run: composer update --no-interaction --no-progress
+          tools: php-cs-fixer
 
       - name: PHP-CS-Fixer
-        run: vendor/bin/php-cs-fixer fix --dry-run --diff
+        run: php-cs-fixer fix --dry-run --diff
 
   tests:
     name: PHPUnit (PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, ${{ matrix.dependency-versions }})
@@ -73,7 +70,6 @@ jobs:
           - '8.4'
           - '8.5'
         symfony:
-          - '5.4.*' # LTS
           - '6.4.*'
           - '7.4.*'
           - '8.0.*'
@@ -94,7 +90,7 @@ jobs:
           # single extra run pinned to the lowest PHP/Symfony we can still resolve with Composer's security-advisory policy
           - os: ubuntu-latest
             php: '8.1'
-            symfony: '5.4.*'
+            symfony: '6.0.*'
             dependency-versions: lowest
 
     runs-on: ${{ matrix.os }}
@@ -111,6 +107,14 @@ jobs:
           php-version: ${{ matrix.php }}
           ini-values: date.timezone='UTC'
           tools: composer:v2,flex
+
+      - name: Allow known advisories for EOL Symfony 6.0 (lowest-bound test only)
+        if: matrix.dependency-versions == 'lowest'
+        run: composer config policy.advisories.block false
+
+      - name: Pin true floor of OR'd Guzzle constraints (prefer-lowest doesn't honor them reliably)
+        if: matrix.dependency-versions == 'lowest'
+        run: composer require --no-update guzzlehttp/guzzle:7.4.5 guzzlehttp/psr7:1.9.1 guzzlehttp/promises:1.5.3
 
       - name: Install dependencies
         uses: ramsey/composer-install@v4

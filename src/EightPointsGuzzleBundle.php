@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class EightPointsGuzzleBundle extends Bundle
 {
     /** @var PluginInterface[] */
-    protected $plugins = [];
+    protected array $plugins = [];
 
     /**
      * @param PluginInterface[] $plugins

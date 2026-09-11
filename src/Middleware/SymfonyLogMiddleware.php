@@ -8,11 +8,9 @@ use Psr\Log\LoggerInterface;
 
 class SymfonyLogMiddleware
 {
-    /** @var MessageFormatter */
-    protected $formatter;
+    protected MessageFormatter $formatter;
 
-    /** @var LoggerInterface */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger, MessageFormatter $formatter)
     {

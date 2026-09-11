@@ -10,10 +10,7 @@ use Symfony\Component\Stopwatch\Stopwatch;
  */
 class ProfileMiddleware
 {
-    /**
-     * @var Stopwatch
-     */
-    private $stopwatch;
+    private Stopwatch $stopwatch;
 
     public function __construct(Stopwatch $stopwatch)
     {

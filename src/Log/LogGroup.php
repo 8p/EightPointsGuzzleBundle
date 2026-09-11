@@ -4,11 +4,9 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
 
 class LogGroup
 {
-    /** @var array */
-    protected $messages = [];
+    protected array $messages = [];
 
-    /** @var string */
-    protected $requestName;
+    protected ?string $requestName = null;
 
     /**
      * Set Request Name

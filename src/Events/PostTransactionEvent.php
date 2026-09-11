@@ -3,14 +3,13 @@
 namespace EightPoints\Bundle\GuzzleBundle\Events;
 
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class PostTransactionEvent extends Event
 {
-    /** @var ResponseInterface|null */
-    protected $response;
+    protected ?ResponseInterface $response;
 
-    /** @var string */
-    protected $serviceName;
+    protected string $serviceName;
 
     public function __construct(?ResponseInterface $response, string $serviceName)
     {

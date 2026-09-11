@@ -21,7 +21,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 class EightPointsGuzzleExtension extends Extension
 {
     /** @var PluginInterface[] */
-    protected $plugins;
+    protected array $plugins;
 
     /**
      * @param PluginInterface[] $plugins
@@ -98,13 +98,11 @@ class EightPointsGuzzleExtension extends Extension
             $serviceName = sprintf('%s.client.%s', $this->getAlias(), $name);
             $container->setDefinition($serviceName, $client);
 
-            // Allowed only for Symfony 4.2+
-            if (method_exists($container, 'registerAliasForArgument')) {
-                if ('%eight_points_guzzle.http_client.class%' !== $options['class']) {
-                    $container->registerAliasForArgument($serviceName, $options['class'], $name . 'Client');
-                }
-                $container->registerAliasForArgument($serviceName, ClientInterface::class, $name . 'Client');
+            if ('%eight_points_guzzle.http_client.class%' !== $options['class']) {
+                $container->registerAliasForArgument($serviceName, $options['class'], $name . 'Client');
             }
+
+            $container->registerAliasForArgument($serviceName, ClientInterface::class, $name . 'Client');
         }
 
         $clientsWithLogging = array_filter($config['clients'], function ($options) use ($logging) {
@@ -173,10 +171,7 @@ class EightPointsGuzzleExtension extends Extension
         return $handler;
     }
 
-    /**
-     * @param  int|bool $logMode
-     */
-    private function convertLogMode($logMode): int
+    private function convertLogMode(bool|int $logMode): int
     {
         if ($logMode === true) {
             return Logger::LOG_MODE_REQUEST_AND_RESPONSE;

@@ -11,20 +11,14 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * @var string
-     */
-    protected $alias;
+    protected string $alias;
 
-    /**
-     * @var bool
-     */
-    protected $debug;
+    protected bool $debug;
 
     /**
      * @var PluginInterface[]
      */
-    protected $plugins;
+    protected array $plugins;
 
     public function __construct(string $alias, bool $debug = false, array $plugins = [])
     {

@@ -10,11 +10,9 @@ use Psr\Http\Message\RequestInterface;
 
 class RequestTimeMiddleware
 {
-    /** @var LoggerInterface */
-    protected $logger;
+    protected LoggerInterface $logger;
 
-    /** @var HttpDataCollector */
-    private $dataCollector;
+    private HttpDataCollector $dataCollector;
 
     public function __construct(LoggerInterface $logger, HttpDataCollector $dataCollector)
     {
@@ -26,8 +24,8 @@ class RequestTimeMiddleware
     {
         return function (RequestInterface $request, array $options) use ($handler) {
             $options['on_stats'] = $this->getOnStatsCallback(
-                isset($options['on_stats']) ? $options['on_stats'] : null,
-                isset($options['request_id']) ? $options['request_id'] : null
+                $options['on_stats'] ?? null,
+                $options['request_id'] ?? null
             );
 
             // Continue the handler chain.

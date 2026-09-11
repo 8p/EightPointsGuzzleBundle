@@ -2,7 +2,6 @@
 
 namespace EightPoints\Bundle\GuzzleBundle\Middleware;
 
-use EightPoints\Bundle\GuzzleBundle\Events\Event;
 use EightPoints\Bundle\GuzzleBundle\Events\GuzzleEvents;
 use EightPoints\Bundle\GuzzleBundle\Events\PostTransactionEvent;
 use EightPoints\Bundle\GuzzleBundle\Events\PreTransactionEvent;
@@ -10,7 +9,6 @@ use GuzzleHttp\Promise\Create;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as ContractsEventDispatcherInterface;
 
 /**
  * Dispatches an Event using the Symfony Event Dispatcher.
@@ -19,11 +17,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as ContractsEvent
  */
 class EventDispatchMiddleware
 {
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
-    /** @var string */
-    private $serviceName;
+    private string $serviceName;
 
     public function __construct(EventDispatcherInterface $eventDispatcher, string $serviceName)
     {
@@ -42,8 +38,8 @@ class EventDispatchMiddleware
                 $preTransactionEvent = new PreTransactionEvent($request, $this->serviceName);
 
                 // Dispatch it through the symfony Dispatcher.
-                $this->doDispatch($preTransactionEvent, GuzzleEvents::PRE_TRANSACTION);
-                $this->doDispatch($preTransactionEvent, GuzzleEvents::preTransactionFor($this->serviceName));
+                $this->eventDispatcher->dispatch($preTransactionEvent, GuzzleEvents::PRE_TRANSACTION);
+                $this->eventDispatcher->dispatch($preTransactionEvent, GuzzleEvents::preTransactionFor($this->serviceName));
 
                 // Continue the handler chain.
                 $promise = $handler($preTransactionEvent->getTransaction(), $options);
@@ -55,8 +51,8 @@ class EventDispatchMiddleware
                         $postTransactionEvent = new PostTransactionEvent($response, $this->serviceName);
 
                         // Dispatch the event on the symfony event dispatcher.
-                        $this->doDispatch($postTransactionEvent, GuzzleEvents::POST_TRANSACTION);
-                        $this->doDispatch($postTransactionEvent, GuzzleEvents::postTransactionFor($this->serviceName));
+                        $this->eventDispatcher->dispatch($postTransactionEvent, GuzzleEvents::POST_TRANSACTION);
+                        $this->eventDispatcher->dispatch($postTransactionEvent, GuzzleEvents::postTransactionFor($this->serviceName));
 
                         // Continue down the chain.
                         return $postTransactionEvent->getTransaction();
@@ -64,7 +60,7 @@ class EventDispatchMiddleware
                     function (\Throwable $reason) {
                         // Get the response when available (Guzzle 7 RequestException / Guzzle 8 ResponseException).
                         $response = null;
-                        if (\is_object($reason) && \method_exists($reason, 'getResponse')) {
+                        if (\method_exists($reason, 'getResponse')) {
                             $response = $reason->getResponse();
                         }
 
@@ -72,8 +68,8 @@ class EventDispatchMiddleware
                         $postTransactionEvent = new PostTransactionEvent($response, $this->serviceName);
 
                         // Dispatch the event on the symfony event dispatcher.
-                        $this->doDispatch($postTransactionEvent, GuzzleEvents::POST_TRANSACTION);
-                        $this->doDispatch($postTransactionEvent, GuzzleEvents::postTransactionFor($this->serviceName));
+                        $this->eventDispatcher->dispatch($postTransactionEvent, GuzzleEvents::POST_TRANSACTION);
+                        $this->eventDispatcher->dispatch($postTransactionEvent, GuzzleEvents::postTransactionFor($this->serviceName));
 
                         // Continue down the chain.
                         return Create::rejectionFor($reason);
@@ -81,17 +77,5 @@ class EventDispatchMiddleware
                 );
             };
         };
-    }
-
-    private function doDispatch(Event $event, string $name): void
-    {
-        if ($this->eventDispatcher instanceof ContractsEventDispatcherInterface) {
-            $this->eventDispatcher->dispatch($event, $name);
-
-            return;
-        }
-
-        // BC compatibility
-        $this->eventDispatcher->dispatch($name, $event);
     }
 }

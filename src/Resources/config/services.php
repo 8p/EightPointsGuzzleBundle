@@ -11,7 +11,6 @@ use EightPoints\Bundle\GuzzleBundle\Middleware\RequestTimeMiddleware;
 use EightPoints\Bundle\GuzzleBundle\Middleware\SymfonyLogMiddleware;
 use GuzzleHttp\Client;
 use GuzzleHttp\MessageFormatter;
-use GuzzleHttp\Middleware;
 
 return static function (ContainerConfigurator $container) {
     $parameters = $container->parameters();
@@ -32,8 +31,4 @@ return static function (ContainerConfigurator $container) {
 
     // parameters
     $parameters->set('eight_points_guzzle.symfony_log_formatter.pattern', '{method} {uri} {code}');
-
-    // Deprecated! Remove them in v8.0
-    $parameters->set('eight_points_guzzle.middleware.class', Middleware::class);
-    $parameters->set('eight_points_guzzle.plugin.header.headers', []);
 };

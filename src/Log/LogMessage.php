@@ -16,7 +16,7 @@ class LogMessage
 
     protected ?float $transferTime = null;
 
-    protected ?string $curlCommand;
+    protected ?string $curlCommand = null;
 
     /**
      * @param string $message

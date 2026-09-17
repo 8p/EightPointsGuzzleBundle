@@ -3,6 +3,7 @@
 namespace EightPoints\Bundle\GuzzleBundle\Tests\DependencyInjection;
 
 use EightPoints\Bundle\GuzzleBundle\DependencyInjection\Configuration;
+use EightPoints\Bundle\GuzzleBundle\Log\Logger;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
@@ -327,6 +328,38 @@ class ConfigurationTest extends TestCase
             $this->assertArrayHasKey($key, $processedConfig['clients']['test_client']['options']);
             $this->assertEquals($expects !== null ? $expects[$key] : $value, $processedConfig['clients']['test_client']['options'][$key]);
         }
+    }
+
+    /**
+     * @dataProvider provideClientLoggingValues
+     *
+     * @param bool|int|string $loggingValue
+     */
+    public function testClientLoggingNormalization($loggingValue, int $expectedLogMode): void
+    {
+        $config = [
+            'eight_points_guzzle' => [
+                'clients' => [
+                    'test_client' => [
+                        'logging' => $loggingValue,
+                    ],
+                ],
+            ],
+        ];
+
+        $processor = new Processor();
+        $processedConfig = $processor->processConfiguration(new Configuration('eight_points_guzzle'), $config);
+
+        $this->assertSame($expectedLogMode, $processedConfig['clients']['test_client']['logging']);
+    }
+
+    public function provideClientLoggingValues(): array
+    {
+        return [
+            'logging true maps to REQUEST_AND_RESPONSE' => [true, Logger::LOG_MODE_REQUEST_AND_RESPONSE],
+            'logging 1 maps to REQUEST_AND_RESPONSE' => [1, Logger::LOG_MODE_REQUEST_AND_RESPONSE],
+            'logging mode name maps to matching constant' => ['request_and_response_headers', Logger::LOG_MODE_REQUEST_AND_RESPONSE_HEADERS],
+        ];
     }
 
     public function testSlowRequestTimeout(): void

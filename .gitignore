@@ -1,9 +1,14 @@
 # General
 .idea
+.claude
+Claude.local.md
+Makefile
+Dockerfile
 
-# Ignore PHPUnit cache and config override
+# Ignore PHPUnit cache, config override and coverage folder
 phpunit.xml
 .phpunit.result.cache
+coverage
 
 # Ignore composer generated files
 composer.lock

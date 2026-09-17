@@ -124,6 +124,7 @@ class HttpDataCollectorTest extends TestCase
 
     /**
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::collect
+     * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::doCollect
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogs
      * @covers \EightPoints\Bundle\GuzzleBundle\DataCollector\HttpDataCollector::getLogGroup
      */
@@ -139,7 +140,9 @@ class HttpDataCollectorTest extends TestCase
 
         $this->logger->expects($this->once())
             ->method('getMessages')
-            ->willReturn([$slowLogMessage]);
+            // the non-LogMessage entry exercises doCollect()'s defensive
+            // "skip messages that aren't a LogMessage" branch
+            ->willReturn(['not a log message', $slowLogMessage]);
 
         $this->logger->expects($this->atLeastOnce())->method('clear');
 

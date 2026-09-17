@@ -9,6 +9,7 @@ use Symfony\Contracts\Service\ResetInterface;
 class Logger implements LoggerInterface, ResetInterface
 {
     use LoggerTrait;
+
     public const LOG_MODE_NONE = 0;
     public const LOG_MODE_REQUEST = 1;
     public const LOG_MODE_REQUEST_AND_RESPONSE_HEADERS = 2;
@@ -46,9 +47,12 @@ class Logger implements LoggerInterface, ResetInterface
             if (!empty($context['request']) && $this->logMode > self::LOG_MODE_NONE) {
                 $logMessage->setRequest(new LogRequest($context['request']));
 
+                // namshi/cuzzle is an optional suggested package; not installed in the test environment.
+                // @codeCoverageIgnoreStart
                 if (class_exists(CurlFormatter::class)) {
                     $logMessage->setCurlCommand((new CurlFormatter())->format($context['request']));
                 }
+                // @codeCoverageIgnoreEnd
             }
 
             if (!empty($context['response']) && $this->logMode > self::LOG_MODE_REQUEST) {

@@ -27,7 +27,7 @@ class DebugExtension extends AbstractExtension
     /**
      * @throws \Exception
      */
-    public function dump(Environment $env, $value): bool|string
+    public function dump(Environment $env, mixed $value): bool|string
     {
         $cloner = new VarCloner();
 

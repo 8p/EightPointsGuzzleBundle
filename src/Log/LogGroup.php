@@ -4,6 +4,7 @@ namespace EightPoints\Bundle\GuzzleBundle\Log;
 
 class LogGroup
 {
+    /** @var LogMessage[] */
     protected array $messages = [];
 
     protected ?string $requestName = null;
@@ -26,6 +27,8 @@ class LogGroup
 
     /**
      * Set Log Messages
+     *
+     * @param LogMessage[] $value
      */
     public function setMessages(array $value): void
     {
@@ -34,6 +37,8 @@ class LogGroup
 
     /**
      * Add Log Messages
+     *
+     * @param LogMessage[] $value
      */
     public function addMessages(array $value): void
     {
@@ -42,6 +47,8 @@ class LogGroup
 
     /**
      * Return Log Messages
+     *
+     * @return LogMessage[]
      */
     public function getMessages(): array
     {

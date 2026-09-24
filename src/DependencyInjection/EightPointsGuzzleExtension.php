@@ -31,15 +31,18 @@ class EightPointsGuzzleExtension extends Extension
         $this->plugins = $plugins;
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $config
+     */
     public function getConfiguration(array $config, ContainerBuilder $container): Configuration
     {
-        return new Configuration($this->getAlias(), $container->getParameter('kernel.debug'), $this->plugins);
+        return new Configuration($this->getAlias(), (bool) $container->getParameter('kernel.debug'), $this->plugins);
     }
 
     /**
      * Loads the Guzzle configuration.
      *
-     * @param array $configs an array of configuration settings
+     * @param array<int, array<string, mixed>> $configs an array of configuration settings
      * @param ContainerBuilder $container a ContainerBuilder instance
      *
      * @throws BadMethodCallException
@@ -53,7 +56,7 @@ class EightPointsGuzzleExtension extends Extension
 
         $loader->load('services.php');
 
-        $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'), $this->plugins);
+        $configuration = new Configuration($this->getAlias(), (bool) $container->getParameter('kernel.debug'), $this->plugins);
         $config = $this->processConfiguration($configuration, $configs);
         $logging = $config['logging'] === true;
         $profiling = $config['profiling'] === true;
@@ -119,6 +122,8 @@ class EightPointsGuzzleExtension extends Extension
     }
 
     /**
+     * @param array<string, mixed> $options
+     *
      * @throws BadMethodCallException
      * @throws InvalidArgumentException
      */

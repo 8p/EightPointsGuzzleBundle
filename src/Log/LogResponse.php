@@ -115,6 +115,8 @@ class LogResponse
 
     /**
      * Return response headers
+     *
+     * @return string[][]
      */
     public function getHeaders(): array
     {
@@ -123,6 +125,8 @@ class LogResponse
 
     /**
      * Set response headers
+     *
+     * @param string[][] $value
      */
     public function setHeaders(array $value): void
     {

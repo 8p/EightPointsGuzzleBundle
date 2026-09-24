@@ -138,6 +138,8 @@ class LogRequest
 
     /**
      * Return headers
+     *
+     * @return string[][]
      */
     public function getHeaders(): array
     {
@@ -146,6 +148,8 @@ class LogRequest
 
     /**
      * Set headers
+     *
+     * @param string[][] $value
      */
     public function setHeaders(array $value): void
     {

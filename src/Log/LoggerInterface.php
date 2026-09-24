@@ -18,6 +18,8 @@ interface LoggerInterface extends PsrLoggerInterface
 
     /**
      * Return log messages
+     *
+     * @return LogMessage[]
      */
     public function getMessages(): array;
 }

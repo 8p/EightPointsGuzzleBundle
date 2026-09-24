@@ -55,7 +55,7 @@ jobs:
           tools: php-cs-fixer
 
       - name: PHP-CS-Fixer
-        run: php-cs-fixer fix --dry-run --diff
+        run: php-cs-fixer fix --dry-run --diff -v
 
   tests:
     name: PHPUnit (PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, ${{ matrix.dependency-versions }})

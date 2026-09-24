@@ -43,6 +43,9 @@ class HttpDataCollector extends DataCollector
 
         if ($this->slowResponseTime > 0) {
             foreach ($messages as $message) {
+                // LoggerInterface::getMessages() is documented to return LogMessage[], but
+                // third-party implementations aren't guaranteed to honor that at runtime.
+                // @phpstan-ignore-next-line instanceof.alwaysTrue
                 if (!$message instanceof LogMessage) {
                     continue;
                 }
@@ -92,6 +95,8 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Returning log entries
+     *
+     * @return array<string, LogGroup>
      */
     public function getLogs(): array
     {
@@ -100,6 +105,8 @@ class HttpDataCollector extends DataCollector
 
     /**
      * Get all messages
+     *
+     * @return LogMessage[]
      */
     public function getMessages(): array
     {
@@ -130,6 +137,9 @@ class HttpDataCollector extends DataCollector
         return count($this->getErrorsByType(LogLevel::ERROR));
     }
 
+    /**
+     * @return LogMessage[]
+     */
     public function getErrorsByType(string $type): array
     {
         return array_filter(

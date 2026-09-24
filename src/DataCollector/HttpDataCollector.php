@@ -100,7 +100,7 @@ class HttpDataCollector extends DataCollector
      */
     public function getLogs(): array
     {
-        return array_key_exists('logs', $this->data) ? $this->data['logs'] : [];
+        return $this->data['logs'] ?? [];
     }
 
     /**

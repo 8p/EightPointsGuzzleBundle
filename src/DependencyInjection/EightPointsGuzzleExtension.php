@@ -36,7 +36,7 @@ class EightPointsGuzzleExtension extends Extension
      */
     public function getConfiguration(array $config, ContainerBuilder $container): Configuration
     {
-        return new Configuration($this->getAlias(), $container->getParameter('kernel.debug'), $this->plugins);
+        return new Configuration($this->getAlias(), (bool) $container->getParameter('kernel.debug'), $this->plugins);
     }
 
     /**
@@ -56,7 +56,7 @@ class EightPointsGuzzleExtension extends Extension
 
         $loader->load('services.php');
 
-        $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'), $this->plugins);
+        $configuration = new Configuration($this->getAlias(), (bool) $container->getParameter('kernel.debug'), $this->plugins);
         $config = $this->processConfiguration($configuration, $configs);
         $logging = $config['logging'] === true;
         $profiling = $config['profiling'] === true;

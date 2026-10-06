@@ -9,6 +9,11 @@ class DevNullLogger implements LoggerInterface, ResetInterface
 {
     use LoggerTrait;
 
+    /**
+     * @param string $level
+     * @param string $message
+     * @param mixed[] $context
+     */
     public function log($level, $message, array $context = []): void
     {
         // do nothing!!
@@ -37,6 +42,8 @@ class DevNullLogger implements LoggerInterface, ResetInterface
 
     /**
      * Return log messages
+     *
+     * @return LogMessage[]
      */
     public function getMessages(): array
     {

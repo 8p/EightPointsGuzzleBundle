@@ -44,7 +44,7 @@ class EightPointsGuzzleBundle extends Bundle
      */
     public function getContainerExtension(): ExtensionInterface
     {
-        if ($this->extension === null) {
+        if (!$this->extension instanceof ExtensionInterface) {
             $this->extension = new EightPointsGuzzleExtension($this->plugins);
         }
 

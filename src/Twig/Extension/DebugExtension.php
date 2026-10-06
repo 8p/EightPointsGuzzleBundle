@@ -32,6 +32,11 @@ class DebugExtension extends AbstractExtension
         $cloner = new VarCloner();
 
         $dump = fopen('php://memory', 'r+b');
+
+        if (false === $dump) {
+            throw new \RuntimeException('Unable to open php://memory stream.');
+        }
+
         $dumper = new HtmlDumper($dump, $env->getCharset());
 
         $dumper->dump($cloner->cloneVar($value));

@@ -20,6 +20,9 @@ class Configuration implements ConfigurationInterface
      */
     protected array $plugins;
 
+    /**
+     * @param PluginInterface[] $plugins
+     */
     public function __construct(string $alias, bool $debug = false, array $plugins = [])
     {
         $this->alias = $alias;
